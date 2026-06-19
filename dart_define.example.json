@@ -1,0 +1,5 @@
+{
+  "TMDB_TOKEN": "votre_token_v4_tmdb",
+  "SUPABASE_URL": "https://VOTRE-PROJET.supabase.co",
+  "SUPABASE_ANON_KEY": "votre_cle_anon_public"
+}
