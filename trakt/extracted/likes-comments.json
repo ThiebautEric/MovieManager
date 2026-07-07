@@ -1,0 +1,37 @@
+[
+  {
+    "liked_at": "2026-02-15T22:29:27.000Z",
+    "type": "comment",
+    "comment": {
+      "id": 543477,
+      "comment": "What a treat!!! The Big Racket has to be one of the best poliziotteschi ever made. Brutal uncompromising violence, strong story, and great acting. What more do you need?!!?",
+      "spoiler": false,
+      "review": false,
+      "parent_id": 0,
+      "created_at": "2023-02-21T20:52:42.000Z",
+      "updated_at": "2023-02-21T20:52:42.000Z",
+      "replies": 0,
+      "likes": 1,
+      "user_rating": 9,
+      "language": "en",
+      "user_stats": {
+        "rating": 9,
+        "play_count": 1,
+        "completed_count": 1
+      },
+      "user": {
+        "username": "beardedonewatches",
+        "private": false,
+        "deleted": false,
+        "name": "BeardedOneWatches",
+        "vip": true,
+        "vip_ep": false,
+        "director": false,
+        "ids": {
+          "slug": "beardedonewatches",
+          "trakt": 1629048
+        }
+      }
+    }
+  }
+]

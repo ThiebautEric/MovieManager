@@ -1,0 +1,252 @@
+{
+  "user": {
+    "username": "ET57800",
+    "private": false,
+    "deleted": false,
+    "name": "ET57800",
+    "vip": true,
+    "vip_ep": false,
+    "director": false,
+    "ids": {
+      "slug": "et57800",
+      "trakt": 11007742,
+      "uuid": "17bc3f1ae8afbcf31810e46e8a54c130ba805db6"
+    },
+    "joined_at": "2021-04-12T10:28:53.000Z",
+    "location": "Béning, Grand Est",
+    "about": "",
+    "gender": "male",
+    "age": 53,
+    "images": {
+      "avatar": {
+        "full": "https://secure.gravatar.com/avatar/495691226d22ec1debb78be885d7f265?d=https%3A%2F%2Fmedia.trakt.tv%2Fhotlink-ok%2Fplaceholders%2Fmedium%2Ffry.png&r=pg&s=256"
+      }
+    },
+    "vip_og": false,
+    "vip_years": 0,
+    "vip_cover_image": null,
+    "dob": "1973-06-19",
+    "email": "thiebaut.eric@laposte.net"
+  },
+  "account": {
+    "timezone": "Europe/Paris",
+    "date_format": "ymd",
+    "time_24hr": true,
+    "cover_image": null,
+    "token": "001d13ee9077566514616e1e38bcf4bf",
+    "display_ads": false
+  },
+  "browsing": {
+    "watch_popup_action": "now",
+    "hide_watching_now": false,
+    "list_popup_action": "ask",
+    "week_start_day": "0",
+    "watch_after_rating": "",
+    "watch_only_once": false,
+    "other_site_ratings": false,
+    "release_date_ignore_runtime": false,
+    "display_early_ratings": false,
+    "hide_episode_type_tags": false,
+    "hide_unsaved_filters_prompt": false,
+    "spoilers": {
+      "episodes": "show",
+      "shows": "show",
+      "movies": "show",
+      "comments": "show",
+      "ratings": "show",
+      "actors": "show"
+    },
+    "calendar": {
+      "period": "week",
+      "start_day": "today",
+      "layout": "list",
+      "image_type": "logo",
+      "hide_specials": false,
+      "autoscroll": false
+    },
+    "progress": {
+      "on_deck": {
+        "sort": "activity",
+        "sort_how": "asc",
+        "refresh": false,
+        "simple_progress": false,
+        "only_favorites": false
+      },
+      "watched": {
+        "refresh": false,
+        "simple_progress": false,
+        "include_specials": false,
+        "include_watchlisted": false,
+        "include_collected": false,
+        "sort": "activity",
+        "sort_how": "asc",
+        "use_last_activity": true,
+        "grid_view": false
+      },
+      "collected": {
+        "refresh": false,
+        "simple_progress": false,
+        "include_specials": false,
+        "include_watchlisted": false,
+        "include_watched": false,
+        "sort": "activity",
+        "sort_how": "asc",
+        "use_last_activity": true,
+        "grid_view": false
+      }
+    },
+    "watchnow": {
+      "country": "fr",
+      "favorites": [
+        "fr-amazon_prime_video",
+        "fr-disney_plus",
+        "fr-france_tv",
+        "fr-netflix",
+        "fr-youtube"
+      ],
+      "only_favorites": false
+    },
+    "dark_knight": "true",
+    "app_theme": "purple",
+    "welcome": {
+      "completed_at": "2021-04-12T10:33:46.000Z",
+      "exit_step": null
+    },
+    "genres": {
+      "favorites": null,
+      "disliked": null
+    },
+    "comments": {
+      "blocked_uids": []
+    },
+    "recommendations": {
+      "ignore_collected": false,
+      "ignore_watchlisted": false
+    },
+    "rewatching": {
+      "adjust_percentage": false
+    },
+    "profile": {
+      "favorites": {
+        "sort_by": "random",
+        "sort_how": "asc"
+      },
+      "most_watched_shows": {
+        "sort_by": "plays",
+        "tab": "last_30_days"
+      },
+      "most_watched_movies": {
+        "sort_by": "time",
+        "tab": "last_30_days"
+      }
+    },
+    "search": {
+      "image_type": "poster",
+      "recent_queries": [
+        {
+          "query": "murder with a view",
+          "type": "shows",
+          "created_at": 1778354701
+        },
+        {
+          "query": "mord mit aussicht",
+          "type": "shows",
+          "created_at": 1778354677
+        },
+        {
+          "query": "last one laughing",
+          "type": "all",
+          "created_at": 1777843780
+        },
+        {
+          "query": "lol france",
+          "type": "all",
+          "created_at": 1777843759
+        },
+        {
+          "query": "laurel hardy",
+          "type": "all",
+          "created_at": 1774874277
+        }
+      ]
+    },
+    "yir": {
+      "shows_most_played": "played",
+      "movies_most_played": "watched"
+    }
+  },
+  "connections": {
+    "facebook": false,
+    "twitter": false,
+    "mastodon": false,
+    "google": false,
+    "tumblr": false,
+    "medium": false,
+    "slack": false,
+    "apple": false,
+    "dropbox": false,
+    "microsoft": false
+  },
+  "sharing_text": {
+    "watching": "I'm watching [item]",
+    "watched": "I just watched [item]",
+    "rated": null
+  },
+  "sharing": {
+    "email": {
+      "new_follower": true,
+      "comment_mention": true,
+      "comment_reply": true,
+      "comment_like": true,
+      "list_comment": true,
+      "list_like": true,
+      "pending_collaboration": true,
+      "weekly_digest": true,
+      "mir": true,
+      "streaming_optimizations": true
+    },
+    "app": {
+      "new_follower": true,
+      "comment_mention": true,
+      "comment_reply": true,
+      "comment_like": true,
+      "list_comment": true,
+      "list_like": true,
+      "pending_collaboration": true,
+      "weekly_digest": true,
+      "mir": true
+    }
+  },
+  "limits": {
+    "list": {
+      "count": 500,
+      "item_count": 5000
+    },
+    "watchlist": {
+      "item_count": 5000
+    },
+    "favorites": {
+      "item_count": 100
+    },
+    "search": {
+      "recent_count": 5
+    },
+    "collection": {
+      "item_count": 100000
+    },
+    "notes": {
+      "item_count": 2000
+    },
+    "saved_filters": {
+      "count": 100
+    },
+    "recommendations": {
+      "item_count": 100
+    }
+  },
+  "permissions": {
+    "commenting": true,
+    "liking": true,
+    "following": true
+  }
+}

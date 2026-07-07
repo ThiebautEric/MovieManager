@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movie Manager — proposition de layout</title>
+<style>
+  :root{
+    --bg:#0e1116; --bg2:#161b22; --card:#1b222c; --line:#262d38;
+    --txt:#e6edf3; --mut:#8b97a7; --accent:#4f8cff; --gold:#ffc857;
+    --dvd:#546e7a; --bluray:#1565c0; --digital:#00897b; --good:#3fb27f;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+
+  /* Top bar */
+  header{position:sticky;top:0;z-index:5;background:rgba(14,17,22,.85);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:18px;height:60px}
+  .brand{font-weight:700;font-size:18px;letter-spacing:.3px;display:flex;align-items:center;gap:8px}
+  .brand .dot{width:10px;height:10px;border-radius:3px;background:var(--accent)}
+  nav{display:flex;gap:4px;margin-left:8px;flex:1;overflow:auto}
+  nav a{padding:8px 14px;border-radius:10px;color:var(--mut);text-decoration:none;
+    font-size:14px;font-weight:600;white-space:nowrap}
+  nav a.active{color:var(--txt);background:var(--card)}
+  nav a.active{box-shadow:inset 0 -2px 0 var(--accent)}
+  .icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+    background:var(--card);color:var(--mut);font-size:18px}
+
+  /* Layout: content + filter rail */
+  .page{display:grid;grid-template-columns:1fr 300px;gap:24px;padding:24px 0 60px}
+  @media(max-width:820px){.page{grid-template-columns:1fr}.rail{display:none}}
+
+  .section-head{display:flex;align-items:baseline;gap:10px;margin:0 0 16px}
+  .section-head h1{font-size:22px;margin:0}
+  .section-head .count{color:var(--mut);font-size:14px}
+
+  /* Grid of cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
+  .card{cursor:pointer}
+  .poster{position:relative;aspect-ratio:2/3;border-radius:var(--radius);overflow:hidden;
+    box-shadow:0 6px 18px rgba(0,0,0,.45);transition:transform .15s ease, box-shadow .15s}
+  .card:hover .poster{transform:translateY(-4px);box-shadow:0 12px 26px rgba(0,0,0,.6)}
+  .poster .art{position:absolute;inset:0;display:grid;place-items:center;
+    font-size:34px;font-weight:800;color:rgba(255,255,255,.85);text-shadow:0 2px 8px rgba(0,0,0,.5)}
+  .scrim{position:absolute;inset:auto 0 0 0;height:55%;
+    background:linear-gradient(to top,rgba(0,0,0,.78),transparent)}
+  .chip{position:absolute;display:flex;align-items:center;gap:4px;
+    font-size:11px;font-weight:700;color:#fff;padding:3px 7px;border-radius:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,.4)}
+  .chip.tl{top:8px;left:8px}.chip.tr{top:8px;right:8px}
+  .chip.dvd{background:var(--dvd)}.chip.bluray{background:var(--bluray)}.chip.digital{background:var(--digital)}
+  .chip.season{background:rgba(0,0,0,.6)}
+  .meta{position:absolute;left:10px;right:10px;bottom:9px;display:flex;align-items:center;
+    justify-content:space-between;gap:6px}
+  .rating{display:flex;align-items:center;gap:3px;font-weight:700;font-size:13px;color:#fff}
+  .rating .star{color:var(--gold)}
+  .date{font-size:12px;color:#dfe7f0;font-weight:600}
+  .title{margin:10px 2px 0;font-size:14px;font-weight:600;line-height:1.25}
+  .sub{margin:2px 2px 0;font-size:12px;color:var(--mut)}
+  .comment{margin:3px 2px 0;font-size:12px;color:var(--mut);font-style:italic;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  /* Filter rail */
+  .rail{align-self:start;position:sticky;top:84px;background:var(--bg2);
+    border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .rail h2{font-size:16px;margin:0 0 14px;display:flex;justify-content:space-between;align-items:center}
+  .rail h2 .reset{font-size:12px;color:var(--accent);font-weight:600;cursor:pointer}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:12px;color:var(--mut);margin-bottom:6px}
+  .select{width:100%;background:var(--card);border:1px solid var(--line);color:var(--txt);
+    border-radius:10px;padding:10px 12px;font-size:14px}
+  .segs{display:flex;background:var(--card);border-radius:10px;padding:3px;gap:3px}
+  .segs button{flex:1;border:0;background:transparent;color:var(--mut);padding:7px;border-radius:8px;
+    font-size:13px;font-weight:600;cursor:pointer}
+  .segs button.on{background:var(--accent);color:#fff}
+  .range{width:100%}
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .pill{font-size:12px;color:var(--mut);background:var(--card);border:1px solid var(--line);
+    padding:5px 10px;border-radius:20px}
+  .note{margin-top:10px;font-size:11px;color:var(--mut);line-height:1.5}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap bar">
+      <div class="brand"><span class="dot"></span>Movie Manager</div>
+      <nav>
+        <a class="active">Historique</a>
+        <a>Collection</a>
+        <a>Favoris</a>
+        <a>Rechercher</a>
+        <a>Stats</a>
+      </nav>
+      <div class="icon">🌙</div>
+    </div>
+  </header>
+
+  <div class="wrap page">
+    <main>
+      <div class="section-head">
+        <h1>Historique</h1>
+        <span class="count">— 6 visionnages</span>
+      </div>
+      <div class="grid" id="grid"></div>
+    </main>
+
+    <aside class="rail">
+      <h2>Filtres <span class="reset">Réinitialiser</span></h2>
+      <div class="field">
+        <label>Type</label>
+        <div class="segs"><button class="on">Tous</button><button>Films</button><button>Séries</button></div>
+      </div>
+      <div class="field"><label>Genre</label>
+        <select class="select"><option>Tous</option><option>Comédie</option><option>Drame</option><option>Science-fiction</option></select></div>
+      <div class="field"><label>Pays d'origine</label>
+        <select class="select"><option>Tous</option><option>🇺🇸 US</option><option>🇫🇷 FR</option><option>🇬🇧 GB</option></select></div>
+      <div class="field"><label>Acteur favori</label>
+        <select class="select"><option>Tous</option><option>Jennifer Aniston</option><option>Keanu Reeves</option></select></div>
+      <div class="field"><label>Année</label>
+        <select class="select"><option>Toutes</option><option>2024</option><option>2003</option><option>1999</option></select></div>
+      <div class="field"><label>Note minimale du visionnage : 7.0</label>
+        <input class="range" type="range" min="0" max="10" value="7"></div>
+      <div class="note">Sur écran large, ce panneau reste affiché en permanence à droite. Sur mobile, il
+        revient sous forme de bouton « Filtrer ».</div>
+    </aside>
+  </div>
+
+<script>
+  const cards = [
+    {t:"The Matrix", c1:"#1b3a5b", c2:"#0e7c66", medium:"digital", ml:"Digital", season:null, rating:"9.0", date:"12/03/2024", sub:"Film · 1999", comment:"Revu au cinéma"},
+    {t:"Friends", c1:"#5b2e7a", c2:"#c0497a", medium:null, ml:null, season:"S1", rating:"8.5", date:"05/06/2026", sub:"Saison 1", comment:"Marathon du dimanche"},
+    {t:"Dune", c1:"#7a5a2e", c2:"#c08a49", medium:"bluray", ml:"Blu-ray", season:null, rating:"8.0", date:"28/02/2024", sub:"Film · 2021", comment:""},
+    {t:"Lost", c1:"#1b5b4a", c2:"#0e3c7c", medium:null, ml:null, season:"S2", rating:null, date:"14/01/2024", sub:"Saison 2", comment:""},
+    {t:"Interstellar", c1:"#2e3a5b", c2:"#49628a", medium:"dvd", ml:"DVD", season:null, rating:"9.5", date:"02/12/2023", sub:"Film · 2014", comment:"Larmes garanties"},
+    {t:"Parasite", c1:"#5b1b2e", c2:"#7c0e3c", medium:null, ml:null, season:null, rating:"9.0", date:"19/11/2023", sub:"Film · 2019", comment:""},
+  ];
+  const g = document.getElementById('grid');
+  g.innerHTML = cards.map(c=>`
+    <div class="card">
+      <div class="poster">
+        <div class="art" style="background:linear-gradient(140deg,${c.c1},${c.c2})">${c.t[0]}</div>
+        <div class="scrim"></div>
+        ${c.medium?`<span class="chip tl ${c.medium}">💿 ${c.ml}</span>`:``}
+        ${c.season?`<span class="chip tr season">📺 ${c.season}</span>`:``}
+        <div class="meta">
+          <span class="date">👁 ${c.date}</span>
+          ${c.rating?`<span class="rating"><span class="star">★</span>${c.rating}</span>`:``}
+        </div>
+      </div>
+      <div class="title">${c.t}</div>
+      <div class="sub">${c.sub}</div>
+      ${c.comment?`<div class="comment">“${c.comment}”</div>`:``}
+    </div>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,5259 @@
+[
+  {
+    "type": "movie",
+    "collected_at": "2025-01-20T16:56:05.000Z",
+    "updated_at": "2025-01-20T16:56:05.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1343097",
+        "plex": {
+          "guid": "5d7768636f4521001eaa4cca",
+          "slug": "the-girl-who-kicked-the-hornets-nest"
+        },
+        "slug": "the-girl-who-kicked-the-hornet-s-nest-2009",
+        "tmdb": 33613,
+        "trakt": 21547
+      },
+      "year": 2009,
+      "title": "The Girl Who Kicked the Hornet's Nest"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2025-01-20T16:47:50.000Z",
+    "updated_at": "2025-01-20T16:47:50.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0116736",
+        "plex": {
+          "guid": "5d9f35236fc551001ef8093b",
+          "slug": "the-hunters-1996"
+        },
+        "slug": "the-hunters-1996",
+        "tmdb": 16003,
+        "trakt": 9789
+      },
+      "year": 1996,
+      "title": "The Hunters"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2025-01-20T14:46:49.000Z",
+    "updated_at": "2025-01-20T14:46:49.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1560671",
+        "plex": {
+          "guid": "5d9f35b868e4c8001fb6098e",
+          "slug": "false-trail"
+        },
+        "slug": "false-trail-2011",
+        "tmdb": 74626,
+        "trakt": 54960
+      },
+      "year": 2011,
+      "title": "False Trail"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2025-01-17T22:17:13.000Z",
+    "updated_at": "2025-01-17T22:17:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1852770",
+        "plex": {
+          "guid": "5d77699f47dd6e001f6c7f40",
+          "slug": "dracula-3d"
+        },
+        "slug": "dracula-3d-2012",
+        "tmdb": 135812,
+        "trakt": 91559
+      },
+      "year": 2012,
+      "title": "Dracula 3D"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2025-01-12T00:05:17.000Z",
+    "updated_at": "2025-01-12T00:05:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0117658",
+        "plex": {
+          "guid": "5d776d1496b655001fe3ebf4",
+          "slug": "the-stendhal-syndrome"
+        },
+        "slug": "the-stendhal-syndrome-1996",
+        "tmdb": 39434,
+        "trakt": 25630
+      },
+      "year": 1996,
+      "title": "The Stendhal Syndrome"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2025-01-07T22:12:01.000Z",
+    "updated_at": "2025-01-07T22:12:02.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0063370",
+        "plex": {
+          "guid": "5d776856880197001ec9939e",
+          "slug": "naked-you-die"
+        },
+        "slug": "naked-you-die-1968",
+        "tmdb": 28064,
+        "trakt": 17408
+      },
+      "year": 1968,
+      "title": "Naked You Die"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2025-01-06T22:41:51.000Z",
+    "updated_at": "2025-01-06T22:41:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069064",
+        "plex": {
+          "guid": "5d7768b6431c830024c142c4",
+          "slug": "death-carries-a-cane"
+        },
+        "slug": "death-carries-a-cane-1973",
+        "tmdb": 74087,
+        "trakt": 54521
+      },
+      "year": 1973,
+      "title": "Death Carries a Cane"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2025-01-02T22:00:54.000Z",
+    "updated_at": "2025-01-02T22:00:55.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068186",
+        "plex": {
+          "guid": "5d7768b21999bc0020dce278",
+          "slug": "tropic-of-cancer"
+        },
+        "slug": "tropic-of-cancer-1972",
+        "tmdb": 71538,
+        "trakt": 52479
+      },
+      "year": 1972,
+      "title": "Tropic of Cancer"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-12-23T22:00:47.000Z",
+    "updated_at": "2024-12-23T22:00:48.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0330691",
+        "plex": {
+          "guid": "5d776d137a53e9001e750280",
+          "slug": "the-card-player"
+        },
+        "slug": "the-card-player-2004",
+        "tmdb": 15483,
+        "trakt": 9411
+      },
+      "year": 2004,
+      "title": "The Card Player"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-12-20T22:50:14.000Z",
+    "updated_at": "2024-12-20T22:50:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068394",
+        "plex": {
+          "guid": "5d776857103a2d001f56e563",
+          "slug": "knife-of-ice"
+        },
+        "slug": "knife-of-ice-1972",
+        "tmdb": 28488,
+        "trakt": 17771
+      },
+      "year": 1972,
+      "title": "Knife of Ice"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-12-19T21:13:20.000Z",
+    "updated_at": "2024-12-19T21:13:20.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0064243",
+        "plex": {
+          "guid": "5d7768a796b655001fdbe1ae",
+          "slug": "the-sweet-body-of-deborah"
+        },
+        "slug": "the-sweet-body-of-deborah-1968",
+        "tmdb": 64628,
+        "trakt": 46678
+      },
+      "year": 1968,
+      "title": "The Sweet Body of Deborah"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-11-22T07:42:10.000Z",
+    "updated_at": "2024-11-22T07:42:11.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0044000",
+        "plex": {
+          "guid": "5d776d1296b655001fe3e70e",
+          "slug": "the-white-sheik"
+        },
+        "slug": "the-white-sheik-1952",
+        "tmdb": 43361,
+        "trakt": 29145
+      },
+      "year": 1952,
+      "title": "The White Sheik"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-11-21T11:28:03.000Z",
+    "updated_at": "2024-11-21T11:28:04.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0087759",
+        "plex": {
+          "guid": "5d776d07f617c900201857ec",
+          "slug": "murder-rock-dancing-death"
+        },
+        "slug": "murder-rock-dancing-death-1984",
+        "tmdb": 40145,
+        "trakt": 26281
+      },
+      "year": 1984,
+      "title": "Murder-Rock: Dancing Death"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-11-11T20:16:39.000Z",
+    "updated_at": "2024-11-11T20:16:40.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092577",
+        "plex": {
+          "guid": "5d77692123d5a3001f4f60b3",
+          "slug": "arabella-black-angel"
+        },
+        "slug": "arabella-black-angel-1989",
+        "tmdb": 108101,
+        "trakt": 76592
+      },
+      "year": 1989,
+      "title": "Arabella: Black Angel"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-11-10T21:27:46.000Z",
+    "updated_at": "2024-11-10T21:27:46.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1020530",
+        "plex": {
+          "guid": "5d77683aeb5d26001f1e1d0b",
+          "slug": "eden-lake"
+        },
+        "slug": "eden-lake-2008",
+        "tmdb": 13510,
+        "trakt": 7965
+      },
+      "year": 2008,
+      "title": "Eden Lake"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-11-08T20:37:50.000Z",
+    "updated_at": "2024-11-08T20:37:50.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0088745",
+        "plex": {
+          "guid": "5d7768d8ad5437001f750de2",
+          "slug": "the-killer-is-still-among-us"
+        },
+        "slug": "the-killer-is-still-among-us-1986",
+        "tmdb": 85139,
+        "trakt": 63888
+      },
+      "year": 1986,
+      "title": "The Killer Is Still Among Us"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-11-08T15:29:05.000Z",
+    "updated_at": "2024-11-08T15:29:05.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078300",
+        "plex": {
+          "guid": "5d7768ed594b2b001e6987c1",
+          "slug": "the-sister-of-ursula"
+        },
+        "slug": "the-sister-of-ursula-1978",
+        "tmdb": 91256,
+        "trakt": 67714
+      },
+      "year": 1978,
+      "title": "The Sister of Ursula"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T20:46:26.000Z",
+    "updated_at": "2024-10-22T20:46:26.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0054749",
+        "plex": {
+          "guid": "5d9f35519dd5f4001e844253",
+          "slug": "two-women-1960"
+        },
+        "slug": "two-women-1960",
+        "tmdb": 24167,
+        "trakt": 14520
+      },
+      "year": 1960,
+      "title": "Two Women"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T16:24:44.000Z",
+    "updated_at": "2024-10-22T16:24:44.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1288558",
+        "plex": {
+          "guid": "5d77692696b655001fdcb7dd",
+          "slug": "evil-dead"
+        },
+        "slug": "evil-dead-2013",
+        "tmdb": 109428,
+        "trakt": 77335
+      },
+      "year": 2013,
+      "title": "Evil Dead"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T15:21:44.000Z",
+    "updated_at": "2024-10-22T15:21:44.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0057323",
+        "plex": {
+          "guid": "5d77687f431c830024c0d9b4",
+          "slug": "the-monsters-1963"
+        },
+        "slug": "the-monsters-1963",
+        "tmdb": 45005,
+        "trakt": 30627
+      },
+      "year": 1963,
+      "title": "The Monsters"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T11:43:43.000Z",
+    "updated_at": "2024-10-22T11:43:43.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068193",
+        "plex": {
+          "guid": "5d77685c7a53e9001e6cdfb2",
+          "slug": "the-eroticist"
+        },
+        "slug": "the-eroticist-1972",
+        "tmdb": 30552,
+        "trakt": 19390
+      },
+      "year": 1972,
+      "title": "The Eroticist"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T11:42:56.000Z",
+    "updated_at": "2024-10-22T11:42:56.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0079788",
+        "plex": {
+          "guid": "5d9f34f5d5fd3f001ee14744",
+          "slug": "zombie-holocaust"
+        },
+        "slug": "doctor-butcher-m-d-1980",
+        "tmdb": 7216,
+        "trakt": 3839
+      },
+      "year": 1980,
+      "title": "Doctor Butcher M.D."
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T09:01:13.000Z",
+    "updated_at": "2024-10-22T09:01:13.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0021814",
+        "plex": {
+          "guid": "5d776d1396b655001fe3ea08",
+          "slug": "dracula-1931"
+        },
+        "slug": "dracula-1931",
+        "tmdb": 138,
+        "trakt": 104
+      },
+      "year": 1931,
+      "title": "Dracula"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T08:59:05.000Z",
+    "updated_at": "2024-10-22T08:59:05.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1680136",
+        "plex": {
+          "guid": "5d77688723d5a3001f4edb1a",
+          "slug": "klown"
+        },
+        "slug": "klown-2010",
+        "tmdb": 48748,
+        "trakt": 33837
+      },
+      "year": 2010,
+      "title": "Klown"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T08:09:46.000Z",
+    "updated_at": "2024-10-22T08:09:46.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0271455",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "de-nuremberg-a-nuremberg-1989",
+        "tmdb": 61760,
+        "trakt": 44317
+      },
+      "year": 1989,
+      "title": "De Nuremberg à Nuremberg"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T08:03:54.000Z",
+    "updated_at": "2024-10-22T08:03:54.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0896952",
+        "plex": {
+          "guid": "5d77689b7e5fa10020bf28f0",
+          "slug": "my-enemys-enemy"
+        },
+        "slug": "my-enemy-s-enemy-2007",
+        "tmdb": 57499,
+        "trakt": 41063
+      },
+      "year": 2007,
+      "title": "My Enemy's Enemy"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T07:24:53.000Z",
+    "updated_at": "2024-10-22T07:24:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt2112124",
+        "plex": {
+          "guid": "5d776a3447dd6e001f6cfd31",
+          "slug": "chennai-express"
+        },
+        "slug": "chennai-express-2013",
+        "tmdb": 205022,
+        "trakt": 127543
+      },
+      "year": 2013,
+      "title": "Chennai Express"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T07:24:51.000Z",
+    "updated_at": "2024-10-22T07:24:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1188996",
+        "plex": {
+          "guid": "5d7768517228e5001f1e2005",
+          "slug": "my-name-is-khan"
+        },
+        "slug": "my-name-is-khan-2010",
+        "tmdb": 26022,
+        "trakt": 15794
+      },
+      "year": 2010,
+      "title": "My Name Is Khan"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-22T07:06:51.000Z",
+    "updated_at": "2024-10-22T07:06:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1600191",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "dance-with-a-serial-killer-2008",
+        "tmdb": 398457,
+        "trakt": 241477
+      },
+      "year": 2008,
+      "title": "Dance with a Serial Killer"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T20:11:45.000Z",
+    "updated_at": "2024-10-21T20:11:45.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0052654",
+        "plex": {
+          "guid": "5d78b9a831d95e001f214f1f",
+          "slug": "the-bridge-1959"
+        },
+        "slug": "the-bridge-1959",
+        "tmdb": 1566,
+        "trakt": 1024
+      },
+      "year": 1959,
+      "title": "The Bridge"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T19:53:06.000Z",
+    "updated_at": "2024-10-21T19:53:06.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067429",
+        "plex": {
+          "guid": "5d776cf7594b2b001e6fddf0",
+          "slug": "caliber-9"
+        },
+        "slug": "caliber-9-1972",
+        "tmdb": 40022,
+        "trakt": 26171
+      },
+      "year": 1972,
+      "title": "Caliber 9"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T19:52:46.000Z",
+    "updated_at": "2024-10-21T19:52:46.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0079135",
+        "plex": {
+          "guid": "5d77685a999c64001ec33fd2",
+          "slug": "fascination"
+        },
+        "slug": "fascination-1979",
+        "tmdb": 29562,
+        "trakt": 18629
+      },
+      "year": 1979,
+      "title": "Fascination"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T19:52:45.000Z",
+    "updated_at": "2024-10-21T19:52:45.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0063707",
+        "plex": {
+          "guid": "5d77699e7a53e9001e6eb349",
+          "slug": "top-sensation"
+        },
+        "slug": "the-seducers-1969",
+        "tmdb": 135260,
+        "trakt": 91294
+      },
+      "year": 1969,
+      "title": "The Seducers"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T13:27:37.000Z",
+    "updated_at": "2024-10-21T13:27:37.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0074979",
+        "plex": {
+          "guid": "5d776918f617c9002015d2fe",
+          "slug": "nine-guests-for-a-crime"
+        },
+        "slug": "nine-guests-for-a-crime-1977",
+        "tmdb": 105663,
+        "trakt": 75156
+      },
+      "year": 1977,
+      "title": "Nine Guests for a Crime"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T13:17:11.000Z",
+    "updated_at": "2024-10-21T13:17:11.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075784",
+        "plex": {
+          "guid": "5d7768308a7581001f12cef0",
+          "slug": "a-bridge-too-far"
+        },
+        "slug": "a-bridge-too-far-1977",
+        "tmdb": 5902,
+        "trakt": 3363
+      },
+      "year": 1977,
+      "title": "A Bridge Too Far"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T13:15:14.000Z",
+    "updated_at": "2024-10-21T13:15:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0071167",
+        "plex": {
+          "guid": "5d776905594b2b001e69afa4",
+          "slug": "the-killer-reserved-nine-seats"
+        },
+        "slug": "the-killer-reserved-nine-seats-1974",
+        "tmdb": 99438,
+        "trakt": 71703
+      },
+      "year": 1974,
+      "title": "The Killer Reserved Nine Seats"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T12:47:18.000Z",
+    "updated_at": "2024-10-21T12:47:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0166139",
+        "plex": {
+          "guid": "5d776976f617c900201600ce",
+          "slug": "like-rabid-dogs"
+        },
+        "slug": "like-rabid-dogs-1976",
+        "tmdb": 121301,
+        "trakt": 84088
+      },
+      "year": 1976,
+      "title": "Like Rabid Dogs"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T11:42:55.000Z",
+    "updated_at": "2024-10-21T11:42:55.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0080931",
+        "plex": {
+          "guid": "5d77685633f255001e8532af",
+          "slug": "nightmare-city"
+        },
+        "slug": "nightmare-city-1980",
+        "tmdb": 28319,
+        "trakt": 17630
+      },
+      "year": 1980,
+      "title": "Nightmare City"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T11:36:27.000Z",
+    "updated_at": "2024-10-21T11:36:27.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0070130",
+        "plex": {
+          "guid": "5d776d09594b2b001e6ffc1a",
+          "slug": "la-grande-bouffe"
+        },
+        "slug": "la-grande-bouffe-1973",
+        "tmdb": 10102,
+        "trakt": 5320
+      },
+      "year": 1973,
+      "title": "La Grande Bouffe"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T09:50:43.000Z",
+    "updated_at": "2024-10-21T09:50:43.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068272",
+        "plex": {
+          "guid": "5d77691423d5a3001f4f5613",
+          "slug": "a-white-dress-for-mariale"
+        },
+        "slug": "a-white-dress-for-mariale-1972",
+        "tmdb": 104360,
+        "trakt": 74407
+      },
+      "year": 1972,
+      "title": "A White Dress for Marialé"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T09:48:44.000Z",
+    "updated_at": "2024-10-21T09:48:44.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0060073",
+        "plex": {
+          "guid": "5d776d0e594b2b001e70012e",
+          "slug": "africa-blood-and-guts"
+        },
+        "slug": "africa-blood-and-guts-1966",
+        "tmdb": 41264,
+        "trakt": 27269
+      },
+      "year": 1966,
+      "title": "Africa Blood and Guts"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T09:48:14.000Z",
+    "updated_at": "2024-10-21T09:48:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0162503",
+        "plex": {
+          "guid": "5d776cf3594b2b001e6fda6e",
+          "slug": "nude-for-satan"
+        },
+        "slug": "nude-for-satan-1974",
+        "tmdb": 35718,
+        "trakt": 22654
+      },
+      "year": 1974,
+      "title": "Nude for Satan"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T09:44:20.000Z",
+    "updated_at": "2024-10-21T09:44:20.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0080922",
+        "plex": {
+          "guid": "5d7768aead5437001f74cedd",
+          "slug": "the-nurse-in-the-military-madhouse"
+        },
+        "slug": "the-nurse-in-the-military-madhouse-1979",
+        "tmdb": 69403,
+        "trakt": 50693
+      },
+      "year": 1979,
+      "title": "The Nurse in the Military Madhouse"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T09:42:54.000Z",
+    "updated_at": "2024-10-21T09:42:54.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092865",
+        "plex": {
+          "guid": "5d776cf9594b2b001e6fe17d",
+          "slug": "phantom-of-death"
+        },
+        "slug": "phantom-of-death-1988",
+        "tmdb": 29169,
+        "trakt": 18307
+      },
+      "year": 1988,
+      "title": "Phantom of Death"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T09:41:37.000Z",
+    "updated_at": "2024-10-21T09:41:37.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075106",
+        "plex": {
+          "guid": "5d7769c1ad5437001f767341",
+          "slug": "school-days-1976-1"
+        },
+        "slug": "school-days-1976",
+        "tmdb": 151027,
+        "trakt": 99202
+      },
+      "year": 1976,
+      "title": "School Days"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-21T09:41:36.000Z",
+    "updated_at": "2024-10-21T09:41:36.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073290",
+        "plex": {
+          "guid": "5d7769017a53e9001e6dede9",
+          "slug": "the-teasers"
+        },
+        "slug": "the-teasers-1975",
+        "tmdb": 98025,
+        "trakt": 71095
+      },
+      "year": 1975,
+      "title": "The Teasers"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-20T20:20:52.000Z",
+    "updated_at": "2024-10-20T20:20:52.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0056210",
+        "plex": {
+          "guid": "5d77686523d5a3001f4eb821",
+          "slug": "mafioso"
+        },
+        "slug": "mafioso-1962",
+        "tmdb": 34866,
+        "trakt": 22257
+      },
+      "year": 1962,
+      "title": "Mafioso"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:59:34.000Z",
+    "updated_at": "2024-10-18T13:59:34.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075834",
+        "plex": {
+          "guid": "5d776cf27a53e9001e74d227",
+          "slug": "the-pyjama-girl-case"
+        },
+        "slug": "the-pyjama-girl-case-1977",
+        "tmdb": 61540,
+        "trakt": 44142
+      },
+      "year": 1977,
+      "title": "The Pyjama Girl Case"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:58:49.000Z",
+    "updated_at": "2024-10-18T13:58:49.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0065677",
+        "plex": {
+          "guid": "5d776d0b594b2b001e6ffdb2",
+          "slug": "the-forbidden-photos-of-a-lady-above-suspicion"
+        },
+        "slug": "the-forbidden-photos-of-a-lady-above-suspicion-1970",
+        "tmdb": 92233,
+        "trakt": 68214
+      },
+      "year": 1970,
+      "title": "The Forbidden Photos of a Lady Above Suspicion"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:51:41.000Z",
+    "updated_at": "2024-10-18T13:51:41.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt2461132",
+        "plex": {
+          "guid": "5d776af196b655001fdfe0ea",
+          "slug": "happy-new-year-2014"
+        },
+        "slug": "happy-new-year-2014",
+        "tmdb": 277432,
+        "trakt": 175102
+      },
+      "year": 2014,
+      "title": "Happy New Year"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:50:52.000Z",
+    "updated_at": "2024-10-18T13:50:52.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt3321428",
+        "plex": {
+          "guid": "5d776aa096b655001fdf4559",
+          "slug": "torrente-5"
+        },
+        "slug": "torrente-5-operation-eurovegas-2014",
+        "tmdb": 254869,
+        "trakt": 155206
+      },
+      "year": 2014,
+      "title": "Torrente 5: Operation Eurovegas"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:50:11.000Z",
+    "updated_at": "2024-10-18T13:50:11.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1285241",
+        "plex": {
+          "guid": "5d776875103a2d001f571fa5",
+          "slug": "don-2"
+        },
+        "slug": "don-2-2011",
+        "tmdb": 41109,
+        "trakt": 27138
+      },
+      "year": 2011,
+      "title": "Don 2"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:49:17.000Z",
+    "updated_at": "2024-10-18T13:49:17.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0461936",
+        "plex": {
+          "guid": "5d776d0cfb0d55001f595a5a",
+          "slug": "don-2006"
+        },
+        "slug": "don-2006",
+        "tmdb": 17501,
+        "trakt": 10693
+      },
+      "year": 2006,
+      "title": "Don"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:42:21.000Z",
+    "updated_at": "2024-10-18T13:42:21.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt4198186",
+        "plex": {
+          "guid": "5d776bf396b655001fe21265",
+          "slug": "violent-shit-the-movie"
+        },
+        "slug": "violent-shit-the-movie-2015",
+        "tmdb": 367941,
+        "trakt": 228919
+      },
+      "year": 2015,
+      "title": "Violent Shit: The Movie"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:37:56.000Z",
+    "updated_at": "2024-10-18T13:37:56.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0126004",
+        "plex": {
+          "guid": "5d7768d3ebdf2200209c94a2",
+          "slug": "the-iron-rose"
+        },
+        "slug": "the-iron-rose-1973",
+        "tmdb": 84473,
+        "trakt": 63329
+      },
+      "year": 1973,
+      "title": "The Iron Rose"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:36:18.000Z",
+    "updated_at": "2024-10-18T13:36:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0071150",
+        "plex": {
+          "guid": "5d7768be308bca0020331a4d",
+          "slug": "the-antichrist"
+        },
+        "slug": "the-antichrist-1974",
+        "tmdb": 78546,
+        "trakt": 58188
+      },
+      "year": 1974,
+      "title": "The Antichrist"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:35:39.000Z",
+    "updated_at": "2024-10-18T13:35:39.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0112870",
+        "plex": {
+          "guid": "5d776844880197001ec9624e",
+          "slug": "dilwale-dulhania-le-jayenge"
+        },
+        "slug": "dilwale-dulhania-le-jayenge-1995",
+        "tmdb": 19404,
+        "trakt": 11956
+      },
+      "year": 1995,
+      "title": "Dilwale Dulhania Le Jayenge"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:35:01.000Z",
+    "updated_at": "2024-10-18T13:35:01.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0109555",
+        "plex": {
+          "guid": "5d776d04ad5437001f7caba7",
+          "slug": "darr"
+        },
+        "slug": "darr-1993",
+        "tmdb": 35053,
+        "trakt": 22348
+      },
+      "year": 1993,
+      "title": "Darr"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:31:32.000Z",
+    "updated_at": "2024-10-18T13:31:32.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073324",
+        "plex": {
+          "guid": "5d776cf5fb0d55001f593380",
+          "slug": "lips-of-blood"
+        },
+        "slug": "lips-of-blood-1975",
+        "tmdb": 29128,
+        "trakt": 18275
+      },
+      "year": 1975,
+      "title": "Lips of Blood"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:30:53.000Z",
+    "updated_at": "2024-10-18T13:30:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0065168",
+        "plex": {
+          "guid": "5d9f354868e4c8001fb5f39a",
+          "slug": "the-nude-vampire"
+        },
+        "slug": "the-nude-vampire-1970",
+        "tmdb": 22480,
+        "trakt": 13681
+      },
+      "year": 1970,
+      "title": "The Nude Vampire"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:30:21.000Z",
+    "updated_at": "2024-10-18T13:30:21.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0147523",
+        "plex": {
+          "guid": "5d776b1a594b2b001e6cf4dd",
+          "slug": "il-solco-di-pesca"
+        },
+        "slug": "the-furrow-of-the-peach-1976",
+        "tmdb": 290133,
+        "trakt": 187059
+      },
+      "year": 1976,
+      "title": "The Furrow of the Peach"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:27:58.000Z",
+    "updated_at": "2024-10-18T13:27:58.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0118983",
+        "plex": {
+          "guid": "5d77683b6f4521001ea9d300",
+          "slug": "dil-to-pagal-hai"
+        },
+        "slug": "dil-to-pagal-hai-1997",
+        "tmdb": 13986,
+        "trakt": 8350
+      },
+      "year": 1997,
+      "title": "Dil To Pagal Hai"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:26:30.000Z",
+    "updated_at": "2024-10-18T13:26:30.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0071840",
+        "plex": {
+          "guid": "5d77688a431c830024c0ebee",
+          "slug": "almost-human-1974"
+        },
+        "slug": "almost-human-1974",
+        "tmdb": 50236,
+        "trakt": 35113
+      },
+      "year": 1974,
+      "title": "Almost Human"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:20:50.000Z",
+    "updated_at": "2024-10-18T13:20:50.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0057176",
+        "plex": {
+          "guid": "5d77697afb0d55001f5274bf",
+          "slug": "limmortelle"
+        },
+        "slug": "the-immortal-one-1963",
+        "tmdb": 121737,
+        "trakt": 84326
+      },
+      "year": 1963,
+      "title": "The Immortal One"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:18:27.000Z",
+    "updated_at": "2024-10-18T13:18:27.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0172684",
+        "plex": {
+          "guid": "5d7768377e9a3c0020c6d39c",
+          "slug": "kuch-kuch-hota-hai"
+        },
+        "slug": "kuch-kuch-hota-hai-1998",
+        "tmdb": 11854,
+        "trakt": 6877
+      },
+      "year": 1998,
+      "title": "Kuch Kuch Hota Hai"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:14:39.000Z",
+    "updated_at": "2024-10-18T13:14:39.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0367110",
+        "plex": {
+          "guid": "5d77683e2e80df001ebdf5c1",
+          "slug": "swades"
+        },
+        "slug": "swades-2004",
+        "tmdb": 15774,
+        "trakt": 9625
+      },
+      "year": 2004,
+      "title": "Swades"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:14:05.000Z",
+    "updated_at": "2024-10-18T13:14:05.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0061113",
+        "plex": {
+          "guid": "5d7768ecfb0d55001f51cee6",
+          "slug": "trans-europ-express"
+        },
+        "slug": "trans-europ-express-1966",
+        "tmdb": 90908,
+        "trakt": 67513
+      },
+      "year": 1966,
+      "title": "Trans-Europ-Express"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:11:01.000Z",
+    "updated_at": "2024-10-18T13:11:01.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt4535650",
+        "plex": {
+          "guid": "5d776bfb96b655001fe22046",
+          "slug": "dilwale-2015"
+        },
+        "slug": "dilwale-2015",
+        "tmdb": 370665,
+        "trakt": 224449
+      },
+      "year": 2015,
+      "title": "Dilwale"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:08:49.000Z",
+    "updated_at": "2024-10-18T13:08:49.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0063080",
+        "plex": {
+          "guid": "5d7768a4decfcd001f2eec48",
+          "slug": "the-man-who-lies"
+        },
+        "slug": "the-man-who-lies-1968",
+        "tmdb": 63213,
+        "trakt": 45482
+      },
+      "year": 1968,
+      "title": "The Man Who Lies"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:06:23.000Z",
+    "updated_at": "2024-10-18T13:06:23.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1182884",
+        "plex": {
+          "guid": "5d77685a61141d001fb19427",
+          "slug": "dulha-mil-gaya"
+        },
+        "slug": "dulha-mil-gaya-2010",
+        "tmdb": 29888,
+        "trakt": 18896
+      },
+      "year": 2010,
+      "title": "Dulha Mil Gaya"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T13:05:34.000Z",
+    "updated_at": "2024-10-18T13:05:34.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0248126",
+        "plex": {
+          "guid": "5d7768353c3c2a001fbce52d",
+          "slug": "kabhi-khushi-kabhie-gham"
+        },
+        "slug": "kabhi-khushi-kabhie-gham-2001",
+        "tmdb": 10757,
+        "trakt": 5920
+      },
+      "year": 2001,
+      "title": "Kabhi Khushi Kabhie Gham"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:57:11.000Z",
+    "updated_at": "2024-10-18T12:57:11.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt3495026",
+        "plex": {
+          "guid": "5d776c0dfb0d55001f57b4bd",
+          "slug": "fan-2016"
+        },
+        "slug": "fan-2016",
+        "tmdb": 377985,
+        "trakt": 225975
+      },
+      "year": 2016,
+      "title": "Fan"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:56:38.000Z",
+    "updated_at": "2024-10-18T12:56:38.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0065148",
+        "plex": {
+          "guid": "5d776cef594b2b001e6fd765",
+          "slug": "one-on-top-of-the-other"
+        },
+        "slug": "one-on-top-of-the-other-1969",
+        "tmdb": 2993,
+        "trakt": 1981
+      },
+      "year": 1969,
+      "title": "One on Top of the Other"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:55:00.000Z",
+    "updated_at": "2024-10-18T12:55:00.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0420332",
+        "plex": {
+          "guid": "5d9f34f1d5fd3f001ee143fe",
+          "slug": "veer-zaara"
+        },
+        "slug": "veer-zaara-2004",
+        "tmdb": 4251,
+        "trakt": 2498
+      },
+      "year": 2004,
+      "title": "Veer-Zaara"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:53:32.000Z",
+    "updated_at": "2024-10-18T12:53:32.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt2631186",
+        "plex": {
+          "guid": "5d9f3c2868e4c8001fb66557",
+          "slug": "baahubali-the-beginning"
+        },
+        "slug": "bahubali-the-beginning-2015",
+        "tmdb": 256040,
+        "trakt": 156067
+      },
+      "year": 2015,
+      "title": "Bāhubali: The Beginning"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:51:22.000Z",
+    "updated_at": "2024-10-18T12:51:22.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0124899",
+        "plex": {
+          "guid": "5d7768e796b655001fdc4cf1",
+          "slug": "terror-express"
+        },
+        "slug": "terror-express-1980",
+        "tmdb": 89315,
+        "trakt": 66670
+      },
+      "year": 1980,
+      "title": "Terror Express"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:49:45.000Z",
+    "updated_at": "2024-10-18T12:49:45.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1024943",
+        "plex": {
+          "guid": "5d7768318718ba001e313bbc",
+          "slug": "om-shanti-om"
+        },
+        "slug": "om-shanti-om-2007",
+        "tmdb": 8079,
+        "trakt": 4046
+      },
+      "year": 2007,
+      "title": "Om Shanti Om"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:48:56.000Z",
+    "updated_at": "2024-10-18T12:48:56.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt3735246",
+        "plex": {
+          "guid": "5d776be29ab544002151059d",
+          "slug": "bajirao-mastani"
+        },
+        "slug": "bajirao-mastani-2015",
+        "tmdb": 362045,
+        "trakt": 223912
+      },
+      "year": 2015,
+      "title": "Bajirao Mastani"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:34:11.000Z",
+    "updated_at": "2024-10-18T12:34:11.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0422091",
+        "plex": {
+          "guid": "5d776840eb5d26001f1e35e1",
+          "slug": "dhoom"
+        },
+        "slug": "dhoom-2004",
+        "tmdb": 17478,
+        "trakt": 10679
+      },
+      "year": 2004,
+      "title": "Dhoom"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:31:08.000Z",
+    "updated_at": "2024-10-18T12:31:08.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1182937",
+        "plex": {
+          "guid": "5d9f3505e4fc29001eb658f1",
+          "slug": "rab-ne-bana-di-jodi"
+        },
+        "slug": "rab-ne-bana-di-jodi-2008",
+        "tmdb": 14072,
+        "trakt": 8413
+      },
+      "year": 2008,
+      "title": "Rab Ne Bana Di Jodi"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:29:00.000Z",
+    "updated_at": "2024-10-18T12:29:00.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0213890",
+        "plex": {
+          "guid": "5d776836961905001eb9477d",
+          "slug": "mohabbatein"
+        },
+        "slug": "mohabbatein-2000",
+        "tmdb": 11518,
+        "trakt": 6600
+      },
+      "year": 2000,
+      "title": "Mohabbatein"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:27:10.000Z",
+    "updated_at": "2024-10-18T12:27:10.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt3863552",
+        "plex": {
+          "guid": "5d776bbe7a53e9001e72ec08",
+          "slug": "bajrangi-bhaijaan"
+        },
+        "slug": "bajrangi-bhaijaan-2015",
+        "tmdb": 348892,
+        "trakt": 221962
+      },
+      "year": 2015,
+      "title": "Bajrangi Bhaijaan"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:23:25.000Z",
+    "updated_at": "2024-10-18T12:23:25.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt2016894",
+        "plex": {
+          "guid": "5d7768dc47dd6e001f6bf921",
+          "slug": "ek-tha-tiger"
+        },
+        "slug": "ek-tha-tiger-2012",
+        "tmdb": 85985,
+        "trakt": 64634
+      },
+      "year": 2012,
+      "title": "Ek Tha Tiger"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:22:41.000Z",
+    "updated_at": "2024-10-18T12:22:41.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068367",
+        "plex": {
+          "guid": "5d776cfdfb0d55001f59428c",
+          "slug": "who-saw-her-die"
+        },
+        "slug": "who-saw-her-die-1972",
+        "tmdb": 69576,
+        "trakt": 50843
+      },
+      "year": 1972,
+      "title": "Who Saw Her Die?"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:21:30.000Z",
+    "updated_at": "2024-10-18T12:21:30.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0080764",
+        "plex": {
+          "guid": "5d7768ab6f6af7001ee5a709",
+          "slug": "macabre-1980"
+        },
+        "slug": "macabre-1980",
+        "tmdb": 67737,
+        "trakt": 49282
+      },
+      "year": 1980,
+      "title": "Macabre"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:20:56.000Z",
+    "updated_at": "2024-10-18T12:20:56.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0126559",
+        "plex": {
+          "guid": "5d7768eb7a53e9001e6dc66c",
+          "slug": "snatch-1976"
+        },
+        "slug": "la-orca-1976",
+        "tmdb": 90187,
+        "trakt": 67167
+      },
+      "year": 1976,
+      "title": "La Orca"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:20:13.000Z",
+    "updated_at": "2024-10-18T12:20:13.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069186",
+        "plex": {
+          "guid": "5d776917fb0d55001f5215fd",
+          "slug": "the-slasher-is-the-sex-maniac"
+        },
+        "slug": "so-sweet-so-dead-1972",
+        "tmdb": 105114,
+        "trakt": 74874
+      },
+      "year": 1972,
+      "title": "So Sweet, So Dead"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:17:18.000Z",
+    "updated_at": "2024-10-18T12:17:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt4814290",
+        "plex": {
+          "guid": "5d776c0c594b2b001e6e9a98",
+          "slug": "te3n"
+        },
+        "slug": "te3n-2016",
+        "tmdb": 377213,
+        "trakt": 225987
+      },
+      "year": 2016,
+      "title": "Te3n"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:15:53.000Z",
+    "updated_at": "2024-10-18T12:15:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0441048",
+        "plex": {
+          "guid": "5d9f3506adeb7a0021ce0d8d",
+          "slug": "dhoom-2"
+        },
+        "slug": "dhoom-2-2006",
+        "tmdb": 14194,
+        "trakt": 8501
+      },
+      "year": 2006,
+      "title": "Dhoom 2"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:13:44.000Z",
+    "updated_at": "2024-10-18T12:13:44.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1833673",
+        "plex": {
+          "guid": "5d77687ffb0d55001f5123a1",
+          "slug": "dhoom-3"
+        },
+        "slug": "dhoom-3-2013",
+        "tmdb": 44977,
+        "trakt": 30600
+      },
+      "year": 2013,
+      "title": "Dhoom 3"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:13:03.000Z",
+    "updated_at": "2024-10-18T12:13:03.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068416",
+        "plex": {
+          "guid": "5d776830961905001eb930ee",
+          "slug": "what-have-you-done-to-solange"
+        },
+        "slug": "what-have-you-done-to-solange-1972",
+        "tmdb": 6591,
+        "trakt": 3695
+      },
+      "year": 1972,
+      "title": "What Have You Done to Solange?"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:12:15.000Z",
+    "updated_at": "2024-10-18T12:12:15.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0054067",
+        "plex": {
+          "guid": "5d7768542e80df001ebe1a1f",
+          "slug": "black-sunday-1960"
+        },
+        "slug": "black-sunday-1960",
+        "tmdb": 27632,
+        "trakt": 17032
+      },
+      "year": 1960,
+      "title": "Black Sunday"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:09:42.000Z",
+    "updated_at": "2024-10-18T12:09:42.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt2372222",
+        "plex": {
+          "guid": "5d776afc51dd69001fe2aac9",
+          "slug": "kick-2014"
+        },
+        "slug": "kick-2014",
+        "tmdb": 280690,
+        "trakt": 178130
+      },
+      "year": 2014,
+      "title": "Kick"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:09:14.000Z",
+    "updated_at": "2024-10-18T12:09:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0807758",
+        "plex": {
+          "guid": "5d7768536f4521001eaa1cae",
+          "slug": "partner"
+        },
+        "slug": "partner-2007",
+        "tmdb": 27298,
+        "trakt": 16742
+      },
+      "year": 2007,
+      "title": "Partner"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:06:23.000Z",
+    "updated_at": "2024-10-18T12:06:23.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0110076",
+        "plex": {
+          "guid": "5d776d137a53e9001e75025d",
+          "slug": "hum-aapke-hain-koun"
+        },
+        "slug": "hum-aapke-hain-koun-1994",
+        "tmdb": 46387,
+        "trakt": 31807
+      },
+      "year": 1994,
+      "title": "Hum Aapke Hain Koun..!"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:03:38.000Z",
+    "updated_at": "2024-10-18T12:03:38.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1084972",
+        "plex": {
+          "guid": "5d776849e6d55c0020410020",
+          "slug": "wanted-2009"
+        },
+        "slug": "wanted-2009",
+        "tmdb": 22717,
+        "trakt": 13809
+      },
+      "year": 2009,
+      "title": "Wanted"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:03:36.000Z",
+    "updated_at": "2024-10-18T12:03:36.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1729637",
+        "plex": {
+          "guid": "5d7768b57a53e9001e6d70b8",
+          "slug": "bodyguard-2011"
+        },
+        "slug": "bodyguard-2011",
+        "tmdb": 73582,
+        "trakt": 54078
+      },
+      "year": 2011,
+      "title": "Bodyguard"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:01:53.000Z",
+    "updated_at": "2024-10-18T12:01:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0071214",
+        "plex": {
+          "guid": "5d7768a30ab244002007100a",
+          "slug": "sadsacks-go-to-war"
+        },
+        "slug": "rookies-go-to-war-1974",
+        "tmdb": 62662,
+        "trakt": 45030
+      },
+      "year": 1974,
+      "title": "Rookies Go to War"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T12:01:51.000Z",
+    "updated_at": "2024-10-18T12:01:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt4585660",
+        "plex": {
+          "guid": "5d776b54594b2b001e6d6c2d",
+          "slug": "klown-forever"
+        },
+        "slug": "klown-forever-2015",
+        "tmdb": 310602,
+        "trakt": 220003
+      },
+      "year": 2015,
+      "title": "Klown Forever"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T11:58:17.000Z",
+    "updated_at": "2024-10-18T11:58:17.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0991346",
+        "plex": {
+          "guid": "5d77683e8718ba001e316872",
+          "slug": "bhoothnath"
+        },
+        "slug": "bhoothnath-2008",
+        "tmdb": 15974,
+        "trakt": 9768
+      },
+      "year": 2008,
+      "title": "Bhoothnath"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T11:56:42.000Z",
+    "updated_at": "2024-10-18T11:56:42.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt3531852",
+        "plex": {
+          "guid": "5d776ac251dd69001fe27dfd",
+          "slug": "bhoothnath-returns"
+        },
+        "slug": "bhoothnath-returns-2014",
+        "tmdb": 264085,
+        "trakt": 162863
+      },
+      "year": 2014,
+      "title": "Bhoothnath Returns"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T11:55:56.000Z",
+    "updated_at": "2024-10-18T11:55:56.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0418362",
+        "plex": {
+          "guid": "5d776845103a2d001f56b9f9",
+          "slug": "mujhse-shaadi-karogi"
+        },
+        "slug": "mujhse-shaadi-karogi-2004",
+        "tmdb": 20495,
+        "trakt": 12584
+      },
+      "year": 2004,
+      "title": "Mujhse Shaadi Karogi"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T11:55:21.000Z",
+    "updated_at": "2024-10-18T11:55:21.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0865556",
+        "plex": {
+          "guid": "5d77682a6f4521001ea99b00",
+          "slug": "the-forbidden-kingdom"
+        },
+        "slug": "the-forbidden-kingdom-2008",
+        "tmdb": 1729,
+        "trakt": 1159
+      },
+      "year": 2008,
+      "title": "The Forbidden Kingdom"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T11:49:13.000Z",
+    "updated_at": "2024-10-18T11:49:13.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1620719",
+        "plex": {
+          "guid": "5d77687e1999bc0020dc6b33",
+          "slug": "dabangg"
+        },
+        "slug": "dabangg-2010",
+        "tmdb": 44425,
+        "trakt": 30131
+      },
+      "year": 2010,
+      "title": "Dabangg"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T11:02:16.000Z",
+    "updated_at": "2024-10-18T11:02:16.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt2112131",
+        "plex": {
+          "guid": "5d7769b8ad5437001f766104",
+          "slug": "fearless-2-2012"
+        },
+        "slug": "dabangg-2-2012",
+        "tmdb": 147405,
+        "trakt": 97427
+      },
+      "year": 2012,
+      "title": "Dabangg 2"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T11:01:36.000Z",
+    "updated_at": "2024-10-18T11:01:36.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1188982",
+        "plex": {
+          "guid": "5d776a86fb0d55001f548957",
+          "slug": "jai-ho-2014"
+        },
+        "slug": "jai-ho-2014",
+        "tmdb": 244237,
+        "trakt": 148729
+      },
+      "year": 2014,
+      "title": "Jai Ho"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T11:00:05.000Z",
+    "updated_at": "2024-10-18T11:00:05.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1708532",
+        "plex": {
+          "guid": "5d7768a8594b2b001e6921e6",
+          "slug": "ready"
+        },
+        "slug": "ready-2011",
+        "tmdb": 65946,
+        "trakt": 47752
+      },
+      "year": 2011,
+      "title": "Ready"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:58:09.000Z",
+    "updated_at": "2024-10-18T10:58:09.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1185412",
+        "plex": {
+          "guid": "5d77685d7228e5001f1e30d8",
+          "slug": "veer-2010"
+        },
+        "slug": "veer-2010",
+        "tmdb": 30886,
+        "trakt": 19653
+      },
+      "year": 2010,
+      "title": "Veer"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:56:43.000Z",
+    "updated_at": "2024-10-18T10:56:43.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0173080",
+        "plex": {
+          "guid": "5d7768813ab0e7001f50308c",
+          "slug": "pyaar-kiya-to-darna-kya-1998"
+        },
+        "slug": "pyaar-kiya-to-darna-kya-1998",
+        "tmdb": 45533,
+        "trakt": 31088
+      },
+      "year": 1998,
+      "title": "Pyaar Kiya To Darna Kya"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:48:02.000Z",
+    "updated_at": "2024-10-18T10:48:02.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1449383",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "der-chinese-2011",
+        "tmdb": 1595133,
+        "trakt": 1325424
+      },
+      "year": 2011,
+      "title": "Der Chinese"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:31:32.000Z",
+    "updated_at": "2024-10-18T10:31:32.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt3405236",
+        "plex": {
+          "guid": "5d9f3cdcca3253001ef312f5",
+          "slug": "raees"
+        },
+        "slug": "raees-2017",
+        "tmdb": 363343,
+        "trakt": 225974
+      },
+      "year": 2017,
+      "title": "Raees"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:15:59.000Z",
+    "updated_at": "2024-10-18T10:15:59.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt5946128",
+        "plex": {
+          "guid": "5d776c6c47dd6e001f6eaeb0",
+          "slug": "dear-zindagi"
+        },
+        "slug": "dear-zindagi-2016",
+        "tmdb": 413543,
+        "trakt": 258942
+      },
+      "year": 2016,
+      "title": "Dear Zindagi"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:11:03.000Z",
+    "updated_at": "2024-10-18T10:11:03.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt5074352",
+        "plex": {
+          "guid": "5d776bdf96b655001fe1ebaa",
+          "slug": "dangal"
+        },
+        "slug": "dangal-2016",
+        "tmdb": 360814,
+        "trakt": 235890
+      },
+      "year": 2016,
+      "title": "Dangal"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:08:18.000Z",
+    "updated_at": "2024-10-18T10:08:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0100095",
+        "plex": {
+          "guid": "5d776855e870fd001f19e20d",
+          "slug": "maine-pyar-kiya"
+        },
+        "slug": "maine-pyar-kiya-1989",
+        "tmdb": 27624,
+        "trakt": 17024
+      },
+      "year": 1989,
+      "title": "Maine Pyar Kiya"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:08:17.000Z",
+    "updated_at": "2024-10-18T10:08:17.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0374271",
+        "plex": {
+          "guid": "5d77689a7e5fa10020bf2804",
+          "slug": "in-your-name"
+        },
+        "slug": "tere-naam-2003",
+        "tmdb": 56969,
+        "trakt": 40671
+      },
+      "year": 2003,
+      "title": "Tere Naam"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T10:05:51.000Z",
+    "updated_at": "2024-10-18T10:05:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0451833",
+        "plex": {
+          "guid": "5d776845f59e58002189a933",
+          "slug": "no-entry"
+        },
+        "slug": "no-entry-2005",
+        "tmdb": 20390,
+        "trakt": 12523
+      },
+      "year": 2005,
+      "title": "No Entry"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:37:08.000Z",
+    "updated_at": "2024-10-18T09:37:08.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt5997666",
+        "plex": {
+          "guid": "5d776cb4ad5437001f7c6a3a",
+          "slug": "jab-harry-met-sejal"
+        },
+        "slug": "jab-harry-met-sejal-2017",
+        "tmdb": 441906,
+        "trakt": 287491
+      },
+      "year": 2017,
+      "title": "Jab Harry Met Sejal"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:22:09.000Z",
+    "updated_at": "2024-10-18T09:22:09.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0120338",
+        "plex": {
+          "guid": "5d776d10ad5437001f7cc065",
+          "slug": "titanic-1997"
+        },
+        "slug": "titanic-1997",
+        "tmdb": 597,
+        "trakt": 475
+      },
+      "year": 1997,
+      "title": "Titanic"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:20:03.000Z",
+    "updated_at": "2024-10-18T09:20:03.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt5956100",
+        "plex": {
+          "guid": "5d776cb4ad5437001f7c6a3f",
+          "slug": "tiger-zinda-hai"
+        },
+        "slug": "tiger-zinda-hai-2017",
+        "tmdb": 441909,
+        "trakt": 287487
+      },
+      "year": 2017,
+      "title": "Tiger Zinda Hai"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:18:41.000Z",
+    "updated_at": "2024-10-18T09:18:41.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067487",
+        "plex": {
+          "guid": "5d7768797a53e9001e6cfd9e",
+          "slug": "the-night-evelyn-came-out-of-the-grave"
+        },
+        "slug": "the-night-evelyn-came-out-of-the-grave-1971",
+        "tmdb": 42499,
+        "trakt": 28374
+      },
+      "year": 1971,
+      "title": "The Night Evelyn Came Out of the Grave"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:18:34.000Z",
+    "updated_at": "2024-10-18T09:18:34.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt2733258",
+        "plex": {
+          "guid": "5d9f393cd5fd3f001ee1a0b4",
+          "slug": "the-strange-color-of-your-bodys-tears"
+        },
+        "slug": "the-strange-color-of-your-body-s-tears-2014",
+        "tmdb": 208284,
+        "trakt": 129184
+      },
+      "year": 2014,
+      "title": "The Strange Color of Your Body's Tears"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:17:41.000Z",
+    "updated_at": "2024-10-18T09:17:41.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0084777",
+        "plex": {
+          "guid": "5d9f3dc1e4fc29001eb71262",
+          "slug": "tenebrae"
+        },
+        "slug": "tenebre-1982",
+        "tmdb": 29702,
+        "trakt": 18750
+      },
+      "year": 1982,
+      "title": "Tenebre"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:14:12.000Z",
+    "updated_at": "2024-10-18T09:14:12.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068444",
+        "plex": {
+          "guid": "5d7768720ea56a001e2a5557",
+          "slug": "the-red-queen-kills-seven-times"
+        },
+        "slug": "the-red-queen-kills-seven-times-1972",
+        "tmdb": 40130,
+        "trakt": 26269
+      },
+      "year": 1972,
+      "title": "The Red Queen Kills Seven Times"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:13:18.000Z",
+    "updated_at": "2024-10-18T09:13:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0086636",
+        "plex": {
+          "guid": "5d77686c33f255001e855c23",
+          "slug": "revenge-of-the-dead"
+        },
+        "slug": "revenge-of-the-dead-1983",
+        "tmdb": 38074,
+        "trakt": 24523
+      },
+      "year": 1983,
+      "title": "Revenge of the Dead"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:11:53.000Z",
+    "updated_at": "2024-10-18T09:11:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067361",
+        "plex": {
+          "guid": "5d776d0b47dd6e001f6ef8e4",
+          "slug": "a-lizard-in-a-womans-skin"
+        },
+        "slug": "a-lizard-in-a-woman-s-skin-1971",
+        "tmdb": 63025,
+        "trakt": 45328
+      },
+      "year": 1971,
+      "title": "A Lizard in a Woman's Skin"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T09:10:24.000Z",
+    "updated_at": "2024-10-18T09:10:24.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1937390",
+        "plex": {
+          "guid": "5d9f3c2c68e4c8001fb66607",
+          "slug": "nymphomaniac-vol-i"
+        },
+        "slug": "nymphomaniac-vol-i-2013",
+        "tmdb": 258216,
+        "trakt": 157799
+      },
+      "year": 2013,
+      "title": "Nymphomaniac: Vol. I"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T08:54:46.000Z",
+    "updated_at": "2024-10-18T08:54:46.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0072052",
+        "plex": {
+          "guid": "5d7768847a53e9001e6d14d8",
+          "slug": "the-four-charlots-musketeers"
+        },
+        "slug": "the-four-charlots-musketeers-1974",
+        "tmdb": 47157,
+        "trakt": 32506
+      },
+      "year": 1974,
+      "title": "The Four Charlots Musketeers"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T07:13:18.000Z",
+    "updated_at": "2024-10-18T07:13:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1424310",
+        "plex": {
+          "guid": "5d7769039ab54400214ee9e9",
+          "slug": "chinese-zodiac"
+        },
+        "slug": "chinese-zodiac-2012",
+        "tmdb": 98567,
+        "trakt": 71377
+      },
+      "year": 2012,
+      "title": "Chinese Zodiac"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T07:10:20.000Z",
+    "updated_at": "2024-10-18T07:10:20.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0091431",
+        "plex": {
+          "guid": "5d776836880197001ec936f3",
+          "slug": "armour-of-god"
+        },
+        "slug": "armour-of-god-1986",
+        "tmdb": 10974,
+        "trakt": 6115
+      },
+      "year": 1986,
+      "title": "Armour of God"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T07:09:22.000Z",
+    "updated_at": "2024-10-18T07:09:22.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt3137630",
+        "plex": {
+          "guid": "5d776ba17a53e9001e72b55d",
+          "slug": "david-brent-life-on-the-road"
+        },
+        "slug": "david-brent-life-on-the-road-2016",
+        "tmdb": 339792,
+        "trakt": 220257
+      },
+      "year": 2016,
+      "title": "David Brent: Life on the Road"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T06:43:30.000Z",
+    "updated_at": "2024-10-18T06:43:30.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt5501158",
+        "plex": {
+          "guid": "5d776d66ad5437001f7d4ff5",
+          "slug": "so-help-me-god"
+        },
+        "slug": "so-help-me-god-2018",
+        "tmdb": 473325,
+        "trakt": 321022
+      },
+      "year": 2018,
+      "title": "So Help Me God"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T06:37:52.000Z",
+    "updated_at": "2024-10-18T06:37:52.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt6527426",
+        "plex": {
+          "guid": "5d776d8b594b2b001e70ba47",
+          "slug": "zero-2018"
+        },
+        "slug": "zero-2018",
+        "tmdb": 496076,
+        "trakt": 343191
+      },
+      "year": 2018,
+      "title": "Zero"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-18T06:37:48.000Z",
+    "updated_at": "2024-10-18T06:37:48.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1502407",
+        "plex": {
+          "guid": "5d776c8796b655001fe33dc7",
+          "slug": "halloween-2018"
+        },
+        "slug": "halloween-2018",
+        "tmdb": 424139,
+        "trakt": 269236
+      },
+      "year": 2018,
+      "title": "Halloween"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-17T16:29:42.000Z",
+    "updated_at": "2024-10-17T16:29:42.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt5970844",
+        "plex": {
+          "guid": "5d776d5f594b2b001e707bb7",
+          "slug": "thugs-of-hindostan"
+        },
+        "slug": "thugs-of-hindostan-2018",
+        "tmdb": 472138,
+        "trakt": 319543
+      },
+      "year": 2018,
+      "title": "Thugs of Hindostan"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-16T21:00:28.000Z",
+    "updated_at": "2024-10-16T21:00:28.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069235",
+        "plex": {
+          "guid": "5d7768997e5fa10020bf2703",
+          "slug": "the-scopone-game"
+        },
+        "slug": "the-scopone-game-1972",
+        "tmdb": 56341,
+        "trakt": 40148
+      },
+      "year": 1972,
+      "title": "The Scopone Game"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-09T20:46:06.000Z",
+    "updated_at": "2024-10-09T20:46:07.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0055602",
+        "plex": {
+          "guid": "5d776899ebdf2200209c3364",
+          "slug": "a-difficult-life"
+        },
+        "slug": "a-difficult-life-1961",
+        "tmdb": 56343,
+        "trakt": 40150
+      },
+      "year": 1961,
+      "title": "A Difficult Life"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-07T22:23:12.000Z",
+    "updated_at": "2024-10-07T22:23:12.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0049226",
+        "plex": {
+          "guid": "5d776b7b51dd69001fe30ade",
+          "slug": "what-a-woman-1956"
+        },
+        "slug": "what-a-woman-1956",
+        "tmdb": 327049,
+        "trakt": 207942
+      },
+      "year": 1956,
+      "title": "What a Woman!"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-05T22:51:29.000Z",
+    "updated_at": "2024-10-05T22:51:29.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0041303",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "sunday-in-august-1950",
+        "tmdb": 85747,
+        "trakt": 64438
+      },
+      "year": 1950,
+      "title": "Sunday in August"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-10-01T20:53:30.000Z",
+    "updated_at": "2024-10-01T20:53:30.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0046881",
+        "plex": {
+          "guid": "5d77691dad5437001f758791",
+          "slug": "chronicle-of-poor-lovers"
+        },
+        "slug": "chronicle-of-poor-lovers-1954",
+        "tmdb": 107035,
+        "trakt": 75973
+      },
+      "year": 1954,
+      "title": "Chronicle of Poor Lovers"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T13:45:12.000Z",
+    "updated_at": "2024-09-30T13:45:12.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt4832640",
+        "plex": {
+          "guid": "5d776c0bad5437001f7b1f62",
+          "slug": "sultan-2016"
+        },
+        "slug": "sultan-2016",
+        "tmdb": 376812,
+        "trakt": 225020
+      },
+      "year": 2016,
+      "title": "Sultan"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T10:41:51.000Z",
+    "updated_at": "2024-09-30T10:41:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0037674",
+        "plex": {
+          "guid": "5d77682beb5d26001f1de905",
+          "slug": "children-of-paradise"
+        },
+        "slug": "children-of-paradise-1945",
+        "tmdb": 2457,
+        "trakt": 1724
+      },
+      "year": 1945,
+      "title": "Children of Paradise"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T09:49:30.000Z",
+    "updated_at": "2024-09-30T09:49:30.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0808151",
+        "plex": {
+          "guid": "5d77683a880197001ec946c0",
+          "slug": "angels-and-demons"
+        },
+        "slug": "angels-demons-2009",
+        "tmdb": 13448,
+        "trakt": 7917
+      },
+      "year": 2009,
+      "title": "Angels & Demons"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T09:49:27.000Z",
+    "updated_at": "2024-09-30T09:49:27.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0382625",
+        "plex": {
+          "guid": "5d7768273c3c2a001fbcb129",
+          "slug": "the-da-vinci-code"
+        },
+        "slug": "the-da-vinci-code-2006",
+        "tmdb": 591,
+        "trakt": 469
+      },
+      "year": 2006,
+      "title": "The Da Vinci Code"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T09:48:48.000Z",
+    "updated_at": "2024-09-30T09:48:48.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0373074",
+        "plex": {
+          "guid": "5d776d17fb0d55001f597445",
+          "slug": "kung-fu-hustle"
+        },
+        "slug": "kung-fu-hustle-2004",
+        "tmdb": 9470,
+        "trakt": 4756
+      },
+      "year": 2004,
+      "title": "Kung Fu Hustle"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T08:37:18.000Z",
+    "updated_at": "2024-09-30T08:37:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0080923",
+        "plex": {
+          "guid": "5d9f352468e4c8001fb5e9c0",
+          "slug": "inferno-1980"
+        },
+        "slug": "inferno-1980",
+        "tmdb": 16395,
+        "trakt": 10102
+      },
+      "year": 1980,
+      "title": "Inferno"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T08:23:57.000Z",
+    "updated_at": "2024-09-30T08:23:57.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092576",
+        "plex": {
+          "guid": "5d776cfdad5437001f7ca262",
+          "slug": "stagefright-1987"
+        },
+        "slug": "stage-fright-1987",
+        "tmdb": 20465,
+        "trakt": 12566
+      },
+      "year": 1987,
+      "title": "Stage Fright"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T08:23:55.000Z",
+    "updated_at": "2024-09-30T08:23:55.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0066735",
+        "plex": {
+          "guid": "5d776d0723d5a3001f51f8d2",
+          "slug": "four-flies-on-grey-velvet"
+        },
+        "slug": "four-flies-on-grey-velvet-1971",
+        "tmdb": 30689,
+        "trakt": 19494
+      },
+      "year": 1971,
+      "title": "Four Flies on Grey Velvet"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T08:20:57.000Z",
+    "updated_at": "2024-09-30T08:20:57.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078916",
+        "plex": {
+          "guid": "5d77682e151a60001f24c5e3",
+          "slug": "beyond-the-darkness"
+        },
+        "slug": "beyond-the-darkness-1979",
+        "tmdb": 5425,
+        "trakt": 3079
+      },
+      "year": 1979,
+      "title": "Beyond the Darkness"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T08:20:53.000Z",
+    "updated_at": "2024-09-30T08:20:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0079207",
+        "plex": {
+          "guid": "5d7768741999bc0020dc5420",
+          "slug": "giallo-in-venice-1979"
+        },
+        "slug": "giallo-in-venice-1979",
+        "tmdb": 40528,
+        "trakt": 26638
+      },
+      "year": 1979,
+      "title": "Giallo in Venice"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-30T08:16:38.000Z",
+    "updated_at": "2024-09-30T08:16:38.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0085303",
+        "plex": {
+          "guid": "5d7768727a53e9001e6cef5e",
+          "slug": "a-blade-in-the-dark"
+        },
+        "slug": "a-blade-in-the-dark-1983",
+        "tmdb": 39991,
+        "trakt": 26140
+      },
+      "year": 1983,
+      "title": "A Blade in the Dark"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-27T11:35:58.000Z",
+    "updated_at": "2024-09-27T11:35:58.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0451850",
+        "plex": {
+          "guid": "5d776862103a2d001f56fde6",
+          "slug": "paheli-2005"
+        },
+        "slug": "paheli-2005",
+        "tmdb": 33081,
+        "trakt": 21188
+      },
+      "year": 2005,
+      "title": "Paheli"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-27T11:35:55.000Z",
+    "updated_at": "2024-09-27T11:35:55.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt3595298",
+        "plex": {
+          "guid": "5d776be247dd6e001f6e46b8",
+          "slug": "prem-ratan-dhan-payo"
+        },
+        "slug": "prem-ratan-dhan-payo-2015",
+        "tmdb": 362136,
+        "trakt": 223899
+      },
+      "year": 2015,
+      "title": "Prem Ratan Dhan Payo"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-27T11:35:53.000Z",
+    "updated_at": "2024-09-27T11:35:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt7721800",
+        "plex": {
+          "guid": "5d7770adb2739400200e95c4",
+          "slug": "bharat"
+        },
+        "slug": "bharat-2019",
+        "tmdb": 569594,
+        "trakt": 421046
+      },
+      "year": 2019,
+      "title": "Bharat"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-27T11:35:49.000Z",
+    "updated_at": "2024-09-27T11:35:49.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0217076",
+        "plex": {
+          "guid": "5d77685385719b001f3a8fd4",
+          "slug": "tach-herr-dokter-der-heinz-becker-film"
+        },
+        "slug": "tach-herr-dokter-der-heinz-becker-film-1999",
+        "tmdb": 27384,
+        "trakt": 16809
+      },
+      "year": 1999,
+      "title": "Tach, Herr Dokter! – Der Heinz-Becker-Film"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-25T20:48:59.000Z",
+    "updated_at": "2024-09-25T20:48:58.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0048475",
+        "plex": {
+          "guid": "5d9f35a568e4c8001fb6079a",
+          "slug": "too-bad-shes-bad"
+        },
+        "slug": "too-bad-she-s-bad-1954",
+        "tmdb": 63857,
+        "trakt": 46036
+      },
+      "year": 1954,
+      "title": "Too Bad She's Bad"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T16:04:50.000Z",
+    "updated_at": "2024-09-24T16:04:50.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0468492",
+        "plex": {
+          "guid": "5d776829103a2d001f564b4f",
+          "slug": "the-host-2006"
+        },
+        "slug": "the-host-2006",
+        "tmdb": 1255,
+        "trakt": 871
+      },
+      "year": 2006,
+      "title": "The Host"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T16:04:36.000Z",
+    "updated_at": "2024-09-24T16:04:36.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0071537",
+        "plex": {
+          "guid": "5d776873fb0d55001f510905",
+          "slug": "eyeball"
+        },
+        "slug": "eyeball-1975",
+        "tmdb": 40474,
+        "trakt": 26588
+      },
+      "year": 1975,
+      "title": "Eyeball"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T13:05:18.000Z",
+    "updated_at": "2024-09-24T13:05:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067384",
+        "plex": {
+          "guid": "5d776d00fb0d55001f594775",
+          "slug": "short-night-of-glass-dolls"
+        },
+        "slug": "short-night-of-glass-dolls-1971",
+        "tmdb": 39993,
+        "trakt": 26142
+      },
+      "year": 1971,
+      "title": "Short Night of Glass Dolls"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T12:41:53.000Z",
+    "updated_at": "2024-09-24T12:41:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0165623",
+        "plex": {
+          "guid": "5d9f3dafe4fc29001eb70e8f",
+          "slug": "angst-1983"
+        },
+        "slug": "angst-1983",
+        "tmdb": 18912,
+        "trakt": 11625
+      },
+      "year": 1983,
+      "title": "Angst"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T12:37:26.000Z",
+    "updated_at": "2024-09-24T12:37:26.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0290673",
+        "plex": {
+          "guid": "5d776828961905001eb919e5",
+          "slug": "irreversible"
+        },
+        "slug": "irreversible-2002",
+        "tmdb": 979,
+        "trakt": 809
+      },
+      "year": 2002,
+      "title": "Irreversible"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T12:37:24.000Z",
+    "updated_at": "2024-09-24T12:37:24.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0157016",
+        "plex": {
+          "guid": "5d776d13fb0d55001f59698e",
+          "slug": "i-stand-alone"
+        },
+        "slug": "i-stand-alone-1999",
+        "tmdb": 1567,
+        "trakt": 1025
+      },
+      "year": 1999,
+      "title": "I Stand Alone"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T11:57:53.000Z",
+    "updated_at": "2024-09-24T11:57:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078252",
+        "plex": {
+          "guid": "5d776d1751dd69001fe3fd99",
+          "slug": "snake-in-the-eagles-shadow"
+        },
+        "slug": "snake-in-the-eagle-s-shadow-1978",
+        "tmdb": 11537,
+        "trakt": 6619
+      },
+      "year": 1978,
+      "title": "Snake in the Eagle's Shadow"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T11:57:51.000Z",
+    "updated_at": "2024-09-24T11:57:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0080179",
+        "plex": {
+          "guid": "5d776d157a53e9001e7506b2",
+          "slug": "drunken-master"
+        },
+        "slug": "drunken-master-1978",
+        "tmdb": 11230,
+        "trakt": 6356
+      },
+      "year": 1978,
+      "title": "Drunken Master"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-24T11:46:18.000Z",
+    "updated_at": "2024-09-24T11:46:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0085127",
+        "plex": {
+          "guid": "5d776d179ab544002151b677",
+          "slug": "project-a"
+        },
+        "slug": "project-a-1983",
+        "tmdb": 21519,
+        "trakt": 13171
+      },
+      "year": 1983,
+      "title": "Project A"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-19T10:35:35.000Z",
+    "updated_at": "2024-09-19T10:35:35.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0093677",
+        "plex": {
+          "guid": "5d77684585719b001f3a6b5c",
+          "slug": "opera"
+        },
+        "slug": "opera-1987",
+        "tmdb": 20115,
+        "trakt": 12345
+      },
+      "year": 1987,
+      "title": "Opera"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-19T10:03:47.000Z",
+    "updated_at": "2024-09-19T10:03:47.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1562871",
+        "plex": {
+          "guid": "5d7768760ab244002006e738",
+          "slug": "ra-one"
+        },
+        "slug": "ra-one-2011",
+        "tmdb": 41517,
+        "trakt": 27479
+      },
+      "year": 2011,
+      "title": "Ra.One"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-19T09:52:51.000Z",
+    "updated_at": "2024-09-19T09:52:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt2176013",
+        "plex": {
+          "guid": "5d77699796b655001fdd3594",
+          "slug": "jab-tak-hai-jaan"
+        },
+        "slug": "jab-tak-hai-jaan-2012",
+        "tmdb": 132316,
+        "trakt": 89866
+      },
+      "year": 2012,
+      "title": "Jab Tak Hai Jaan"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-18T21:34:29.000Z",
+    "updated_at": "2024-09-18T21:34:29.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0053105",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "my-wife-s-enemy-1959",
+        "tmdb": 283226,
+        "trakt": 180526
+      },
+      "year": 1959,
+      "title": "My Wife's Enemy"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-07T21:32:18.000Z",
+    "updated_at": "2024-09-07T21:32:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069017",
+        "plex": {
+          "guid": "5d7768546f4521001eaa1da3",
+          "slug": "night-of-the-devils"
+        },
+        "slug": "the-night-of-the-devils-1972",
+        "tmdb": 27409,
+        "trakt": 16832
+      },
+      "year": 1972,
+      "title": "The Night of the Devils"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-09-03T22:34:50.000Z",
+    "updated_at": "2024-09-03T22:34:50.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067084",
+        "plex": {
+          "guid": "5d9f3568b0262f001f6eae55",
+          "slug": "the-bloodstained-butterfly"
+        },
+        "slug": "the-bloodstained-butterfly-1971",
+        "tmdb": 29482,
+        "trakt": 18558
+      },
+      "year": 1971,
+      "title": "The Bloodstained Butterfly"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-30T20:48:15.000Z",
+    "updated_at": "2024-08-30T20:48:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073406",
+        "plex": {
+          "guid": "5d7768c151dd69001fe106d6",
+          "slug": "the-suspicious-death-of-a-minor"
+        },
+        "slug": "the-suspicious-death-of-a-minor-1975",
+        "tmdb": 80067,
+        "trakt": 59566
+      },
+      "year": 1975,
+      "title": "The Suspicious Death of a Minor"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-24T21:25:47.000Z",
+    "updated_at": "2024-08-24T21:25:47.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0058567",
+        "plex": {
+          "guid": "5d7768562e80df001ebe1bc8",
+          "slug": "blood-and-black-lace"
+        },
+        "slug": "blood-and-black-lace-1964",
+        "tmdb": 28055,
+        "trakt": 17400
+      },
+      "year": 1964,
+      "title": "Blood and Black Lace"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-18T20:06:59.000Z",
+    "updated_at": "2024-08-18T20:06:59.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0155360",
+        "plex": {
+          "guid": "5d776918f617c9002015d302",
+          "slug": "crazy-desires-of-a-murderer"
+        },
+        "slug": "crazy-desires-of-a-murderer-1977",
+        "tmdb": 105659,
+        "trakt": 75152
+      },
+      "year": 1977,
+      "title": "Crazy Desires of a Murderer"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-12T20:46:59.000Z",
+    "updated_at": "2024-08-12T20:46:59.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067396",
+        "plex": {
+          "guid": "5d776917fb0d55001f5215f8",
+          "slug": "the-murder-mansion"
+        },
+        "slug": "murder-mansion-1972",
+        "tmdb": 105110,
+        "trakt": 74871
+      },
+      "year": 1972,
+      "title": "Murder Mansion"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-11T22:19:32.000Z",
+    "updated_at": "2024-08-11T22:19:33.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073327",
+        "plex": {
+          "guid": "5d7768fb594b2b001e69a0d9",
+          "slug": "autopsy-1975"
+        },
+        "slug": "autopsy-1975",
+        "tmdb": 96167,
+        "trakt": 70140
+      },
+      "year": 1975,
+      "title": "Autopsy"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-06T21:35:32.000Z",
+    "updated_at": "2024-08-06T21:35:32.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0050083",
+        "plex": {
+          "guid": "5d776d147a53e9001e75042e",
+          "slug": "12-angry-men"
+        },
+        "slug": "12-angry-men-1957",
+        "tmdb": 389,
+        "trakt": 309
+      },
+      "year": 1957,
+      "title": "12 Angry Men"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-02T20:58:36.000Z",
+    "updated_at": "2024-08-02T20:58:36.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0074287",
+        "plex": {
+          "guid": "5d77689a47dd6e001f6bc25c",
+          "slug": "the-house-with-laughing-windows"
+        },
+        "slug": "the-house-with-laughing-windows-1976",
+        "tmdb": 57447,
+        "trakt": 41021
+      },
+      "year": 1976,
+      "title": "The House with Laughing Windows"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-01T19:51:45.000Z",
+    "updated_at": "2024-08-01T19:51:46.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075814",
+        "plex": {
+          "guid": "5d7768ff7a53e9001e6deb8c",
+          "slug": "the-girl-in-room-2a"
+        },
+        "slug": "the-girl-in-room-2a-1974",
+        "tmdb": 97527,
+        "trakt": 70830
+      },
+      "year": 1974,
+      "title": "The Girl in Room 2A"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-08-01T18:17:50.000Z",
+    "updated_at": "2024-08-01T18:17:50.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069850",
+        "plex": {
+          "guid": "5d776cf1ad5437001f7c94fc",
+          "slug": "the-french-sex-murders"
+        },
+        "slug": "the-french-sex-murders-1972",
+        "tmdb": 39910,
+        "trakt": 26067
+      },
+      "year": 1972,
+      "title": "The French Sex Murders"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-07-30T07:31:13.000Z",
+    "updated_at": "2024-07-30T07:31:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0047396",
+        "plex": {
+          "guid": "5d776826151a60001f24a9c8",
+          "slug": "rear-window"
+        },
+        "slug": "rear-window-1954",
+        "tmdb": 567,
+        "trakt": 447
+      },
+      "year": 1954,
+      "title": "Rear Window"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-07-29T05:14:54.000Z",
+    "updated_at": "2024-07-29T05:14:54.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067434",
+        "plex": {
+          "guid": "5d776cf896b655001fe3bd4e",
+          "slug": "my-dear-killer"
+        },
+        "slug": "my-dear-killer-1972",
+        "tmdb": 69579,
+        "trakt": 50846
+      },
+      "year": 1972,
+      "title": "My Dear Killer"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-07-09T21:08:54.000Z",
+    "updated_at": "2024-07-09T21:08:55.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0081286",
+        "plex": {
+          "guid": "5d77688b1999bc0020dc8b72",
+          "slug": "murder-syndrome"
+        },
+        "slug": "murder-obsession-1981",
+        "tmdb": 50425,
+        "trakt": 35252
+      },
+      "year": 1981,
+      "title": "Murder Obsession"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-06-29T21:36:26.000Z",
+    "updated_at": "2024-06-29T21:36:27.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073554",
+        "plex": {
+          "guid": "5d776917f617c9002015d23d",
+          "slug": "the-police-are-blundering-in-the-dark"
+        },
+        "slug": "the-police-are-blundering-in-the-dark-1972",
+        "tmdb": 105429,
+        "trakt": 75029
+      },
+      "year": 1972,
+      "title": "The Police Are Blundering in the Dark"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-06-07T21:11:24.000Z",
+    "updated_at": "2024-06-07T21:11:25.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069734",
+        "plex": {
+          "guid": "5d77685beb5d26001f1e7b15",
+          "slug": "the-killer-is-one-of-13"
+        },
+        "slug": "the-killer-is-one-of-thirteen-1973",
+        "tmdb": 30422,
+        "trakt": 19291
+      },
+      "year": 1973,
+      "title": "The Killer Is One of Thirteen"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-05-30T14:28:14.000Z",
+    "updated_at": "2024-05-30T14:28:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0076885",
+        "plex": {
+          "guid": "5d7768577a53e9001e6cdb0d",
+          "slug": "trauma-1978"
+        },
+        "slug": "trauma-1978",
+        "tmdb": 28487,
+        "trakt": 17770
+      },
+      "year": 1978,
+      "title": "Trauma"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-05-27T21:28:05.000Z",
+    "updated_at": "2024-05-27T21:28:05.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0072007",
+        "plex": {
+          "guid": "5d7768ae47dd6e001f6bd6b3",
+          "slug": "what-have-they-done-to-your-daughters"
+        },
+        "slug": "what-have-they-done-to-your-daughters-1974",
+        "tmdb": 69578,
+        "trakt": 50845
+      },
+      "year": 1974,
+      "title": "What Have They Done to Your Daughters?"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-05-26T21:31:53.000Z",
+    "updated_at": "2024-05-26T21:31:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0066988",
+        "plex": {
+          "guid": "5d776dfcad5437001f7e6faa",
+          "slug": "why"
+        },
+        "slug": "why-1971",
+        "tmdb": 73827,
+        "trakt": 54292
+      },
+      "year": 1971,
+      "title": "Why"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-05-22T21:07:07.000Z",
+    "updated_at": "2024-05-22T21:07:07.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0054442",
+        "plex": {
+          "guid": "5d77689f6f6af7001ee58dd5",
+          "slug": "il-vigile"
+        },
+        "slug": "the-traffic-policeman-1960",
+        "tmdb": 60046,
+        "trakt": 42963
+      },
+      "year": 1960,
+      "title": "The Traffic Policeman"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-05-12T06:26:24.000Z",
+    "updated_at": "2024-05-12T06:26:24.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0050817",
+        "plex": {
+          "guid": "5d77689947dd6e001f6bc09b",
+          "slug": "scandal-in-sorrento"
+        },
+        "slug": "scandal-in-sorrento-1955",
+        "tmdb": 56287,
+        "trakt": 40103
+      },
+      "year": 1955,
+      "title": "Scandal in Sorrento"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-04-26T17:50:08.000Z",
+    "updated_at": "2024-04-26T17:50:08.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0047327",
+        "plex": {
+          "guid": "5d776cf623d5a3001f51f379",
+          "slug": "frisky-1954"
+        },
+        "slug": "frisky-1954",
+        "tmdb": 57991,
+        "trakt": 41469
+      },
+      "year": 1954,
+      "title": "Frisky"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-31T22:33:57.000Z",
+    "updated_at": "2024-03-31T22:33:57.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0046159",
+        "plex": {
+          "guid": "5d77689923d5a3001f4ee906",
+          "slug": "bread-love-and-dreams"
+        },
+        "slug": "bread-love-and-dreams-1953",
+        "tmdb": 56402,
+        "trakt": 40204
+      },
+      "year": 1953,
+      "title": "Bread, Love and Dreams"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-29T21:13:08.000Z",
+    "updated_at": "2024-03-29T21:13:09.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0047024",
+        "plex": {
+          "guid": "5d776ae5ad5437001f78c296",
+          "slug": "days-of-love-1954"
+        },
+        "slug": "days-of-love-1954",
+        "tmdb": 273607,
+        "trakt": 171484
+      },
+      "year": 1954,
+      "title": "Days of Love"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-29T01:38:18.000Z",
+    "updated_at": "2024-03-29T01:38:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075793",
+        "plex": {
+          "guid": "5d776878f59e58002189e071",
+          "slug": "we-all-loved-each-other-so-much"
+        },
+        "slug": "we-all-loved-each-other-so-much-1974",
+        "tmdb": 42269,
+        "trakt": 28172
+      },
+      "year": 1974,
+      "title": "We All Loved Each Other So Much"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-27T23:04:41.000Z",
+    "updated_at": "2024-03-27T23:04:41.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069019",
+        "plex": {
+          "guid": "5d776888ebdf2200209c1ab2",
+          "slug": "dont-torture-a-duckling"
+        },
+        "slug": "don-t-torture-a-duckling-1972",
+        "tmdb": 49361,
+        "trakt": 34367
+      },
+      "year": 1972,
+      "title": "Don't Torture a Duckling"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-23T23:08:09.000Z",
+    "updated_at": "2024-03-23T23:08:09.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0064846",
+        "plex": {
+          "guid": "5d7768c851dd69001fe10bc1",
+          "slug": "il-prof-dott-guido-tersilli-primario-della-clinica-villa-celeste-convenzionata-con-le-mutue"
+        },
+        "slug": "medicine-italian-style-1969",
+        "tmdb": 82372,
+        "trakt": 61592
+      },
+      "year": 1969,
+      "title": "Medicine Italian Style"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-19T06:50:26.000Z",
+    "updated_at": "2024-03-19T06:50:26.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0066924",
+        "plex": {
+          "guid": "5d776d12fb0d55001f5967db",
+          "slug": "the-case-of-the-scorpions-tail"
+        },
+        "slug": "the-case-of-the-scorpion-s-tail-1971",
+        "tmdb": 16825,
+        "trakt": 10298
+      },
+      "year": 1971,
+      "title": "The Case of the Scorpion's Tail"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-10T22:35:05.000Z",
+    "updated_at": "2024-03-10T22:35:05.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073582",
+        "plex": {
+          "guid": "5d776d1451dd69001fe3fc5d",
+          "slug": "deep-red"
+        },
+        "slug": "deep-red-1975",
+        "tmdb": 20126,
+        "trakt": 12352
+      },
+      "year": 1975,
+      "title": "Deep Red"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-10T22:34:45.000Z",
+    "updated_at": "2024-03-10T22:34:44.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0072196",
+        "plex": {
+          "guid": "5d776cf6ad5437001f7c9865",
+          "slug": "spasmo"
+        },
+        "slug": "spasmo-1974",
+        "tmdb": 94069,
+        "trakt": 69104
+      },
+      "year": 1974,
+      "title": "Spasmo"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T15:08:46.000Z",
+    "updated_at": "2024-03-05T15:08:46.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078767",
+        "plex": {
+          "guid": "5d7768363c3c2a001fbce953",
+          "slug": "the-amityville-horror-1979"
+        },
+        "slug": "the-amityville-horror-1979",
+        "tmdb": 11449,
+        "trakt": 6537
+      },
+      "year": 1979,
+      "title": "The Amityville Horror"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T14:59:59.000Z",
+    "updated_at": "2024-03-05T14:59:59.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0030667",
+        "plex": {
+          "guid": "5d7768c16f6af7001ee5cc91",
+          "slug": "lets-go-up-the-champs-elysees"
+        },
+        "slug": "let-s-go-up-the-champs-elysees-1938",
+        "tmdb": 80126,
+        "trakt": 59611
+      },
+      "year": 1938,
+      "title": "Let’s Go Up the Champs-Élysées"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T14:52:25.000Z",
+    "updated_at": "2024-03-05T14:52:25.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0028847",
+        "plex": {
+          "guid": "5d7768bb374a5b001fece96b",
+          "slug": "lets-make-a-dream"
+        },
+        "slug": "let-s-make-a-dream-1936",
+        "tmdb": 76694,
+        "trakt": 56660
+      },
+      "year": 1936,
+      "title": "Let's Make a Dream"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T14:50:27.000Z",
+    "updated_at": "2024-03-05T14:50:27.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0194201",
+        "plex": {
+          "guid": "5d7768bb3ab0e7001f50910b",
+          "slug": "the-new-testament"
+        },
+        "slug": "the-new-testament-1936",
+        "tmdb": 76697,
+        "trakt": 56663
+      },
+      "year": 1936,
+      "title": "The New Testament"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:51:07.000Z",
+    "updated_at": "2024-03-05T09:51:07.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1262416",
+        "plex": {
+          "guid": "5d776875fb0d55001f510e0f",
+          "slug": "scream-4"
+        },
+        "slug": "scream-4-2011",
+        "tmdb": 41446,
+        "trakt": 27420
+      },
+      "year": 2011,
+      "title": "Scream 4"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:46:24.000Z",
+    "updated_at": "2024-03-05T09:46:24.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt10935560",
+        "plex": {
+          "guid": "5e16598ccd0850003b781c2c",
+          "slug": "dark-glasses"
+        },
+        "slug": "dark-glasses-2022",
+        "tmdb": 630720,
+        "trakt": 475089
+      },
+      "year": 2022,
+      "title": "Dark Glasses"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:45:41.000Z",
+    "updated_at": "2024-03-05T09:45:41.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0066412",
+        "plex": {
+          "guid": "5d776d16ad5437001f7ccc3e",
+          "slug": "the-strange-vice-of-mrs-wardh"
+        },
+        "slug": "the-strange-vice-of-mrs-wardh-1971",
+        "tmdb": 30903,
+        "trakt": 19670
+      },
+      "year": 1971,
+      "title": "The Strange Vice of Mrs Wardh"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:41:21.000Z",
+    "updated_at": "2024-03-05T09:41:21.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0094860",
+        "plex": {
+          "guid": "5d776d16594b2b001e70116c",
+          "slug": "the-church-1989"
+        },
+        "slug": "the-church-1989",
+        "tmdb": 40364,
+        "trakt": 26485
+      },
+      "year": 1989,
+      "title": "The Church"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:37:45.000Z",
+    "updated_at": "2024-03-05T09:37:45.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0084298",
+        "plex": {
+          "guid": "5d77685d7228e5001f1e30d9",
+          "slug": "manhattan-baby"
+        },
+        "slug": "manhattan-baby-1982",
+        "tmdb": 30875,
+        "trakt": 19643
+      },
+      "year": 1982,
+      "title": "Manhattan Baby"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:28:04.000Z",
+    "updated_at": "2024-03-05T09:28:04.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0087800",
+        "plex": {
+          "guid": "5d776d17594b2b001e7011d1",
+          "slug": "a-nightmare-on-elm-street-1984"
+        },
+        "slug": "a-nightmare-on-elm-street-1984",
+        "tmdb": 377,
+        "trakt": 301
+      },
+      "year": 1984,
+      "title": "A Nightmare on Elm Street"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:26:26.000Z",
+    "updated_at": "2024-03-05T09:26:26.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0083907",
+        "plex": {
+          "guid": "5d7768282e80df001ebdcebf",
+          "slug": "the-evil-dead-1981"
+        },
+        "slug": "the-evil-dead-1981",
+        "tmdb": 764,
+        "trakt": 607
+      },
+      "year": 1981,
+      "title": "The Evil Dead"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:26:19.000Z",
+    "updated_at": "2024-03-05T09:26:19.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092991",
+        "plex": {
+          "guid": "5d7768275af944001f1f6dc5",
+          "slug": "evil-dead-ii"
+        },
+        "slug": "evil-dead-ii-1987",
+        "tmdb": 765,
+        "trakt": 608
+      },
+      "year": 1987,
+      "title": "Evil Dead II"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:26:06.000Z",
+    "updated_at": "2024-03-05T09:26:06.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0059095",
+        "plex": {
+          "guid": "5d776d12ad5437001f7cc420",
+          "slug": "the-10th-victim"
+        },
+        "slug": "the-10th-victim-1965",
+        "tmdb": 65632,
+        "trakt": 47496
+      },
+      "year": 1965,
+      "title": "The 10th Victim"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:19:35.000Z",
+    "updated_at": "2024-03-05T09:19:35.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0115658",
+        "plex": {
+          "guid": "5d7768452e80df001ebe035a",
+          "slug": "bernie"
+        },
+        "slug": "bernie-1996",
+        "tmdb": 19963,
+        "trakt": 12251
+      },
+      "year": 1996,
+      "title": "Bernie"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:19:34.000Z",
+    "updated_at": "2024-03-05T09:19:34.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0099528",
+        "plex": {
+          "guid": "5d7768377e9a3c0020c6d298",
+          "slug": "the-exorcist-iii"
+        },
+        "slug": "the-exorcist-iii-1990",
+        "tmdb": 11587,
+        "trakt": 6664
+      },
+      "year": 1990,
+      "title": "The Exorcist III"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:19:30.000Z",
+    "updated_at": "2024-03-05T09:19:30.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0106308",
+        "plex": {
+          "guid": "5d7768282ec6b5001f6ba4df",
+          "slug": "army-of-darkness"
+        },
+        "slug": "army-of-darkness-1992",
+        "tmdb": 766,
+        "trakt": 609
+      },
+      "year": 1992,
+      "title": "Army of Darkness"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-05T09:19:27.000Z",
+    "updated_at": "2024-03-05T09:19:27.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0054640",
+        "plex": {
+          "guid": "5d9f3580d74e670020022570",
+          "slug": "the-assassin-1961"
+        },
+        "slug": "the-assassin-1961",
+        "tmdb": 47240,
+        "trakt": 32575
+      },
+      "year": 1961,
+      "title": "The Assassin"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-04T07:49:18.000Z",
+    "updated_at": "2024-03-04T07:49:18.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078288",
+        "plex": {
+          "guid": "5d776904ad5437001f755bf6",
+          "slug": "the-bloodstained-shadow"
+        },
+        "slug": "the-bloodstained-shadow-1978",
+        "tmdb": 99261,
+        "trakt": 71610
+      },
+      "year": 1978,
+      "title": "The Bloodstained Shadow"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-03-01T21:30:14.000Z",
+    "updated_at": "2024-03-01T21:30:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092516",
+        "plex": {
+          "guid": "5d776873fb0d55001f510904",
+          "slug": "aenigma"
+        },
+        "slug": "aenigma-1987",
+        "tmdb": 40461,
+        "trakt": 26575
+      },
+      "year": 1987,
+      "title": "Ænigma"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-29T22:40:26.000Z",
+    "updated_at": "2024-02-29T22:40:26.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0101493",
+        "plex": {
+          "guid": "5d77685a961905001eb99d61",
+          "slug": "body-puzzle"
+        },
+        "slug": "body-puzzle-1992",
+        "tmdb": 29954,
+        "trakt": 18959
+      },
+      "year": 1992,
+      "title": "Body Puzzle"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-28T21:20:08.000Z",
+    "updated_at": "2024-02-28T21:20:08.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068206",
+        "plex": {
+          "guid": "5d7768a67e5fa10020bf3509",
+          "slug": "amuck"
+        },
+        "slug": "amuck-1972",
+        "tmdb": 64528,
+        "trakt": 46600
+      },
+      "year": 1972,
+      "title": "Amuck!"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-27T21:11:20.000Z",
+    "updated_at": "2024-02-27T21:11:20.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067489",
+        "plex": {
+          "guid": "5d77695e7a53e9001e6e424f",
+          "slug": "what-the-peeper-saw"
+        },
+        "slug": "what-the-peeper-saw-1972",
+        "tmdb": 112355,
+        "trakt": 78995
+      },
+      "year": 1972,
+      "title": "What the Peeper Saw"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-26T21:23:57.000Z",
+    "updated_at": "2024-02-26T21:23:58.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0076068",
+        "plex": {
+          "guid": "5d776cf07a53e9001e74d192",
+          "slug": "watch-me-when-i-kill"
+        },
+        "slug": "watch-me-when-i-kill-1977",
+        "tmdb": 40261,
+        "trakt": 26385
+      },
+      "year": 1977,
+      "title": "Watch Me When I Kill"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-25T21:57:26.000Z",
+    "updated_at": "2024-02-25T21:57:26.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0047876",
+        "plex": {
+          "guid": "5d776d0796b655001fe3d340",
+          "slug": "the-swindle-1955"
+        },
+        "slug": "the-swindle-1955",
+        "tmdb": 36102,
+        "trakt": 22894
+      },
+      "year": 1955,
+      "title": "The Swindle"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-24T23:26:55.000Z",
+    "updated_at": "2024-02-24T23:26:55.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0063508",
+        "plex": {
+          "guid": "5d7768ad96b655001fdbef6f",
+          "slug": "will-our-heroes-be-able-to-find-their-friend-who-has-mysteriously-disappeared-in-africa"
+        },
+        "slug": "will-our-heroes-be-able-to-find-their-friend-who-has-mysteriously-disappeared-in-africa-1968",
+        "tmdb": 68816,
+        "trakt": 50215
+      },
+      "year": 1968,
+      "title": "Will Our Heroes Be Able to Find Their Friend Who Has Mysteriously Disappeared in Africa?"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-23T22:56:12.000Z",
+    "updated_at": "2024-02-23T22:56:12.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1190539",
+        "plex": {
+          "guid": "5d776cf69ab544002151a89c",
+          "slug": "the-chaser-2008"
+        },
+        "slug": "the-chaser-2008",
+        "tmdb": 13855,
+        "trakt": 8239
+      },
+      "year": 2008,
+      "title": "The Chaser"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-23T22:55:56.000Z",
+    "updated_at": "2024-02-23T22:55:56.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0353969",
+        "plex": {
+          "guid": "5d776836eb5d26001f1e1022",
+          "slug": "memories-of-murder"
+        },
+        "slug": "memories-of-murder-2003",
+        "tmdb": 11423,
+        "trakt": 6518
+      },
+      "year": 2003,
+      "title": "Memories of Murder"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-23T22:55:40.000Z",
+    "updated_at": "2024-02-23T22:55:40.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt1588170",
+        "plex": {
+          "guid": "5d77688af59e58002189f0bd",
+          "slug": "i-saw-the-devil"
+        },
+        "slug": "i-saw-the-devil-2010",
+        "tmdb": 49797,
+        "trakt": 34728
+      },
+      "year": 2010,
+      "title": "I Saw the Devil"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-23T22:55:27.000Z",
+    "updated_at": "2024-02-23T22:55:28.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0070047",
+        "plex": {
+          "guid": "5d7768333c3c2a001fbcdab7",
+          "slug": "the-exorcist"
+        },
+        "slug": "the-exorcist-1973",
+        "tmdb": 9552,
+        "trakt": 4830
+      },
+      "year": 1973,
+      "title": "The Exorcist"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-22T15:59:29.000Z",
+    "updated_at": "2024-02-22T15:59:29.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0444505",
+        "plex": {
+          "guid": "5d776829103a2d001f564b51",
+          "slug": "torrente-3-el-protector"
+        },
+        "slug": "torrente-3-the-protector-2005",
+        "tmdb": 1285,
+        "trakt": 895
+      },
+      "year": 2005,
+      "title": "Torrente 3: The Protector"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-21T21:50:17.000Z",
+    "updated_at": "2024-02-21T21:50:17.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075852",
+        "plex": {
+          "guid": "5d776cf97a53e9001e74d9ae",
+          "slug": "the-cynic-the-rat-and-the-fist"
+        },
+        "slug": "the-cynic-the-rat-the-fist-1977",
+        "tmdb": 52810,
+        "trakt": 37230
+      },
+      "year": 1977,
+      "title": "The Cynic, the Rat & the Fist"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-21T06:56:47.000Z",
+    "updated_at": "2024-02-21T11:40:34.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069390",
+        "plex": {
+          "guid": "5d776d1696b655001fe3f081",
+          "slug": "theyre-coming-to-get-you-1972"
+        },
+        "slug": "all-the-colours-of-the-dark-1972",
+        "tmdb": 30901,
+        "trakt": 19668
+      },
+      "year": 1972,
+      "title": "All the Colours of the Dark"
+    },
+    "available_on": [],
+    "metadata": {
+      "3d": null,
+      "hdr": null,
+      "audio": null,
+      "media_type": "bluray",
+      "resolution": null,
+      "audio_channels": null
+    }
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-20T00:16:22.000Z",
+    "updated_at": "2024-02-20T00:16:22.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067446",
+        "plex": {
+          "guid": "5d776d0bfb0d55001f59586a",
+          "slug": "death-walks-on-high-heels"
+        },
+        "slug": "death-walks-on-high-heels-1971",
+        "tmdb": 77029,
+        "trakt": 56943
+      },
+      "year": 1971,
+      "title": "Death Walks on High Heels"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-19T07:06:06.000Z",
+    "updated_at": "2024-02-19T07:06:06.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068971",
+        "plex": {
+          "guid": "5d7768ed51dd69001fe127e7",
+          "slug": "death-walks-at-midnight"
+        },
+        "slug": "death-walks-at-midnight-1972",
+        "tmdb": 91255,
+        "trakt": 67713
+      },
+      "year": 1972,
+      "title": "Death Walks at Midnight"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-16T22:41:52.000Z",
+    "updated_at": "2024-02-16T22:41:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0220827",
+        "plex": {
+          "guid": "5d776d167a53e9001e7507ec",
+          "slug": "sleepless-2001"
+        },
+        "slug": "sleepless-2001",
+        "tmdb": 39436,
+        "trakt": 25632
+      },
+      "year": 2001,
+      "title": "Sleepless"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-14T22:07:02.000Z",
+    "updated_at": "2024-02-14T22:07:02.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0074252",
+        "plex": {
+          "guid": "5d776d0d23d5a3001f51faa9",
+          "slug": "ugly-dirty-and-bad"
+        },
+        "slug": "ugly-dirty-and-bad-1976",
+        "tmdb": 19413,
+        "trakt": 11959
+      },
+      "year": 1976,
+      "title": "Ugly, Dirty and Bad"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-14T15:33:02.000Z",
+    "updated_at": "2024-02-14T15:33:02.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0056801",
+        "plex": {
+          "guid": "5d776826eb5d26001f1dd405",
+          "slug": "81-2"
+        },
+        "slug": "8-1963",
+        "tmdb": 422,
+        "trakt": 334
+      },
+      "year": 1963,
+      "title": "8½"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-14T12:55:36.000Z",
+    "updated_at": "2024-02-14T12:55:36.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0053779",
+        "plex": {
+          "guid": "5d7768266f4521001ea98bd6",
+          "slug": "la-dolce-vita"
+        },
+        "slug": "la-dolce-vita-1960",
+        "tmdb": 439,
+        "trakt": 350
+      },
+      "year": 1960,
+      "title": "La Dolce Vita"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T16:20:54.000Z",
+    "updated_at": "2024-02-13T16:20:54.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0056883",
+        "plex": {
+          "guid": "5d9f35cae4fc29001eb6874c",
+          "slug": "the-boom"
+        },
+        "slug": "the-boom-1963",
+        "tmdb": 81831,
+        "trakt": 61128
+      },
+      "year": 1963,
+      "title": "The Boom"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T16:20:51.000Z",
+    "updated_at": "2024-02-13T16:20:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0031084",
+        "plex": {
+          "guid": "5d776aa796b655001fdf51b1",
+          "slug": "beating-heart"
+        },
+        "slug": "beating-heart-1940",
+        "tmdb": 257050,
+        "trakt": 156860
+      },
+      "year": 1940,
+      "title": "Beating Heart"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T16:20:49.000Z",
+    "updated_at": "2024-02-13T16:20:49.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0055913",
+        "plex": {
+          "guid": "5d9f3541dfd12800208a097e",
+          "slug": "divorce-italian-style"
+        },
+        "slug": "divorce-italian-style-1961",
+        "tmdb": 20271,
+        "trakt": 12433
+      },
+      "year": 1961,
+      "title": "Divorce Italian Style"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T16:06:40.000Z",
+    "updated_at": "2024-02-13T16:06:40.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0081505",
+        "plex": {
+          "guid": "5d7768287e9a3c0020c6ad28",
+          "slug": "the-shining"
+        },
+        "slug": "the-shining-1980",
+        "tmdb": 694,
+        "trakt": 566
+      },
+      "year": 1980,
+      "title": "The Shining"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T16:06:38.000Z",
+    "updated_at": "2024-02-13T16:06:38.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073470",
+        "plex": {
+          "guid": "5d776d13ad5437001f7cc5d2",
+          "slug": "strip-nude-for-your-killer"
+        },
+        "slug": "strip-nude-for-your-killer-1975",
+        "tmdb": 11226,
+        "trakt": 6352
+      },
+      "year": 1975,
+      "title": "Strip Nude for Your Killer"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T16:06:14.000Z",
+    "updated_at": "2024-02-13T16:06:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0034063",
+        "plex": {
+          "guid": "5d776cd0594b2b001e6fd04d",
+          "slug": "her-first-affair"
+        },
+        "slug": "her-first-affair-1941",
+        "tmdb": 333269,
+        "trakt": 214208
+      },
+      "year": 1941,
+      "title": "Her First Affair"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T16:00:20.000Z",
+    "updated_at": "2024-02-13T16:00:20.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0058335",
+        "plex": {
+          "guid": "5d9f35844441b1001fa0f482",
+          "slug": "marriage-italian-style"
+        },
+        "slug": "marriage-italian-style-1964",
+        "tmdb": 49687,
+        "trakt": 34634
+      },
+      "year": 1964,
+      "title": "Marriage Italian Style"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T15:58:42.000Z",
+    "updated_at": "2024-02-13T15:58:42.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0054068",
+        "plex": {
+          "guid": "5d7768c8fb0d55001f5197f9",
+          "slug": "love-and-larceny"
+        },
+        "slug": "love-and-larceny-1960",
+        "tmdb": 82368,
+        "trakt": 61589
+      },
+      "year": 1960,
+      "title": "Love and Larceny"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T15:57:53.000Z",
+    "updated_at": "2024-02-13T15:57:53.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0134668",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "il-gaucho-1964",
+        "tmdb": 186630,
+        "trakt": 116913
+      },
+      "year": 1964,
+      "title": "Il gaucho"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T15:57:03.000Z",
+    "updated_at": "2024-02-13T15:57:03.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0070669",
+        "plex": {
+          "guid": "5d7769fd96b655001fde0153",
+          "slug": "how-funny-can-sex-be"
+        },
+        "slug": "how-funny-can-sex-be-1973",
+        "tmdb": 180719,
+        "trakt": 113840
+      },
+      "year": 1973,
+      "title": "How Funny Can Sex Be?"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T15:20:50.000Z",
+    "updated_at": "2024-02-13T15:20:51.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0049634",
+        "plex": {
+          "guid": "5d7768a2ebdf2200209c4501",
+          "slug": "poor-but-beautiful-1957"
+        },
+        "slug": "poor-but-beautiful-1957",
+        "tmdb": 61829,
+        "trakt": 44373
+      },
+      "year": 1957,
+      "title": "Poor But Beautiful"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T15:20:48.000Z",
+    "updated_at": "2024-02-13T15:20:48.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0053185",
+        "plex": {
+          "guid": "5d776b15ad5437001f79297f",
+          "slug": "poor-millionaires-1959"
+        },
+        "slug": "poor-millionaires-1959",
+        "tmdb": 288921,
+        "trakt": 185914
+      },
+      "year": 1959,
+      "title": "Poor Millionaires"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T15:20:46.000Z",
+    "updated_at": "2024-02-13T15:20:46.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0050181",
+        "plex": {
+          "guid": "5d7768c296b655001fdc118b",
+          "slug": "poor-girl-pretty-girl"
+        },
+        "slug": "poor-girl-pretty-girl-1957",
+        "tmdb": 80439,
+        "trakt": 59895
+      },
+      "year": 1957,
+      "title": "Poor Girl, Pretty Girl"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T15:20:36.000Z",
+    "updated_at": "2024-02-13T15:20:36.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0056512",
+        "plex": {
+          "guid": "5d776cfbad5437001f7c9f69",
+          "slug": "the-easy-life-1962"
+        },
+        "slug": "il-sorpasso-1962",
+        "tmdb": 24188,
+        "trakt": 14540
+      },
+      "year": 1962,
+      "title": "Il Sorpasso"
+    },
+    "available_on": [],
+    "metadata": null
+  }
+]

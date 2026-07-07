@@ -1,0 +1,1094 @@
+[
+  {
+    "rated_at": "2025-04-21T20:15:30.000Z",
+    "rating": 5,
+    "type": "season",
+    "season": {
+      "number": 4,
+      "ids": {
+        "trakt": 348786,
+        "tvdb": null,
+        "tmdb": 369323,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    },
+    "show": {
+      "title": "Lego Masters",
+      "year": 2020,
+      "ids": {
+        "trakt": 164174,
+        "slug": "lego-masters-2020-164174",
+        "tvdb": 385123,
+        "imdb": null,
+        "tmdb": 115211,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-28T19:05:04.000Z",
+    "rating": 10,
+    "type": "season",
+    "season": {
+      "number": 2,
+      "ids": {
+        "trakt": 445543,
+        "tvdb": 2169274,
+        "tmdb": 440627,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "Bref.",
+      "year": 2011,
+      "ids": {
+        "trakt": 60282,
+        "slug": "bref",
+        "tvdb": 251562,
+        "imdb": "tt2044128",
+        "tmdb": 60715,
+        "tvrage": null
+      },
+      "aired_episodes": 88
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:00:47.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 10727,
+        "tvdb": 840,
+        "tmdb": 10302,
+        "tvrage": null
+      },
+      "aired_episodes": 8
+    },
+    "show": {
+      "title": "Oz",
+      "year": 1997,
+      "ids": {
+        "trakt": 3300,
+        "slug": "oz",
+        "tvdb": 70682,
+        "imdb": "tt0118421",
+        "tmdb": 3322,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:44:23.000Z",
+    "rating": 6,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 4999,
+        "tvdb": 2016,
+        "tmdb": 4602,
+        "tvrage": null
+      },
+      "aired_episodes": 25
+    },
+    "show": {
+      "title": "The Golden Girls",
+      "year": 1985,
+      "ids": {
+        "trakt": 1667,
+        "slug": "the-golden-girls",
+        "tvdb": 71292,
+        "imdb": "tt0088526",
+        "tmdb": 1678,
+        "tvrage": null
+      },
+      "aired_episodes": 180
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:47:30.000Z",
+    "rating": 10,
+    "type": "season",
+    "season": {
+      "number": 0,
+      "ids": {
+        "trakt": 49918,
+        "tvdb": 28418,
+        "tmdb": null,
+        "tvrage": null
+      },
+      "aired_episodes": 22
+    },
+    "show": {
+      "title": "Die Ludolfs",
+      "year": 2006,
+      "ids": {
+        "trakt": 37563,
+        "slug": "die-ludolfs",
+        "tvdb": 80523,
+        "imdb": "tt1056152",
+        "tmdb": 37721,
+        "tvrage": null
+      },
+      "aired_episodes": 90
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:39:18.000Z",
+    "rating": 5,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 53397,
+        "tvdb": 168501,
+        "tmdb": 52156,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    },
+    "show": {
+      "title": "Chu-Bra!!",
+      "year": 2010,
+      "ids": {
+        "trakt": 42186,
+        "slug": "chu-bra",
+        "tvdb": 133331,
+        "imdb": "tt1582777",
+        "tmdb": 42409,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:30:16.000Z",
+    "rating": 1,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 70482,
+        "tvdb": 224121,
+        "tmdb": 209769,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    },
+    "show": {
+      "title": "Lovedol ~Lovely Idol~",
+      "year": 2006,
+      "ids": {
+        "trakt": 66307,
+        "slug": "lovedol-lovely-idol",
+        "tvdb": 154101,
+        "imdb": "tt0978081",
+        "tmdb": 132994,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:27:16.000Z",
+    "rating": 6,
+    "type": "season",
+    "season": {
+      "number": 0,
+      "ids": {
+        "trakt": 55845,
+        "tvdb": 29294,
+        "tmdb": 54541,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    },
+    "show": {
+      "title": "Kodomo no Jikan",
+      "year": 2007,
+      "ids": {
+        "trakt": 45923,
+        "slug": "kodomo-no-jikan",
+        "tvdb": 80811,
+        "imdb": "tt1125577",
+        "tmdb": 46179,
+        "tvrage": null
+      },
+      "aired_episodes": 15
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:05:33.000Z",
+    "rating": 7,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 67376,
+        "tvdb": 470132,
+        "tmdb": 88582,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    },
+    "show": {
+      "title": "Manyu Scroll",
+      "year": 2011,
+      "ids": {
+        "trakt": 64083,
+        "slug": "manyu-scroll",
+        "tvdb": 250363,
+        "imdb": "tt5568758",
+        "tmdb": 71834,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:04:57.000Z",
+    "rating": 7,
+    "type": "season",
+    "season": {
+      "number": 0,
+      "ids": {
+        "trakt": 67301,
+        "tvdb": 470131,
+        "tmdb": 151749,
+        "tvrage": null
+      },
+      "aired_episodes": 8
+    },
+    "show": {
+      "title": "Manyu Scroll",
+      "year": 2011,
+      "ids": {
+        "trakt": 64083,
+        "slug": "manyu-scroll",
+        "tvdb": 250363,
+        "imdb": "tt5568758",
+        "tmdb": 71834,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T14:50:02.000Z",
+    "rating": 6,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 48989,
+        "tvdb": 90311,
+        "tmdb": 48127,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    },
+    "show": {
+      "title": "Charger Girl Juden Chan",
+      "year": 2009,
+      "ids": {
+        "trakt": 36827,
+        "slug": "charger-girl-juden-chan",
+        "tvdb": 103291,
+        "imdb": "tt1458514",
+        "tmdb": 36984,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-03T08:04:43.000Z",
+    "rating": 7,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 53519,
+        "tvdb": 16230,
+        "tmdb": 52277,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    },
+    "show": {
+      "title": "Ai Yori Aoshi",
+      "year": 2002,
+      "ids": {
+        "trakt": 42343,
+        "slug": "ai-yori-aoshi",
+        "tvdb": 79267,
+        "imdb": "tt0339953",
+        "tmdb": 42567,
+        "tvrage": null
+      },
+      "aired_episodes": 36
+    }
+  },
+  {
+    "rated_at": "2025-01-30T11:03:37.000Z",
+    "rating": 7,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 53638,
+        "tvdb": 29145,
+        "tmdb": 52389,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    },
+    "show": {
+      "title": "Strawberry 100%",
+      "year": 2005,
+      "ids": {
+        "trakt": 42647,
+        "slug": "strawberry-100",
+        "tvdb": 80759,
+        "imdb": "tt1165082",
+        "tmdb": 42873,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-01-24T17:15:01.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 7,
+      "ids": {
+        "trakt": 50061,
+        "tvdb": 169941,
+        "tmdb": 49179,
+        "tvrage": null
+      },
+      "aired_episodes": 33
+    },
+    "show": {
+      "title": "One Piece",
+      "year": 1999,
+      "ids": {
+        "trakt": 37696,
+        "slug": "one-piece",
+        "tvdb": 81797,
+        "imdb": "tt0388629",
+        "tmdb": 37854,
+        "tvrage": null
+      },
+      "aired_episodes": 1166
+    }
+  },
+  {
+    "rated_at": "2025-01-23T15:51:34.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 29034,
+        "tvdb": 78241,
+        "tmdb": 28337,
+        "tvrage": null
+      },
+      "aired_episodes": 7
+    },
+    "show": {
+      "title": "Psychoville",
+      "year": 2009,
+      "ids": {
+        "trakt": 17342,
+        "slug": "psychoville",
+        "tvdb": 99101,
+        "imdb": "tt1305562",
+        "tmdb": 17420,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    }
+  },
+  {
+    "rated_at": "2024-10-22T15:58:20.000Z",
+    "rating": 10,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 44463,
+        "tvdb": 16961,
+        "tmdb": 43717,
+        "tvrage": null
+      },
+      "aired_episodes": 20
+    },
+    "show": {
+      "title": "The Killing",
+      "year": 2007,
+      "ids": {
+        "trakt": 32228,
+        "slug": "the-killing",
+        "tvdb": 79689,
+        "imdb": "tt0826760",
+        "tmdb": 32368,
+        "tvrage": null
+      },
+      "aired_episodes": 40
+    }
+  },
+  {
+    "rated_at": "2024-10-21T13:06:56.000Z",
+    "rating": 7,
+    "type": "season",
+    "season": {
+      "number": 12,
+      "ids": {
+        "trakt": 118812,
+        "tvdb": 644835,
+        "tmdb": 72277,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2024-10-21T09:56:41.000Z",
+    "rating": 9,
+    "type": "season",
+    "season": {
+      "number": 0,
+      "ids": {
+        "trakt": 481269,
+        "tvdb": null,
+        "tmdb": 128660,
+        "tvrage": null
+      },
+      "aired_episodes": 2
+    },
+    "show": {
+      "title": "Peplum",
+      "year": 2015,
+      "ids": {
+        "trakt": 96564,
+        "slug": "peplum",
+        "tvdb": 292340,
+        "imdb": "tt4119154",
+        "tmdb": 62129,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2024-10-18T10:52:28.000Z",
+    "rating": 7,
+    "type": "season",
+    "season": {
+      "number": 13,
+      "ids": {
+        "trakt": 135367,
+        "tvdb": 688960,
+        "tmdb": 82125,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2024-10-18T08:28:44.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 2,
+      "ids": {
+        "trakt": 14207,
+        "tvdb": 5155,
+        "tmdb": 13738,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "One Foot in the Grave",
+      "year": 1990,
+      "ids": {
+        "trakt": 4524,
+        "slug": "one-foot-in-the-grave",
+        "tvdb": 73021,
+        "imdb": "tt0098882",
+        "tmdb": 4548,
+        "tvrage": null
+      },
+      "aired_episodes": 36
+    }
+  },
+  {
+    "rated_at": "2024-10-18T08:13:37.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 46040,
+        "tvdb": 347951,
+        "tmdb": 45216,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "The Trip",
+      "year": 2010,
+      "ids": {
+        "trakt": 34293,
+        "slug": "the-trip",
+        "tvdb": 202571,
+        "imdb": "tt1698441",
+        "tmdb": 34440,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2024-10-17T16:11:28.000Z",
+    "rating": 9,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 46874,
+        "tvdb": 194301,
+        "tmdb": 46036,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    },
+    "show": {
+      "title": "The Ricky Gervais Show",
+      "year": 2010,
+      "ids": {
+        "trakt": 35154,
+        "slug": "the-ricky-gervais-show",
+        "tvdb": 142581,
+        "imdb": "tt1553644",
+        "tmdb": 35305,
+        "tvrage": null
+      },
+      "aired_episodes": 39
+    }
+  },
+  {
+    "rated_at": "2024-10-05T15:32:25.000Z",
+    "rating": 9,
+    "type": "season",
+    "season": {
+      "number": 4,
+      "ids": {
+        "trakt": 202543,
+        "tvdb": 1847332,
+        "tmdb": 155488,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "Call My Agent!",
+      "year": 2015,
+      "ids": {
+        "trakt": 102782,
+        "slug": "call-my-agent",
+        "tvdb": 300247,
+        "imdb": "tt4277922",
+        "tmdb": 64165,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2024-09-30T13:20:18.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 2,
+      "ids": {
+        "trakt": 56589,
+        "tvdb": 590744,
+        "tmdb": 62379,
+        "tvrage": null
+      },
+      "aired_episodes": 23
+    },
+    "show": {
+      "title": "Brooklyn Nine-Nine",
+      "year": 2013,
+      "ids": {
+        "trakt": 48587,
+        "slug": "brooklyn-nine-nine",
+        "tvdb": 269586,
+        "imdb": "tt2467372",
+        "tmdb": 48891,
+        "tvrage": null
+      },
+      "aired_episodes": 152
+    }
+  },
+  {
+    "rated_at": "2024-09-30T10:27:01.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 4,
+      "ids": {
+        "trakt": 8287,
+        "tvdb": 120491,
+        "tmdb": 7912,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "The IT Crowd",
+      "year": 2006,
+      "ids": {
+        "trakt": 2475,
+        "slug": "the-it-crowd",
+        "tvdb": 79216,
+        "imdb": "tt0487831",
+        "tmdb": 2490,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2024-09-29T00:35:17.000Z",
+    "rating": 9,
+    "type": "season",
+    "season": {
+      "number": 2,
+      "ids": {
+        "trakt": 141841,
+        "tvdb": 705861,
+        "tmdb": 87539,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "Call My Agent!",
+      "year": 2015,
+      "ids": {
+        "trakt": 102782,
+        "slug": "call-my-agent",
+        "tvdb": 300247,
+        "imdb": "tt4277922",
+        "tmdb": 64165,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2024-09-24T12:53:15.000Z",
+    "rating": 9,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 251289,
+        "tvdb": 1915178,
+        "tmdb": 188781,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "LOL : Qui rit, sort !",
+      "year": 2021,
+      "ids": {
+        "trakt": 176980,
+        "slug": "lol-qui-rit-sort",
+        "tvdb": 400292,
+        "imdb": "tt13696152",
+        "tmdb": 122228,
+        "tvrage": null
+      },
+      "aired_episodes": 39
+    }
+  },
+  {
+    "rated_at": "2024-09-24T12:10:25.000Z",
+    "rating": 10,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 151318,
+        "tvdb": 730693,
+        "tmdb": 109267,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "Sick of It",
+      "year": 2018,
+      "ids": {
+        "trakt": 123918,
+        "slug": "sick-of-it",
+        "tvdb": 335295,
+        "imdb": "tt7604446",
+        "tmdb": 82338,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2024-09-20T15:33:05.000Z",
+    "rating": 9,
+    "type": "season",
+    "season": {
+      "number": 7,
+      "ids": {
+        "trakt": 14189,
+        "tvdb": 118111,
+        "tmdb": 13720,
+        "tvrage": null
+      },
+      "aired_episodes": 10
+    },
+    "show": {
+      "title": "Curb Your Enthusiasm",
+      "year": 2000,
+      "ids": {
+        "trakt": 4522,
+        "slug": "curb-your-enthusiasm",
+        "tvdb": 76203,
+        "imdb": "tt0264235",
+        "tmdb": 4546,
+        "tvrage": null
+      },
+      "aired_episodes": 120
+    }
+  },
+  {
+    "rated_at": "2024-09-03T22:33:34.000Z",
+    "rating": 9,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 14167,
+        "tvdb": 16336,
+        "tmdb": 13698,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    },
+    "show": {
+      "title": "Lucky Louie",
+      "year": 2006,
+      "ids": {
+        "trakt": 4516,
+        "slug": "lucky-louie",
+        "tvdb": 79326,
+        "imdb": "tt0460619",
+        "tmdb": 4540,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    }
+  },
+  {
+    "rated_at": "2024-07-23T08:06:24.000Z",
+    "rating": 7,
+    "type": "season",
+    "season": {
+      "number": 4,
+      "ids": {
+        "trakt": 302185,
+        "tvdb": 2064526,
+        "tmdb": 305753,
+        "tvrage": null
+      },
+      "aired_episodes": 8
+    },
+    "show": {
+      "title": "The Boys",
+      "year": 2019,
+      "ids": {
+        "trakt": 139960,
+        "slug": "the-boys-2019",
+        "tvdb": 355567,
+        "imdb": "tt1190634",
+        "tmdb": 76479,
+        "tvrage": null
+      },
+      "aired_episodes": 40
+    }
+  },
+  {
+    "rated_at": "2024-06-16T22:37:10.000Z",
+    "rating": 7,
+    "type": "season",
+    "season": {
+      "number": 5,
+      "ids": {
+        "trakt": 375268,
+        "tvdb": null,
+        "tmdb": 385274,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    },
+    "show": {
+      "title": "LOL: Last One Laughing",
+      "year": 2021,
+      "ids": {
+        "trakt": 177070,
+        "slug": "lol-last-one-laughing-2021-177070",
+        "tvdb": 400263,
+        "imdb": "tt13929916",
+        "tmdb": 122241,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2024-06-16T20:51:28.000Z",
+    "rating": 10,
+    "type": "season",
+    "season": {
+      "number": 12,
+      "ids": {
+        "trakt": 347344,
+        "tvdb": 2098096,
+        "tmdb": 369008,
+        "tvrage": null
+      },
+      "aired_episodes": 10
+    },
+    "show": {
+      "title": "Curb Your Enthusiasm",
+      "year": 2000,
+      "ids": {
+        "trakt": 4522,
+        "slug": "curb-your-enthusiasm",
+        "tvdb": 76203,
+        "imdb": "tt0264235",
+        "tmdb": 4546,
+        "tvrage": null
+      },
+      "aired_episodes": 120
+    }
+  },
+  {
+    "rated_at": "2024-03-05T14:41:48.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 1,
+      "ids": {
+        "trakt": 12904,
+        "tvdb": 10281,
+        "tmdb": 12441,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    },
+    "show": {
+      "title": "Married... with Children",
+      "year": 1987,
+      "ids": {
+        "trakt": 4215,
+        "slug": "married-with-children",
+        "tvdb": 76385,
+        "imdb": "tt0092400",
+        "tmdb": 4239,
+        "tvrage": null
+      },
+      "aired_episodes": 258
+    }
+  },
+  {
+    "rated_at": "2024-03-05T13:36:28.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 6,
+      "ids": {
+        "trakt": 12909,
+        "tvdb": 10288,
+        "tmdb": 12446,
+        "tvrage": null
+      },
+      "aired_episodes": 26
+    },
+    "show": {
+      "title": "Married... with Children",
+      "year": 1987,
+      "ids": {
+        "trakt": 4215,
+        "slug": "married-with-children",
+        "tvdb": 76385,
+        "imdb": "tt0092400",
+        "tmdb": 4239,
+        "tvrage": null
+      },
+      "aired_episodes": 258
+    }
+  },
+  {
+    "rated_at": "2024-03-05T09:55:24.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 10,
+      "ids": {
+        "trakt": 12913,
+        "tvdb": 10282,
+        "tmdb": 12450,
+        "tvrage": null
+      },
+      "aired_episodes": 26
+    },
+    "show": {
+      "title": "Married... with Children",
+      "year": 1987,
+      "ids": {
+        "trakt": 4215,
+        "slug": "married-with-children",
+        "tvdb": 76385,
+        "imdb": "tt0092400",
+        "tmdb": 4239,
+        "tvrage": null
+      },
+      "aired_episodes": 258
+    }
+  },
+  {
+    "rated_at": "2024-02-22T15:55:14.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 3,
+      "ids": {
+        "trakt": 95267,
+        "tvdb": 497302,
+        "tmdb": 88220,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    },
+    "show": {
+      "title": "Murder With A View",
+      "year": 2008,
+      "ids": {
+        "trakt": 40933,
+        "slug": "murder-with-a-view",
+        "tvdb": 82638,
+        "imdb": "tt1163573",
+        "tmdb": 41132,
+        "tvrage": null
+      },
+      "aired_episodes": 58
+    }
+  },
+  {
+    "rated_at": "2024-02-14T12:45:05.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 7,
+      "ids": {
+        "trakt": 11833,
+        "tvdb": 17566,
+        "tmdb": 11394,
+        "tvrage": null
+      },
+      "aired_episodes": 10
+    },
+    "show": {
+      "title": "Trailer Park Boys",
+      "year": 2001,
+      "ids": {
+        "trakt": 3773,
+        "slug": "trailer-park-boys",
+        "tvdb": 70566,
+        "imdb": "tt0290988",
+        "tmdb": 3796,
+        "tvrage": null
+      },
+      "aired_episodes": 105
+    }
+  },
+  {
+    "rated_at": "2023-02-27T12:49:33.000Z",
+    "rating": 8,
+    "type": "season",
+    "season": {
+      "number": 7,
+      "ids": {
+        "trakt": 12910,
+        "tvdb": 10289,
+        "tmdb": 12447,
+        "tvrage": null
+      },
+      "aired_episodes": 26
+    },
+    "show": {
+      "title": "Married... with Children",
+      "year": 1987,
+      "ids": {
+        "trakt": 4215,
+        "slug": "married-with-children",
+        "tvdb": 76385,
+        "imdb": "tt0092400",
+        "tmdb": 4239,
+        "tvrage": null
+      },
+      "aired_episodes": 258
+    }
+  }
+]

@@ -1,0 +1,7502 @@
+[
+  {
+    "rated_at": "2026-06-16T21:14:24.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Chapter One: The Vanishing of Will Byers",
+      "ids": {
+        "trakt": 2111721,
+        "tvdb": 5468124,
+        "imdb": "tt4593118",
+        "tmdb": 1198665,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Stranger Things",
+      "year": 2016,
+      "ids": {
+        "trakt": 104439,
+        "slug": "stranger-things",
+        "tvdb": 305288,
+        "imdb": "tt4574334",
+        "tmdb": 66732,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2026-06-03T06:38:50.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 1451883,
+        "tvdb": 482221,
+        "imdb": null,
+        "tmdb": 608448,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Der kleine Mann",
+      "year": 2009,
+      "ids": {
+        "trakt": 40579,
+        "slug": "der-kleine-mann",
+        "tvdb": 87091,
+        "imdb": "tt1284142",
+        "tmdb": 22253,
+        "tvrage": null
+      },
+      "aired_episodes": 8
+    }
+  },
+  {
+    "rated_at": "2026-05-27T10:50:14.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 2,
+      "title": "Finsdorf",
+      "ids": {
+        "trakt": 379682,
+        "tvdb": 1231441,
+        "imdb": "tt1542322",
+        "tmdb": 371748,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Stromberg",
+      "year": 2004,
+      "ids": {
+        "trakt": 6164,
+        "slug": "stromberg",
+        "tvdb": 79656,
+        "imdb": "tt0428167",
+        "tmdb": 6202,
+        "tvrage": null
+      },
+      "aired_episodes": 46
+    }
+  },
+  {
+    "rated_at": "2026-05-27T10:49:27.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Malik",
+      "ids": {
+        "trakt": 379691,
+        "tvdb": 4179523,
+        "imdb": "tt2105943",
+        "tmdb": 371768,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Stromberg",
+      "year": 2004,
+      "ids": {
+        "trakt": 6164,
+        "slug": "stromberg",
+        "tvdb": 79656,
+        "imdb": "tt0428167",
+        "tmdb": 6202,
+        "tvrage": null
+      },
+      "aired_episodes": 46
+    }
+  },
+  {
+    "rated_at": "2026-05-27T10:48:16.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Beziehungen",
+      "ids": {
+        "trakt": 379681,
+        "tvdb": 1231381,
+        "imdb": "tt1542319",
+        "tmdb": 371746,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Stromberg",
+      "year": 2004,
+      "ids": {
+        "trakt": 6164,
+        "slug": "stromberg",
+        "tvdb": 79656,
+        "imdb": "tt0428167",
+        "tmdb": 6202,
+        "tvrage": null
+      },
+      "aired_episodes": 46
+    }
+  },
+  {
+    "rated_at": "2026-05-17T13:18:26.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Jennifer",
+      "ids": {
+        "trakt": 379673,
+        "tvdb": 324813,
+        "imdb": "tt0931247",
+        "tmdb": 371708,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Stromberg",
+      "year": 2004,
+      "ids": {
+        "trakt": 6164,
+        "slug": "stromberg",
+        "tvdb": 79656,
+        "imdb": "tt0428167",
+        "tmdb": 6202,
+        "tvrage": null
+      },
+      "aired_episodes": 46
+    }
+  },
+  {
+    "rated_at": "2026-05-17T13:17:11.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 379663,
+        "tvdb": 331137,
+        "imdb": "tt0711824",
+        "tmdb": 371722,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Stromberg",
+      "year": 2004,
+      "ids": {
+        "trakt": 6164,
+        "slug": "stromberg",
+        "tvdb": 79656,
+        "imdb": "tt0428167",
+        "tmdb": 6202,
+        "tvrage": null
+      },
+      "aired_episodes": 46
+    }
+  },
+  {
+    "rated_at": "2026-05-12T06:53:32.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Der Parkplatz",
+      "ids": {
+        "trakt": 379655,
+        "tvdb": 331129,
+        "imdb": "tt0711815",
+        "tmdb": 371731,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Stromberg",
+      "year": 2004,
+      "ids": {
+        "trakt": 6164,
+        "slug": "stromberg",
+        "tvdb": 79656,
+        "imdb": "tt0428167",
+        "tmdb": 6202,
+        "tvrage": null
+      },
+      "aired_episodes": 46
+    }
+  },
+  {
+    "rated_at": "2026-05-09T08:18:37.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 5700523,
+        "tvdb": 8844353,
+        "imdb": null,
+        "tmdb": 3342224,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Merz gegen Merz",
+      "year": 2019,
+      "ids": {
+        "trakt": 146760,
+        "slug": "merz-gegen-merz",
+        "tvdb": 362754,
+        "imdb": "tt8703168",
+        "tmdb": 84897,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2026-05-06T20:32:05.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 4074568,
+        "tvdb": 7650543,
+        "imdb": null,
+        "tmdb": 2222296,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Merz gegen Merz",
+      "year": 2019,
+      "ids": {
+        "trakt": 146760,
+        "slug": "merz-gegen-merz",
+        "tvdb": 362754,
+        "imdb": "tt8703168",
+        "tmdb": 84897,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2026-05-03T21:30:22.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "L'union fait-elle vraiment la force?",
+      "ids": {
+        "trakt": 14100828,
+        "tvdb": null,
+        "imdb": null,
+        "tmdb": 7121982,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "LOL : Qui rit, sort !",
+      "year": 2021,
+      "ids": {
+        "trakt": 176980,
+        "slug": "lol-qui-rit-sort",
+        "tvdb": 400292,
+        "imdb": "tt13696152",
+        "tmdb": 122228,
+        "tvrage": null
+      },
+      "aired_episodes": 39
+    }
+  },
+  {
+    "rated_at": "2026-04-30T07:42:50.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 3490325,
+        "tvdb": 7143284,
+        "imdb": "tt10204588",
+        "tmdb": 1639488,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Merz gegen Merz",
+      "year": 2019,
+      "ids": {
+        "trakt": 146760,
+        "slug": "merz-gegen-merz",
+        "tvdb": 362754,
+        "imdb": "tt8703168",
+        "tmdb": 84897,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2026-04-27T06:51:35.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "The anonymous street",
+      "ids": {
+        "trakt": 547513,
+        "tvdb": 1177461,
+        "imdb": null,
+        "tmdb": 539481,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Fortier",
+      "year": 2000,
+      "ids": {
+        "trakt": 15443,
+        "slug": "fortier",
+        "tvdb": 118461,
+        "imdb": "tt0229898",
+        "tmdb": 15508,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2026-04-21T11:02:54.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 547505,
+        "tvdb": 1177381,
+        "imdb": null,
+        "tmdb": 539470,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Fortier",
+      "year": 2000,
+      "ids": {
+        "trakt": 15443,
+        "slug": "fortier",
+        "tvdb": 118461,
+        "imdb": "tt0229898",
+        "tmdb": 15508,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2026-04-15T18:24:37.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 547497,
+        "tvdb": 1177301,
+        "imdb": null,
+        "tmdb": 539458,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Fortier",
+      "year": 2000,
+      "ids": {
+        "trakt": 15443,
+        "slug": "fortier",
+        "tvdb": 118461,
+        "imdb": "tt0229898",
+        "tmdb": 15508,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2026-04-11T19:42:55.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 547489,
+        "tvdb": 1177221,
+        "imdb": null,
+        "tmdb": 539457,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Fortier",
+      "year": 2000,
+      "ids": {
+        "trakt": 15443,
+        "slug": "fortier",
+        "tvdb": 118461,
+        "imdb": "tt0229898",
+        "tmdb": 15508,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2026-04-06T07:33:48.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 547479,
+        "tvdb": 1177111,
+        "imdb": null,
+        "tmdb": 539440,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Fortier",
+      "year": 2000,
+      "ids": {
+        "trakt": 15443,
+        "slug": "fortier",
+        "tvdb": 118461,
+        "imdb": "tt0229898",
+        "tmdb": 15508,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2026-03-29T14:27:07.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Déséquilibre",
+      "ids": {
+        "trakt": 12831693,
+        "tvdb": 10929585,
+        "imdb": "tt35769870",
+        "tmdb": 5989335,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Empathie",
+      "year": 2025,
+      "ids": {
+        "trakt": 277012,
+        "slug": "empathie",
+        "tvdb": 459343,
+        "imdb": "tt32827662",
+        "tmdb": 284656,
+        "tvrage": null
+      },
+      "aired_episodes": 10
+    }
+  },
+  {
+    "rated_at": "2026-03-19T11:28:51.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 1338642,
+        "tvdb": 433124,
+        "imdb": null,
+        "tmdb": 1190108,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2026-01-17T09:34:18.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 8,
+      "number": 1,
+      "title": "Louis Poirson, Le tailleur de pierres",
+      "ids": {
+        "trakt": 1341495,
+        "tvdb": 415452,
+        "imdb": null,
+        "tmdb": 1373015,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-12-27T16:15:20.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Chapter 1",
+      "ids": {
+        "trakt": 13154360,
+        "tvdb": 10855669,
+        "imdb": "tt35073641",
+        "tmdb": 6254204,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Man vs Baby",
+      "year": 2025,
+      "ids": {
+        "trakt": 270166,
+        "slug": "man-vs-baby",
+        "tvdb": 457885,
+        "imdb": "tt35047134",
+        "tmdb": 279601,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    }
+  },
+  {
+    "rated_at": "2025-12-14T18:52:25.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 7,
+      "number": 1,
+      "title": "Jean-Claude Romand, Le menteur",
+      "ids": {
+        "trakt": 1341295,
+        "tvdb": 415482,
+        "imdb": null,
+        "tmdb": 1373005,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-12-04T23:00:55.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 13724018,
+        "tvdb": 11468188,
+        "imdb": null,
+        "tmdb": 6685317,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "LOL: In Real Life",
+      "year": 2025,
+      "ids": {
+        "trakt": 308021,
+        "slug": "lol-in-real-life",
+        "tvdb": 470703,
+        "imdb": "tt38938332",
+        "tmdb": 305639,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    }
+  },
+  {
+    "rated_at": "2025-11-27T07:44:40.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 17,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 3145959,
+        "tvdb": 5999546,
+        "imdb": null,
+        "tmdb": 1287553,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-11-20T08:15:12.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 18,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 3145969,
+        "tvdb": 6527103,
+        "imdb": null,
+        "tmdb": 1801397,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-11-10T08:35:48.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 19,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 3307539,
+        "tvdb": 6977675,
+        "imdb": null,
+        "tmdb": 1801578,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-11-07T07:48:13.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 20,
+      "number": 1,
+      "title": "Alain Berruet: the obsession of revenge",
+      "ids": {
+        "trakt": 3897620,
+        "tvdb": 7506998,
+        "imdb": null,
+        "tmdb": 2048145,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-10-31T14:36:20.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 21,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 4536082,
+        "tvdb": 7999551,
+        "imdb": null,
+        "tmdb": 2468958,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-10-26T17:05:01.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 22,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 5533313,
+        "tvdb": 8682997,
+        "imdb": null,
+        "tmdb": 3256745,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-10-18T17:45:58.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 23,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 6704548,
+        "tvdb": 9346885,
+        "imdb": null,
+        "tmdb": 3960309,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-10-15T06:04:22.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Hitchhiker",
+      "ids": {
+        "trakt": 13336089,
+        "tvdb": null,
+        "imdb": null,
+        "tmdb": 6393731,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Naming the Dead",
+      "year": 2025,
+      "ids": {
+        "trakt": 292488,
+        "slug": "naming-the-dead",
+        "tvdb": 466031,
+        "imdb": "tt37738739",
+        "tmdb": 296423,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    }
+  },
+  {
+    "rated_at": "2025-08-23T20:56:06.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Desperate Doings in the Graveyard",
+      "ids": {
+        "trakt": 167762,
+        "tvdb": 133116,
+        "imdb": "tt0500308",
+        "tmdb": 960017,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "'Allo 'Allo!",
+      "year": 1984,
+      "ids": {
+        "trakt": 2198,
+        "slug": "allo-allo",
+        "tvdb": 73940,
+        "imdb": "tt0086659",
+        "tmdb": 2211,
+        "tvrage": null
+      },
+      "aired_episodes": 82
+    }
+  },
+  {
+    "rated_at": "2025-08-09T07:03:42.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Desperate Doings in the Dungeon",
+      "ids": {
+        "trakt": 167736,
+        "tvdb": 133090,
+        "imdb": "tt0500337",
+        "tmdb": 154806,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "'Allo 'Allo!",
+      "year": 1984,
+      "ids": {
+        "trakt": 2198,
+        "slug": "allo-allo",
+        "tvdb": 73940,
+        "imdb": "tt0086659",
+        "tmdb": 2211,
+        "tvrage": null
+      },
+      "aired_episodes": 82
+    }
+  },
+  {
+    "rated_at": "2025-07-03T18:03:04.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Prisoners of War",
+      "ids": {
+        "trakt": 167730,
+        "tvdb": 133084,
+        "imdb": "tt0500351",
+        "tmdb": 957569,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "'Allo 'Allo!",
+      "year": 1984,
+      "ids": {
+        "trakt": 2198,
+        "slug": "allo-allo",
+        "tvdb": 73940,
+        "imdb": "tt0086659",
+        "tmdb": 2211,
+        "tvrage": null
+      },
+      "aired_episodes": 82
+    }
+  },
+  {
+    "rated_at": "2025-06-24T06:07:06.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 2,
+      "title": "When the Children Are Asleep",
+      "ids": {
+        "trakt": 223398,
+        "tvdb": 214332,
+        "imdb": null,
+        "tmdb": 212729,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "2Point4 Children",
+      "year": 1991,
+      "ids": {
+        "trakt": 2686,
+        "slug": "2point4-children",
+        "tvdb": 76760,
+        "imdb": "tt0101032",
+        "tmdb": 2704,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-06-20T06:51:15.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "The Nicked Knockwurst",
+      "ids": {
+        "trakt": 167724,
+        "tvdb": 133078,
+        "imdb": "tt0500371",
+        "tmdb": 957563,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "'Allo 'Allo!",
+      "year": 1984,
+      "ids": {
+        "trakt": 2198,
+        "slug": "allo-allo",
+        "tvdb": 73940,
+        "imdb": "tt0086659",
+        "tmdb": 2211,
+        "tvrage": null
+      },
+      "aired_episodes": 82
+    }
+  },
+  {
+    "rated_at": "2025-06-13T21:16:03.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Part 1",
+      "ids": {
+        "trakt": 12197523,
+        "tvdb": 10636981,
+        "imdb": "tt33184716",
+        "tmdb": 5532021,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Into the Fire: The Lost Daughter",
+      "year": 2024,
+      "ids": {
+        "trakt": 252096,
+        "slug": "into-the-fire-the-lost-daughter",
+        "tvdb": 453315,
+        "imdb": "tt33163756",
+        "tmdb": 261649,
+        "tvrage": null
+      },
+      "aired_episodes": 2
+    }
+  },
+  {
+    "rated_at": "2025-06-11T20:18:56.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "What Do You Mean, Missing?",
+      "ids": {
+        "trakt": 12174727,
+        "tvdb": 10623930,
+        "imdb": "tt33079207",
+        "tmdb": 5518334,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "American Murder: Laci Peterson",
+      "year": 2024,
+      "ids": {
+        "trakt": 251287,
+        "slug": "american-murder-laci-peterson",
+        "tvdb": 452965,
+        "imdb": "tt33079160",
+        "tmdb": 261034,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2025-06-04T18:53:29.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "I'm Going Slightly Mad",
+      "ids": {
+        "trakt": 223389,
+        "tvdb": 214324,
+        "imdb": null,
+        "tmdb": 212720,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "2Point4 Children",
+      "year": 1991,
+      "ids": {
+        "trakt": 2686,
+        "slug": "2point4-children",
+        "tvdb": 76760,
+        "imdb": "tt0101032",
+        "tmdb": 2704,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-06-02T10:39:18.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 2,
+      "title": "The Gâteau from the Château (Christmas Special 1985)",
+      "ids": {
+        "trakt": 167705,
+        "tvdb": 352954,
+        "imdb": "tt0500364",
+        "tmdb": 154832,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "'Allo 'Allo!",
+      "year": 1984,
+      "ids": {
+        "trakt": 2198,
+        "slug": "allo-allo",
+        "tvdb": 73940,
+        "imdb": "tt0086659",
+        "tmdb": 2211,
+        "tvrage": null
+      },
+      "aired_episodes": 82
+    }
+  },
+  {
+    "rated_at": "2025-06-02T10:38:25.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Six Big Boobies",
+      "ids": {
+        "trakt": 167717,
+        "tvdb": 133071,
+        "imdb": "tt0500354",
+        "tmdb": 957557,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "'Allo 'Allo!",
+      "year": 1984,
+      "ids": {
+        "trakt": 2198,
+        "slug": "allo-allo",
+        "tvdb": 73940,
+        "imdb": "tt0086659",
+        "tmdb": 2211,
+        "tvrage": null
+      },
+      "aired_episodes": 82
+    }
+  },
+  {
+    "rated_at": "2025-06-01T09:13:50.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Fred",
+      "ids": {
+        "trakt": 13012437,
+        "tvdb": 11088781,
+        "imdb": "tt36595721",
+        "tmdb": 6138419,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Fred and Rose West: A British Horror Story",
+      "year": 2025,
+      "ids": {
+        "trakt": 282738,
+        "slug": "fred-and-rose-west-a-british-horror-story",
+        "tvdb": 462666,
+        "imdb": "tt36590949",
+        "tmdb": 289123,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2025-05-24T20:43:00.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Just an Accident?",
+      "ids": {
+        "trakt": 12933896,
+        "tvdb": 11041433,
+        "imdb": null,
+        "tmdb": 6067654,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "From Rock Star to Killer",
+      "year": 2025,
+      "ids": {
+        "trakt": 280135,
+        "slug": "from-rock-star-to-killer",
+        "tvdb": 461727,
+        "imdb": "tt36241713",
+        "tmdb": 287131,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2025-05-21T18:39:32.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Leader of the Pack",
+      "ids": {
+        "trakt": 223383,
+        "tvdb": 214318,
+        "imdb": "tt0101032",
+        "tmdb": 212714,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "2Point4 Children",
+      "year": 1991,
+      "ids": {
+        "trakt": 2686,
+        "slug": "2point4-children",
+        "tvdb": 76760,
+        "imdb": "tt0101032",
+        "tmdb": 2704,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-05-17T16:48:12.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The British 'ave Come",
+      "ids": {
+        "trakt": 167710,
+        "tvdb": 133064,
+        "imdb": "tt0762157",
+        "tmdb": 957552,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "'Allo 'Allo!",
+      "year": 1984,
+      "ids": {
+        "trakt": 2198,
+        "slug": "allo-allo",
+        "tvdb": 73940,
+        "imdb": "tt0086659",
+        "tmdb": 2211,
+        "tvrage": null
+      },
+      "aired_episodes": 82
+    }
+  },
+  {
+    "rated_at": "2025-05-08T21:52:12.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Ladders",
+      "ids": {
+        "trakt": 1709381,
+        "tvdb": 5101131,
+        "imdb": "tt3840022",
+        "tmdb": 1047309,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Community",
+      "year": 2009,
+      "ids": {
+        "trakt": 18265,
+        "slug": "community",
+        "tvdb": 94571,
+        "imdb": "tt1439629",
+        "tmdb": 18347,
+        "tvrage": null
+      },
+      "aired_episodes": 110
+    }
+  },
+  {
+    "rated_at": "2025-05-08T21:51:48.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Repilot",
+      "ids": {
+        "trakt": 571973,
+        "tvdb": 4689623,
+        "imdb": "tt2911368",
+        "tmdb": 969950,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Community",
+      "year": 2009,
+      "ids": {
+        "trakt": 18265,
+        "slug": "community",
+        "tvdb": 94571,
+        "imdb": "tt1439629",
+        "tmdb": 18347,
+        "tvrage": null
+      },
+      "aired_episodes": 110
+    }
+  },
+  {
+    "rated_at": "2025-05-04T21:06:32.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Grüße aus Bad Kicher-Nich",
+      "ids": {
+        "trakt": 12993413,
+        "tvdb": 10947567,
+        "imdb": null,
+        "tmdb": 6122025,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "LOL: Last One Laughing",
+      "year": 2021,
+      "ids": {
+        "trakt": 177070,
+        "slug": "lol-last-one-laughing-2021-177070",
+        "tvdb": 400263,
+        "imdb": "tt13929916",
+        "tmdb": 122241,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2025-05-04T21:05:56.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Focus, dawg! Focus!",
+      "ids": {
+        "trakt": 7431284,
+        "tvdb": 9354560,
+        "imdb": "tt22041958",
+        "tmdb": 4233442,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "LOL: Last One Laughing",
+      "year": 2021,
+      "ids": {
+        "trakt": 177070,
+        "slug": "lol-last-one-laughing-2021-177070",
+        "tvdb": 400263,
+        "imdb": "tt13929916",
+        "tmdb": 122241,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2025-05-04T21:05:08.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "A Moose on the Titanic",
+      "ids": {
+        "trakt": 5989719,
+        "tvdb": null,
+        "imdb": "tt18549356",
+        "tmdb": 3591113,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "LOL: Last One Laughing",
+      "year": 2021,
+      "ids": {
+        "trakt": 177070,
+        "slug": "lol-last-one-laughing-2021-177070",
+        "tvdb": 400263,
+        "imdb": "tt13929916",
+        "tmdb": 122241,
+        "tvrage": null
+      },
+      "aired_episodes": 42
+    }
+  },
+  {
+    "rated_at": "2025-04-29T20:46:22.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "History 101",
+      "ids": {
+        "trakt": 571960,
+        "tvdb": 4343723,
+        "imdb": "tt2295962",
+        "tmdb": 563851,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Community",
+      "year": 2009,
+      "ids": {
+        "trakt": 18265,
+        "slug": "community",
+        "tvdb": 94571,
+        "imdb": "tt1439629",
+        "tmdb": 18347,
+        "tvrage": null
+      },
+      "aired_episodes": 110
+    }
+  },
+  {
+    "rated_at": "2025-04-27T14:02:23.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Je me drogue à la vie !",
+      "ids": {
+        "trakt": 12993375,
+        "tvdb": 10339982,
+        "imdb": null,
+        "tmdb": 6121941,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "LOL : Qui rit, sort !",
+      "year": 2021,
+      "ids": {
+        "trakt": 176980,
+        "slug": "lol-qui-rit-sort",
+        "tvdb": 400292,
+        "imdb": "tt13696152",
+        "tmdb": 122228,
+        "tvrage": null
+      },
+      "aired_episodes": 39
+    }
+  },
+  {
+    "rated_at": "2025-04-23T20:04:47.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 2917450,
+        "tvdb": 5853122,
+        "imdb": null,
+        "tmdb": 1447636,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Private Crimes",
+      "year": 1993,
+      "ids": {
+        "trakt": 128678,
+        "slug": "private-crimes",
+        "tvdb": 320224,
+        "imdb": "tt0103398",
+        "tmdb": 15505,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    }
+  },
+  {
+    "rated_at": "2025-04-23T05:48:33.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Biology 101",
+      "ids": {
+        "trakt": 571938,
+        "tvdb": 4127516,
+        "imdb": "tt1986325",
+        "tmdb": 563828,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Community",
+      "year": 2009,
+      "ids": {
+        "trakt": 18265,
+        "slug": "community",
+        "tvdb": 94571,
+        "imdb": "tt1439629",
+        "tmdb": 18347,
+        "tvrage": null
+      },
+      "aired_episodes": 110
+    }
+  },
+  {
+    "rated_at": "2025-04-21T20:15:42.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 11208461,
+        "tvdb": null,
+        "imdb": null,
+        "tmdb": 4989371,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Lego Masters",
+      "year": 2020,
+      "ids": {
+        "trakt": 164174,
+        "slug": "lego-masters-2020-164174",
+        "tvdb": 385123,
+        "imdb": null,
+        "tmdb": 115211,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-04-15T06:22:55.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Anthropology 101",
+      "ids": {
+        "trakt": 571914,
+        "tvdb": 2447051,
+        "imdb": "tt1640852",
+        "tmdb": 563815,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Community",
+      "year": 2009,
+      "ids": {
+        "trakt": 18265,
+        "slug": "community",
+        "tvdb": 94571,
+        "imdb": "tt1439629",
+        "tmdb": 18347,
+        "tvrage": null
+      },
+      "aired_episodes": 110
+    }
+  },
+  {
+    "rated_at": "2025-04-13T06:29:41.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 11630036,
+        "tvdb": 11006114,
+        "imdb": "tt31842380",
+        "tmdb": 5951245,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Adolescence",
+      "year": 2025,
+      "ids": {
+        "trakt": 230892,
+        "slug": "adolescence",
+        "tvdb": 452467,
+        "imdb": "tt31806037",
+        "tmdb": 249042,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    }
+  },
+  {
+    "rated_at": "2025-04-07T19:39:19.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 571889,
+        "tvdb": 657721,
+        "imdb": "tt1467481",
+        "tmdb": 563782,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Community",
+      "year": 2009,
+      "ids": {
+        "trakt": 18265,
+        "slug": "community",
+        "tvdb": 94571,
+        "imdb": "tt1439629",
+        "tmdb": 18347,
+        "tvrage": null
+      },
+      "aired_episodes": 110
+    }
+  },
+  {
+    "rated_at": "2025-03-31T06:54:32.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 5747763,
+        "tvdb": 8876436,
+        "imdb": null,
+        "tmdb": 3400022,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Lego Masters",
+      "year": 2020,
+      "ids": {
+        "trakt": 164174,
+        "slug": "lego-masters-2020-164174",
+        "tvdb": 385123,
+        "imdb": null,
+        "tmdb": 115211,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-03-31T06:53:53.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 4623564,
+        "tvdb": 8073076,
+        "imdb": null,
+        "tmdb": 2584285,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Lego Masters",
+      "year": 2020,
+      "ids": {
+        "trakt": 164174,
+        "slug": "lego-masters-2020-164174",
+        "tvdb": 385123,
+        "imdb": null,
+        "tmdb": 115211,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-03-31T06:52:55.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 6768070,
+        "tvdb": 9384852,
+        "imdb": null,
+        "tmdb": 3988540,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Lego Masters",
+      "year": 2020,
+      "ids": {
+        "trakt": 164174,
+        "slug": "lego-masters-2020-164174",
+        "tvdb": 385123,
+        "imdb": null,
+        "tmdb": 115211,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-03-27T19:04:46.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 9,
+      "title": "Episode 9",
+      "ids": {
+        "trakt": 6400726,
+        "tvdb": 9020907,
+        "imdb": null,
+        "tmdb": 3742231,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Le Flambeau, les aventuriers de Chupacabra",
+      "year": 2022,
+      "ids": {
+        "trakt": 195699,
+        "slug": "le-flambeau-les-aventuriers-de-chupacabra",
+        "tvdb": null,
+        "imdb": "tt20723358",
+        "tmdb": 202772,
+        "tvrage": null
+      },
+      "aired_episodes": 9
+    }
+  },
+  {
+    "rated_at": "2025-03-23T09:51:54.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 2,
+      "title": "2022 Special",
+      "ids": {
+        "trakt": 6960753,
+        "tvdb": 8923466,
+        "imdb": "tt21019050",
+        "tmdb": 4096529,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Detectorists",
+      "year": 2014,
+      "ids": {
+        "trakt": 80430,
+        "slug": "detectorists",
+        "tvdb": 280847,
+        "imdb": "tt4082744",
+        "tmdb": 61828,
+        "tvrage": null
+      },
+      "aired_episodes": 18
+    }
+  },
+  {
+    "rated_at": "2025-03-23T08:35:14.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 2758497,
+        "tvdb": 6359916,
+        "imdb": "tt7578006",
+        "tmdb": 1387575,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Detectorists",
+      "year": 2014,
+      "ids": {
+        "trakt": 80430,
+        "slug": "detectorists",
+        "tvdb": 280847,
+        "imdb": "tt4082744",
+        "tmdb": 61828,
+        "tvrage": null
+      },
+      "aired_episodes": 18
+    }
+  },
+  {
+    "rated_at": "2025-03-21T06:26:11.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Christmas Special",
+      "ids": {
+        "trakt": 2036196,
+        "tvdb": 5380202,
+        "imdb": "tt5247478",
+        "tmdb": 1255581,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Detectorists",
+      "year": 2014,
+      "ids": {
+        "trakt": 80430,
+        "slug": "detectorists",
+        "tvdb": 280847,
+        "imdb": "tt4082744",
+        "tmdb": 61828,
+        "tvrage": null
+      },
+      "aired_episodes": 18
+    }
+  },
+  {
+    "rated_at": "2025-03-20T20:43:43.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 2003767,
+        "tvdb": 5345695,
+        "imdb": "tt5130672",
+        "tmdb": 1140370,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Detectorists",
+      "year": 2014,
+      "ids": {
+        "trakt": 80430,
+        "slug": "detectorists",
+        "tvdb": 280847,
+        "imdb": "tt4082744",
+        "tmdb": 61828,
+        "tvrage": null
+      },
+      "aired_episodes": 18
+    }
+  },
+  {
+    "rated_at": "2025-03-19T07:42:47.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 1317937,
+        "tvdb": 4860604,
+        "imdb": "tt4088818",
+        "tmdb": 1033595,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Detectorists",
+      "year": 2014,
+      "ids": {
+        "trakt": 80430,
+        "slug": "detectorists",
+        "tvdb": 280847,
+        "imdb": "tt4082744",
+        "tmdb": 61828,
+        "tvrage": null
+      },
+      "aired_episodes": 18
+    }
+  },
+  {
+    "rated_at": "2025-03-13T21:22:06.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 4408776,
+        "tvdb": 7833678,
+        "imdb": null,
+        "tmdb": 1954778,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "La Flamme",
+      "year": 2020,
+      "ids": {
+        "trakt": 166114,
+        "slug": "la-flamme",
+        "tvdb": 371079,
+        "imdb": "tt13286778",
+        "tmdb": 94626,
+        "tvrage": null
+      },
+      "aired_episodes": 9
+    }
+  },
+  {
+    "rated_at": "2025-03-13T13:27:33.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 3,
+      "title": "Last Christmas",
+      "ids": {
+        "trakt": 6972920,
+        "tvdb": null,
+        "imdb": "tt23941794",
+        "tmdb": 4096684,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Motherland",
+      "year": 2017,
+      "ids": {
+        "trakt": 111531,
+        "slug": "motherland",
+        "tvdb": 317476,
+        "imdb": "tt6006350",
+        "tmdb": 67804,
+        "tvrage": null
+      },
+      "aired_episodes": 17
+    }
+  },
+  {
+    "rated_at": "2025-03-12T20:58:13.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Nit Blitz",
+      "ids": {
+        "trakt": 5147724,
+        "tvdb": 8404492,
+        "imdb": "tt11046704",
+        "tmdb": 2926457,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Motherland",
+      "year": 2017,
+      "ids": {
+        "trakt": 111531,
+        "slug": "motherland",
+        "tvdb": 317476,
+        "imdb": "tt6006350",
+        "tmdb": 67804,
+        "tvrage": null
+      },
+      "aired_episodes": 17
+    }
+  },
+  {
+    "rated_at": "2025-03-10T12:38:04.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 2367554,
+        "tvdb": 5764077,
+        "imdb": "tt6020680",
+        "tmdb": 1550654,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Motherland",
+      "year": 2017,
+      "ids": {
+        "trakt": 111531,
+        "slug": "motherland",
+        "tvdb": 317476,
+        "imdb": "tt6006350",
+        "tmdb": 67804,
+        "tvrage": null
+      },
+      "aired_episodes": 17
+    }
+  },
+  {
+    "rated_at": "2025-03-10T08:22:12.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 2,
+      "title": "Christmas Special",
+      "ids": {
+        "trakt": 4644088,
+        "tvdb": 8082634,
+        "imdb": "tt13537174",
+        "tmdb": 2586424,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Motherland",
+      "year": 2017,
+      "ids": {
+        "trakt": 111531,
+        "slug": "motherland",
+        "tvdb": 317476,
+        "imdb": "tt6006350",
+        "tmdb": 67804,
+        "tvrage": null
+      },
+      "aired_episodes": 17
+    }
+  },
+  {
+    "rated_at": "2025-03-09T18:50:18.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "No Mum Left Behind",
+      "ids": {
+        "trakt": 3730805,
+        "tvdb": 7374499,
+        "imdb": "tt8145350",
+        "tmdb": 1948593,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Motherland",
+      "year": 2017,
+      "ids": {
+        "trakt": 111531,
+        "slug": "motherland",
+        "tvdb": 317476,
+        "imdb": "tt6006350",
+        "tmdb": 67804,
+        "tvrage": null
+      },
+      "aired_episodes": 17
+    }
+  },
+  {
+    "rated_at": "2025-03-07T06:43:28.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Birthday Party",
+      "ids": {
+        "trakt": 2352530,
+        "tvdb": 6398496,
+        "imdb": "tt7577882",
+        "tmdb": 1499145,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Motherland",
+      "year": 2017,
+      "ids": {
+        "trakt": 111531,
+        "slug": "motherland",
+        "tvdb": 317476,
+        "imdb": "tt6006350",
+        "tmdb": 67804,
+        "tvrage": null
+      },
+      "aired_episodes": 17
+    }
+  },
+  {
+    "rated_at": "2025-02-28T19:05:12.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Bref. It's All Back in Motion.",
+      "ids": {
+        "trakt": 12786768,
+        "tvdb": 10939272,
+        "imdb": "tt35652804",
+        "tmdb": 5954058,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bref.",
+      "year": 2011,
+      "ids": {
+        "trakt": 60282,
+        "slug": "bref",
+        "tvdb": 251562,
+        "imdb": "tt2044128",
+        "tmdb": 60715,
+        "tvrage": null
+      },
+      "aired_episodes": 88
+    }
+  },
+  {
+    "rated_at": "2025-02-26T09:03:05.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Assistance Report A-15/99",
+      "ids": {
+        "trakt": 477616,
+        "tvdb": 297788,
+        "imdb": "tt0684651",
+        "tmdb": 469195,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Unit One",
+      "year": 2000,
+      "ids": {
+        "trakt": 11871,
+        "slug": "unit-one",
+        "tvdb": 78859,
+        "imdb": "tt0220261",
+        "tmdb": 11924,
+        "tvrage": null
+      },
+      "aired_episodes": 32
+    }
+  },
+  {
+    "rated_at": "2025-02-26T08:02:23.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 8,
+      "number": 16,
+      "title": "Stéphane Krauth - Le meurtre de Karine Schaaff",
+      "ids": {
+        "trakt": 1341727,
+        "tvdb": 415468,
+        "imdb": null,
+        "tmdb": 1373030,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Faites entrer l'accusé",
+      "year": 2000,
+      "ids": {
+        "trakt": 61577,
+        "slug": "faites-entrer-l-accuse",
+        "tvdb": 84095,
+        "imdb": "tt0465809",
+        "tmdb": 61660,
+        "tvrage": null
+      },
+      "aired_episodes": 316
+    }
+  },
+  {
+    "rated_at": "2025-02-26T07:40:14.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 1507995,
+        "tvdb": 926661,
+        "imdb": null,
+        "tmdb": 2000048,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Remote",
+      "year": 2002,
+      "ids": {
+        "trakt": 44365,
+        "slug": "remote",
+        "tvdb": 107011,
+        "imdb": "tt1278938",
+        "tmdb": 44613,
+        "tvrage": null
+      },
+      "aired_episodes": 10
+    }
+  },
+  {
+    "rated_at": "2025-02-26T07:39:23.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 1658158,
+        "tvdb": 3001821,
+        "imdb": null,
+        "tmdb": 1182668,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "SAV des émissions",
+      "year": 2005,
+      "ids": {
+        "trakt": 39765,
+        "slug": "sav-des-emissions",
+        "tvdb": 85561,
+        "imdb": "tt0499407",
+        "tmdb": 39945,
+        "tvrage": null
+      },
+      "aired_episodes": 152
+    }
+  },
+  {
+    "rated_at": "2025-02-26T07:07:51.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 961900,
+        "tvdb": 4161772,
+        "imdb": "tt2057549",
+        "tmdb": 976326,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bref.",
+      "year": 2011,
+      "ids": {
+        "trakt": 60282,
+        "slug": "bref",
+        "tvdb": 251562,
+        "imdb": "tt2044128",
+        "tmdb": 60715,
+        "tvrage": null
+      },
+      "aired_episodes": 88
+    }
+  },
+  {
+    "rated_at": "2025-02-25T17:04:17.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Jet-Assisted Chevy",
+      "ids": {
+        "trakt": 6600724,
+        "tvdb": 328578,
+        "imdb": "tt0768480",
+        "tmdb": 65243,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "MythBusters",
+      "year": 2003,
+      "ids": {
+        "trakt": 1419,
+        "slug": "mythbusters",
+        "tvdb": 73388,
+        "imdb": "tt0383126",
+        "tmdb": 1428,
+        "tvrage": null
+      },
+      "aired_episodes": 272
+    }
+  },
+  {
+    "rated_at": "2025-02-25T15:05:42.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Der PEZ-Spender",
+      "ids": {
+        "trakt": 597574,
+        "tvdb": 648931,
+        "imdb": null,
+        "tmdb": 589246,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Ladykracher",
+      "year": 2002,
+      "ids": {
+        "trakt": 20620,
+        "slug": "ladykracher",
+        "tvdb": 94391,
+        "imdb": "tt0303487",
+        "tmdb": 20716,
+        "tvrage": null
+      },
+      "aired_episodes": 101
+    }
+  },
+  {
+    "rated_at": "2025-02-25T15:05:18.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Shopping",
+      "ids": {
+        "trakt": 597560,
+        "tvdb": 648801,
+        "imdb": null,
+        "tmdb": 589232,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Ladykracher",
+      "year": 2002,
+      "ids": {
+        "trakt": 20620,
+        "slug": "ladykracher",
+        "tvdb": 94391,
+        "imdb": "tt0303487",
+        "tmdb": 20716,
+        "tvrage": null
+      },
+      "aired_episodes": 101
+    }
+  },
+  {
+    "rated_at": "2025-02-25T14:20:57.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 236814,
+        "tvdb": 304734,
+        "imdb": "tt0632109",
+        "tmdb": 228274,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Life on Mars",
+      "year": 2006,
+      "ids": {
+        "trakt": 2953,
+        "slug": "life-on-mars",
+        "tvdb": 79177,
+        "imdb": "tt0478942",
+        "tmdb": 2973,
+        "tvrage": null
+      },
+      "aired_episodes": 16
+    }
+  },
+  {
+    "rated_at": "2025-02-25T14:15:29.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Part 1",
+      "ids": {
+        "trakt": 11698349,
+        "tvdb": null,
+        "imdb": null,
+        "tmdb": 4309713,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Little Britain Abroad",
+      "year": 2006,
+      "ids": {
+        "trakt": 233451,
+        "slug": "little-britain-abroad",
+        "tvdb": null,
+        "imdb": null,
+        "tmdb": 222745,
+        "tvrage": null
+      },
+      "aired_episodes": 2
+    }
+  },
+  {
+    "rated_at": "2025-02-25T14:12:59.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Bzzzzzzzz",
+      "ids": {
+        "trakt": 273156,
+        "tvdb": 295325,
+        "imdb": null,
+        "tmdb": 264574,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Smoking Room",
+      "year": 2004,
+      "ids": {
+        "trakt": 3743,
+        "slug": "the-smoking-room",
+        "tvdb": 78808,
+        "imdb": "tt0414773",
+        "tmdb": 3766,
+        "tvrage": null
+      },
+      "aired_episodes": 16
+    }
+  },
+  {
+    "rated_at": "2025-02-25T14:12:32.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Do De Dum De Da",
+      "ids": {
+        "trakt": 1586678,
+        "tvdb": 295685,
+        "imdb": null,
+        "tmdb": 1775949,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Smoking Room",
+      "year": 2004,
+      "ids": {
+        "trakt": 3743,
+        "slug": "the-smoking-room",
+        "tvdb": 78808,
+        "imdb": "tt0414773",
+        "tmdb": 3766,
+        "tvrage": null
+      },
+      "aired_episodes": 16
+    }
+  },
+  {
+    "rated_at": "2025-02-25T14:11:21.000Z",
+    "rating": 3,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 7,
+      "title": "White Box",
+      "ids": {
+        "trakt": 1592926,
+        "tvdb": 626301,
+        "imdb": "tt0504689",
+        "tmdb": 313946,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Absolutely Fabulous",
+      "year": 1992,
+      "ids": {
+        "trakt": 4469,
+        "slug": "absolutely-fabulous",
+        "tvdb": 73314,
+        "imdb": "tt0105929",
+        "tmdb": 4493,
+        "tvrage": null
+      },
+      "aired_episodes": 39
+    }
+  },
+  {
+    "rated_at": "2025-02-25T13:30:00.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Carly Summers",
+      "ids": {
+        "trakt": 271990,
+        "tvdb": 340094,
+        "imdb": "tt1058340",
+        "tmdb": 263258,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Nip/Tuck",
+      "year": 2003,
+      "ids": {
+        "trakt": 3727,
+        "slug": "nip-tuck",
+        "tvdb": 72201,
+        "imdb": "tt0361217",
+        "tmdb": 3750,
+        "tvrage": null
+      },
+      "aired_episodes": 100
+    }
+  },
+  {
+    "rated_at": "2025-02-25T13:21:49.000Z",
+    "rating": 4,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Judgment Call",
+      "ids": {
+        "trakt": 36900,
+        "tvdb": 132302,
+        "imdb": "tt0663219",
+        "tmdb": 33387,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Numb3rs",
+      "year": 2005,
+      "ids": {
+        "trakt": 577,
+        "slug": "numb3rs",
+        "tvdb": 73918,
+        "imdb": "tt0433309",
+        "tmdb": 578,
+        "tvrage": null
+      },
+      "aired_episodes": 118
+    }
+  },
+  {
+    "rated_at": "2025-02-25T13:15:53.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Girl Who Fell From the Sky",
+      "ids": {
+        "trakt": 798723,
+        "tvdb": 362954,
+        "imdb": "tt1267141",
+        "tmdb": 791272,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "To Love-Ru",
+      "year": 2008,
+      "ids": {
+        "trakt": 34593,
+        "slug": "to-love-ru",
+        "tvdb": 81831,
+        "imdb": "tt1216222",
+        "tmdb": 34742,
+        "tvrage": null
+      },
+      "aired_episodes": 64
+    }
+  },
+  {
+    "rated_at": "2025-02-25T13:11:11.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Freshman Year Summer! I'll Definitely Find a Boyfriend!",
+      "ids": {
+        "trakt": 1019732,
+        "tvdb": 343794,
+        "imdb": "tt2039912",
+        "tmdb": 680930,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Lovely Complex",
+      "year": 2007,
+      "ids": {
+        "trakt": 61850,
+        "slug": "lovely-complex",
+        "tvdb": 80901,
+        "imdb": "tt1587394",
+        "tmdb": 27167,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-25T12:39:08.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "The Beginning of the End",
+      "ids": {
+        "trakt": 342317,
+        "tvdb": 344941,
+        "imdb": "tt0994348",
+        "tmdb": 333996,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Lost",
+      "year": 2004,
+      "ids": {
+        "trakt": 4583,
+        "slug": "lost-2004",
+        "tvdb": 73739,
+        "imdb": "tt0411008",
+        "tmdb": 4607,
+        "tvrage": null
+      },
+      "aired_episodes": 118
+    }
+  },
+  {
+    "rated_at": "2025-02-25T11:07:04.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 538514,
+        "tvdb": 392018,
+        "imdb": "tt1068789",
+        "tmdb": 530272,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Little Britain USA",
+      "year": 2008,
+      "ids": {
+        "trakt": 14816,
+        "slug": "little-britain-usa",
+        "tvdb": 83232,
+        "imdb": "tt0936458",
+        "tmdb": 14880,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:20:36.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 17139,
+        "tvdb": 317024,
+        "imdb": null,
+        "tmdb": 14978,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Dirt",
+      "year": 2007,
+      "ids": {
+        "trakt": 283,
+        "slug": "dirt",
+        "tvdb": 79679,
+        "imdb": "tt0496275",
+        "tmdb": 284,
+        "tvrage": null
+      },
+      "aired_episodes": 20
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:14:42.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 2,
+      "title": "Extra Class: Smile, Please! / Mammoth, Yum! / May I Fall in Love?",
+      "ids": {
+        "trakt": 764127,
+        "tvdb": 347101,
+        "imdb": "tt22259544",
+        "tmdb": 757912,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "School Rumble",
+      "year": 2004,
+      "ids": {
+        "trakt": 31528,
+        "slug": "school-rumble",
+        "tvdb": 79194,
+        "imdb": "tt0878036",
+        "tmdb": 31665,
+        "tvrage": null
+      },
+      "aired_episodes": 52
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:14:17.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Extra Class: New-Term Excitement! / To Be Near You Scramble! / The Naked Truth!",
+      "ids": {
+        "trakt": 764126,
+        "tvdb": 347100,
+        "imdb": "tt22259546",
+        "tmdb": 757913,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "School Rumble",
+      "year": 2004,
+      "ids": {
+        "trakt": 31528,
+        "slug": "school-rumble",
+        "tvdb": 79194,
+        "imdb": "tt0878036",
+        "tmdb": 31665,
+        "tvrage": null
+      },
+      "aired_episodes": 52
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:13:36.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Scramble Reloaded! Requesting a Superstar! A Scandalous Restart!",
+      "ids": {
+        "trakt": 764157,
+        "tvdb": 313338,
+        "imdb": "tt0974376",
+        "tmdb": 757943,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "School Rumble",
+      "year": 2004,
+      "ids": {
+        "trakt": 31528,
+        "slug": "school-rumble",
+        "tvdb": 79194,
+        "imdb": "tt0878036",
+        "tmdb": 31665,
+        "tvrage": null
+      },
+      "aired_episodes": 52
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:13:00.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pounding Heart at a New School Term! Struggle with a Love Letter! Zooming on Bicycles!",
+      "ids": {
+        "trakt": 764131,
+        "tvdb": 304989,
+        "imdb": "tt0972970",
+        "tmdb": 757916,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "School Rumble",
+      "year": 2004,
+      "ids": {
+        "trakt": 31528,
+        "slug": "school-rumble",
+        "tvdb": 79194,
+        "imdb": "tt0878036",
+        "tmdb": 31665,
+        "tvrage": null
+      },
+      "aired_episodes": 52
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:11:03.000Z",
+    "rating": 1,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Sayonara, Zetsubou-Sensei",
+      "ids": {
+        "trakt": 1679193,
+        "tvdb": 355975,
+        "imdb": null,
+        "tmdb": 1186268,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Sayonara Zetsubou Sensei",
+      "year": 2007,
+      "ids": {
+        "trakt": 42661,
+        "slug": "sayonara-zetsubou-sensei",
+        "tvdb": 80327,
+        "imdb": "tt1161699",
+        "tmdb": 42887,
+        "tvrage": null
+      },
+      "aired_episodes": 38
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:03:40.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 11,
+      "number": 1,
+      "title": "Beyond Blunderdome",
+      "ids": {
+        "trakt": 25960,
+        "tvdb": 55679,
+        "imdb": "tt0701069",
+        "tmdb": 62458,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Simpsons",
+      "year": 1989,
+      "ids": {
+        "trakt": 455,
+        "slug": "the-simpsons",
+        "tvdb": 71663,
+        "imdb": "tt0096697",
+        "tmdb": 456,
+        "tvrage": null
+      },
+      "aired_episodes": 801
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:03:04.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 10,
+      "number": 1,
+      "title": "Lard of the Dance",
+      "ids": {
+        "trakt": 25937,
+        "tvdb": 55656,
+        "imdb": "tt0701149",
+        "tmdb": 62445,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Simpsons",
+      "year": 1989,
+      "ids": {
+        "trakt": 455,
+        "slug": "the-simpsons",
+        "tvdb": 71663,
+        "imdb": "tt0096697",
+        "tmdb": 456,
+        "tvrage": null
+      },
+      "aired_episodes": 801
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:02:20.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 9,
+      "number": 1,
+      "title": "The City of New York vs. Homer Simpson",
+      "ids": {
+        "trakt": 25912,
+        "tvdb": 55631,
+        "imdb": "tt0701230",
+        "tmdb": 62420,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Simpsons",
+      "year": 1989,
+      "ids": {
+        "trakt": 455,
+        "slug": "the-simpsons",
+        "tvdb": 71663,
+        "imdb": "tt0096697",
+        "tmdb": 456,
+        "tvrage": null
+      },
+      "aired_episodes": 801
+    }
+  },
+  {
+    "rated_at": "2025-02-25T10:01:45.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Bart of Darkness",
+      "ids": {
+        "trakt": 25837,
+        "tvdb": 55555,
+        "imdb": "tt0763026",
+        "tmdb": 62337,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Simpsons",
+      "year": 1989,
+      "ids": {
+        "trakt": 455,
+        "slug": "the-simpsons",
+        "tvdb": 71663,
+        "imdb": "tt0096697",
+        "tmdb": 456,
+        "tvrage": null
+      },
+      "aired_episodes": 801
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:55:52.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 7,
+      "number": 1,
+      "title": "Who Shot Mr. Burns? (2)",
+      "ids": {
+        "trakt": 25862,
+        "tvdb": 55581,
+        "imdb": "tt0701295",
+        "tmdb": 62377,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Simpsons",
+      "year": 1989,
+      "ids": {
+        "trakt": 455,
+        "slug": "the-simpsons",
+        "tvdb": 71663,
+        "imdb": "tt0096697",
+        "tmdb": 456,
+        "tvrage": null
+      },
+      "aired_episodes": 801
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:51:22.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Mr. Monk and His Biggest Fan",
+      "ids": {
+        "trakt": 99667,
+        "tvdb": 331623,
+        "imdb": "tt1033266",
+        "tmdb": 88182,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Monk",
+      "year": 2002,
+      "ids": {
+        "trakt": 1683,
+        "slug": "monk",
+        "tvdb": 78490,
+        "imdb": "tt0312172",
+        "tmdb": 1695,
+        "tvrage": null
+      },
+      "aired_episodes": 124
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:50:55.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Mr. Monk and the Actor",
+      "ids": {
+        "trakt": 99651,
+        "tvdb": 308897,
+        "imdb": "tt0825095",
+        "tmdb": 87989,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Monk",
+      "year": 2002,
+      "ids": {
+        "trakt": 1683,
+        "slug": "monk",
+        "tvdb": 78490,
+        "imdb": "tt0312172",
+        "tmdb": 1695,
+        "tvrage": null
+      },
+      "aired_episodes": 124
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:33:57.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 27,
+      "title": "Dodge's Dad",
+      "ids": {
+        "trakt": 182370,
+        "tvdb": 575601,
+        "imdb": "tt1429422",
+        "tmdb": 170433,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "My Name Is Earl",
+      "year": 2005,
+      "ids": {
+        "trakt": 2303,
+        "slug": "my-name-is-earl",
+        "tvdb": 75397,
+        "imdb": "tt0460091",
+        "tmdb": 2317,
+        "tvrage": null
+      },
+      "aired_episodes": 92
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:27:37.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Dead",
+      "ids": {
+        "trakt": 37929,
+        "tvdb": 233977,
+        "imdb": "tt0770144",
+        "tmdb": 34208,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Two Pints of Lager and a Packet of Crisps",
+      "year": 2001,
+      "ids": {
+        "trakt": 597,
+        "slug": "two-pints-of-lager-and-a-packet-of-crisps",
+        "tvdb": 77215,
+        "imdb": "tt0278251",
+        "tmdb": 598,
+        "tvrage": null
+      },
+      "aired_episodes": 78
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:06:23.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Testing Times",
+      "ids": {
+        "trakt": 93204,
+        "tvdb": 429210,
+        "imdb": "tt0882338",
+        "tmdb": 82195,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Green Green Grass",
+      "year": 2005,
+      "ids": {
+        "trakt": 1593,
+        "slug": "the-green-green-grass",
+        "tvdb": 80102,
+        "imdb": "tt0469869",
+        "tmdb": 1604,
+        "tvrage": null
+      },
+      "aired_episodes": 32
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:05:55.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Keep on Running",
+      "ids": {
+        "trakt": 93197,
+        "tvdb": 429179,
+        "imdb": "tt0592815",
+        "tmdb": 82187,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Green Green Grass",
+      "year": 2005,
+      "ids": {
+        "trakt": 1593,
+        "slug": "the-green-green-grass",
+        "tvdb": 80102,
+        "imdb": "tt0469869",
+        "tmdb": 1604,
+        "tvrage": null
+      },
+      "aired_episodes": 32
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:00:27.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Don't Tempt Me!!",
+      "ids": {
+        "trakt": 889599,
+        "tvdb": 371721,
+        "imdb": "tt0991469",
+        "tmdb": 882637,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Ah My Buddha!!",
+      "year": 2005,
+      "ids": {
+        "trakt": 42560,
+        "slug": "ah-my-buddha",
+        "tvdb": 80075,
+        "imdb": "tt0978531",
+        "tmdb": 42786,
+        "tvrage": null
+      },
+      "aired_episodes": 26
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:00:04.000Z",
+    "rating": 4,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Don't Awaken!!",
+      "ids": {
+        "trakt": 889586,
+        "tvdb": 327981,
+        "imdb": "tt0980244",
+        "tmdb": 882624,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Ah My Buddha!!",
+      "year": 2005,
+      "ids": {
+        "trakt": 42560,
+        "slug": "ah-my-buddha",
+        "tvdb": 80075,
+        "imdb": "tt0978531",
+        "tmdb": 42786,
+        "tvrage": null
+      },
+      "aired_episodes": 26
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:58:43.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "The Queen of Sheba",
+      "ids": {
+        "trakt": 314366,
+        "tvdb": 8145904,
+        "imdb": "tt0891148",
+        "tmdb": 305558,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Royle Family",
+      "year": 1998,
+      "ids": {
+        "trakt": 4364,
+        "slug": "the-royle-family",
+        "tvdb": 75624,
+        "imdb": "tt0129711",
+        "tmdb": 4388,
+        "tvrage": null
+      },
+      "aired_episodes": 20
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:58:13.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Baby",
+      "ids": {
+        "trakt": 314394,
+        "tvdb": 174053,
+        "imdb": "tt0785642",
+        "tmdb": 305550,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Royle Family",
+      "year": 1998,
+      "ids": {
+        "trakt": 4364,
+        "slug": "the-royle-family",
+        "tvdb": 75624,
+        "imdb": "tt0129711",
+        "tmdb": 4388,
+        "tvrage": null
+      },
+      "aired_episodes": 20
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:57:45.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Pregnancy",
+      "ids": {
+        "trakt": 314388,
+        "tvdb": 174046,
+        "imdb": "tt0785643",
+        "tmdb": 305544,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Royle Family",
+      "year": 1998,
+      "ids": {
+        "trakt": 4364,
+        "slug": "the-royle-family",
+        "tvdb": 75624,
+        "imdb": "tt0129711",
+        "tmdb": 4388,
+        "tvrage": null
+      },
+      "aired_episodes": 20
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:57:18.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Bills, Bills, Bills",
+      "ids": {
+        "trakt": 314382,
+        "tvdb": 174040,
+        "imdb": "tt0757646",
+        "tmdb": 305538,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Royle Family",
+      "year": 1998,
+      "ids": {
+        "trakt": 4364,
+        "slug": "the-royle-family",
+        "tvdb": 75624,
+        "imdb": "tt0129711",
+        "tmdb": 4388,
+        "tvrage": null
+      },
+      "aired_episodes": 20
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:55:30.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 1056620,
+        "tvdb": 444782,
+        "imdb": null,
+        "tmdb": 2615370,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Psychic Academy",
+      "year": 2002,
+      "ids": {
+        "trakt": 63597,
+        "slug": "psychic-academy",
+        "tvdb": 82026,
+        "imdb": "tt2275406",
+        "tmdb": 115967,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:51:05.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Three Minami Sisters",
+      "ids": {
+        "trakt": 948209,
+        "tvdb": 359763,
+        "imdb": "tt1161314",
+        "tmdb": 938624,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Minami-ke",
+      "year": 2007,
+      "ids": {
+        "trakt": 55999,
+        "slug": "minami-ke",
+        "tvdb": 81463,
+        "imdb": "tt1132205",
+        "tmdb": 56354,
+        "tvrage": null
+      },
+      "aired_episodes": 52
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:05:36.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 1384413,
+        "tvdb": 413962,
+        "imdb": null,
+        "tmdb": 1946725,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Nanatsu-iro Drops: First Love That Encompasses You",
+      "year": 2007,
+      "ids": {
+        "trakt": 65635,
+        "slug": "nanatsu-iro-drops-first-love-that-encompasses-you",
+        "tvdb": 84027,
+        "imdb": "tt1132208",
+        "tmdb": 92573,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-25T08:04:58.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Key and the Clock",
+      "ids": {
+        "trakt": 283013,
+        "tvdb": 314748,
+        "imdb": "tt1285074",
+        "tmdb": 269563,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Lost Room",
+      "year": 2006,
+      "ids": {
+        "trakt": 3845,
+        "slug": "the-lost-room",
+        "tvdb": 79637,
+        "imdb": "tt0830361",
+        "tmdb": 3868,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2025-02-25T07:50:40.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "They Came...",
+      "ids": {
+        "trakt": 887297,
+        "tvdb": 159588,
+        "imdb": "tt0947963",
+        "tmdb": 880410,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Maburaho",
+      "year": 2003,
+      "ids": {
+        "trakt": 42218,
+        "slug": "maburaho",
+        "tvdb": 75003,
+        "imdb": "tt0399990",
+        "tmdb": 42442,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-25T07:48:17.000Z",
+    "rating": 3,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Where Is Everybody?",
+      "ids": {
+        "trakt": 382193,
+        "tvdb": 119249,
+        "imdb": "tt0734692",
+        "tmdb": 374331,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Twilight Zone",
+      "year": 1959,
+      "ids": {
+        "trakt": 6318,
+        "slug": "the-twilight-zone-1959",
+        "tvdb": 73587,
+        "imdb": "tt0052520",
+        "tmdb": 6357,
+        "tvrage": null
+      },
+      "aired_episodes": 156
+    }
+  },
+  {
+    "rated_at": "2025-02-25T07:43:07.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "A 30cm Unrequited Love",
+      "ids": {
+        "trakt": 1694146,
+        "tvdb": 360583,
+        "imdb": null,
+        "tmdb": 789659,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Tona-gura!",
+      "year": 2006,
+      "ids": {
+        "trakt": 34515,
+        "slug": "tona-gura",
+        "tvdb": 81735,
+        "imdb": "tt0988931",
+        "tmdb": 34664,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:47:12.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Foretelling",
+      "ids": {
+        "trakt": 1003314,
+        "tvdb": 213420,
+        "imdb": "tt0526541",
+        "tmdb": 969108,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Blackadder",
+      "year": 1983,
+      "ids": {
+        "trakt": 60940,
+        "slug": "blackadder",
+        "tvdb": 76736,
+        "imdb": "tt0084988",
+        "tmdb": 7246,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:45:38.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "A Chance Encounter",
+      "ids": {
+        "trakt": 888981,
+        "tvdb": 180539,
+        "imdb": "tt0909536",
+        "tmdb": 882102,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Elfen Lied",
+      "year": 2004,
+      "ids": {
+        "trakt": 42446,
+        "slug": "elfen-lied",
+        "tvdb": 75941,
+        "imdb": "tt0480489",
+        "tmdb": 42671,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:44:27.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Engagement",
+      "ids": {
+        "trakt": 98424,
+        "tvdb": 41323,
+        "imdb": "tt0589801",
+        "tmdb": 86492,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Golden Girls",
+      "year": 1985,
+      "ids": {
+        "trakt": 1667,
+        "slug": "the-golden-girls",
+        "tvdb": 71292,
+        "imdb": "tt0088526",
+        "tmdb": 1678,
+        "tvrage": null
+      },
+      "aired_episodes": 180
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:43:38.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Churaumi!",
+      "ids": {
+        "trakt": 1022584,
+        "tvdb": 369560,
+        "imdb": null,
+        "tmdb": 1477142,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Kenkou Zenrakei Suieibu Umishou",
+      "year": 2007,
+      "ids": {
+        "trakt": 61991,
+        "slug": "kenkou-zenrakei-suieibu-umishou",
+        "tvdb": 82168,
+        "imdb": "tt1190620",
+        "tmdb": 79041,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:41:18.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "For All Debts Public and Private",
+      "ids": {
+        "trakt": 73583,
+        "tvdb": 167578,
+        "imdb": "tt0705245",
+        "tmdb": 63014,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Sopranos",
+      "year": 1999,
+      "ids": {
+        "trakt": 1389,
+        "slug": "the-sopranos",
+        "tvdb": 75299,
+        "imdb": "tt0141842",
+        "tmdb": 1398,
+        "tvrage": null
+      },
+      "aired_episodes": 86
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:40:47.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Mr. Ruggerio's Neighborhood",
+      "ids": {
+        "trakt": 73570,
+        "tvdb": 167565,
+        "imdb": "tt0705266",
+        "tmdb": 62997,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Sopranos",
+      "year": 1999,
+      "ids": {
+        "trakt": 1389,
+        "slug": "the-sopranos",
+        "tvdb": 75299,
+        "imdb": "tt0141842",
+        "tmdb": 1398,
+        "tvrage": null
+      },
+      "aired_episodes": 86
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:39:28.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Guy Walks into a Psychiatrist's Office",
+      "ids": {
+        "trakt": 73557,
+        "tvdb": 167552,
+        "imdb": "tt0705250",
+        "tmdb": 62984,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Sopranos",
+      "year": 1999,
+      "ids": {
+        "trakt": 1389,
+        "slug": "the-sopranos",
+        "tvdb": 75299,
+        "imdb": "tt0141842",
+        "tmdb": 1398,
+        "tvrage": null
+      },
+      "aired_episodes": 86
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:38:29.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Sopranos",
+      "ids": {
+        "trakt": 73544,
+        "tvdb": 167539,
+        "imdb": "tt0705282",
+        "tmdb": 62970,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Sopranos",
+      "year": 1999,
+      "ids": {
+        "trakt": 1389,
+        "slug": "the-sopranos",
+        "tvdb": 75299,
+        "imdb": "tt0141842",
+        "tmdb": 1398,
+        "tvrage": null
+      },
+      "aired_episodes": 86
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:36:38.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Stockholm Syndrome",
+      "ids": {
+        "trakt": 758020,
+        "tvdb": 1078961,
+        "imdb": "tt1442735",
+        "tmdb": 751953,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bored to Death",
+      "year": 2009,
+      "ids": {
+        "trakt": 30943,
+        "slug": "bored-to-death",
+        "tvdb": 104641,
+        "imdb": "tt1255913",
+        "tmdb": 31078,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:34:54.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Rebirth",
+      "ids": {
+        "trakt": 517492,
+        "tvdb": 311257,
+        "imdb": "tt0885243",
+        "tmdb": 970179,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Death Note",
+      "year": 2006,
+      "ids": {
+        "trakt": 13855,
+        "slug": "death-note",
+        "tvdb": 79481,
+        "imdb": "tt0877057",
+        "tmdb": 13916,
+        "tvrage": null
+      },
+      "aired_episodes": 37
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:31:06.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "La tempête",
+      "ids": {
+        "trakt": 608661,
+        "tvdb": 1524031,
+        "imdb": null,
+        "tmdb": 600391,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Hero Corp",
+      "year": 2008,
+      "ids": {
+        "trakt": 21665,
+        "slug": "hero-corp",
+        "tvdb": 83750,
+        "imdb": "tt1480072",
+        "tmdb": 21766,
+        "tvrage": null
+      },
+      "aired_episodes": 93
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:30:42.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Le village",
+      "ids": {
+        "trakt": 608646,
+        "tvdb": 406765,
+        "imdb": "tt1485330",
+        "tmdb": 600375,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Hero Corp",
+      "year": 2008,
+      "ids": {
+        "trakt": 21665,
+        "slug": "hero-corp",
+        "tvdb": 83750,
+        "imdb": "tt1480072",
+        "tmdb": 21766,
+        "tvrage": null
+      },
+      "aired_episodes": 93
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:28:21.000Z",
+    "rating": 1,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Nice to Meet You, Master!",
+      "ids": {
+        "trakt": 830697,
+        "tvdb": 368359,
+        "imdb": null,
+        "tmdb": 824945,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Kamen no Maid Guy",
+      "year": 2008,
+      "ids": {
+        "trakt": 36204,
+        "slug": "kamen-no-maid-guy",
+        "tvdb": 82086,
+        "imdb": "tt1216123",
+        "tmdb": 36360,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:26:47.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Welcome to the Project!",
+      "ids": {
+        "trakt": 889625,
+        "tvdb": 308010,
+        "imdb": "tt0858159",
+        "tmdb": 960068,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Welcome to the N.H.K.",
+      "year": 2006,
+      "ids": {
+        "trakt": 42595,
+        "slug": "welcome-to-the-n-h-k",
+        "tvdb": 79415,
+        "imdb": "tt0857297",
+        "tmdb": 42821,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:20:16.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Louise the Zero",
+      "ids": {
+        "trakt": 816774,
+        "tvdb": 317394,
+        "imdb": "tt0980234",
+        "tmdb": 809937,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Familiar of Zero",
+      "year": 2006,
+      "ids": {
+        "trakt": 35599,
+        "slug": "the-familiar-of-zero",
+        "tvdb": 79719,
+        "imdb": "tt0978553",
+        "tmdb": 35753,
+        "tvrage": null
+      },
+      "aired_episodes": 49
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:17:47.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 298247,
+        "tvdb": 122032,
+        "imdb": "tt0765909",
+        "tmdb": 289359,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The King of Queens",
+      "year": 1998,
+      "ids": {
+        "trakt": 4214,
+        "slug": "the-king-of-queens",
+        "tvdb": 73641,
+        "imdb": "tt0165581",
+        "tmdb": 4238,
+        "tvrage": null
+      },
+      "aired_episodes": 207
+    }
+  },
+  {
+    "rated_at": "2025-02-24T14:16:34.000Z",
+    "rating": 4,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Red Night",
+      "ids": {
+        "trakt": 1685133,
+        "tvdb": 1161181,
+        "imdb": null,
+        "tmdb": 892684,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "11eyes",
+      "year": 2009,
+      "ids": {
+        "trakt": 44065,
+        "slug": "11eyes",
+        "tvdb": 117851,
+        "imdb": "tt1515976",
+        "tmdb": 44310,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-24T13:46:29.000Z",
+    "rating": 3,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Star of Contract Flowed... (1)",
+      "ids": {
+        "trakt": 765160,
+        "tvdb": 328321,
+        "imdb": "tt1015625",
+        "tmdb": 758956,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "DARKER THAN BLACK",
+      "year": 2007,
+      "ids": {
+        "trakt": 31580,
+        "slug": "darker-than-black",
+        "tvdb": 80042,
+        "imdb": "tt0995941",
+        "tmdb": 31718,
+        "tvrage": null
+      },
+      "aired_episodes": 37
+    }
+  },
+  {
+    "rated_at": "2025-02-24T13:42:25.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "My Master and the Useless Bum",
+      "ids": {
+        "trakt": 581162,
+        "tvdb": 116017,
+        "imdb": null,
+        "tmdb": 572471,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Oruchuban Ebichu",
+      "year": 1999,
+      "ids": {
+        "trakt": 19149,
+        "slug": "oruchuban-ebichu",
+        "tvdb": 73492,
+        "imdb": "tt0366064",
+        "tmdb": 19238,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:43:12.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Nice Is Different than Good",
+      "ids": {
+        "trakt": 42343,
+        "tvdb": 806811,
+        "imdb": "tt1471507",
+        "tmdb": 162894,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Desperate Housewives",
+      "year": 2004,
+      "ids": {
+        "trakt": 691,
+        "slug": "desperate-housewives",
+        "tvdb": 73800,
+        "imdb": "tt0410975",
+        "tmdb": 693,
+        "tvrage": null
+      },
+      "aired_episodes": 179
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:42:41.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "You're Gonna Love Tomorrow",
+      "ids": {
+        "trakt": 42319,
+        "tvdb": 381050,
+        "imdb": "tt1263186",
+        "tmdb": 163694,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Desperate Housewives",
+      "year": 2004,
+      "ids": {
+        "trakt": 691,
+        "slug": "desperate-housewives",
+        "tvdb": 73800,
+        "imdb": "tt0410975",
+        "tmdb": 693,
+        "tvrage": null
+      },
+      "aired_episodes": 179
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:42:07.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Now You Know",
+      "ids": {
+        "trakt": 42302,
+        "tvdb": 335741,
+        "imdb": "tt1002845",
+        "tmdb": 163623,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Desperate Housewives",
+      "year": 2004,
+      "ids": {
+        "trakt": 691,
+        "slug": "desperate-housewives",
+        "tvdb": 73800,
+        "imdb": "tt0410975",
+        "tmdb": 693,
+        "tvrage": null
+      },
+      "aired_episodes": 179
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:41:40.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Listen to the Rain on the Roof",
+      "ids": {
+        "trakt": 42279,
+        "tvdb": 307903,
+        "imdb": "tt0829690",
+        "tmdb": 38409,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Desperate Housewives",
+      "year": 2004,
+      "ids": {
+        "trakt": 691,
+        "slug": "desperate-housewives",
+        "tvdb": 73800,
+        "imdb": "tt0410975",
+        "tmdb": 693,
+        "tvrage": null
+      },
+      "aired_episodes": 179
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:41:13.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Next",
+      "ids": {
+        "trakt": 42255,
+        "tvdb": 299372,
+        "imdb": "tt0558717",
+        "tmdb": 38385,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Desperate Housewives",
+      "year": 2004,
+      "ids": {
+        "trakt": 691,
+        "slug": "desperate-housewives",
+        "tvdb": 73800,
+        "imdb": "tt0410975",
+        "tmdb": 693,
+        "tvrage": null
+      },
+      "aired_episodes": 179
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:40:44.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 42232,
+        "tvdb": 128921,
+        "imdb": "tt0558720",
+        "tmdb": 38362,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Desperate Housewives",
+      "year": 2004,
+      "ids": {
+        "trakt": 691,
+        "slug": "desperate-housewives",
+        "tvdb": 73800,
+        "imdb": "tt0410975",
+        "tmdb": 693,
+        "tvrage": null
+      },
+      "aired_episodes": 179
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:35:02.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 77741,
+        "tvdb": 307497,
+        "imdb": "tt0680222",
+        "tmdb": 66772,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Psych",
+      "year": 2006,
+      "ids": {
+        "trakt": 1438,
+        "slug": "psych",
+        "tvdb": 79335,
+        "imdb": "tt0491738",
+        "tmdb": 1447,
+        "tvrage": null
+      },
+      "aired_episodes": 120
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:21:24.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Christmas In Chatsworth",
+      "ids": {
+        "trakt": 140247,
+        "tvdb": 335091,
+        "imdb": "tt0419132",
+        "tmdb": 123129,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Shameless",
+      "year": 2004,
+      "ids": {
+        "trakt": 1893,
+        "slug": "shameless",
+        "tvdb": 78846,
+        "imdb": "tt0377260",
+        "tmdb": 1906,
+        "tvrage": null
+      },
+      "aired_episodes": 138
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:20:33.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 140265,
+        "tvdb": 771301,
+        "imdb": "tt0698946",
+        "tmdb": 122986,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Shameless",
+      "year": 2004,
+      "ids": {
+        "trakt": 1893,
+        "slug": "shameless",
+        "tvdb": 78846,
+        "imdb": "tt0377260",
+        "tmdb": 1906,
+        "tvrage": null
+      },
+      "aired_episodes": 138
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:19:58.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 140255,
+        "tvdb": 296358,
+        "imdb": "tt0698936",
+        "tmdb": 122984,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Shameless",
+      "year": 2004,
+      "ids": {
+        "trakt": 1893,
+        "slug": "shameless",
+        "tvdb": 78846,
+        "imdb": "tt0377260",
+        "tmdb": 1906,
+        "tvrage": null
+      },
+      "aired_episodes": 138
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:19:27.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 140248,
+        "tvdb": 296350,
+        "imdb": "tt0698929",
+        "tmdb": 122595,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Shameless",
+      "year": 2004,
+      "ids": {
+        "trakt": 1893,
+        "slug": "shameless",
+        "tvdb": 78846,
+        "imdb": "tt0377260",
+        "tmdb": 1906,
+        "tvrage": null
+      },
+      "aired_episodes": 138
+    }
+  },
+  {
+    "rated_at": "2025-02-24T10:14:21.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Innocence and Panic",
+      "ids": {
+        "trakt": 1015995,
+        "tvdb": 1186751,
+        "imdb": "tt2297778",
+        "tmdb": 1155064,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Scenes from a Marriage",
+      "year": 1973,
+      "ids": {
+        "trakt": 61581,
+        "slug": "scenes-from-a-marriage",
+        "tvdb": 119011,
+        "imdb": "tt0070644",
+        "tmdb": 65170,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    }
+  },
+  {
+    "rated_at": "2025-02-23T15:53:31.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Christmas in the old clogs",
+      "ids": {
+        "trakt": 21257,
+        "tvdb": 339332,
+        "imdb": null,
+        "tmdb": 18884,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Klovn",
+      "year": 2005,
+      "ids": {
+        "trakt": 366,
+        "slug": "klovn",
+        "tvdb": 79269,
+        "imdb": "tt0434695",
+        "tmdb": 367,
+        "tvrage": null
+      },
+      "aired_episodes": 94
+    }
+  },
+  {
+    "rated_at": "2025-02-22T19:28:52.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 9,
+      "number": 1,
+      "title": "The Red Pants",
+      "ids": {
+        "trakt": 6549763,
+        "tvdb": 9263901,
+        "imdb": null,
+        "tmdb": 3825117,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Klovn",
+      "year": 2005,
+      "ids": {
+        "trakt": 366,
+        "slug": "klovn",
+        "tvdb": 79269,
+        "imdb": "tt0434695",
+        "tmdb": 367,
+        "tvrage": null
+      },
+      "aired_episodes": 94
+    }
+  },
+  {
+    "rated_at": "2025-02-22T18:16:21.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Seven Thirty-Seven",
+      "ids": {
+        "trakt": 73489,
+        "tvdb": 438912,
+        "imdb": "tt1232244",
+        "tmdb": 972873,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Breaking Bad",
+      "year": 2008,
+      "ids": {
+        "trakt": 1388,
+        "slug": "breaking-bad",
+        "tvdb": 81189,
+        "imdb": "tt0903747",
+        "tmdb": 1396,
+        "tvrage": null
+      },
+      "aired_episodes": 62
+    }
+  },
+  {
+    "rated_at": "2025-02-22T18:15:54.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 73482,
+        "tvdb": 349232,
+        "imdb": "tt0959621",
+        "tmdb": 62085,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Breaking Bad",
+      "year": 2008,
+      "ids": {
+        "trakt": 1388,
+        "slug": "breaking-bad",
+        "tvdb": 81189,
+        "imdb": "tt0903747",
+        "tmdb": 1396,
+        "tvrage": null
+      },
+      "aired_episodes": 62
+    }
+  },
+  {
+    "rated_at": "2025-02-22T18:07:12.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Don's New Job",
+      "ids": {
+        "trakt": 398944,
+        "tvdb": 3109321,
+        "imdb": "tt1771364",
+        "tmdb": 390548,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How Not To Live Your Life",
+      "year": 2008,
+      "ids": {
+        "trakt": 7709,
+        "slug": "how-not-to-live-your-life",
+        "tvdb": 82825,
+        "imdb": "tt1270367",
+        "tmdb": 7755,
+        "tvrage": null
+      },
+      "aired_episodes": 19
+    }
+  },
+  {
+    "rated_at": "2025-02-22T18:06:46.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Don's New Flatmate",
+      "ids": {
+        "trakt": 398938,
+        "tvdb": 1079401,
+        "imdb": "tt1475873",
+        "tmdb": 390532,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How Not To Live Your Life",
+      "year": 2008,
+      "ids": {
+        "trakt": 7709,
+        "slug": "how-not-to-live-your-life",
+        "tvdb": 82825,
+        "imdb": "tt1270367",
+        "tmdb": 7755,
+        "tvrage": null
+      },
+      "aired_episodes": 19
+    }
+  },
+  {
+    "rated_at": "2025-02-22T18:06:19.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Home Sweet Home",
+      "ids": {
+        "trakt": 398932,
+        "tvdb": 383455,
+        "imdb": "tt1279678",
+        "tmdb": 390538,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How Not To Live Your Life",
+      "year": 2008,
+      "ids": {
+        "trakt": 7709,
+        "slug": "how-not-to-live-your-life",
+        "tvdb": 82825,
+        "imdb": "tt1270367",
+        "tmdb": 7755,
+        "tvrage": null
+      },
+      "aired_episodes": 19
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:53:54.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 9,
+      "number": 1,
+      "title": "Back to Earth (1)",
+      "ids": {
+        "trakt": 18892,
+        "tvdb": 442841,
+        "imdb": "tt1365540",
+        "tmdb": 421442,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:53:27.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 8,
+      "number": 1,
+      "title": "Back in the Red (1)",
+      "ids": {
+        "trakt": 18884,
+        "tvdb": 42403,
+        "imdb": "tt0684140",
+        "tmdb": 421346,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:53:00.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 7,
+      "number": 1,
+      "title": "Tikka to Ride",
+      "ids": {
+        "trakt": 18876,
+        "tvdb": 42393,
+        "imdb": "tt0684184",
+        "tmdb": 421300,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:52:35.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Psirens",
+      "ids": {
+        "trakt": 18870,
+        "tvdb": 42387,
+        "imdb": "tt0684173",
+        "tmdb": 421323,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:52:09.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Holoship",
+      "ids": {
+        "trakt": 18864,
+        "tvdb": 42381,
+        "imdb": "tt0684159",
+        "tmdb": 421361,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:51:42.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Camille",
+      "ids": {
+        "trakt": 18858,
+        "tvdb": 42375,
+        "imdb": "tt0684149",
+        "tmdb": 421422,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:51:14.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Backwards",
+      "ids": {
+        "trakt": 18852,
+        "tvdb": 42369,
+        "imdb": "tt0684144",
+        "tmdb": 421336,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:50:29.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Kryten",
+      "ids": {
+        "trakt": 18846,
+        "tvdb": 42363,
+        "imdb": "tt0684161",
+        "tmdb": 421330,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:50:00.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The End",
+      "ids": {
+        "trakt": 18840,
+        "tvdb": 42357,
+        "imdb": "tt0684181",
+        "tmdb": 421377,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Red Dwarf",
+      "year": 1988,
+      "ids": {
+        "trakt": 325,
+        "slug": "red-dwarf",
+        "tvdb": 71326,
+        "imdb": "tt0094535",
+        "tmdb": 326,
+        "tvrage": null
+      },
+      "aired_episodes": 73
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:45:20.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 75741,
+        "tvdb": 660911,
+        "imdb": "tt1444504",
+        "tmdb": 64965,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Modern Family",
+      "year": 2009,
+      "ids": {
+        "trakt": 1412,
+        "slug": "modern-family",
+        "tvdb": 95011,
+        "imdb": "tt1442437",
+        "tmdb": 1421,
+        "tvrage": null
+      },
+      "aired_episodes": 250
+    }
+  },
+  {
+    "rated_at": "2025-02-22T17:27:50.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "China",
+      "ids": {
+        "trakt": 787934,
+        "tvdb": 2753031,
+        "imdb": "tt1713577",
+        "tmdb": 780624,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "An Idiot Abroad",
+      "year": 2010,
+      "ids": {
+        "trakt": 33867,
+        "slug": "an-idiot-abroad",
+        "tvdb": 187071,
+        "imdb": "tt1702042",
+        "tmdb": 34014,
+        "tvrage": null
+      },
+      "aired_episodes": 19
+    }
+  },
+  {
+    "rated_at": "2025-02-20T10:21:33.000Z",
+    "rating": 1,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Color 01",
+      "ids": {
+        "trakt": 454482,
+        "tvdb": 619511,
+        "imdb": null,
+        "tmdb": 446242,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Colorful",
+      "year": 1999,
+      "ids": {
+        "trakt": 11095,
+        "slug": "colorful",
+        "tvdb": 93251,
+        "imdb": "tt0844490",
+        "tmdb": 11147,
+        "tvrage": null
+      },
+      "aired_episodes": 16
+    }
+  },
+  {
+    "rated_at": "2025-02-20T10:11:44.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 9,
+      "number": 1,
+      "title": "The Butter Shave",
+      "ids": {
+        "trakt": 73843,
+        "tvdb": 304216,
+        "imdb": "tt0697665",
+        "tmdb": 63261,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Seinfeld",
+      "year": 1989,
+      "ids": {
+        "trakt": 1391,
+        "slug": "seinfeld",
+        "tvdb": 79169,
+        "imdb": "tt0098904",
+        "tmdb": 1400,
+        "tvrage": null
+      },
+      "aired_episodes": 180
+    }
+  },
+  {
+    "rated_at": "2025-02-20T10:11:16.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 8,
+      "number": 1,
+      "title": "The Foundation",
+      "ids": {
+        "trakt": 73821,
+        "tvdb": 304194,
+        "imdb": "tt0697699",
+        "tmdb": 63239,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Seinfeld",
+      "year": 1989,
+      "ids": {
+        "trakt": 1391,
+        "slug": "seinfeld",
+        "tvdb": 79169,
+        "imdb": "tt0098904",
+        "tmdb": 1400,
+        "tvrage": null
+      },
+      "aired_episodes": 180
+    }
+  },
+  {
+    "rated_at": "2025-02-20T10:10:35.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 7,
+      "number": 1,
+      "title": "The Engagement",
+      "ids": {
+        "trakt": 73797,
+        "tvdb": 304170,
+        "imdb": "tt0697690",
+        "tmdb": 63214,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Seinfeld",
+      "year": 1989,
+      "ids": {
+        "trakt": 1391,
+        "slug": "seinfeld",
+        "tvdb": 79169,
+        "imdb": "tt0098904",
+        "tmdb": 1400,
+        "tvrage": null
+      },
+      "aired_episodes": 180
+    }
+  },
+  {
+    "rated_at": "2025-02-20T10:01:46.000Z",
+    "rating": 3,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Episode 1",
+      "ids": {
+        "trakt": 1439061,
+        "tvdb": 2371821,
+        "imdb": "tt0513342",
+        "tmdb": 1136572,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Anke",
+      "year": 2000,
+      "ids": {
+        "trakt": 40530,
+        "slug": "anke",
+        "tvdb": 170311,
+        "imdb": "tt0231011",
+        "tmdb": 23052,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:49:19.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Daddy Cool",
+      "ids": {
+        "trakt": 1748313,
+        "tvdb": 604081,
+        "imdb": null,
+        "tmdb": 1313625,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Die Ludolfs",
+      "year": 2006,
+      "ids": {
+        "trakt": 37563,
+        "slug": "die-ludolfs",
+        "tvdb": 80523,
+        "imdb": "tt1056152",
+        "tmdb": 37721,
+        "tvrage": null
+      },
+      "aired_episodes": 90
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:48:48.000Z",
+    "rating": 10,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Der runde Baron von Dernbach",
+      "ids": {
+        "trakt": 1748304,
+        "tvdb": 444888,
+        "imdb": null,
+        "tmdb": 1313616,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Die Ludolfs",
+      "year": 2006,
+      "ids": {
+        "trakt": 37563,
+        "slug": "die-ludolfs",
+        "tvdb": 80523,
+        "imdb": "tt1056152",
+        "tmdb": 37721,
+        "tvrage": null
+      },
+      "aired_episodes": 90
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:48:20.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Lang soll er leben",
+      "ids": {
+        "trakt": 1748286,
+        "tvdb": 384626,
+        "imdb": null,
+        "tmdb": 1313597,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Die Ludolfs",
+      "year": 2006,
+      "ids": {
+        "trakt": 37563,
+        "slug": "die-ludolfs",
+        "tvdb": 80523,
+        "imdb": "tt1056152",
+        "tmdb": 37721,
+        "tvrage": null
+      },
+      "aired_episodes": 90
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:46:53.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Vollgas unter roter Sonne",
+      "ids": {
+        "trakt": 854840,
+        "tvdb": 384593,
+        "imdb": "tt1072530",
+        "tmdb": 850912,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Die Ludolfs",
+      "year": 2006,
+      "ids": {
+        "trakt": 37563,
+        "slug": "die-ludolfs",
+        "tvdb": 80523,
+        "imdb": "tt1056152",
+        "tmdb": 37721,
+        "tvrage": null
+      },
+      "aired_episodes": 90
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:39:48.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Girl With Adult Panties",
+      "ids": {
+        "trakt": 886782,
+        "tvdb": 1504871,
+        "imdb": "tt1585730",
+        "tmdb": 879905,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Chu-Bra!!",
+      "year": 2010,
+      "ids": {
+        "trakt": 42186,
+        "slug": "chu-bra",
+        "tvdb": 133331,
+        "imdb": "tt1582777",
+        "tmdb": 42409,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:37:39.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "The Robotic Manipulation",
+      "ids": {
+        "trakt": 75432,
+        "tvdb": 2405541,
+        "imdb": "tt1632224",
+        "tmdb": 64697,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Big Bang Theory",
+      "year": 2007,
+      "ids": {
+        "trakt": 1409,
+        "slug": "the-big-bang-theory",
+        "tvdb": 80379,
+        "imdb": "tt0898266",
+        "tmdb": 1418,
+        "tvrage": null
+      },
+      "aired_episodes": 279
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:37:18.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "The Electric Can Opener Fluctuation",
+      "ids": {
+        "trakt": 75409,
+        "tvdb": 795681,
+        "imdb": "tt1487706",
+        "tmdb": 64674,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Big Bang Theory",
+      "year": 2007,
+      "ids": {
+        "trakt": 1409,
+        "slug": "the-big-bang-theory",
+        "tvdb": 80379,
+        "imdb": "tt0898266",
+        "tmdb": 1418,
+        "tvrage": null
+      },
+      "aired_episodes": 279
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:36:51.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "The Bad Fish Paradigm",
+      "ids": {
+        "trakt": 75386,
+        "tvdb": 387721,
+        "imdb": "tt1256599",
+        "tmdb": 64651,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Big Bang Theory",
+      "year": 2007,
+      "ids": {
+        "trakt": 1409,
+        "slug": "the-big-bang-theory",
+        "tvdb": 80379,
+        "imdb": "tt0898266",
+        "tmdb": 1418,
+        "tvrage": null
+      },
+      "aired_episodes": 279
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:36:26.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 75369,
+        "tvdb": 332484,
+        "imdb": "tt0775431",
+        "tmdb": 64766,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Big Bang Theory",
+      "year": 2007,
+      "ids": {
+        "trakt": 1409,
+        "slug": "the-big-bang-theory",
+        "tvdb": 80379,
+        "imdb": "tt0898266",
+        "tmdb": 1418,
+        "tvrage": null
+      },
+      "aired_episodes": 279
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:03:10.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "...And the Horse He Rode in On",
+      "ids": {
+        "trakt": 318801,
+        "tvdb": 60852,
+        "imdb": "tt0748731",
+        "tmdb": 309993,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Will & Grace",
+      "year": 1998,
+      "ids": {
+        "trakt": 4430,
+        "slug": "will-grace",
+        "tvdb": 71814,
+        "imdb": "tt0157246",
+        "tmdb": 4454,
+        "tvrage": null
+      },
+      "aired_episodes": 194
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:02:41.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "The Third Wheel Gets the Grace",
+      "ids": {
+        "trakt": 318774,
+        "tvdb": 60825,
+        "imdb": "tt0748884",
+        "tmdb": 309941,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Will & Grace",
+      "year": 1998,
+      "ids": {
+        "trakt": 4430,
+        "slug": "will-grace",
+        "tvdb": 71814,
+        "imdb": "tt0157246",
+        "tmdb": 4454,
+        "tvrage": null
+      },
+      "aired_episodes": 194
+    }
+  },
+  {
+    "rated_at": "2025-02-20T09:01:06.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "New Will City",
+      "ids": {
+        "trakt": 318749,
+        "tvdb": 60800,
+        "imdb": "tt0748834",
+        "tmdb": 309891,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Will & Grace",
+      "year": 1998,
+      "ids": {
+        "trakt": 4430,
+        "slug": "will-grace",
+        "tvdb": 71814,
+        "imdb": "tt0157246",
+        "tmdb": 4454,
+        "tvrage": null
+      },
+      "aired_episodes": 194
+    }
+  },
+  {
+    "rated_at": "2025-02-20T08:43:25.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 7,
+      "title": "Chapter 13",
+      "ids": {
+        "trakt": 406642,
+        "tvdb": 2958931,
+        "imdb": "tt1734264",
+        "tmdb": 398031,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Eastbound & Down",
+      "year": 2009,
+      "ids": {
+        "trakt": 8578,
+        "slug": "eastbound-down",
+        "tvdb": 82467,
+        "imdb": "tt0866442",
+        "tmdb": 8624,
+        "tvrage": null
+      },
+      "aired_episodes": 29
+    }
+  },
+  {
+    "rated_at": "2025-02-20T08:41:58.000Z",
+    "rating": 4,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Present is little sister?",
+      "ids": {
+        "trakt": 1061382,
+        "tvdb": 413605,
+        "imdb": null,
+        "tmdb": 1429177,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Chocotto Sister",
+      "year": 2006,
+      "ids": {
+        "trakt": 63904,
+        "slug": "chocotto-sister",
+        "tvdb": 80048,
+        "imdb": "tt2629076",
+        "tmdb": 76895,
+        "tvrage": null
+      },
+      "aired_episodes": 24
+    }
+  },
+  {
+    "rated_at": "2025-02-18T08:58:27.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 8,
+      "number": 1,
+      "title": "Waste of Pingus",
+      "ids": {
+        "trakt": 5196635,
+        "tvdb": 8468598,
+        "imdb": null,
+        "tmdb": 3001129,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Klovn",
+      "year": 2005,
+      "ids": {
+        "trakt": 366,
+        "slug": "klovn",
+        "tvdb": 79269,
+        "imdb": "tt0434695",
+        "tmdb": 367,
+        "tvrage": null
+      },
+      "aired_episodes": 94
+    }
+  },
+  {
+    "rated_at": "2025-02-18T08:58:00.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 7,
+      "number": 1,
+      "title": "The Muslim Piano",
+      "ids": {
+        "trakt": 3108382,
+        "tvdb": 6782569,
+        "imdb": null,
+        "tmdb": 1550550,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Klovn",
+      "year": 2005,
+      "ids": {
+        "trakt": 366,
+        "slug": "klovn",
+        "tvdb": 79269,
+        "imdb": "tt0434695",
+        "tmdb": 367,
+        "tvrage": null
+      },
+      "aired_episodes": 94
+    }
+  },
+  {
+    "rated_at": "2025-02-15T22:25:12.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "1,000 People Fight for $5,000,000",
+      "ids": {
+        "trakt": 11649559,
+        "tvdb": 10825504,
+        "imdb": "tt34696737",
+        "tmdb": 5220174,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Beast Games",
+      "year": 2024,
+      "ids": {
+        "trakt": 231618,
+        "slug": "beast-games",
+        "tvdb": 447806,
+        "imdb": "tt31812476",
+        "tmdb": 249522,
+        "tvrage": null
+      },
+      "aired_episodes": 20
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:53:34.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 8,
+      "number": 1,
+      "title": "Home Sweet Home",
+      "ids": {
+        "trakt": 142803,
+        "tvdb": 4095761,
+        "imdb": "tt1725268",
+        "tmdb": 131076,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Entourage",
+      "year": 2004,
+      "ids": {
+        "trakt": 1927,
+        "slug": "entourage",
+        "tvdb": 74543,
+        "imdb": "tt0387199",
+        "tmdb": 1940,
+        "tvrage": null
+      },
+      "aired_episodes": 96
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:52:49.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Drive",
+      "ids": {
+        "trakt": 142781,
+        "tvdb": 780681,
+        "imdb": "tt1410538",
+        "tmdb": 131060,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Entourage",
+      "year": 2004,
+      "ids": {
+        "trakt": 1927,
+        "slug": "entourage",
+        "tvdb": 74543,
+        "imdb": "tt0387199",
+        "tmdb": 1940,
+        "tvrage": null
+      },
+      "aired_episodes": 96
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:50:04.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 7,
+      "number": 1,
+      "title": "Stunted",
+      "ids": {
+        "trakt": 142793,
+        "tvdb": 2119281,
+        "imdb": "tt1633511",
+        "tmdb": 131068,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Entourage",
+      "year": 2004,
+      "ids": {
+        "trakt": 1927,
+        "slug": "entourage",
+        "tvdb": 74543,
+        "imdb": "tt0387199",
+        "tmdb": 1940,
+        "tvrage": null
+      },
+      "aired_episodes": 96
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:49:35.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Fantasy Island",
+      "ids": {
+        "trakt": 142769,
+        "tvdb": 361072,
+        "imdb": "tt1280592",
+        "tmdb": 131030,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Entourage",
+      "year": 2004,
+      "ids": {
+        "trakt": 1927,
+        "slug": "entourage",
+        "tvdb": 74543,
+        "imdb": "tt0387199",
+        "tmdb": 1940,
+        "tvrage": null
+      },
+      "aired_episodes": 96
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:49:01.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Welcome to the Jungle",
+      "ids": {
+        "trakt": 142757,
+        "tvdb": 330217,
+        "imdb": "tt0971568",
+        "tmdb": 131007,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Entourage",
+      "year": 2004,
+      "ids": {
+        "trakt": 1927,
+        "slug": "entourage",
+        "tvdb": 74543,
+        "imdb": "tt0387199",
+        "tmdb": 1940,
+        "tvrage": null
+      },
+      "aired_episodes": 96
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:11:08.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Pink Phink",
+      "ids": {
+        "trakt": 534868,
+        "tvdb": 49504,
+        "imdb": "tt13511548",
+        "tmdb": 6845015,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Pink Panther",
+      "year": 1964,
+      "ids": {
+        "trakt": 14629,
+        "slug": "the-pink-panther",
+        "tvdb": 71554,
+        "imdb": "tt13505014",
+        "tmdb": null,
+        "tvrage": null
+      },
+      "aired_episodes": 124
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:11:04.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Prefabricated Pink",
+      "ids": {
+        "trakt": 1512633,
+        "tvdb": 49537,
+        "imdb": null,
+        "tmdb": 6038516,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Pink Panther",
+      "year": 1964,
+      "ids": {
+        "trakt": 14629,
+        "slug": "the-pink-panther",
+        "tvdb": 71554,
+        "imdb": "tt13505014",
+        "tmdb": null,
+        "tvrage": null
+      },
+      "aired_episodes": 124
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:11:01.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "The Pink Flea",
+      "ids": {
+        "trakt": 1512700,
+        "tvdb": 49571,
+        "imdb": null,
+        "tmdb": 5960299,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Pink Panther",
+      "year": 1964,
+      "ids": {
+        "trakt": 14629,
+        "slug": "the-pink-panther",
+        "tvdb": 71554,
+        "imdb": "tt13505014",
+        "tmdb": null,
+        "tvrage": null
+      },
+      "aired_episodes": 124
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:10:57.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Pink Lightning",
+      "ids": {
+        "trakt": 1512848,
+        "tvdb": 352929,
+        "imdb": null,
+        "tmdb": 5960333,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Pink Panther",
+      "year": 1964,
+      "ids": {
+        "trakt": 14629,
+        "slug": "the-pink-panther",
+        "tvdb": 71554,
+        "imdb": "tt13505014",
+        "tmdb": null,
+        "tvrage": null
+      },
+      "aired_episodes": 124
+    }
+  },
+  {
+    "rated_at": "2025-02-12T16:04:45.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 777116,
+        "tvdb": 2529021,
+        "imdb": "tt1668798",
+        "tmdb": 770521,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Raising Hope",
+      "year": 2010,
+      "ids": {
+        "trakt": 32674,
+        "slug": "raising-hope",
+        "tvdb": 164021,
+        "imdb": "tt1615919",
+        "tmdb": 32815,
+        "tvrage": null
+      },
+      "aired_episodes": 88
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:52:19.000Z",
+    "rating": 1,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Samurai Labyrinth? Loverinth?",
+      "ids": {
+        "trakt": 1026372,
+        "tvdb": 713851,
+        "imdb": null,
+        "tmdb": 3150190,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Labyrinth of Flames",
+      "year": 2000,
+      "ids": {
+        "trakt": 62188,
+        "slug": "labyrinth-of-flames",
+        "tvdb": 82968,
+        "imdb": "tt0314017",
+        "tmdb": 131899,
+        "tvrage": null
+      },
+      "aired_episodes": 2
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:48:10.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "The Field Trip",
+      "ids": {
+        "trakt": 394554,
+        "tvdb": 493361,
+        "imdb": "tt1398705",
+        "tmdb": 386292,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "The Inbetweeners",
+      "year": 2008,
+      "ids": {
+        "trakt": 7276,
+        "slug": "the-inbetweeners",
+        "tvdb": 81950,
+        "imdb": "tt1220617",
+        "tmdb": 7317,
+        "tvrage": null
+      },
+      "aired_episodes": 18
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:40:07.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Big Days",
+      "ids": {
+        "trakt": 67656,
+        "tvdb": 2545911,
+        "imdb": "tt1701804",
+        "tmdb": 62868,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How I Met Your Mother",
+      "year": 2005,
+      "ids": {
+        "trakt": 1095,
+        "slug": "how-i-met-your-mother",
+        "tvdb": 75760,
+        "imdb": "tt0460649",
+        "tmdb": 1100,
+        "tvrage": null
+      },
+      "aired_episodes": 208
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:39:42.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Definitions",
+      "ids": {
+        "trakt": 67632,
+        "tvdb": 792741,
+        "imdb": "tt1491272",
+        "tmdb": 62844,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How I Met Your Mother",
+      "year": 2005,
+      "ids": {
+        "trakt": 1095,
+        "slug": "how-i-met-your-mother",
+        "tvdb": 75760,
+        "imdb": "tt0460649",
+        "tmdb": 1100,
+        "tvrage": null
+      },
+      "aired_episodes": 208
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:39:13.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Do I Know You?",
+      "ids": {
+        "trakt": 67608,
+        "tvdb": 383453,
+        "imdb": "tt1256606",
+        "tmdb": 62820,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How I Met Your Mother",
+      "year": 2005,
+      "ids": {
+        "trakt": 1095,
+        "slug": "how-i-met-your-mother",
+        "tvdb": 75760,
+        "imdb": "tt0460649",
+        "tmdb": 1100,
+        "tvrage": null
+      },
+      "aired_episodes": 208
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:38:39.000Z",
+    "rating": 9,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Wait for It",
+      "ids": {
+        "trakt": 67588,
+        "tvdb": 336246,
+        "imdb": "tt1084790",
+        "tmdb": 62800,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How I Met Your Mother",
+      "year": 2005,
+      "ids": {
+        "trakt": 1095,
+        "slug": "how-i-met-your-mother",
+        "tvdb": 75760,
+        "imdb": "tt0460649",
+        "tmdb": 1100,
+        "tvrage": null
+      },
+      "aired_episodes": 208
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:38:11.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Where Were We?",
+      "ids": {
+        "trakt": 67566,
+        "tvdb": 307598,
+        "imdb": "tt0863640",
+        "tmdb": 62778,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How I Met Your Mother",
+      "year": 2005,
+      "ids": {
+        "trakt": 1095,
+        "slug": "how-i-met-your-mother",
+        "tvdb": 75760,
+        "imdb": "tt0460649",
+        "tmdb": 1100,
+        "tvrage": null
+      },
+      "aired_episodes": 208
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:37:35.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Pilot",
+      "ids": {
+        "trakt": 67544,
+        "tvdb": 177831,
+        "imdb": "tt0606110",
+        "tmdb": 62756,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "How I Met Your Mother",
+      "year": 2005,
+      "ids": {
+        "trakt": 1095,
+        "slug": "how-i-met-your-mother",
+        "tvdb": 75760,
+        "imdb": "tt0460649",
+        "tmdb": 1100,
+        "tvrage": null
+      },
+      "aired_episodes": 208
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:05:26.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 3,
+      "title": "The Sealed Sword Frenzy",
+      "ids": {
+        "trakt": 756523,
+        "tvdb": 354675,
+        "imdb": "tt1105263",
+        "tmdb": 1845007,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bleach",
+      "year": 2004,
+      "ids": {
+        "trakt": 30850,
+        "slug": "bleach",
+        "tvdb": 74796,
+        "imdb": "tt0434665",
+        "tmdb": 30984,
+        "tvrage": null
+      },
+      "aired_episodes": 406
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:04:51.000Z",
+    "rating": 4,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Memories in the Rain",
+      "ids": {
+        "trakt": 756521,
+        "tvdb": 339330,
+        "imdb": null,
+        "tmdb": 2584829,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bleach",
+      "year": 2004,
+      "ids": {
+        "trakt": 30850,
+        "slug": "bleach",
+        "tvdb": 74796,
+        "imdb": "tt0434665",
+        "tmdb": 30984,
+        "tvrage": null
+      },
+      "aired_episodes": 406
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:02:11.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 98,
+      "title": "Clash! Kenpachi Zaraki vs. Maki Ichinose",
+      "ids": {
+        "trakt": 756629,
+        "tvdb": 318386,
+        "imdb": "tt0942928",
+        "tmdb": 1517231,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bleach",
+      "year": 2004,
+      "ids": {
+        "trakt": 30850,
+        "slug": "bleach",
+        "tvdb": 74796,
+        "imdb": "tt0434665",
+        "tmdb": 30984,
+        "tvrage": null
+      },
+      "aired_episodes": 406
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:01:27.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 75,
+      "title": "Earth-Shattering Event at 11th Squad! The Shinigami Who Rises Again",
+      "ids": {
+        "trakt": 756612,
+        "tvdb": 318400,
+        "imdb": "tt0856389",
+        "tmdb": 1517208,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bleach",
+      "year": 2004,
+      "ids": {
+        "trakt": 30850,
+        "slug": "bleach",
+        "tvdb": 74796,
+        "imdb": "tt0434665",
+        "tmdb": 30984,
+        "tvrage": null
+      },
+      "aired_episodes": 406
+    }
+  },
+  {
+    "rated_at": "2025-02-12T15:00:40.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 52,
+      "title": "Renji, Oath of the Soul! Death Match with Byakuya",
+      "ids": {
+        "trakt": 756588,
+        "tvdb": 318423,
+        "imdb": "tt0856426",
+        "tmdb": 1517183,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bleach",
+      "year": 2004,
+      "ids": {
+        "trakt": 30850,
+        "slug": "bleach",
+        "tvdb": 74796,
+        "imdb": "tt0434665",
+        "tmdb": 30984,
+        "tvrage": null
+      },
+      "aired_episodes": 406
+    }
+  },
+  {
+    "rated_at": "2025-02-12T14:59:45.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 26,
+      "title": "Formation! The Worst Tag",
+      "ids": {
+        "trakt": 756557,
+        "tvdb": 313413,
+        "imdb": "tt0856394",
+        "tmdb": 1517143,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bleach",
+      "year": 2004,
+      "ids": {
+        "trakt": 30850,
+        "slug": "bleach",
+        "tvdb": 74796,
+        "imdb": "tt0434665",
+        "tmdb": 30984,
+        "tvrage": null
+      },
+      "aired_episodes": 406
+    }
+  },
+  {
+    "rated_at": "2025-02-12T14:57:44.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Day I Became a Shinigami",
+      "ids": {
+        "trakt": 756527,
+        "tvdb": 155071,
+        "imdb": "tt0856437",
+        "tmdb": 750573,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Bleach",
+      "year": 2004,
+      "ids": {
+        "trakt": 30850,
+        "slug": "bleach",
+        "tvdb": 74796,
+        "imdb": "tt0434665",
+        "tmdb": 30984,
+        "tvrage": null
+      },
+      "aired_episodes": 406
+    }
+  },
+  {
+    "rated_at": "2025-02-11T16:06:29.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Yuki's Trouble",
+      "ids": {
+        "trakt": 838323,
+        "tvdb": 85660,
+        "imdb": "tt0850934",
+        "tmdb": 832922,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "His and Her Circumstances",
+      "year": 1998,
+      "ids": {
+        "trakt": 36680,
+        "slug": "his-and-her-circumstances",
+        "tvdb": 72444,
+        "imdb": "tt0202430",
+        "tmdb": 36837,
+        "tvrage": null
+      },
+      "aired_episodes": 26
+    }
+  },
+  {
+    "rated_at": "2025-02-11T16:05:55.000Z",
+    "rating": 3,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Gang Gets Racist",
+      "ids": {
+        "trakt": 223716,
+        "tvdb": 296310,
+        "imdb": "tt0612823",
+        "tmdb": 213050,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "It's Always Sunny in Philadelphia",
+      "year": 2005,
+      "ids": {
+        "trakt": 2692,
+        "slug": "it-s-always-sunny-in-philadelphia",
+        "tvdb": 75805,
+        "imdb": "tt0472954",
+        "tmdb": 2710,
+        "tvrage": null
+      },
+      "aired_episodes": 177
+    }
+  },
+  {
+    "rated_at": "2025-02-11T16:03:55.000Z",
+    "rating": 4,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Sawaki Rinna (1)",
+      "ids": {
+        "trakt": 1063921,
+        "tvdb": 421933,
+        "imdb": null,
+        "tmdb": 897708,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Kono Aozora ni Yakusoku wo",
+      "year": 2007,
+      "ids": {
+        "trakt": 64073,
+        "slug": "kono-aozora-ni-yakusoku-wo",
+        "tvdb": 84464,
+        "imdb": "tt1055696",
+        "tmdb": 45205,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    }
+  },
+  {
+    "rated_at": "2025-02-11T16:00:59.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Bust Through the Heavens with Your Drill!!",
+      "ids": {
+        "trakt": 607759,
+        "tvdb": 328145,
+        "imdb": "tt0998686",
+        "tmdb": 599461,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Gurren Lagann",
+      "year": 2007,
+      "ids": {
+        "trakt": 21628,
+        "slug": "gurren-lagann",
+        "tvdb": 80096,
+        "imdb": "tt0948103",
+        "tmdb": 21729,
+        "tvrage": null
+      },
+      "aired_episodes": 27
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:59:12.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Wicked Usual Day of a Brother And Sister",
+      "ids": {
+        "trakt": 915622,
+        "tvdb": 3384541,
+        "imdb": null,
+        "tmdb": 907666,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Because I Don't Like My Big Brother At-All--!!",
+      "year": 2011,
+      "ids": {
+        "trakt": 45914,
+        "slug": "because-i-don-t-like-my-big-brother-at-all",
+        "tvdb": 216611,
+        "imdb": "tt1872461",
+        "tmdb": 46170,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:58:41.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "From Little Sister With Love, Big Brother's Chronicle of Turn-Ons",
+      "ids": {
+        "trakt": 915621,
+        "tvdb": 3384661,
+        "imdb": null,
+        "tmdb": 907678,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Because I Don't Like My Big Brother At-All--!!",
+      "year": 2011,
+      "ids": {
+        "trakt": 45914,
+        "slug": "because-i-don-t-like-my-big-brother-at-all",
+        "tvdb": 216611,
+        "imdb": "tt1872461",
+        "tmdb": 46170,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:54:53.000Z",
+    "rating": 3,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Les parents disjonctent",
+      "ids": {
+        "trakt": 397992,
+        "tvdb": 981141,
+        "imdb": null,
+        "tmdb": 389556,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:54:30.000Z",
+    "rating": 3,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Bonnes et mauvaises surprises",
+      "ids": {
+        "trakt": 397995,
+        "tvdb": 981171,
+        "imdb": null,
+        "tmdb": 389540,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:54:04.000Z",
+    "rating": 4,
+    "type": "episode",
+    "episode": {
+      "season": 3,
+      "number": 1,
+      "title": "Nicolas s'en va-t'en-guerre",
+      "ids": {
+        "trakt": 397998,
+        "tvdb": 981201,
+        "imdb": null,
+        "tmdb": 389560,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:53:39.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 4,
+      "number": 1,
+      "title": "Le Clash",
+      "ids": {
+        "trakt": 398001,
+        "tvdb": 981241,
+        "imdb": null,
+        "tmdb": 389547,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:53:16.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 5,
+      "number": 1,
+      "title": "Des invités encombrants",
+      "ids": {
+        "trakt": 398004,
+        "tvdb": 981271,
+        "imdb": null,
+        "tmdb": 389544,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:52:51.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 6,
+      "number": 1,
+      "title": "Rien ne va plus",
+      "ids": {
+        "trakt": 398007,
+        "tvdb": 981301,
+        "imdb": null,
+        "tmdb": 389552,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:52:21.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 7,
+      "number": 1,
+      "title": "Les adieux à Nono",
+      "ids": {
+        "trakt": 398010,
+        "tvdb": 981331,
+        "imdb": null,
+        "tmdb": 389558,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:51:55.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 8,
+      "number": 1,
+      "title": "Le grand virage",
+      "ids": {
+        "trakt": 398013,
+        "tvdb": 1562181,
+        "imdb": null,
+        "tmdb": 389548,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:51:19.000Z",
+    "rating": 5,
+    "type": "episode",
+    "episode": {
+      "season": 9,
+      "number": 1,
+      "title": "Vive la crise !",
+      "ids": {
+        "trakt": 398016,
+        "tvdb": 4237821,
+        "imdb": null,
+        "tmdb": 389563,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Une famille formidable",
+      "year": 1992,
+      "ids": {
+        "trakt": 7621,
+        "slug": "une-famille-formidable",
+        "tvdb": 109241,
+        "imdb": "tt0169504",
+        "tmdb": 7666,
+        "tvrage": null
+      },
+      "aired_episodes": 56
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:45:24.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Sekirei",
+      "ids": {
+        "trakt": 800127,
+        "tvdb": 383058,
+        "imdb": "tt1730281",
+        "tmdb": 792716,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Sekirei",
+      "year": 2008,
+      "ids": {
+        "trakt": 34656,
+        "slug": "sekirei",
+        "tvdb": 82807,
+        "imdb": "tt1339238",
+        "tmdb": 34805,
+        "tvrage": null
+      },
+      "aired_episodes": 25
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:44:55.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Kusano's First Shopping Trip",
+      "ids": {
+        "trakt": 800124,
+        "tvdb": 469421,
+        "imdb": null,
+        "tmdb": 792741,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Sekirei",
+      "year": 2008,
+      "ids": {
+        "trakt": 34656,
+        "slug": "sekirei",
+        "tvdb": 82807,
+        "imdb": "tt1339238",
+        "tmdb": 34805,
+        "tvrage": null
+      },
+      "aired_episodes": 25
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:43:44.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 2,
+      "number": 1,
+      "title": "Silent Omen",
+      "ids": {
+        "trakt": 800139,
+        "tvdb": 2392161,
+        "imdb": "tt2000160",
+        "tmdb": 792736,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Sekirei",
+      "year": 2008,
+      "ids": {
+        "trakt": 34656,
+        "slug": "sekirei",
+        "tvdb": 82807,
+        "imdb": "tt1339238",
+        "tmdb": 34805,
+        "tvrage": null
+      },
+      "aired_episodes": 25
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:42:48.000Z",
+    "rating": 4,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Drifters of the DEAD",
+      "ids": {
+        "trakt": 949502,
+        "tvdb": 2769161,
+        "imdb": "tt5799076",
+        "tmdb": 939800,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "High School of the Dead",
+      "year": 2010,
+      "ids": {
+        "trakt": 56632,
+        "slug": "high-school-of-the-dead",
+        "tvdb": 171591,
+        "imdb": "tt1685401",
+        "tmdb": 56998,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:42:29.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Spring of the DEAD",
+      "ids": {
+        "trakt": 949503,
+        "tvdb": 2396181,
+        "imdb": "tt1687418",
+        "tmdb": 939788,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "High School of the Dead",
+      "year": 2010,
+      "ids": {
+        "trakt": 56632,
+        "slug": "high-school-of-the-dead",
+        "tvdb": 171591,
+        "imdb": "tt1685401",
+        "tmdb": 56998,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:40:17.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The End of the Earth",
+      "ids": {
+        "trakt": 1367349,
+        "tvdb": 4123509,
+        "imdb": null,
+        "tmdb": 1057771,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Mayo Chiki!",
+      "year": 2011,
+      "ids": {
+        "trakt": 63537,
+        "slug": "mayo-chiki",
+        "tvdb": 249866,
+        "imdb": "tt2008252",
+        "tmdb": 46169,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:35:20.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Straight-Descending First Love",
+      "ids": {
+        "trakt": 1006159,
+        "tvdb": 2913241,
+        "imdb": "tt2187615",
+        "tmdb": 856560,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "MM!",
+      "year": 2010,
+      "ids": {
+        "trakt": 61067,
+        "slug": "mm",
+        "tvdb": 194541,
+        "imdb": "tt1952071",
+        "tmdb": 38084,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:32:30.000Z",
+    "rating": 8,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "The Demon Lord Is Born!",
+      "ids": {
+        "trakt": 886879,
+        "tvdb": 1791851,
+        "imdb": null,
+        "tmdb": 880002,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Demon King Daimao",
+      "year": 2010,
+      "ids": {
+        "trakt": 42190,
+        "slug": "demon-king-daimao",
+        "tvdb": 140071,
+        "imdb": "tt1636694",
+        "tmdb": 42413,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:32:02.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Thump!? A Swimming Tournament with Girls Everywhere! There's Also an Accident or Two!?",
+      "ids": {
+        "trakt": 886873,
+        "tvdb": 2422841,
+        "imdb": null,
+        "tmdb": 879996,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Demon King Daimao",
+      "year": 2010,
+      "ids": {
+        "trakt": 42190,
+        "slug": "demon-king-daimao",
+        "tvdb": 140071,
+        "imdb": "tt1636694",
+        "tmdb": 42413,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:29:02.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Wonderful Days",
+      "ids": {
+        "trakt": 1012449,
+        "tvdb": 435203,
+        "imdb": "tt1639240",
+        "tmdb": 906174,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "KissXsis",
+      "year": 2010,
+      "ids": {
+        "trakt": 61388,
+        "slug": "kissxsis",
+        "tvdb": 84768,
+        "imdb": "tt1634209",
+        "tmdb": 45998,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:28:34.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Start from Scratch",
+      "ids": {
+        "trakt": 1011829,
+        "tvdb": 438592,
+        "imdb": "tt3902548",
+        "tmdb": 906179,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "KissXsis",
+      "year": 2010,
+      "ids": {
+        "trakt": 61388,
+        "slug": "kissxsis",
+        "tvdb": 84768,
+        "imdb": "tt1634209",
+        "tmdb": 45998,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:27:53.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "A Friendly Step",
+      "ids": {
+        "trakt": 915670,
+        "tvdb": 341136,
+        "imdb": null,
+        "tmdb": 907718,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Kodomo no Jikan",
+      "year": 2007,
+      "ids": {
+        "trakt": 45923,
+        "slug": "kodomo-no-jikan",
+        "tvdb": 80811,
+        "imdb": "tt1125577",
+        "tmdb": 46179,
+        "tvrage": null
+      },
+      "aired_episodes": 15
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:27:24.000Z",
+    "rating": 6,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Recess Time \"The Thing You Gave to Me\"",
+      "ids": {
+        "trakt": 915666,
+        "tvdb": 378699,
+        "imdb": null,
+        "tmdb": 907714,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Kodomo no Jikan",
+      "year": 2007,
+      "ids": {
+        "trakt": 45923,
+        "slug": "kodomo-no-jikan",
+        "tvdb": 80811,
+        "imdb": "tt1125577",
+        "tmdb": 46179,
+        "tvrage": null
+      },
+      "aired_episodes": 15
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:25:50.000Z",
+    "rating": 1,
+    "type": "episode",
+    "episode": {
+      "season": 0,
+      "number": 1,
+      "title": "Strike Witches OVA",
+      "ids": {
+        "trakt": 1005335,
+        "tvdb": 375488,
+        "imdb": null,
+        "tmdb": 3233501,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "Strike Witches",
+      "year": 2008,
+      "ids": {
+        "trakt": 61062,
+        "slug": "strike-witches",
+        "tvdb": 82484,
+        "imdb": "tt1300176",
+        "tmdb": 35464,
+        "tvrage": null
+      },
+      "aired_episodes": 36
+    }
+  },
+  {
+    "rated_at": "2025-02-11T15:24:06.000Z",
+    "rating": 7,
+    "type": "episode",
+    "episode": {
+      "season": 1,
+      "number": 1,
+      "title": "Welcome to Inspiration Academy!",
+      "ids": {
+        "trakt": 887811,
+        "tvdb": 4123510,
+        "imdb": "tt2179933",
+        "tmdb": 880910,
+        "tvrage": null
+      }
+    },
+    "show": {
+      "title": "R-15",
+      "year": 2011,
+      "ids": {
+        "trakt": 42286,
+        "slug": "r-15",
+        "tvdb": 249867,
+        "imdb": "tt2075073",
+        "tmdb": 42510,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  }
+]

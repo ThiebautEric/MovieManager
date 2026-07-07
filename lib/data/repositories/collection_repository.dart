@@ -7,207 +7,720 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/config/app_config.dart';
 import '../../core/supabase/supabase_providers.dart';
-import '../models/collection_item.dart';
+import '../models/collection_entry.dart';
+import '../models/film.dart';
+import '../models/film_season.dart';
+import '../models/history_entry.dart';
 
 /// Contrat commun aux deux backends (cloud Supabase / local appareil).
-abstract class CollectionRepository {
-  Stream<List<CollectionItem>> watchAll();
-  Future<void> upsert(CollectionItem item);
-  Future<void> update(CollectionItem item);
-  Future<void> delete(String id);
+///
+/// Modèle normalisé : `films` (catalogue) + `collection` (possessions) +
+/// `history` (visionnages) + `film_seasons` (saisons). `collection` et
+/// `history` sont TOTALEMENT indépendantes : aucune suppression de l'une
+/// n'affecte l'autre. Seule suppression automatique : un film qui n'est plus
+/// référencé ni en collection ni en historique est retiré du catalogue.
+abstract class LibraryRepository {
+  Stream<List<CollectionView>> watchCollection();
+  Stream<List<HistoryView>> watchHistory();
 
-  /// Resynchronise la liste avec la source de vérité (utile pour récupérer les
-  /// changements faits depuis un autre appareil, non reçus en temps réel).
+  Future<void> addToCollection(
+    Film film, {
+    FilmSeason? season,
+    required Medium medium,
+    DateTime? addedAt,
+  });
+
+  Future<void> addToHistory(
+    Film film, {
+    FilmSeason? season,
+    required DateTime watchedAt,
+    double? rating,
+    String? comment,
+  });
+
+  Future<void> updateHistory(
+    String id, {
+    required DateTime watchedAt,
+    double? rating,
+    String? comment,
+  });
+
+  /// Suppression par l'utilisateur uniquement (l'UI confirme).
+  Future<void> removeFromCollection(String id);
+  Future<void> removeFromHistory(String id);
+
+  /// Met à jour les métadonnées d'un film DÉJÀ présent dans la bibliothèque
+  /// (pays, casting, etc.) à partir d'une fiche TMDB fraîche. NE CRÉE PAS de
+  /// film s'il n'est pas déjà référencé. Sert au « backfill » des anciennes
+  /// entrées à l'ouverture de leur fiche.
+  Future<void> backfillFilm(Film film);
+
+  /// Resynchronise avec la source de vérité (autres appareils).
   Future<void> refresh();
+
+  void dispose();
 }
 
-/// Backend cloud : table `collection_items` de Supabase (auth + synchro).
-///
-/// Maintient un cache local mis à jour de façon **optimiste** à chaque
-/// mutation : l'UI se met à jour immédiatement (sans attendre/dépendre des
-/// événements temps réel, peu fiables pour les suppressions). Le flux temps
-/// réel sert en plus à recevoir les changements faits depuis un autre appareil.
-class SupabaseCollectionRepository implements CollectionRepository {
-  SupabaseCollectionRepository(this._client);
+String _seasonKey(String filmId, int seasonNumber) => '$filmId:$seasonNumber';
+
+/// Fusionne une fiche fraîche TMDB [f] dans le film existant [e] : on garde
+/// l'identité (id/titre/affiche/année) et on complète avec les métadonnées
+/// fraîches (pays, casting, genres, durée, synopsis, titre original).
+Film _mergeFilm(Film e, Film f) => Film(
+      id: e.id,
+      tmdbId: e.tmdbId,
+      mediaType: e.mediaType,
+      title: e.title,
+      posterPath: f.posterPath ?? e.posterPath,
+      releaseYear: e.releaseYear,
+      originalTitle: f.originalTitle ?? e.originalTitle,
+      runtime: f.runtime ?? e.runtime,
+      overview: (f.overview?.isNotEmpty ?? false) ? f.overview : e.overview,
+      originCountry: f.originCountry ?? e.originCountry,
+      genres: f.genres.isNotEmpty ? f.genres : e.genres,
+      castIds: f.castIds.isNotEmpty ? f.castIds : e.castIds,
+    );
+
+bool _intSetEq(List<int> a, List<int> b) {
+  final sa = a.toSet(), sb = b.toSet();
+  return sa.length == sb.length && sa.containsAll(sb);
+}
+
+/// Vrai si les métadonnées « enrichissables » sont identiques (rien à réécrire).
+bool _sameMeta(Film a, Film b) =>
+    a.posterPath == b.posterPath &&
+    a.originCountry == b.originCountry &&
+    a.runtime == b.runtime &&
+    a.overview == b.overview &&
+    a.originalTitle == b.originalTitle &&
+    _intSetEq(a.genres, b.genres) &&
+    _intSetEq(a.castIds, b.castIds);
+
+// ===========================================================================
+// Backend cloud : 4 tables Supabase écoutées en temps réel et jointes en
+// mémoire en vues composites (CollectionView / HistoryView).
+// ===========================================================================
+class SupabaseLibraryRepository implements LibraryRepository {
+  SupabaseLibraryRepository(this._client);
 
   final SupabaseClient _client;
-  static const _table = 'collection_items';
 
-  List<CollectionItem> _cache = const [];
-  StreamController<List<CollectionItem>>? _controller;
-  StreamSubscription<List<Map<String, dynamic>>>? _sub;
+  // Caches sources (chargés par pagination, voir _loadAll).
+  Map<String, Film> _filmsById = {};
+  Map<String, Film> _filmsByKey = {};
+  List<FilmSeason> _seasons = const [];
+  List<CollectionEntry> _collection = const [];
+  List<HistoryEntry> _history = const [];
+
+  StreamController<List<CollectionView>>? _collectionCtrl;
+  StreamController<List<HistoryView>>? _historyCtrl;
+  // Dernières vues émises, rejouées aux nouveaux abonnés (flux broadcast).
+  List<CollectionView> _lastColl = const [];
+  List<HistoryView> _lastHist = const [];
+  bool _loaded = false;
+  bool _emitted = false; // au moins une émission faite (rejouable aux abonnés)
 
   String get _userId {
     final id = _client.auth.currentUser?.id;
-    if (id == null) {
-      throw StateError('Aucun utilisateur connecté.');
-    }
+    if (id == null) throw StateError('Aucun utilisateur connecté.');
     return id;
   }
 
-  void _emit() => _controller?.add(List.unmodifiable(_cache));
-
-  void _sortCache() {
-    _cache.sort((a, b) => (a.addedAt ?? DateTime.fromMillisecondsSinceEpoch(0))
-        .compareTo(b.addedAt ?? DateTime.fromMillisecondsSinceEpoch(0)));
+  void _ensureLoaded() {
+    _collectionCtrl ??= StreamController<List<CollectionView>>.broadcast();
+    _historyCtrl ??= StreamController<List<HistoryView>>.broadcast();
+    if (!_loaded) {
+      _loaded = true;
+      _loadAll();
+    }
   }
 
-  @override
-  Stream<List<CollectionItem>> watchAll() {
-    _controller ??= StreamController<List<CollectionItem>>.broadcast(
-      onCancel: () {
-        _sub?.cancel();
-        _sub = null;
-        _controller?.close();
-        _controller = null;
-      },
-    );
-    // Temps réel : reflète les changements externes (autres appareils).
-    _sub ??= _client
-        .from(_table)
-        .stream(primaryKey: ['id'])
-        .eq('user_id', _userId)
-        .order('added_at')
-        .listen((rows) {
-      _cache = rows.map(CollectionItem.fromJson).toList();
-      _emit();
+  /// Charge une table en entier en paginant (PostgREST plafonne à 1000 lignes
+  /// par requête ; on enchaîne les pages jusqu'à épuisement).
+  Future<List<Map<String, dynamic>>> _selectAll(String table) async {
+    const pageSize = 1000;
+    final out = <Map<String, dynamic>>[];
+    var from = 0;
+    while (true) {
+      final rows = await _client
+          .from(table)
+          .select()
+          .eq('user_id', _userId)
+          .order('id')
+          .range(from, from + pageSize - 1);
+      final list = (rows as List).cast<Map<String, dynamic>>();
+      out.addAll(list);
+      if (list.length < pageSize) break;
+      from += pageSize;
+    }
+    return out;
+  }
+
+  Future<void> _loadAll() async {
+    final films = await _selectAll('films');
+    final seasons = await _selectAll('film_seasons');
+    final coll = await _selectAll('collection');
+    final hist = await _selectAll('history');
+    final fl = films.map(Film.fromJson).toList();
+    _filmsById = {for (final f in fl) f.id!: f};
+    _filmsByKey = {for (final f in fl) f.mediaKey: f};
+    _seasons = seasons.map(FilmSeason.fromJson).toList();
+    _collection = coll.map(CollectionEntry.fromJson).toList();
+    _history = hist.map(HistoryEntry.fromJson).toList();
+    _rebuild();
+  }
+
+  void _rebuild() {
+    final seasonByKey = <String, FilmSeason>{
+      for (final s in _seasons)
+        if (s.filmId != null) _seasonKey(s.filmId!, s.seasonNumber): s,
+    };
+
+    // Dédoublonnage par id : évite tout doublon transitoire entre la mise à
+    // jour optimiste et l'écho temps réel d'un insert (corrigé sinon au reload).
+    final seenColl = <String>{};
+    final coll = <CollectionView>[];
+    for (final e in _collection) {
+      if (e.id != null && !seenColl.add(e.id!)) continue;
+      final film = _filmsById[e.filmId];
+      if (film == null) continue; // film pas encore reçu : ignoré transitoirement
+      coll.add(CollectionView(
+        entry: e,
+        film: film,
+        season: e.seasonNumber == null
+            ? null
+            : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
+      ));
+    }
+    coll.sort((a, b) {
+      final t = a.film.title.toLowerCase().compareTo(b.film.title.toLowerCase());
+      if (t != 0) return t;
+      return (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
     });
-    return _controller!.stream;
+
+    final seenHist = <String>{};
+    final hist = <HistoryView>[];
+    for (final e in _history) {
+      if (e.id != null && !seenHist.add(e.id!)) continue;
+      final film = _filmsById[e.filmId];
+      if (film == null) continue;
+      hist.add(HistoryView(
+        entry: e,
+        film: film,
+        season: e.seasonNumber == null
+            ? null
+            : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
+      ));
+    }
+    hist.sort((a, b) => b.watchedAt.compareTo(a.watchedAt));
+
+    _lastColl = List.unmodifiable(coll);
+    _lastHist = List.unmodifiable(hist);
+    _emitted = true;
+    _collectionCtrl?.add(_lastColl);
+    _historyCtrl?.add(_lastHist);
   }
 
   @override
-  Future<void> upsert(CollectionItem item) async {
-    final payload = {...item.toUpsertJson(), 'user_id': _userId};
+  Stream<List<CollectionView>> watchCollection() async* {
+    _ensureLoaded();
+    if (_emitted) yield _lastColl;
+    yield* _collectionCtrl!.stream;
+  }
+
+  @override
+  Stream<List<HistoryView>> watchHistory() async* {
+    _ensureLoaded();
+    if (_emitted) yield _lastHist;
+    yield* _historyCtrl!.stream;
+  }
+
+  /// Upsert le film (catalogue) et renvoie la version persistée (avec id).
+  Future<Film> _upsertFilm(Film film) async {
     final row = await _client
-        .from(_table)
-        .upsert(payload, onConflict: 'user_id,tmdb_id,media_type')
+        .from('films')
+        .upsert({...film.toUpsertJson(), 'user_id': _userId},
+            onConflict: 'user_id,tmdb_id,media_type')
         .select()
         .single();
-    final saved = CollectionItem.fromJson(row);
-    _cache = [
-      ..._cache.where((e) =>
-          !(e.tmdbId == saved.tmdbId && e.mediaType == saved.mediaType)),
+    final saved = Film.fromJson(row);
+    _filmsById[saved.id!] = saved;
+    _filmsByKey[saved.mediaKey] = saved;
+    return saved;
+  }
+
+  /// Upsert la saison (catalogue) pour un film donné.
+  Future<void> _upsertSeason(Film film, FilmSeason season) async {
+    final payload = {
+      ...season.toUpsertJson(),
+      'user_id': _userId,
+      'film_id': film.id,
+    };
+    final row = await _client
+        .from('film_seasons')
+        .upsert(payload, onConflict: 'film_id,season_number')
+        .select()
+        .single();
+    final saved = FilmSeason.fromJson(row);
+    _seasons = [
+      ..._seasons.where(
+          (x) => !(x.filmId == saved.filmId && x.seasonNumber == saved.seasonNumber)),
       saved,
     ];
-    _sortCache();
-    _emit();
   }
 
   @override
-  Future<void> update(CollectionItem item) async {
-    if (item.id == null) return upsert(item);
-    await _client
-        .from(_table)
-        .update(item.toUpsertJson())
-        .eq('id', item.id!)
-        .eq('user_id', _userId);
-    // Mise à jour optimiste du cache.
-    _cache = _cache.map((e) => e.id == item.id ? item : e).toList();
-    _emit();
+  Future<void> addToCollection(
+    Film film, {
+    FilmSeason? season,
+    required Medium medium,
+    DateTime? addedAt,
+  }) async {
+    final saved = await _upsertFilm(film);
+    if (season != null) await _upsertSeason(saved, season);
+
+    // Évite le doublon exact (film, saison, support) — `null` n'est pas dédupé
+    // par la contrainte unique côté Postgres.
+    final already = _collection.any((e) =>
+        e.filmId == saved.id &&
+        e.seasonNumber == season?.seasonNumber &&
+        e.medium == medium);
+    if (already) return;
+
+    final entry = CollectionEntry(
+      filmId: saved.id!,
+      seasonNumber: season?.seasonNumber,
+      medium: medium,
+      addedAt: addedAt ?? DateTime.now(),
+    );
+    final row = await _client
+        .from('collection')
+        .insert({...entry.toUpsertJson(), 'user_id': _userId})
+        .select()
+        .single();
+    final saved2 = CollectionEntry.fromJson(row);
+    _collection = [
+      ..._collection.where((e) => e.id != saved2.id),
+      saved2,
+    ];
+    _rebuild();
   }
 
   @override
-  Future<void> delete(String id) async {
-    await _client.from(_table).delete().eq('id', id).eq('user_id', _userId);
-    // Retrait optimiste immédiat (ne dépend pas du temps réel).
-    _cache = _cache.where((e) => e.id != id).toList();
-    _emit();
+  Future<void> addToHistory(
+    Film film, {
+    FilmSeason? season,
+    required DateTime watchedAt,
+    double? rating,
+    String? comment,
+  }) async {
+    final saved = await _upsertFilm(film);
+    if (season != null) await _upsertSeason(saved, season);
+
+    final entry = HistoryEntry(
+      filmId: saved.id!,
+      seasonNumber: season?.seasonNumber,
+      watchedAt: watchedAt,
+      rating: rating,
+      comment: comment,
+    );
+    final row = await _client
+        .from('history')
+        .insert({...entry.toUpsertJson(), 'user_id': _userId})
+        .select()
+        .single();
+    final saved2 = HistoryEntry.fromJson(row);
+    _history = [
+      ..._history.where((e) => e.id != saved2.id),
+      saved2,
+    ];
+    _rebuild();
+  }
+
+  @override
+  Future<void> updateHistory(
+    String id, {
+    required DateTime watchedAt,
+    double? rating,
+    String? comment,
+  }) async {
+    await _client.from('history').update({
+      'watched_at': watchedAt.toUtc().toIso8601String(),
+      'rating': rating,
+      'comment': comment,
+    }).eq('id', id).eq('user_id', _userId);
+    _history = _history
+        .map((e) => e.id == id
+            ? HistoryEntry(
+                id: e.id,
+                filmId: e.filmId,
+                seasonNumber: e.seasonNumber,
+                watchedAt: watchedAt,
+                rating: rating,
+                comment: comment,
+              )
+            : e)
+        .toList();
+    _rebuild();
+  }
+
+  @override
+  Future<void> removeFromCollection(String id) async {
+    final filmId = _filmIdOfCollection(id);
+    await _client.from('collection').delete().eq('id', id).eq('user_id', _userId);
+    _collection = _collection.where((e) => e.id != id).toList();
+    if (filmId != null) _gcFilmLocally(filmId);
+    _rebuild();
+  }
+
+  @override
+  Future<void> removeFromHistory(String id) async {
+    final filmId = _filmIdOfHistory(id);
+    await _client.from('history').delete().eq('id', id).eq('user_id', _userId);
+    _history = _history.where((e) => e.id != id).toList();
+    if (filmId != null) _gcFilmLocally(filmId);
+    _rebuild();
+  }
+
+  String? _filmIdOfCollection(String id) {
+    for (final e in _collection) {
+      if (e.id == id) return e.filmId;
+    }
+    return null;
+  }
+
+  String? _filmIdOfHistory(String id) {
+    for (final e in _history) {
+      if (e.id == id) return e.filmId;
+    }
+    return null;
+  }
+
+  /// Reflète localement le GC serveur (trigger) : retire du cache un film qui
+  /// n'est plus référencé, pour une UI immédiatement cohérente.
+  void _gcFilmLocally(String filmId) {
+    final stillRef = _collection.any((e) => e.filmId == filmId) ||
+        _history.any((e) => e.filmId == filmId);
+    if (stillRef) return;
+    final film = _filmsById.remove(filmId);
+    if (film != null) _filmsByKey.remove(film.mediaKey);
+    _seasons = _seasons.where((s) => s.filmId != filmId).toList();
   }
 
   @override
   Future<void> refresh() async {
-    // Récupère la vérité côté serveur (supprime les éventuels « fantômes »
-    // laissés par des suppressions faites depuis un autre appareil).
-    final rows = await _client
-        .from(_table)
-        .select()
-        .eq('user_id', _userId)
-        .order('added_at');
-    _cache = rows
-        .map((e) => CollectionItem.fromJson(e))
-        .toList();
-    _emit();
+    _ensureLoaded();
+    await _loadAll();
+  }
+
+  @override
+  Future<void> backfillFilm(Film fresh) async {
+    final existing = _filmsByKey[fresh.mediaKey];
+    if (existing == null) return; // pas dans la bibliothèque → on ne crée rien
+    final merged = _mergeFilm(existing, fresh);
+    if (_sameMeta(existing, merged)) return; // rien de neuf à écrire
+    await _client.from('films').update({
+      'poster_path': merged.posterPath,
+      'origin_country': merged.originCountry,
+      'cast_ids': merged.castIds,
+      'runtime': merged.runtime,
+      'overview': merged.overview,
+      'original_title': merged.originalTitle,
+      'genres': merged.genres,
+    }).eq('id', existing.id!).eq('user_id', _userId);
+    _filmsById[existing.id!] = merged;
+    _filmsByKey[merged.mediaKey] = merged;
+    _rebuild();
+  }
+
+  @override
+  void dispose() {
+    _collectionCtrl?.close();
+    _historyCtrl?.close();
   }
 }
 
-/// Backend local : collection persistée sur l'appareil (sans compte ni synchro).
-class LocalCollectionRepository implements CollectionRepository {
-  LocalCollectionRepository(this._prefs) {
-    _items = _load();
-    _controller.add(_snapshot());
+// ===========================================================================
+// Backend local : mêmes structures persistées dans shared_preferences (sans
+// compte ni synchro). Le GC des films orphelins est fait côté application.
+// ===========================================================================
+class LocalLibraryRepository implements LibraryRepository {
+  LocalLibraryRepository(this._prefs) {
+    _load();
   }
 
   final SharedPreferences _prefs;
-  static const _key = 'local_collection_v1';
+  static const _filmsKey = 'lib_films_v1';
+  static const _seasonsKey = 'lib_seasons_v1';
+  static const _collectionKey = 'lib_collection_v1';
+  static const _historyKey = 'lib_history_v1';
 
-  late List<CollectionItem> _items;
-  final _controller = StreamController<List<CollectionItem>>.broadcast();
+  final _collectionCtrl = StreamController<List<CollectionView>>.broadcast();
+  final _historyCtrl = StreamController<List<HistoryView>>.broadcast();
 
-  String _idFor(CollectionItem i) => '${i.mediaType}_${i.tmdbId}';
+  Map<String, Film> _filmsById = {};
+  Map<String, Film> _filmsByKey = {};
+  List<FilmSeason> _seasons = [];
+  List<CollectionEntry> _collection = [];
+  List<HistoryEntry> _history = [];
+  int _seq = 0;
 
-  List<CollectionItem> _load() {
-    final raw = _prefs.getString(_key);
+  List<T> _decode<T>(String key, T Function(Map<String, dynamic>) f) {
+    final raw = _prefs.getString(key);
     if (raw == null) return [];
-    final list = (jsonDecode(raw) as List<dynamic>);
-    return list
-        .map((e) => CollectionItem.fromJson(e as Map<String, dynamic>))
+    return (jsonDecode(raw) as List<dynamic>)
+        .map((e) => f(e as Map<String, dynamic>))
         .toList();
   }
 
+  void _load() {
+    final films = _decode(_filmsKey, Film.fromJson);
+    _filmsById = {for (final f in films) f.id!: f};
+    _filmsByKey = {for (final f in films) f.mediaKey: f};
+    _seasons = _decode(_seasonsKey, FilmSeason.fromJson);
+    _collection = _decode(_collectionKey, CollectionEntry.fromJson);
+    _history = _decode(_historyKey, HistoryEntry.fromJson);
+  }
+
   Future<void> _persist() async {
+    await _prefs.setString(_filmsKey,
+        jsonEncode(_filmsById.values.map((e) => e.toFullJson()).toList()));
     await _prefs.setString(
-        _key, jsonEncode(_items.map((e) => e.toFullJson()).toList()));
-    _controller.add(_snapshot());
+        _seasonsKey, jsonEncode(_seasons.map((e) => e.toFullJson()).toList()));
+    await _prefs.setString(_collectionKey,
+        jsonEncode(_collection.map((e) => e.toFullJson()).toList()));
+    await _prefs.setString(
+        _historyKey, jsonEncode(_history.map((e) => e.toFullJson()).toList()));
+    _emit();
   }
 
-  List<CollectionItem> _snapshot() => List.unmodifiable(_items);
-
-  @override
-  Stream<List<CollectionItem>> watchAll() async* {
-    yield _snapshot();
-    yield* _controller.stream;
+  void _emit() {
+    final seasonByKey = <String, FilmSeason>{
+      for (final s in _seasons)
+        if (s.filmId != null) _seasonKey(s.filmId!, s.seasonNumber): s,
+    };
+    final coll = [
+      for (final e in _collection)
+        if (_filmsById[e.filmId] != null)
+          CollectionView(
+            entry: e,
+            film: _filmsById[e.filmId]!,
+            season: e.seasonNumber == null
+                ? null
+                : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
+          )
+    ]..sort((a, b) {
+        final t =
+            a.film.title.toLowerCase().compareTo(b.film.title.toLowerCase());
+        return t != 0 ? t : (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
+      });
+    final hist = [
+      for (final e in _history)
+        if (_filmsById[e.filmId] != null)
+          HistoryView(
+            entry: e,
+            film: _filmsById[e.filmId]!,
+            season: e.seasonNumber == null
+                ? null
+                : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
+          )
+    ]..sort((a, b) => b.watchedAt.compareTo(a.watchedAt));
+    _collectionCtrl.add(List.unmodifiable(coll));
+    _historyCtrl.add(List.unmodifiable(hist));
   }
 
   @override
-  Future<void> upsert(CollectionItem item) async {
-    final id = item.id ?? _idFor(item);
-    final withId = CollectionItem(
+  Stream<List<CollectionView>> watchCollection() async* {
+    _emit();
+    yield* _collectionCtrl.stream;
+  }
+
+  @override
+  Stream<List<HistoryView>> watchHistory() async* {
+    _emit();
+    yield* _historyCtrl.stream;
+  }
+
+  String _nextId() =>
+      '${DateTime.now().microsecondsSinceEpoch}-${_seq++}';
+
+  Film _ensureFilm(Film film) {
+    final existing = _filmsByKey[film.mediaKey];
+    final id = existing?.id ?? film.mediaKey;
+    final saved = Film(
       id: id,
-      tmdbId: item.tmdbId,
-      mediaType: item.mediaType,
-      title: item.title,
-      posterPath: item.posterPath,
-      releaseYear: item.releaseYear,
-      genres: item.genres,
-      owned: item.owned,
-      userRating: item.userRating,
-      notes: item.notes,
-      addedAt: item.addedAt ?? DateTime.now(),
-      ownedAt: item.ownedAt,
-      watchDates: item.watchDates,
+      tmdbId: film.tmdbId,
+      mediaType: film.mediaType,
+      title: film.title,
+      originalTitle: film.originalTitle,
+      posterPath: film.posterPath,
+      releaseYear: film.releaseYear,
+      runtime: film.runtime,
+      overview: film.overview,
+      originCountry: film.originCountry,
+      genres: film.genres,
+      castIds: film.castIds,
     );
-    final idx = _items.indexWhere((e) => e.id == id);
-    if (idx >= 0) {
-      _items[idx] = withId;
-    } else {
-      _items.add(withId);
-    }
+    _filmsById[id] = saved;
+    _filmsByKey[saved.mediaKey] = saved;
+    return saved;
+  }
+
+  void _ensureSeason(Film film, FilmSeason season) {
+    final saved = FilmSeason(
+      id: '${film.id}#${season.seasonNumber}',
+      filmId: film.id,
+      seasonNumber: season.seasonNumber,
+      name: season.name,
+      posterPath: season.posterPath,
+      airYear: season.airYear,
+    );
+    _seasons = [
+      ..._seasons.where(
+          (x) => !(x.filmId == saved.filmId && x.seasonNumber == saved.seasonNumber)),
+      saved,
+    ];
+  }
+
+  @override
+  Future<void> addToCollection(
+    Film film, {
+    FilmSeason? season,
+    required Medium medium,
+    DateTime? addedAt,
+  }) async {
+    final saved = _ensureFilm(film);
+    if (season != null) _ensureSeason(saved, season);
+    final already = _collection.any((e) =>
+        e.filmId == saved.id &&
+        e.seasonNumber == season?.seasonNumber &&
+        e.medium == medium);
+    if (already) return;
+    _collection = [
+      ..._collection,
+      CollectionEntry(
+        id: _nextId(),
+        filmId: saved.id!,
+        seasonNumber: season?.seasonNumber,
+        medium: medium,
+        addedAt: addedAt ?? DateTime.now(),
+      ),
+    ];
     await _persist();
   }
 
   @override
-  Future<void> update(CollectionItem item) => upsert(item);
+  Future<void> addToHistory(
+    Film film, {
+    FilmSeason? season,
+    required DateTime watchedAt,
+    double? rating,
+    String? comment,
+  }) async {
+    final saved = _ensureFilm(film);
+    if (season != null) _ensureSeason(saved, season);
+    _history = [
+      ..._history,
+      HistoryEntry(
+        id: _nextId(),
+        filmId: saved.id!,
+        seasonNumber: season?.seasonNumber,
+        watchedAt: watchedAt,
+        rating: rating,
+        comment: comment,
+      ),
+    ];
+    await _persist();
+  }
 
   @override
-  Future<void> delete(String id) async {
-    _items.removeWhere((e) => e.id == id);
+  Future<void> updateHistory(
+    String id, {
+    required DateTime watchedAt,
+    double? rating,
+    String? comment,
+  }) async {
+    _history = _history
+        .map((e) => e.id == id
+            ? HistoryEntry(
+                id: e.id,
+                filmId: e.filmId,
+                seasonNumber: e.seasonNumber,
+                watchedAt: watchedAt,
+                rating: rating,
+                comment: comment,
+              )
+            : e)
+        .toList();
     await _persist();
+  }
+
+  @override
+  Future<void> removeFromCollection(String id) async {
+    final filmId = _collection
+        .where((e) => e.id == id)
+        .map((e) => e.filmId)
+        .cast<String?>()
+        .firstWhere((_) => true, orElse: () => null);
+    _collection = _collection.where((e) => e.id != id).toList();
+    if (filmId != null) _gcFilm(filmId);
+    await _persist();
+  }
+
+  @override
+  Future<void> removeFromHistory(String id) async {
+    final filmId = _history
+        .where((e) => e.id == id)
+        .map((e) => e.filmId)
+        .cast<String?>()
+        .firstWhere((_) => true, orElse: () => null);
+    _history = _history.where((e) => e.id != id).toList();
+    if (filmId != null) _gcFilm(filmId);
+    await _persist();
+  }
+
+  /// GC applicatif : film/saison orphelin → retiré du catalogue.
+  void _gcFilm(String filmId) {
+    final filmRef = _collection.any((e) => e.filmId == filmId) ||
+        _history.any((e) => e.filmId == filmId);
+    if (!filmRef) {
+      final film = _filmsById.remove(filmId);
+      if (film != null) _filmsByKey.remove(film.mediaKey);
+      _seasons = _seasons.where((s) => s.filmId != filmId).toList();
+      return;
+    }
+    // Nettoyage des saisons orphelines du film conservé.
+    _seasons = _seasons.where((s) {
+      if (s.filmId != filmId) return true;
+      final used = _collection.any(
+              (e) => e.filmId == filmId && e.seasonNumber == s.seasonNumber) ||
+          _history.any(
+              (e) => e.filmId == filmId && e.seasonNumber == s.seasonNumber);
+      return used;
+    }).toList();
   }
 
   @override
   Future<void> refresh() async {
-    _items = _load();
-    _controller.add(_snapshot());
+    _load();
+    _emit();
+  }
+
+  @override
+  Future<void> backfillFilm(Film fresh) async {
+    final existing = _filmsByKey[fresh.mediaKey];
+    if (existing == null) return;
+    final merged = _mergeFilm(existing, fresh);
+    if (_sameMeta(existing, merged)) return;
+    _filmsById[existing.id!] = merged;
+    _filmsByKey[merged.mediaKey] = merged;
+    await _persist();
+  }
+
+  @override
+  void dispose() {
+    _collectionCtrl.close();
+    _historyCtrl.close();
   }
 }
 
@@ -217,17 +730,23 @@ final sharedPreferencesProvider = Provider<SharedPreferences>(
 );
 
 /// Renvoie le bon backend selon la configuration (cloud si Supabase, sinon local).
-final collectionRepositoryProvider = Provider<CollectionRepository>((ref) {
-  if (AppConfig.hasSupabase) {
-    return SupabaseCollectionRepository(ref.watch(supabaseClientProvider));
-  }
-  return LocalCollectionRepository(ref.watch(sharedPreferencesProvider));
-});
-
-/// Flux de la collection (réinitialisé au changement d'auth en mode cloud).
-final collectionStreamProvider = StreamProvider<List<CollectionItem>>((ref) {
+/// Recréé au changement d'auth en mode cloud (et nettoie ses souscriptions).
+final libraryRepositoryProvider = Provider<LibraryRepository>((ref) {
   if (AppConfig.hasSupabase) {
     ref.watch(currentUserProvider);
+    final repo = SupabaseLibraryRepository(ref.watch(supabaseClientProvider));
+    ref.onDispose(repo.dispose);
+    return repo;
   }
-  return ref.watch(collectionRepositoryProvider).watchAll();
+  final repo = LocalLibraryRepository(ref.watch(sharedPreferencesProvider));
+  ref.onDispose(repo.dispose);
+  return repo;
 });
+
+/// Flux de la collection (possessions enrichies).
+final collectionStreamProvider = StreamProvider<List<CollectionView>>(
+    (ref) => ref.watch(libraryRepositoryProvider).watchCollection());
+
+/// Flux de l'historique (visionnages enrichis), du plus récent au plus ancien.
+final historyStreamProvider = StreamProvider<List<HistoryView>>(
+    (ref) => ref.watch(libraryRepositoryProvider).watchHistory());

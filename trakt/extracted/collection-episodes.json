@@ -1,0 +1,3036 @@
+[
+  {
+    "type": "episode",
+    "collected_at": "2025-01-02T17:56:17.000Z",
+    "updated_at": "2025-01-02T17:56:18.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1104921",
+        "plex": {
+          "guid": "5d9c13e6ba2e21001f1b8a7a"
+        },
+        "tmdb": 212172,
+        "tvdb": 345726,
+        "trakt": 222822
+      },
+      "title": "Christmas Special",
+      "number": 1,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0445114",
+        "plex": {
+          "guid": "5d9c08752df347001e3b368b",
+          "slug": "extras"
+        },
+        "slug": "extras",
+        "tmdb": 2693,
+        "tvdb": 75660,
+        "trakt": 2675
+      },
+      "year": 2005,
+      "title": "Extras",
+      "aired_episodes": 12
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2025-01-02T11:32:25.000Z",
+    "updated_at": "2025-01-02T11:32:26.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0852776",
+        "plex": {
+          "guid": "5d9c13e63c3f87001f3d17b2"
+        },
+        "tmdb": 212160,
+        "tvdb": 307820,
+        "trakt": 222829
+      },
+      "title": "Orlando Bloom",
+      "number": 1,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0445114",
+        "plex": {
+          "guid": "5d9c08752df347001e3b368b",
+          "slug": "extras"
+        },
+        "slug": "extras",
+        "tmdb": 2693,
+        "tvdb": 75660,
+        "trakt": 2675
+      },
+      "year": 2005,
+      "title": "Extras",
+      "aired_episodes": 12
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-12-30T23:23:35.000Z",
+    "updated_at": "2024-12-30T23:23:35.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0574498",
+        "plex": {
+          "guid": "5d9c13e6ba2e21001f1b8a80"
+        },
+        "tmdb": 212166,
+        "tvdb": 296431,
+        "trakt": 222823
+      },
+      "title": "Ben Stiller",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0445114",
+        "plex": {
+          "guid": "5d9c08752df347001e3b368b",
+          "slug": "extras"
+        },
+        "slug": "extras",
+        "tmdb": 2693,
+        "tvdb": 75660,
+        "trakt": 2675
+      },
+      "year": 2005,
+      "title": "Extras",
+      "aired_episodes": 12
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-21T20:24:52.000Z",
+    "updated_at": "2024-10-21T20:24:52.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt2099831",
+        "plex": {
+          "guid": "5d9c0da12192ba001f343789"
+        },
+        "tmdb": 1237232,
+        "tvdb": 4202398,
+        "trakt": 1088834
+      },
+      "title": "The Menace",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2094220",
+        "plex": {
+          "guid": "5d9c0810170e24001f2a73d5",
+          "slug": "apocalypse-the-rise-of-hitler"
+        },
+        "slug": "apocalypse-the-rise-of-hitler",
+        "tmdb": 68558,
+        "tvdb": 253534,
+        "trakt": 65466
+      },
+      "year": 2011,
+      "title": "Apocalypse: The Rise of Hitler",
+      "aired_episodes": 2
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-21T20:13:15.000Z",
+    "updated_at": "2024-10-21T20:13:15.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1609201",
+        "plex": {
+          "guid": "5d9c0af56c3e37001ece2d99"
+        },
+        "tmdb": 1007050,
+        "tvdb": 1073541,
+        "trakt": 781541
+      },
+      "title": "Aggression (1933–1939)",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1508238",
+        "plex": {
+          "guid": "5d9c07f01cae62001f748320",
+          "slug": "apocalypse-world-war-ii"
+        },
+        "slug": "apocalypse-the-second-world-war",
+        "tmdb": 33189,
+        "tvdb": 113371,
+        "trakt": 33044
+      },
+      "year": 2009,
+      "title": "Apocalypse: The Second World War",
+      "aired_episodes": 6
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-21T13:02:01.000Z",
+    "updated_at": "2024-10-21T13:02:01.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt2370419",
+        "plex": {
+          "guid": "5d9c11154eefaa001f6364e0"
+        },
+        "tmdb": 870670,
+        "tvdb": 4333901,
+        "trakt": 875463
+      },
+      "title": "Apéritif",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2243973",
+        "plex": {
+          "guid": "5d9c08544eefaa001f5daa50",
+          "slug": "hannibal"
+        },
+        "slug": "hannibal",
+        "tmdb": 40008,
+        "tvdb": 259063,
+        "trakt": 39825
+      },
+      "year": 2013,
+      "title": "Hannibal",
+      "aired_episodes": 39
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-21T10:03:45.000Z",
+    "updated_at": "2024-10-21T10:03:45.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1044933,
+        "tvdb": 5135870,
+        "trakt": 1771913
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4119154",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "peplum",
+        "tmdb": 62129,
+        "tvdb": 292340,
+        "trakt": 96564
+      },
+      "year": 2015,
+      "title": "Peplum",
+      "aired_episodes": 3
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-21T10:03:43.000Z",
+    "updated_at": "2024-10-21T10:03:43.000Z",
+    "episode": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1867662,
+        "tvdb": null,
+        "trakt": 13430255
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4119154",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "peplum",
+        "tmdb": 62129,
+        "tvdb": 292340,
+        "trakt": 96564
+      },
+      "year": 2015,
+      "title": "Peplum",
+      "aired_episodes": 3
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T13:38:56.000Z",
+    "updated_at": "2024-10-18T13:38:56.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1601741",
+        "plex": {
+          "guid": "5d9c0eba705e7a001e72cfe8"
+        },
+        "tmdb": 799671,
+        "tvdb": 1737861,
+        "trakt": 807170
+      },
+      "title": "Space Monkey",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1553644",
+        "plex": {
+          "guid": "5d9c082102391c001f581bb5",
+          "slug": "the-ricky-gervais-show"
+        },
+        "slug": "the-ricky-gervais-show",
+        "tmdb": 35305,
+        "tvdb": 142581,
+        "trakt": 35154
+      },
+      "year": 2010,
+      "title": "The Ricky Gervais Show",
+      "aired_episodes": 39
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T11:54:07.000Z",
+    "updated_at": "2024-10-18T11:54:07.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt3288504",
+        "plex": {
+          "guid": "5d9c10904eefaa001f62f63f"
+        },
+        "tmdb": 975118,
+        "tvdb": 4637186,
+        "trakt": 1215565
+      },
+      "title": "Marriage",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt3277670",
+        "plex": {
+          "guid": "5d9c0848ffd9ef001e990e34",
+          "slug": "the-moaning-of-life"
+        },
+        "slug": "the-moaning-of-life",
+        "tmdb": 58790,
+        "tvdb": 272391,
+        "trakt": 72786
+      },
+      "year": 2013,
+      "title": "The Moaning of Life",
+      "aired_episodes": 11
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T10:38:49.000Z",
+    "updated_at": "2024-10-18T10:38:49.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1443130",
+        "plex": {
+          "guid": "5d9c1206ffd9ef001e9fba23"
+        },
+        "tmdb": 554903,
+        "tvdb": 753851,
+        "trakt": 562941
+      },
+      "title": "Black Mail",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1305562",
+        "plex": {
+          "guid": "5d9c08673c3f87001f34e764",
+          "slug": "psychoville"
+        },
+        "slug": "psychoville",
+        "tmdb": 17420,
+        "tvdb": 99101,
+        "trakt": 17342
+      },
+      "year": 2009,
+      "title": "Psychoville",
+      "aired_episodes": 13
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:29:36.000Z",
+    "updated_at": "2024-10-18T08:29:36.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665895",
+        "plex": {
+          "guid": "5d9c125508fddd001f31548b"
+        },
+        "tmdb": 325928,
+        "tvdb": 105345,
+        "trakt": 334635
+      },
+      "title": "Alive and Buried",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:29:02.000Z",
+    "updated_at": "2024-10-18T08:29:02.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665905",
+        "plex": {
+          "guid": "5d9c1255e98e47001eb82900"
+        },
+        "tmdb": 325933,
+        "tvdb": 105351,
+        "trakt": 334641
+      },
+      "title": "In Luton Airport No-One Can Hear You Scream",
+      "number": 1,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:28:14.000Z",
+    "updated_at": "2024-10-18T08:28:14.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665934",
+        "plex": {
+          "guid": "5de8ec0099d6fa001e567ffb"
+        },
+        "tmdb": 325967,
+        "tvdb": 105358,
+        "trakt": 334623
+      },
+      "title": "Who's Listening?",
+      "number": 1,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:26:52.000Z",
+    "updated_at": "2024-10-18T08:26:52.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665907",
+        "plex": {
+          "guid": "5d9c12554eefaa001f642b16"
+        },
+        "tmdb": 325939,
+        "tvdb": 105359,
+        "trakt": 334647
+      },
+      "title": "Monday Morning Will Be Fine",
+      "number": 1,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:26:20.000Z",
+    "updated_at": "2024-10-18T08:26:20.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665922",
+        "plex": {
+          "guid": "5de8ec0099d6fa001e567ffe"
+        },
+        "tmdb": 325968,
+        "tvdb": 105356,
+        "trakt": 334624
+      },
+      "title": "The Man in the Long Black Coat",
+      "number": 2,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:25:08.000Z",
+    "updated_at": "2024-10-18T08:25:08.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665923",
+        "plex": {
+          "guid": "5d9c12554eefaa001f642b26"
+        },
+        "tmdb": 325945,
+        "tvdb": 105365,
+        "trakt": 334653
+      },
+      "title": "The Pit and the Pendulum",
+      "number": 1,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:24:07.000Z",
+    "updated_at": "2024-10-18T08:24:07.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5de8ec0099d6fa001e56800a"
+        },
+        "tmdb": 325971,
+        "tvdb": 105378,
+        "trakt": 334627
+      },
+      "title": "The Wisdom of the Witch",
+      "number": 5,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:24:00.000Z",
+    "updated_at": "2024-10-18T08:24:00.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665921",
+        "plex": {
+          "guid": "67e65ea0822a8376884b03eb"
+        },
+        "tmdb": 3583959,
+        "tvdb": 4638171,
+        "trakt": 334659
+      },
+      "title": "The Man Who Blew Away",
+      "number": 1,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:23:51.000Z",
+    "updated_at": "2024-10-18T08:23:51.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5de8ec0099d6fa001e568004"
+        },
+        "tmdb": 325969,
+        "tvdb": 333436,
+        "trakt": 334626
+      },
+      "title": "One Foot in the Algarve",
+      "number": 4,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:18:41.000Z",
+    "updated_at": "2024-10-18T08:18:41.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665919",
+        "plex": {
+          "guid": "5d9c1255ffd9ef001e9fee06"
+        },
+        "tmdb": 325956,
+        "tvdb": 105381,
+        "trakt": 334664
+      },
+      "title": "The Executioner's Song",
+      "number": 1,
+      "season": 6
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:16:43.000Z",
+    "updated_at": "2024-10-18T08:16:43.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665911",
+        "plex": {
+          "guid": "5de8ec0099d6fa001e56800d"
+        },
+        "tmdb": 325972,
+        "tvdb": 105380,
+        "trakt": 334628
+      },
+      "title": "Starbound",
+      "number": 6,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:16:03.000Z",
+    "updated_at": "2024-10-18T08:16:03.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0665900",
+        "plex": {
+          "guid": "5de8ec0099d6fa001e568010"
+        },
+        "tmdb": 325973,
+        "tvdb": 105377,
+        "trakt": 334629
+      },
+      "title": "Endgame",
+      "number": 7,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0098882",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd76",
+          "slug": "one-foot-in-the-grave"
+        },
+        "slug": "one-foot-in-the-grave",
+        "tmdb": 4548,
+        "tvdb": 73021,
+        "trakt": 4524
+      },
+      "year": 1990,
+      "title": "One Foot in the Grave",
+      "aired_episodes": 36
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T08:14:03.000Z",
+    "updated_at": "2024-10-18T08:14:03.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1701119",
+        "plex": {
+          "guid": "5d9c12072192ba001f37efd6"
+        },
+        "tmdb": 786967,
+        "tvdb": 3076371,
+        "trakt": 794246
+      },
+      "title": "The Inn at Whitewell",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1698441",
+        "plex": {
+          "guid": "5d9c08677b5c2e001e65adaa",
+          "slug": "the-trip"
+        },
+        "slug": "the-trip",
+        "tmdb": 34440,
+        "tvdb": 202571,
+        "trakt": 34293
+      },
+      "year": 2010,
+      "title": "The Trip",
+      "aired_episodes": 24
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-10-18T06:58:38.000Z",
+    "updated_at": "2024-10-18T06:58:38.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt2666140",
+        "plex": {
+          "guid": "5d9c10092df347001e4005c0"
+        },
+        "tmdb": 974102,
+        "tvdb": 7082530,
+        "trakt": 961491
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2616280",
+        "plex": {
+          "guid": "5d9c08394eefaa001f5d89cd",
+          "slug": "derek"
+        },
+        "slug": "derek",
+        "tmdb": 60655,
+        "tvdb": 257630,
+        "trakt": 60234
+      },
+      "year": 2013,
+      "title": "Derek",
+      "aired_episodes": 12
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-30T09:49:44.000Z",
+    "updated_at": "2024-09-30T09:49:44.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0578586",
+        "plex": {
+          "guid": "5d9c13ee02391c001f608060"
+        },
+        "tmdb": 154635,
+        "tvdb": 180451,
+        "trakt": 167559
+      },
+      "title": "Communication Problems",
+      "number": 1,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0072500",
+        "plex": {
+          "guid": "5d9c0874ffd9ef001e99607a",
+          "slug": "fawlty-towers"
+        },
+        "slug": "fawlty-towers",
+        "tmdb": 2207,
+        "tvdb": 75932,
+        "trakt": 2194
+      },
+      "year": 1975,
+      "title": "Fawlty Towers",
+      "aired_episodes": 12
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-30T09:49:42.000Z",
+    "updated_at": "2024-09-30T09:49:42.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0578584",
+        "plex": {
+          "guid": "5d9c13ee46115600200d573e"
+        },
+        "tmdb": 154629,
+        "tvdb": 180445,
+        "trakt": 167553
+      },
+      "title": "A Touch of Class",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0072500",
+        "plex": {
+          "guid": "5d9c0874ffd9ef001e99607a",
+          "slug": "fawlty-towers"
+        },
+        "slug": "fawlty-towers",
+        "tmdb": 2207,
+        "tvdb": 75932,
+        "trakt": 2194
+      },
+      "year": 1975,
+      "title": "Fawlty Towers",
+      "aired_episodes": 12
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-27T11:36:12.000Z",
+    "updated_at": "2024-09-27T11:36:12.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1025027",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1063534,
+        "tvdb": 401174,
+        "trakt": 1636087
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0111957",
+        "plex": {
+          "guid": "5d9c083646115600200a8454",
+          "slug": "familie-heinz-becker"
+        },
+        "slug": "familie-heinz-becker",
+        "tmdb": 41053,
+        "tvdb": 83558,
+        "trakt": 40858
+      },
+      "year": 1992,
+      "title": "Familie Heinz Becker",
+      "aired_episodes": 42
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-27T11:36:10.000Z",
+    "updated_at": "2024-09-27T11:36:10.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0930230",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1063540,
+        "tvdb": 401518,
+        "trakt": 1636101
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0111957",
+        "plex": {
+          "guid": "5d9c083646115600200a8454",
+          "slug": "familie-heinz-becker"
+        },
+        "slug": "familie-heinz-becker",
+        "tmdb": 41053,
+        "tvdb": 83558,
+        "trakt": 40858
+      },
+      "year": 1992,
+      "title": "Familie Heinz Becker",
+      "aired_episodes": 42
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-27T11:36:08.000Z",
+    "updated_at": "2024-09-27T11:36:08.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1294750",
+        "plex": {
+          "guid": "606f12d8ff5b43002ce1b29b"
+        },
+        "tmdb": 1063546,
+        "tvdb": 401524,
+        "trakt": 1636118
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0111957",
+        "plex": {
+          "guid": "5d9c083646115600200a8454",
+          "slug": "familie-heinz-becker"
+        },
+        "slug": "familie-heinz-becker",
+        "tmdb": 41053,
+        "tvdb": 83558,
+        "trakt": 40858
+      },
+      "year": 1992,
+      "title": "Familie Heinz Becker",
+      "aired_episodes": 42
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-27T11:36:07.000Z",
+    "updated_at": "2024-09-27T11:36:07.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1171299",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1063552,
+        "tvdb": 401357,
+        "trakt": 1636138
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0111957",
+        "plex": {
+          "guid": "5d9c083646115600200a8454",
+          "slug": "familie-heinz-becker"
+        },
+        "slug": "familie-heinz-becker",
+        "tmdb": 41053,
+        "tvdb": 83558,
+        "trakt": 40858
+      },
+      "year": 1992,
+      "title": "Familie Heinz Becker",
+      "aired_episodes": 42
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-27T11:36:04.000Z",
+    "updated_at": "2024-09-27T11:36:04.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1294745",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1063558,
+        "tvdb": 401534,
+        "trakt": 1636149
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0111957",
+        "plex": {
+          "guid": "5d9c083646115600200a8454",
+          "slug": "familie-heinz-becker"
+        },
+        "slug": "familie-heinz-becker",
+        "tmdb": 41053,
+        "tvdb": 83558,
+        "trakt": 40858
+      },
+      "year": 1992,
+      "title": "Familie Heinz Becker",
+      "aired_episodes": 42
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-27T11:36:02.000Z",
+    "updated_at": "2024-09-27T11:36:02.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1294762",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1063566,
+        "tvdb": 401540,
+        "trakt": 1636163
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 6
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0111957",
+        "plex": {
+          "guid": "5d9c083646115600200a8454",
+          "slug": "familie-heinz-becker"
+        },
+        "slug": "familie-heinz-becker",
+        "tmdb": 41053,
+        "tvdb": 83558,
+        "trakt": 40858
+      },
+      "year": 1992,
+      "title": "Familie Heinz Becker",
+      "aired_episodes": 42
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-27T11:35:57.000Z",
+    "updated_at": "2024-09-27T11:35:57.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "606f12daff5b43002ce1b2bd"
+        },
+        "tmdb": 1063572,
+        "tvdb": 401546,
+        "trakt": 1636174
+      },
+      "title": "Episode 1",
+      "number": 1,
+      "season": 7
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0111957",
+        "plex": {
+          "guid": "5d9c083646115600200a8454",
+          "slug": "familie-heinz-becker"
+        },
+        "slug": "familie-heinz-becker",
+        "tmdb": 41053,
+        "tvdb": 83558,
+        "trakt": 40858
+      },
+      "year": 1992,
+      "title": "Familie Heinz Becker",
+      "aired_episodes": 42
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-27T10:00:30.000Z",
+    "updated_at": "2024-09-27T10:00:30.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt1072501",
+        "plex": {
+          "guid": "61b164656bfb4feb4850ff3c"
+        },
+        "tmdb": 850883,
+        "tvdb": 361820,
+        "trakt": 854829
+      },
+      "title": "Der Scheunenfund",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1056152",
+        "plex": {
+          "guid": "61b164466bfb4feb4850fddf",
+          "slug": "die-ludolfs"
+        },
+        "slug": "die-ludolfs",
+        "tmdb": 37721,
+        "tvdb": 80523,
+        "trakt": 37563
+      },
+      "year": 2006,
+      "title": "Die Ludolfs",
+      "aired_episodes": 90
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:33:45.000Z",
+    "updated_at": "2024-09-24T15:33:45.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666553",
+        "plex": {
+          "guid": "5e833e06cba452004018f585"
+        },
+        "tmdb": 2685,
+        "tvdb": 443488,
+        "trakt": 3407
+      },
+      "title": "Heroes and Villains",
+      "number": 16,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:33:33.000Z",
+    "updated_at": "2024-09-24T15:33:33.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666562",
+        "plex": {
+          "guid": "67e651d5c1489518b33a766b"
+        },
+        "tmdb": 1225757,
+        "tvdb": 174151,
+        "trakt": 3404
+      },
+      "title": "Miami Twice: Oh to Be in England",
+      "number": 13,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:33:07.000Z",
+    "updated_at": "2024-09-24T15:33:07.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt14079928",
+        "plex": {
+          "guid": "5de8d08f29943d001dbb9984"
+        },
+        "tmdb": 2737612,
+        "tvdb": 4090553,
+        "trakt": 3425
+      },
+      "title": "We Love Only Fools and Horses",
+      "number": 34,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:32:43.000Z",
+    "updated_at": "2024-09-24T15:32:43.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt3672826",
+        "plex": {
+          "guid": "5de8d08f29943d001dbb9980"
+        },
+        "tmdb": 2315070,
+        "tvdb": 4833854,
+        "trakt": 3423
+      },
+      "title": "Beckham in Peckham - Sport Relief 2014",
+      "number": 32,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:32:22.000Z",
+    "updated_at": "2024-09-24T15:32:22.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0756576",
+        "plex": {
+          "guid": "5e833e06cba452004018f588"
+        },
+        "tmdb": 2690,
+        "tvdb": 7670850,
+        "trakt": 3412
+      },
+      "title": "Sleepless in Peckham",
+      "number": 21,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:32:01.000Z",
+    "updated_at": "2024-09-24T15:32:01.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666571",
+        "plex": {
+          "guid": "5e833e07cba452004018f5a8"
+        },
+        "tmdb": 2689,
+        "tvdb": 443492,
+        "trakt": 3411
+      },
+      "title": "Strangers on the Shore",
+      "number": 20,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:31:43.000Z",
+    "updated_at": "2024-09-24T15:31:43.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666556",
+        "plex": {
+          "guid": "5e833e06cba452004018f580"
+        },
+        "tmdb": 2688,
+        "tvdb": 443491,
+        "trakt": 3410
+      },
+      "title": "If They Could See Us Now",
+      "number": 19,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:31:15.000Z",
+    "updated_at": "2024-09-24T15:31:15.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5de8d08929943d001dbb9972"
+        },
+        "tmdb": 2664,
+        "tvdb": 864091,
+        "trakt": 3417
+      },
+      "title": "Comic Relief Special",
+      "number": 26,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:30:55.000Z",
+    "updated_at": "2024-09-24T15:30:55.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666587",
+        "plex": {
+          "guid": "5e833e06cba452004018f5a3"
+        },
+        "tmdb": 2686,
+        "tvdb": 443490,
+        "trakt": 3409
+      },
+      "title": "Time on Our Hands",
+      "number": 18,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:30:22.000Z",
+    "updated_at": "2024-09-24T15:30:22.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666563",
+        "plex": {
+          "guid": "5e833e06cba452004018f57c"
+        },
+        "tmdb": 2687,
+        "tvdb": 443489,
+        "trakt": 3408
+      },
+      "title": "Modern Men",
+      "number": 17,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:29:47.000Z",
+    "updated_at": "2024-09-24T15:29:47.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666546",
+        "plex": {
+          "guid": "5de8d07e29943d001dbb9958"
+        },
+        "tmdb": 2684,
+        "tvdb": 443482,
+        "trakt": 3406
+      },
+      "title": "Fatal Extraction",
+      "number": 15,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:29:27.000Z",
+    "updated_at": "2024-09-24T15:29:27.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666564",
+        "plex": {
+          "guid": "5e833e06cba452004018f574"
+        },
+        "tmdb": 2682,
+        "tvdb": 174152,
+        "trakt": 3405
+      },
+      "title": "Mother Nature's Son",
+      "number": 14,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:28:42.000Z",
+    "updated_at": "2024-09-24T15:28:42.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666561",
+        "plex": {
+          "guid": "5e833e06cba452004018f571"
+        },
+        "tmdb": 2662,
+        "tvdb": 174150,
+        "trakt": 1551541
+      },
+      "title": "Miami Twice: The American Dream",
+      "number": 12,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:25:39.000Z",
+    "updated_at": "2024-09-24T15:25:39.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666582",
+        "plex": {
+          "guid": "5de8d09429943d001dbb9a39"
+        },
+        "tmdb": 2643,
+        "tvdb": 174143,
+        "trakt": 3465
+      },
+      "title": "The Sky's the Limit",
+      "number": 1,
+      "season": 7
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:24:16.000Z",
+    "updated_at": "2024-09-24T15:24:16.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666566",
+        "plex": {
+          "guid": "5de8d07d29943d001dbb9950"
+        },
+        "tmdb": 2683,
+        "tvdb": 174149,
+        "trakt": 3403
+      },
+      "title": "Rodney Come Home",
+      "number": 11,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:23:51.000Z",
+    "updated_at": "2024-09-24T15:23:51.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5de8d08929943d001dbb9970"
+        },
+        "tmdb": 2693,
+        "tvdb": 864081,
+        "trakt": 3416
+      },
+      "title": "The Robin Flies At Dawn",
+      "number": 25,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:23:30.000Z",
+    "updated_at": "2024-09-24T15:23:30.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666576",
+        "plex": {
+          "guid": "5de8d07d29943d001dbb994e"
+        },
+        "tmdb": 2681,
+        "tvdb": 174142,
+        "trakt": 3402
+      },
+      "title": "The Jolly Boys' Outing",
+      "number": 10,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:48.000Z",
+    "updated_at": "2024-09-24T15:21:48.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666595",
+        "plex": {
+          "guid": "5de8d09329943d001dbb9a1e"
+        },
+        "tmdb": 2648,
+        "tvdb": 174135,
+        "trakt": 3459
+      },
+      "title": "Yuppy Love",
+      "number": 1,
+      "season": 6
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:46.000Z",
+    "updated_at": "2024-09-24T15:21:46.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666544",
+        "plex": {
+          "guid": "5de8d07d29943d001dbb994c"
+        },
+        "tmdb": 2679,
+        "tvdb": 174141,
+        "trakt": 3401
+      },
+      "title": "Dates",
+      "number": 9,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:45.000Z",
+    "updated_at": "2024-09-24T15:21:45.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666575",
+        "plex": {
+          "guid": "5de8d07d29943d001dbb994a"
+        },
+        "tmdb": 2680,
+        "tvdb": 174134,
+        "trakt": 3400
+      },
+      "title": "The Frog's Legacy",
+      "number": 8,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:44.000Z",
+    "updated_at": "2024-09-24T15:21:44.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666534",
+        "plex": {
+          "guid": "5de8d07c29943d001dbb9948"
+        },
+        "tmdb": 2678,
+        "tvdb": 174132,
+        "trakt": 3398
+      },
+      "title": "A Royal Flush",
+      "number": 6,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:42.000Z",
+    "updated_at": "2024-09-24T15:21:42.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5de8d08329943d001dbb996e"
+        },
+        "tmdb": 2694,
+        "tvdb": 864071,
+        "trakt": 3415
+      },
+      "title": "Royal Variety Show",
+      "number": 24,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:40.000Z",
+    "updated_at": "2024-09-24T15:21:40.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666548",
+        "plex": {
+          "guid": "5de8d09329943d001dbb9a03"
+        },
+        "tmdb": 2637,
+        "tvdb": 174126,
+        "trakt": 3453
+      },
+      "title": "From Prussia with Love",
+      "number": 1,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:39.000Z",
+    "updated_at": "2024-09-24T15:21:39.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5de8d08329943d001dbb996c"
+        },
+        "tmdb": 2691,
+        "tvdb": 864061,
+        "trakt": 3414
+      },
+      "title": "White Mice",
+      "number": 23,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:38.000Z",
+    "updated_at": "2024-09-24T15:21:38.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666588",
+        "plex": {
+          "guid": "5de8d07c29943d001dbb9946"
+        },
+        "tmdb": 2676,
+        "tvdb": 174125,
+        "trakt": 3397
+      },
+      "title": "To Hull and Back",
+      "number": 5,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:36.000Z",
+    "updated_at": "2024-09-24T15:21:36.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666550",
+        "plex": {
+          "guid": "5de8d09229943d001dbb99e4"
+        },
+        "tmdb": 2655,
+        "tvdb": 174118,
+        "trakt": 3446
+      },
+      "title": "Happy Returns",
+      "number": 1,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:35.000Z",
+    "updated_at": "2024-09-24T15:21:35.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt6849058",
+        "plex": {
+          "guid": "5de8d08329943d001dbb996a"
+        },
+        "tmdb": 2692,
+        "tvdb": 174133,
+        "trakt": 3399
+      },
+      "title": "Licensed to Drill",
+      "number": 7,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:34.000Z",
+    "updated_at": "2024-09-24T15:21:34.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666585",
+        "plex": {
+          "guid": "5de8d07c29943d001dbb9944"
+        },
+        "tmdb": 2677,
+        "tvdb": 174117,
+        "trakt": 3396
+      },
+      "title": "Thicker Than Water",
+      "number": 4,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:32.000Z",
+    "updated_at": "2024-09-24T15:21:32.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666555",
+        "plex": {
+          "guid": "5de8d09129943d001dbb99c5"
+        },
+        "tmdb": 2615,
+        "tvdb": 174110,
+        "trakt": 3439
+      },
+      "title": "Homesick",
+      "number": 1,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:30.000Z",
+    "updated_at": "2024-09-24T15:21:30.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666545",
+        "plex": {
+          "guid": "5de8d07c29943d001dbb9942"
+        },
+        "tmdb": 2675,
+        "tvdb": 358847,
+        "trakt": 3395
+      },
+      "title": "Diamonds Are for Heather",
+      "number": 3,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:29.000Z",
+    "updated_at": "2024-09-24T15:21:29.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666542",
+        "plex": {
+          "guid": "5de8d07c29943d001dbb9940"
+        },
+        "tmdb": 2661,
+        "tvdb": 358846,
+        "trakt": 3394
+      },
+      "title": "Christmas Trees",
+      "number": 2,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:28.000Z",
+    "updated_at": "2024-09-24T15:21:28.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666577",
+        "plex": {
+          "guid": "5de8d09029943d001dbb99a6"
+        },
+        "tmdb": 2633,
+        "tvdb": 358832,
+        "trakt": 3432
+      },
+      "title": "The Long Legs of the Law",
+      "number": 1,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:27.000Z",
+    "updated_at": "2024-09-24T15:21:27.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666541",
+        "plex": {
+          "guid": "5e833e05cba452004018f56a"
+        },
+        "tmdb": 2674,
+        "tvdb": 174101,
+        "trakt": 3393
+      },
+      "title": "Christmas Crackers",
+      "number": 1,
+      "season": 0
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T15:21:25.000Z",
+    "updated_at": "2024-09-24T15:21:25.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt0666538",
+        "plex": {
+          "guid": "5de8d08f29943d001dbb998b"
+        },
+        "tmdb": 2624,
+        "tvdb": 174095,
+        "trakt": 3426
+      },
+      "title": "Big Brother",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0081912",
+        "plex": {
+          "guid": "5d9c07fe6c3e37001ecd3803",
+          "slug": "only-fools-and-horses"
+        },
+        "slug": "only-fools-and-horses",
+        "tmdb": 72,
+        "tvdb": 75628,
+        "trakt": 71
+      },
+      "year": 1981,
+      "title": "Only Fools and Horses",
+      "aired_episodes": 45
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T11:46:37.000Z",
+    "updated_at": "2024-09-24T11:46:37.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1574177,
+        "tvdb": 6698152,
+        "trakt": 3121034
+      },
+      "title": "The Apocalypse",
+      "number": 4,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt8030700",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "coincoin-and-the-extra-humans",
+        "tmdb": 82441,
+        "tvdb": 439724,
+        "trakt": 135215
+      },
+      "year": 2018,
+      "title": "CoinCoin and the Extra-Humans",
+      "aired_episodes": 4
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-24T11:46:30.000Z",
+    "updated_at": "2024-09-24T11:46:30.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1107723,
+        "tvdb": 4931319,
+        "trakt": 1303525
+      },
+      "title": "Allah akbar!",
+      "number": 4,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt3053694",
+        "plex": {
+          "guid": "5d9c08091cae62001f749212",
+          "slug": "lil-quinquin"
+        },
+        "slug": "li-l-quinquin",
+        "tmdb": 63953,
+        "tvdb": 281377,
+        "trakt": 79068
+      },
+      "year": 2014,
+      "title": "Li'l Quinquin",
+      "aired_episodes": 4
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-20T15:17:29.000Z",
+    "updated_at": "2024-09-20T15:17:29.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5d9c13fd705e7a001e771f10"
+        },
+        "tmdb": 245673,
+        "tvdb": 202872,
+        "trakt": 254365
+      },
+      "title": "Men of Property",
+      "number": 7,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0057785",
+        "plex": {
+          "guid": "5d9c0875ffd9ef001e9961ca",
+          "slug": "steptoe-and-son"
+        },
+        "slug": "steptoe-and-son",
+        "tmdb": 3333,
+        "tvdb": 76607,
+        "trakt": 3311
+      },
+      "year": 1962,
+      "title": "Steptoe and Son",
+      "aired_episodes": 55
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-20T15:17:28.000Z",
+    "updated_at": "2024-09-20T15:17:28.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5d9c13fd2192ba001f397379"
+        },
+        "tmdb": 245635,
+        "tvdb": 202865,
+        "trakt": 254358
+      },
+      "title": "Pilgrim's Progress",
+      "number": 7,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0057785",
+        "plex": {
+          "guid": "5d9c0875ffd9ef001e9961ca",
+          "slug": "steptoe-and-son"
+        },
+        "slug": "steptoe-and-son",
+        "tmdb": 3333,
+        "tvdb": 76607,
+        "trakt": 3311
+      },
+      "year": 1962,
+      "title": "Steptoe and Son",
+      "aired_episodes": 55
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-20T15:17:26.000Z",
+    "updated_at": "2024-09-20T15:17:26.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 245642,
+        "tvdb": 202858,
+        "trakt": 254351
+      },
+      "title": "The Lodger",
+      "number": 7,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0057785",
+        "plex": {
+          "guid": "5d9c0875ffd9ef001e9961ca",
+          "slug": "steptoe-and-son"
+        },
+        "slug": "steptoe-and-son",
+        "tmdb": 3333,
+        "tvdb": 76607,
+        "trakt": 3311
+      },
+      "year": 1962,
+      "title": "Steptoe and Son",
+      "aired_episodes": 55
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-20T15:17:24.000Z",
+    "updated_at": "2024-09-20T15:17:24.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5d9c13fdffd9ef001ea1081c"
+        },
+        "tmdb": 245677,
+        "tvdb": 202851,
+        "trakt": 254344
+      },
+      "title": "Is That Your Horse Outside?",
+      "number": 7,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0057785",
+        "plex": {
+          "guid": "5d9c0875ffd9ef001e9961ca",
+          "slug": "steptoe-and-son"
+        },
+        "slug": "steptoe-and-son",
+        "tmdb": 3333,
+        "tvdb": 76607,
+        "trakt": 3311
+      },
+      "year": 1962,
+      "title": "Steptoe and Son",
+      "aired_episodes": 55
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-20T15:17:22.000Z",
+    "updated_at": "2024-09-20T15:17:22.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5d9c13fdef619b00204aa7c0"
+        },
+        "tmdb": 245666,
+        "tvdb": 202844,
+        "trakt": 254337
+      },
+      "title": "The Holiday",
+      "number": 6,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0057785",
+        "plex": {
+          "guid": "5d9c0875ffd9ef001e9961ca",
+          "slug": "steptoe-and-son"
+        },
+        "slug": "steptoe-and-son",
+        "tmdb": 3333,
+        "tvdb": 76607,
+        "trakt": 3311
+      },
+      "year": 1962,
+      "title": "Steptoe and Son",
+      "aired_episodes": 55
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-20T15:11:58.000Z",
+    "updated_at": "2024-09-20T15:11:58.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5d9c13fd7d06d9001fffdd76"
+        },
+        "tmdb": 245652,
+        "tvdb": 202880,
+        "trakt": 254373
+      },
+      "title": "Cuckoo in the Nest",
+      "number": 8,
+      "season": 6
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0057785",
+        "plex": {
+          "guid": "5d9c0875ffd9ef001e9961ca",
+          "slug": "steptoe-and-son"
+        },
+        "slug": "steptoe-and-son",
+        "tmdb": 3333,
+        "tvdb": 76607,
+        "trakt": 3311
+      },
+      "year": 1962,
+      "title": "Steptoe and Son",
+      "aired_episodes": 55
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-20T15:11:57.000Z",
+    "updated_at": "2024-09-20T15:11:57.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5d9c13fdffd9ef001ea10833"
+        },
+        "tmdb": 245656,
+        "tvdb": 202887,
+        "trakt": 254380
+      },
+      "title": "The Desperate Hours",
+      "number": 7,
+      "season": 7
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0057785",
+        "plex": {
+          "guid": "5d9c0875ffd9ef001e9961ca",
+          "slug": "steptoe-and-son"
+        },
+        "slug": "steptoe-and-son",
+        "tmdb": 3333,
+        "tvdb": 76607,
+        "trakt": 3311
+      },
+      "year": 1962,
+      "title": "Steptoe and Son",
+      "aired_episodes": 55
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-09-20T15:11:56.000Z",
+    "updated_at": "2024-09-20T15:11:56.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "5d9c13fd3c3f87001f3d2662"
+        },
+        "tmdb": 245686,
+        "tvdb": 202893,
+        "trakt": 254386
+      },
+      "title": "Seance in a Wet Rag and Bone Yard",
+      "number": 6,
+      "season": 8
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0057785",
+        "plex": {
+          "guid": "5d9c0875ffd9ef001e9961ca",
+          "slug": "steptoe-and-son"
+        },
+        "slug": "steptoe-and-son",
+        "tmdb": 3333,
+        "tvdb": 76607,
+        "trakt": 3311
+      },
+      "year": 1962,
+      "title": "Steptoe and Son",
+      "aired_episodes": 55
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-03-05T09:36:25.000Z",
+    "updated_at": "2024-03-05T09:36:25.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt7801806",
+        "plex": {
+          "guid": "5d9c10fb08fddd001f30681e"
+        },
+        "tmdb": 1473212,
+        "tvdb": 6533381,
+        "trakt": 2877902
+      },
+      "title": "The Mettle of Man",
+      "number": 10,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4189022",
+        "plex": {
+          "guid": "5d9c08522df347001e3af97f",
+          "slug": "ash-vs-evil-dead"
+        },
+        "slug": "ash-vs-evil-dead",
+        "tmdb": 62264,
+        "tvdb": 296295,
+        "trakt": 99460
+      },
+      "year": 2015,
+      "title": "Ash vs Evil Dead",
+      "aired_episodes": 30
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-03-05T09:36:21.000Z",
+    "updated_at": "2024-03-05T09:36:21.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt5197286",
+        "plex": {
+          "guid": "5fbd73f80f5e7b002d3a89dc"
+        },
+        "tmdb": 1225862,
+        "tvdb": 5704165,
+        "trakt": 2305771
+      },
+      "title": "Second Coming",
+      "number": 10,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4189022",
+        "plex": {
+          "guid": "5d9c08522df347001e3af97f",
+          "slug": "ash-vs-evil-dead"
+        },
+        "slug": "ash-vs-evil-dead",
+        "tmdb": 62264,
+        "tvdb": 296295,
+        "trakt": 99460
+      },
+      "year": 2015,
+      "title": "Ash vs Evil Dead",
+      "aired_episodes": 30
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "episode",
+    "collected_at": "2024-03-05T09:23:15.000Z",
+    "updated_at": "2024-03-05T09:23:15.000Z",
+    "episode": {
+      "ids": {
+        "imdb": "tt4427982",
+        "plex": {
+          "guid": "5d9c10fbe98e47001eb7254c"
+        },
+        "tmdb": 1131017,
+        "tvdb": 5324546,
+        "trakt": 1979569
+      },
+      "title": "The Dark One",
+      "number": 10,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4189022",
+        "plex": {
+          "guid": "5d9c08522df347001e3af97f",
+          "slug": "ash-vs-evil-dead"
+        },
+        "slug": "ash-vs-evil-dead",
+        "tmdb": 62264,
+        "tvdb": 296295,
+        "trakt": 99460
+      },
+      "year": 2015,
+      "title": "Ash vs Evil Dead",
+      "aired_episodes": 30
+    },
+    "available_on": [],
+    "metadata": null
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073169",
+        "plex": {
+          "guid": "5d77682d961905001eb927e8",
+          "slug": "dirty-hands"
+        },
+        "slug": "innocents-with-dirty-hands-1975",
+        "tmdb": 3479,
+        "trakt": 2220
+      },
+      "year": 1975,
+      "title": "Innocents with Dirty Hands"
+    },
+    "rank": 1,
+    "id": 1420425834,
+    "listed_at": "2026-02-01T22:31:53.000Z",
+    "notes": null,
+    "my_rating": null
+  }
+]

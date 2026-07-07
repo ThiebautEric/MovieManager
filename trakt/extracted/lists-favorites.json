@@ -1,0 +1,46 @@
+[
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0115658",
+        "plex": {
+          "guid": "5d7768452e80df001ebe035a",
+          "slug": "bernie"
+        },
+        "slug": "bernie-1996",
+        "tmdb": 19963,
+        "trakt": 12251
+      },
+      "year": 1996,
+      "title": "Bernie"
+    },
+    "rank": 1,
+    "id": 1419456915,
+    "listed_at": "2026-01-30T21:22:57.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1190539",
+        "plex": {
+          "guid": "5d776cf69ab544002151a89c",
+          "slug": "the-chaser-2008"
+        },
+        "slug": "the-chaser-2008",
+        "tmdb": 13855,
+        "trakt": 8239
+      },
+      "year": 2008,
+      "title": "The Chaser"
+    },
+    "rank": 2,
+    "id": 1475114414,
+    "listed_at": "2026-06-04T21:47:37.000Z",
+    "notes": null,
+    "my_rating": null
+  }
+]

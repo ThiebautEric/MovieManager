@@ -1,0 +1,51 @@
+[
+  {
+    "type": "movie",
+    "collected_at": "2024-02-13T15:20:32.000Z",
+    "updated_at": "2024-02-13T15:20:32.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0057171",
+        "plex": {
+          "guid": "5d776d1247dd6e001f6efadf",
+          "slug": "yesterday-today-and-tomorrow"
+        },
+        "slug": "yesterday-today-and-tomorrow-1963",
+        "tmdb": 42801,
+        "trakt": 28662
+      },
+      "year": 1963,
+      "title": "Yesterday, Today and Tomorrow"
+    },
+    "available_on": [],
+    "metadata": null
+  },
+  {
+    "type": "movie",
+    "collected_at": "1970-01-01T00:00:00.000Z",
+    "updated_at": "2026-04-17T13:44:14.000Z",
+    "movie": {
+      "ids": {
+        "imdb": "tt0074840",
+        "plex": {
+          "guid": "5d77682c103a2d001f565a11",
+          "slug": "mado"
+        },
+        "slug": "mado-1976",
+        "tmdb": 3424,
+        "trakt": 2203
+      },
+      "year": 1976,
+      "title": "Mado"
+    },
+    "available_on": [],
+    "metadata": {
+      "3d": null,
+      "hdr": null,
+      "audio": null,
+      "media_type": "dvd",
+      "resolution": "sd_576p",
+      "audio_channels": null
+    }
+  }
+]

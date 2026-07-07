@@ -2,68 +2,104 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/models/collection_item.dart';
+import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/theme_toggle_button.dart';
 
-/// Tableau de bord : compteurs + graphiques sur la collection.
+/// Tableau de bord : compteurs + graphiques sur la collection et l'historique.
 class StatsScreen extends ConsumerWidget {
   const StatsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(collectionStreamProvider).value ?? [];
+    final collection = ref.watch(collectionStreamProvider).value ?? [];
+    final history = ref.watch(historyStreamProvider).value ?? [];
     final genresById = ref.watch(genresByIdProvider);
+
+    // Films distincts connus (union collection + historique), par clé TMDB.
+    final films = <String, Film>{
+      for (final v in history) v.film.mediaKey: v.film,
+      for (final c in collection) c.film.mediaKey: c.film,
+    };
+    final watchedKeys = {for (final v in history) v.film.mediaKey};
+    final ownedKeys = {for (final c in collection) c.film.mediaKey};
+    final ratings = [
+      for (final v in history)
+        if (v.rating != null) v.rating!
+    ];
+
+    final total = films.length;
+    final watched = watchedKeys.length;
+    final owned = ownedKeys.length;
+    final avg = ratings.isEmpty
+        ? null
+        : ratings.reduce((a, b) => a + b) / ratings.length;
+
+    if (total == 0) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Statistiques'),
+          actions: const [ThemeToggleButton()],
+        ),
+        body: const Center(child: Text('Aucune donnée à afficher.')),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Statistiques'),
         actions: const [ThemeToggleButton()],
       ),
-      body: items.isEmpty
-          ? const Center(child: Text('Aucune donnée à afficher.'))
-          : ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                _SummaryGrid(items: items),
-                const SizedBox(height: 24),
-                Text('Vus / non vus',
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 12),
-                SizedBox(height: 200, child: _WatchedPie(items: items)),
-                const SizedBox(height: 24),
-                Text('Top genres',
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 12),
-                _GenreBars(items: items, genresById: genresById),
-              ],
-            ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          _SummaryGrid(
+            total: total,
+            watched: watched,
+            owned: owned,
+            views: history.length,
+            avg: avg,
+          ),
+          const SizedBox(height: 24),
+          Text('Vus / non vus',
+              style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 12),
+          SizedBox(
+              height: 200, child: _WatchedPie(watched: watched, total: total)),
+          const SizedBox(height: 24),
+          Text('Top genres', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 12),
+          _GenreBars(films: films.values.toList(), genresById: genresById),
+        ],
+      ),
     );
   }
 }
 
 class _SummaryGrid extends StatelessWidget {
-  const _SummaryGrid({required this.items});
+  const _SummaryGrid({
+    required this.total,
+    required this.watched,
+    required this.owned,
+    required this.views,
+    required this.avg,
+  });
 
-  final List<CollectionItem> items;
+  final int total;
+  final int watched;
+  final int owned;
+  final int views;
+  final double? avg;
 
   @override
   Widget build(BuildContext context) {
-    final watched = items.where((i) => i.watched).length;
-    final owned = items.where((i) => i.owned).length;
-    final rated = items.where((i) => i.userRating != null).toList();
-    final avg = rated.isEmpty
-        ? null
-        : rated.map((i) => i.userRating!).reduce((a, b) => a + b) /
-            rated.length;
-
     final cards = [
-      ('Total', '${items.length}', Icons.movie),
+      ('Titres', '$total', Icons.movie),
       ('Vus', '$watched', Icons.visibility),
-      ('Non vus', '${items.length - watched}', Icons.visibility_off),
+      ('Visionnages', '$views', Icons.history),
       ('Possédés', '$owned', Icons.inventory_2),
-      ('Note moy.', avg == null ? '—' : avg.toStringAsFixed(1), Icons.star),
+      ('Note moy.', avg == null ? '—' : avg!.toStringAsFixed(1), Icons.star),
     ];
 
     return Wrap(
@@ -96,17 +132,15 @@ class _SummaryGrid extends StatelessWidget {
 }
 
 class _WatchedPie extends StatelessWidget {
-  const _WatchedPie({required this.items});
+  const _WatchedPie({required this.watched, required this.total});
 
-  final List<CollectionItem> items;
+  final int watched;
+  final int total;
 
   @override
   Widget build(BuildContext context) {
-    final watched = items.where((i) => i.watched).length;
-    final unwatched = items.length - watched;
+    final unwatched = total - watched;
     final scheme = Theme.of(context).colorScheme;
-
-    if (items.isEmpty) return const SizedBox.shrink();
 
     return Row(
       children: [
@@ -129,8 +163,7 @@ class _WatchedPie extends StatelessWidget {
                   title: '$unwatched',
                   color: scheme.secondaryContainer,
                   radius: 50,
-                  titleStyle:
-                      TextStyle(color: scheme.onSecondaryContainer),
+                  titleStyle: TextStyle(color: scheme.onSecondaryContainer),
                 ),
               ],
             ),
@@ -172,16 +205,16 @@ class _Legend extends StatelessWidget {
 }
 
 class _GenreBars extends StatelessWidget {
-  const _GenreBars({required this.items, required this.genresById});
+  const _GenreBars({required this.films, required this.genresById});
 
-  final List<CollectionItem> items;
+  final List<Film> films;
   final Map<int, String> genresById;
 
   @override
   Widget build(BuildContext context) {
     final counts = <int, int>{};
-    for (final i in items) {
-      for (final g in i.genres) {
+    for (final f in films) {
+      for (final g in f.genres) {
         counts[g] = (counts[g] ?? 0) + 1;
       }
     }
@@ -237,8 +270,8 @@ class _GenreBars extends StatelessWidget {
                   toY: shown[i].value.toDouble(),
                   color: scheme.primary,
                   width: 18,
-                  borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(4)),
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(4)),
                 ),
               ]),
           ],

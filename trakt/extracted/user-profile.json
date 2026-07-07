@@ -1,0 +1,26 @@
+{
+  "username": "ET57800",
+  "private": false,
+  "deleted": false,
+  "name": "ET57800",
+  "vip": true,
+  "vip_ep": false,
+  "director": false,
+  "ids": {
+    "slug": "et57800",
+    "trakt": 11007742
+  },
+  "joined_at": "2021-04-12T10:28:53.000Z",
+  "location": "Béning, Grand Est",
+  "about": "",
+  "gender": "male",
+  "age": 53,
+  "images": {
+    "avatar": {
+      "full": "https://secure.gravatar.com/avatar/495691226d22ec1debb78be885d7f265?d=https%3A%2F%2Fmedia.trakt.tv%2Fhotlink-ok%2Fplaceholders%2Fmedium%2Ffry.png&r=pg&s=256"
+    }
+  },
+  "vip_og": false,
+  "vip_years": 0,
+  "vip_cover_image": null
+}

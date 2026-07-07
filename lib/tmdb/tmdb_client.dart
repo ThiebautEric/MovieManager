@@ -5,6 +5,8 @@ import 'models/genre.dart';
 import 'models/media_details.dart';
 import 'models/media_summary.dart';
 import 'models/person_details.dart';
+import 'models/person_summary.dart';
+import 'models/search_hit.dart';
 
 /// Client de l'API TMDB (endpoints v3).
 ///
@@ -44,8 +46,9 @@ class TmdbClient {
     return '$imageBase/$size$path';
   }
 
-  /// Recherche multi (films + séries).
-  Future<List<MediaSummary>> searchMulti(String query, {int page = 1}) async {
+  /// Recherche multi (films + séries + personnalités), dans l'ordre de
+  /// pertinence renvoyé par TMDB.
+  Future<List<SearchHit>> searchMulti(String query, {int page = 1}) async {
     if (query.trim().isEmpty) return [];
     final res = await _dio.get('/search/multi', queryParameters: {
       'query': query,
@@ -54,10 +57,18 @@ class TmdbClient {
       'include_adult': false,
     });
     final results = (res.data['results'] as List<dynamic>? ?? []);
-    return results
-        .map((e) => MediaSummary.fromJson(e as Map<String, dynamic>))
-        .whereType<MediaSummary>()
-        .toList();
+    final hits = <SearchHit>[];
+    for (final e in results.whereType<Map<String, dynamic>>()) {
+      switch (e['media_type'] as String?) {
+        case 'movie':
+        case 'tv':
+          final m = MediaSummary.fromJson(e);
+          if (m != null) hits.add(MediaHit(m));
+        case 'person':
+          hits.add(PersonHit(PersonSummary.fromJson(e)));
+      }
+    }
+    return hits;
   }
 
   /// Fiche détaillée d'un média, avec casting et vidéos (append_to_response).

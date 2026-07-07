@@ -1,0 +1,6266 @@
+[
+  {
+    "id": 10060659943,
+    "watched_at": "2024-10-09T20:45:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0055602",
+        "plex": {
+          "guid": "5d776899ebdf2200209c3364",
+          "slug": "a-difficult-life"
+        },
+        "slug": "a-difficult-life-1961",
+        "tmdb": 56343,
+        "trakt": 40150
+      },
+      "year": 1961,
+      "title": "A Difficult Life"
+    }
+  },
+  {
+    "id": 10054855483,
+    "watched_at": "2024-10-06T22:22:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0049226",
+        "plex": {
+          "guid": "5d776b7b51dd69001fe30ade",
+          "slug": "what-a-woman-1956"
+        },
+        "slug": "what-a-woman-1956",
+        "tmdb": 327049,
+        "trakt": 207942
+      },
+      "year": 1956,
+      "title": "What a Woman!"
+    }
+  },
+  {
+    "id": 10048474397,
+    "watched_at": "2024-10-04T22:50:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0041303",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "sunday-in-august-1950",
+        "tmdb": 85747,
+        "trakt": 64438
+      },
+      "year": 1950,
+      "title": "Sunday in August"
+    }
+  },
+  {
+    "id": 10053791803,
+    "watched_at": "2024-10-04T16:28:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt6261456",
+        "plex": {
+          "guid": "5d9c186902391c001f62f361"
+        },
+        "tmdb": 1288505,
+        "tvdb": 5950003,
+        "trakt": 2524077
+      },
+      "title": "Avsnitt 1",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt5372890",
+        "plex": {
+          "guid": "5d9c08cc08fddd001f2a16c2",
+          "slug": "bonus-family"
+        },
+        "slug": "bonus-family",
+        "tmdb": 70748,
+        "tvdb": 323421,
+        "trakt": 117566
+      },
+      "year": 2017,
+      "title": "Bonus Family",
+      "aired_episodes": 38
+    }
+  },
+  {
+    "id": 10047362258,
+    "watched_at": "2024-10-04T15:31:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt4978420",
+        "plex": {
+          "guid": "5d776becad5437001f7ae52b",
+          "slug": "borderlands"
+        },
+        "slug": "borderlands-2024",
+        "tmdb": 365177,
+        "trakt": 223432
+      },
+      "year": 2024,
+      "title": "Borderlands"
+    }
+  },
+  {
+    "id": 10047363895,
+    "watched_at": "2024-10-02T15:32:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt9755048",
+        "plex": {
+          "guid": "5edb3b548fb34a0041b7e2bc"
+        },
+        "tmdb": 2337660,
+        "tvdb": 7777805,
+        "trakt": 3785591
+      },
+      "title": "Charlotte",
+      "number": 1,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4277922",
+        "plex": {
+          "guid": "5d9c080d705e7a001e6d0f58",
+          "slug": "call-my-agent-1"
+        },
+        "slug": "call-my-agent",
+        "tmdb": 64165,
+        "tvdb": 300247,
+        "trakt": 102782
+      },
+      "year": 2015,
+      "title": "Call My Agent!",
+      "aired_episodes": 24
+    }
+  },
+  {
+    "id": 10037169405,
+    "watched_at": "2024-10-01T20:53:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0046881",
+        "plex": {
+          "guid": "5d77691dad5437001f758791",
+          "slug": "chronicle-of-poor-lovers"
+        },
+        "slug": "chronicle-of-poor-lovers-1954",
+        "tmdb": 107035,
+        "trakt": 75973
+      },
+      "year": 1954,
+      "title": "Chronicle of Poor Lovers"
+    }
+  },
+  {
+    "id": 10035778491,
+    "watched_at": "2024-09-30T08:05:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt8116494",
+        "plex": {
+          "guid": "5d9c0d852192ba001f341cd0"
+        },
+        "tmdb": 1602867,
+        "tvdb": 6833203,
+        "trakt": 3162632
+      },
+      "title": "Jean",
+      "number": 1,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4277922",
+        "plex": {
+          "guid": "5d9c080d705e7a001e6d0f58",
+          "slug": "call-my-agent-1"
+        },
+        "slug": "call-my-agent",
+        "tmdb": 64165,
+        "tvdb": 300247,
+        "trakt": 102782
+      },
+      "year": 2015,
+      "title": "Call My Agent!",
+      "aired_episodes": 24
+    }
+  },
+  {
+    "id": 10028660976,
+    "watched_at": "2024-09-29T00:35:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt6770496",
+        "plex": {
+          "guid": "5d9c0d852192ba001f341cbe"
+        },
+        "tmdb": 1304830,
+        "tvdb": 6023946,
+        "trakt": 2535761
+      },
+      "title": "Virginie and Ramzy",
+      "number": 1,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4277922",
+        "plex": {
+          "guid": "5d9c080d705e7a001e6d0f58",
+          "slug": "call-my-agent-1"
+        },
+        "slug": "call-my-agent",
+        "tmdb": 64165,
+        "tvdb": 300247,
+        "trakt": 102782
+      },
+      "year": 2015,
+      "title": "Call My Agent!",
+      "aired_episodes": 24
+    }
+  },
+  {
+    "id": 10028657653,
+    "watched_at": "2024-09-28T00:34:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt27722530",
+        "plex": {
+          "guid": "64411589c9c05b91f58801ca",
+          "slug": "here-and-there-2024"
+        },
+        "slug": "here-and-there-2024",
+        "tmdb": 1114751,
+        "trakt": 896918
+      },
+      "year": 2024,
+      "title": "Here and There"
+    }
+  },
+  {
+    "id": 10022549768,
+    "watched_at": "2024-09-26T21:35:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt4311334",
+        "plex": {
+          "guid": "5d9c0d85d4f2a9001f813bea"
+        },
+        "tmdb": 1118406,
+        "tvdb": 5350841,
+        "trakt": 2026001
+      },
+      "title": "Cécile",
+      "number": 1,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4277922",
+        "plex": {
+          "guid": "5d9c080d705e7a001e6d0f58",
+          "slug": "call-my-agent-1"
+        },
+        "slug": "call-my-agent",
+        "tmdb": 64165,
+        "tvdb": 300247,
+        "trakt": 102782
+      },
+      "year": 2015,
+      "title": "Call My Agent!",
+      "aired_episodes": 24
+    }
+  },
+  {
+    "id": 10016372941,
+    "watched_at": "2024-09-25T20:49:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0048475",
+        "plex": {
+          "guid": "5d9f35a568e4c8001fb6079a",
+          "slug": "too-bad-shes-bad"
+        },
+        "slug": "too-bad-she-s-bad-1954",
+        "tmdb": 63857,
+        "trakt": 46036
+      },
+      "year": 1954,
+      "title": "Too Bad She's Bad"
+    }
+  },
+  {
+    "id": 10011789942,
+    "watched_at": "2024-09-24T07:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": "6161a7e0dd9f8e14b511d800"
+        },
+        "tmdb": 3270313,
+        "tvdb": 8660069,
+        "trakt": 5597917
+      },
+      "title": "Mazel Tov",
+      "number": 6,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt10423460",
+        "plex": {
+          "guid": "5d9c092508fddd001f2a8913",
+          "slug": "family-business-2019"
+        },
+        "slug": "family-business-2019",
+        "tmdb": 89785,
+        "tvdb": 364468,
+        "trakt": 148215
+      },
+      "year": 2019,
+      "title": "Family Business",
+      "aired_episodes": 18
+    }
+  },
+  {
+    "id": 10007410960,
+    "watched_at": "2024-09-22T18:35:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": "5f1693ec8e462a0040ae19e5"
+        },
+        "tmdb": 2423336,
+        "tvdb": 7838002,
+        "trakt": 4315527
+      },
+      "title": "Burrata",
+      "number": 6,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt10423460",
+        "plex": {
+          "guid": "5d9c092508fddd001f2a8913",
+          "slug": "family-business-2019"
+        },
+        "slug": "family-business-2019",
+        "tmdb": 89785,
+        "tvdb": 364468,
+        "trakt": 148215
+      },
+      "year": 2019,
+      "title": "Family Business",
+      "aired_episodes": 18
+    }
+  },
+  {
+    "id": 10003363143,
+    "watched_at": "2024-09-20T11:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt29007338",
+        "plex": {
+          "guid": "64fdc3aa20fe71907f283129",
+          "slug": "14-days-to-feel-better"
+        },
+        "slug": "14-days-to-feel-better-2024",
+        "tmdb": 1118841,
+        "trakt": 900305
+      },
+      "year": 2024,
+      "title": "14 Days to Feel Better"
+    }
+  },
+  {
+    "id": 9996951481,
+    "watched_at": "2024-09-18T21:34:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0053105",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "my-wife-s-enemy-1959",
+        "tmdb": 283226,
+        "trakt": 180526
+      },
+      "year": 1959,
+      "title": "My Wife's Enemy"
+    }
+  },
+  {
+    "id": 9996444500,
+    "watched_at": "2024-09-18T17:15:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": "5e160e43168f3f001e4456f6"
+        },
+        "tmdb": 1838603,
+        "tvdb": 7200007,
+        "trakt": 3542160
+      },
+      "title": "End of the Line",
+      "number": 6,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt10423460",
+        "plex": {
+          "guid": "5d9c092508fddd001f2a8913",
+          "slug": "family-business-2019"
+        },
+        "slug": "family-business-2019",
+        "tmdb": 89785,
+        "tvdb": 364468,
+        "trakt": 148215
+      },
+      "year": 2019,
+      "title": "Family Business",
+      "aired_episodes": 18
+    }
+  },
+  {
+    "id": 9987494940,
+    "watched_at": "2024-09-15T08:53:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": "63b45278cd402b2e978904c8"
+        },
+        "tmdb": 4135688,
+        "tvdb": null,
+        "trakt": 7208736
+      },
+      "title": "Count to 10",
+      "number": 8,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt16402422",
+        "plex": {
+          "guid": "623ca53099812151dc293026",
+          "slug": "wellmania"
+        },
+        "slug": "wellmania",
+        "tmdb": 195841,
+        "tvdb": 417230,
+        "trakt": 194236
+      },
+      "year": 2023,
+      "title": "Wellmania",
+      "aired_episodes": 8
+    }
+  },
+  {
+    "id": 9987491918,
+    "watched_at": "2024-09-14T08:52:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt7882250",
+        "plex": {
+          "guid": "5d77708131d95e001f1a32da",
+          "slug": "new-biz-in-the-hood"
+        },
+        "slug": "new-biz-in-the-hood-2019",
+        "tmdb": 547388,
+        "trakt": 397572
+      },
+      "year": 2019,
+      "title": "New Biz in the Hood"
+    }
+  },
+  {
+    "id": 9977957374,
+    "watched_at": "2024-09-11T16:29:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt22689112",
+        "plex": {
+          "guid": "65fec725f1de68411d8b15e0"
+        },
+        "tmdb": 5227319,
+        "tvdb": 10410198,
+        "trakt": 11661653
+      },
+      "title": "Episode 7",
+      "number": 7,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt13649112",
+        "plex": {
+          "guid": "65775ffef0d9d4f00f4d8f4e",
+          "slug": "baby-reindeer"
+        },
+        "slug": "baby-reindeer",
+        "tmdb": 241259,
+        "tvdb": 417223,
+        "trakt": 217121
+      },
+      "year": 2024,
+      "title": "Baby Reindeer",
+      "aired_episodes": 7
+    }
+  },
+  {
+    "id": 9976969872,
+    "watched_at": "2024-09-10T05:16:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": "66d06c0bc8a4b0a4d92ca793"
+        },
+        "tmdb": 5557246,
+        "tvdb": null,
+        "trakt": 12231044
+      },
+      "title": "On the Run",
+      "number": 6,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt23546622",
+        "plex": {
+          "guid": "622e00b5fdd95ff2f3c69d30",
+          "slug": "represent"
+        },
+        "slug": "represent",
+        "tmdb": 194899,
+        "tvdb": 426793,
+        "trakt": 200729
+      },
+      "year": 2023,
+      "title": "Represent",
+      "aired_episodes": 12
+    }
+  },
+  {
+    "id": 9968339590,
+    "watched_at": "2024-09-07T21:32:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069017",
+        "plex": {
+          "guid": "5d7768546f4521001eaa1da3",
+          "slug": "night-of-the-devils"
+        },
+        "slug": "the-night-of-the-devils-1972",
+        "tmdb": 27409,
+        "trakt": 16832
+      },
+      "year": 1972,
+      "title": "The Night of the Devils"
+    }
+  },
+  {
+    "id": 9969436078,
+    "watched_at": "2024-09-07T08:04:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 4174966,
+        "tvdb": null,
+        "trakt": 7258418
+      },
+      "title": "The Final Hurdle",
+      "number": 6,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt23546622",
+        "plex": {
+          "guid": "622e00b5fdd95ff2f3c69d30",
+          "slug": "represent"
+        },
+        "slug": "represent",
+        "tmdb": 194899,
+        "tvdb": 426793,
+        "trakt": 200729
+      },
+      "year": 2023,
+      "title": "Represent",
+      "aired_episodes": 12
+    }
+  },
+  {
+    "id": 9963539007,
+    "watched_at": "2024-09-06T00:04:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt27424353",
+        "plex": {
+          "guid": "66c0dd9bf49facbdca467c71"
+        },
+        "tmdb": 5533846,
+        "tvdb": 10553282,
+        "trakt": 12201319
+      },
+      "title": "Marburg is for Lovers",
+      "number": 8,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt26773988",
+        "plex": {
+          "guid": "66755e6fe09615a57ada860d",
+          "slug": "perfectly-missed"
+        },
+        "slug": "the-perfect-miss",
+        "tmdb": 234202,
+        "tvdb": 446763,
+        "trakt": 252283
+      },
+      "year": 2024,
+      "title": "The Perfect Miss",
+      "aired_episodes": 8
+    }
+  },
+  {
+    "id": 9958114401,
+    "watched_at": "2024-09-03T22:34:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067084",
+        "plex": {
+          "guid": "5d9f3568b0262f001f6eae55",
+          "slug": "the-bloodstained-butterfly"
+        },
+        "slug": "the-bloodstained-butterfly-1971",
+        "tmdb": 29482,
+        "trakt": 18558
+      },
+      "year": 1971,
+      "title": "The Bloodstained Butterfly"
+    }
+  },
+  {
+    "id": 9958113522,
+    "watched_at": "2024-09-02T22:34:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0878482",
+        "plex": {
+          "guid": "5d9c1252ba6eb9001fc13b5d"
+        },
+        "tmdb": 323868,
+        "tvdb": 355678,
+        "trakt": 332615
+      },
+      "title": "Clowntime Is Over",
+      "number": 13,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0460619",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd7a",
+          "slug": "lucky-louie"
+        },
+        "slug": "lucky-louie",
+        "tmdb": 4540,
+        "tvdb": 79326,
+        "trakt": 4516
+      },
+      "year": 2006,
+      "title": "Lucky Louie",
+      "aired_episodes": 13
+    }
+  },
+  {
+    "id": 9946170339,
+    "watched_at": "2024-08-30T20:48:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073406",
+        "plex": {
+          "guid": "5d7768c151dd69001fe106d6",
+          "slug": "the-suspicious-death-of-a-minor"
+        },
+        "slug": "the-suspicious-death-of-a-minor-1975",
+        "tmdb": 80067,
+        "trakt": 59566
+      },
+      "year": 1975,
+      "title": "The Suspicious Death of a Minor"
+    }
+  },
+  {
+    "id": 9944627537,
+    "watched_at": "2024-08-27T06:48:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt4368394",
+        "plex": {
+          "guid": "5d9c0b88e9d5a1001f4e61d3"
+        },
+        "tmdb": 1062727,
+        "tvdb": 5203028,
+        "trakt": 1841341
+      },
+      "title": "The Road (2)",
+      "number": 8,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1492966",
+        "plex": {
+          "guid": "5d9c07f7ef619b002047ba63",
+          "slug": "louie-2010"
+        },
+        "slug": "louie",
+        "tmdb": 32962,
+        "tvdb": 155201,
+        "trakt": 32820
+      },
+      "year": 2010,
+      "title": "Louie",
+      "aired_episodes": 61
+    }
+  },
+  {
+    "id": 9930631238,
+    "watched_at": "2024-08-25T23:20:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt3775768",
+        "plex": {
+          "guid": "5d9c0b8846115600200b7269"
+        },
+        "tmdb": 979918,
+        "tvdb": 4854731,
+        "trakt": 779352
+      },
+      "title": "Pamela (3)",
+      "number": 14,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1492966",
+        "plex": {
+          "guid": "5d9c07f7ef619b002047ba63",
+          "slug": "louie-2010"
+        },
+        "slug": "louie",
+        "tmdb": 32962,
+        "tvdb": 155201,
+        "trakt": 32820
+      },
+      "year": 2010,
+      "title": "Louie",
+      "aired_episodes": 61
+    }
+  },
+  {
+    "id": 9927127296,
+    "watched_at": "2024-08-24T21:25:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0058567",
+        "plex": {
+          "guid": "5d7768562e80df001ebe1bc8",
+          "slug": "blood-and-black-lace"
+        },
+        "slug": "blood-and-black-lace-1964",
+        "tmdb": 28055,
+        "trakt": 17400
+      },
+      "year": 1964,
+      "title": "Blood and Black Lace"
+    }
+  },
+  {
+    "id": 9911763146,
+    "watched_at": "2024-08-18T20:07:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0155360",
+        "plex": {
+          "guid": "5d776918f617c9002015d302",
+          "slug": "crazy-desires-of-a-murderer"
+        },
+        "slug": "crazy-desires-of-a-murderer-1977",
+        "tmdb": 105659,
+        "trakt": 75152
+      },
+      "year": 1977,
+      "title": "Crazy Desires of a Murderer"
+    }
+  },
+  {
+    "id": 9911767768,
+    "watched_at": "2024-08-16T20:08:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt2037574",
+        "plex": {
+          "guid": "5d9c0b88ec357c001f9b82b1"
+        },
+        "tmdb": 772678,
+        "tvdb": 4081774,
+        "trakt": 779325
+      },
+      "title": "New Jersey / Airport",
+      "number": 13,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1492966",
+        "plex": {
+          "guid": "5d9c07f7ef619b002047ba63",
+          "slug": "louie-2010"
+        },
+        "slug": "louie",
+        "tmdb": 32962,
+        "tvdb": 155201,
+        "trakt": 32820
+      },
+      "year": 2010,
+      "title": "Louie",
+      "aired_episodes": 61
+    }
+  },
+  {
+    "id": 9911769891,
+    "watched_at": "2024-08-15T20:08:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt5779228",
+        "plex": {
+          "guid": "5d776ea67a53e9001e77dca4",
+          "slug": "the-garfield-movie"
+        },
+        "slug": "the-garfield-movie-2024",
+        "tmdb": 748783,
+        "trakt": 589071
+      },
+      "year": 2024,
+      "title": "The Garfield Movie"
+    }
+  },
+  {
+    "id": 9897561583,
+    "watched_at": "2024-08-12T20:46:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067396",
+        "plex": {
+          "guid": "5d776917fb0d55001f5215f8",
+          "slug": "the-murder-mansion"
+        },
+        "slug": "murder-mansion-1972",
+        "tmdb": 105110,
+        "trakt": 74871
+      },
+      "year": 1972,
+      "title": "Murder Mansion"
+    }
+  },
+  {
+    "id": 9895398180,
+    "watched_at": "2024-08-11T22:19:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073327",
+        "plex": {
+          "guid": "5d7768fb594b2b001e69a0d9",
+          "slug": "autopsy-1975"
+        },
+        "slug": "autopsy-1975",
+        "tmdb": 96167,
+        "trakt": 70140
+      },
+      "year": 1975,
+      "title": "Autopsy"
+    }
+  },
+  {
+    "id": 9894774090,
+    "watched_at": "2024-08-11T17:51:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt1722050",
+        "plex": {
+          "guid": "5d9c0b887d06d9001ffdf0e6"
+        },
+        "tmdb": 772655,
+        "tvdb": 2263321,
+        "trakt": 779312
+      },
+      "title": "Night Out",
+      "number": 13,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1492966",
+        "plex": {
+          "guid": "5d9c07f7ef619b002047ba63",
+          "slug": "louie-2010"
+        },
+        "slug": "louie",
+        "tmdb": 32962,
+        "tvdb": 155201,
+        "trakt": 32820
+      },
+      "year": 2010,
+      "title": "Louie",
+      "aired_episodes": 61
+    }
+  },
+  {
+    "id": 9894021707,
+    "watched_at": "2024-08-09T10:23:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt24053750",
+        "plex": {
+          "guid": "6390d256026002a5cf1e3560",
+          "slug": "jeff-panacloc-a-la-poursuite-de-jean-marc-2"
+        },
+        "slug": "jeff-panacloc-a-la-poursuite-de-jean-marc-2023-12-20",
+        "tmdb": 1000597,
+        "trakt": 804364
+      },
+      "year": 2023,
+      "title": "Jeff Panacloc : À la poursuite de Jean-Marc"
+    }
+  },
+  {
+    "id": 9887364485,
+    "watched_at": "2024-08-07T05:31:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0072884",
+        "plex": {
+          "guid": "5d7768a3308bca002032ea37",
+          "slug": "distracted"
+        },
+        "slug": "distracted-1970",
+        "tmdb": 62675,
+        "trakt": 45041
+      },
+      "year": 1970,
+      "title": "Distracted"
+    }
+  },
+  {
+    "id": 9884248296,
+    "watched_at": "2024-08-06T21:35:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0050083",
+        "plex": {
+          "guid": "5d776d147a53e9001e75042e",
+          "slug": "12-angry-men"
+        },
+        "slug": "12-angry-men-1957",
+        "tmdb": 389,
+        "trakt": 309
+      },
+      "year": 1957,
+      "title": "12 Angry Men"
+    }
+  },
+  {
+    "id": 10086690426,
+    "watched_at": "2024-08-06T12:30:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt4515544",
+        "plex": {
+          "guid": "5d9f3ce3adeb7a0021ce9a8c",
+          "slug": "la-tour-2-controle-infernale"
+        },
+        "slug": "la-tour-2-controle-infernale-2016",
+        "tmdb": 369779,
+        "trakt": 224187
+      },
+      "year": 2016,
+      "title": "La Tour 2 contrôle infernale"
+    }
+  },
+  {
+    "id": 9874153980,
+    "watched_at": "2024-08-02T20:58:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0074287",
+        "plex": {
+          "guid": "5d77689a47dd6e001f6bc25c",
+          "slug": "the-house-with-laughing-windows"
+        },
+        "slug": "the-house-with-laughing-windows-1976",
+        "tmdb": 57447,
+        "trakt": 41021
+      },
+      "year": 1976,
+      "title": "The House with Laughing Windows"
+    }
+  },
+  {
+    "id": 9873815707,
+    "watched_at": "2024-08-02T18:20:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt11483762",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 2010489,
+        "tvdb": 7486706,
+        "trakt": 3870756
+      },
+      "title": "Episode 8",
+      "number": 8,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2040020",
+        "plex": {
+          "guid": "5d9c08474eefaa001f5d9987",
+          "slug": "platane"
+        },
+        "slug": "platane",
+        "tmdb": 61375,
+        "tvdb": 244701,
+        "trakt": 64205
+      },
+      "year": 2011,
+      "title": "Platane",
+      "aired_episodes": 32
+    }
+  },
+  {
+    "id": 9871652877,
+    "watched_at": "2024-08-01T19:51:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075814",
+        "plex": {
+          "guid": "5d7768ff7a53e9001e6deb8c",
+          "slug": "the-girl-in-room-2a"
+        },
+        "slug": "the-girl-in-room-2a-1974",
+        "tmdb": 97527,
+        "trakt": 70830
+      },
+      "year": 1974,
+      "title": "The Girl in Room 2A"
+    }
+  },
+  {
+    "id": 9871491102,
+    "watched_at": "2024-07-31T18:17:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069850",
+        "plex": {
+          "guid": "5d776cf1ad5437001f7c94fc",
+          "slug": "the-french-sex-murders"
+        },
+        "slug": "the-french-sex-murders-1972",
+        "tmdb": 39910,
+        "trakt": 26067
+      },
+      "year": 1972,
+      "title": "The French Sex Murders"
+    }
+  },
+  {
+    "id": 9871488050,
+    "watched_at": "2024-07-29T18:14:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt2978972",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1009309,
+        "tvdb": 4660807,
+        "trakt": 1068571
+      },
+      "title": "Episode 12",
+      "number": 12,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2040020",
+        "plex": {
+          "guid": "5d9c08474eefaa001f5d9987",
+          "slug": "platane"
+        },
+        "slug": "platane",
+        "tmdb": 61375,
+        "tvdb": 244701,
+        "trakt": 64205
+      },
+      "year": 2011,
+      "title": "Platane",
+      "aired_episodes": 32
+    }
+  },
+  {
+    "id": 9865240233,
+    "watched_at": "2024-07-29T07:31:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0047396",
+        "plex": {
+          "guid": "5d776826151a60001f24a9c8",
+          "slug": "rear-window"
+        },
+        "slug": "rear-window-1954",
+        "tmdb": 567,
+        "trakt": 447
+      },
+      "year": 1954,
+      "title": "Rear Window"
+    }
+  },
+  {
+    "id": 9862725795,
+    "watched_at": "2024-07-28T05:14:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067434",
+        "plex": {
+          "guid": "5d776cf896b655001fe3bd4e",
+          "slug": "my-dear-killer"
+        },
+        "slug": "my-dear-killer-1972",
+        "tmdb": 69579,
+        "trakt": 50846
+      },
+      "year": 1972,
+      "title": "My Dear Killer"
+    }
+  },
+  {
+    "id": 9848673888,
+    "watched_at": "2024-07-22T08:07:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0259060",
+        "plex": {
+          "guid": "5d77683d2e80df001ebdf301",
+          "slug": "dont-die-too-hard"
+        },
+        "slug": "don-t-die-too-hard-2001",
+        "tmdb": 15449,
+        "trakt": 9381
+      },
+      "year": 2001,
+      "title": "Don't Die Too Hard!"
+    }
+  },
+  {
+    "id": 9848672577,
+    "watched_at": "2024-07-22T08:06:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt26660301",
+        "plex": {
+          "guid": "63e24ec60c5ad75dc02602cb"
+        },
+        "tmdb": 4217016,
+        "tvdb": 10297575,
+        "trakt": 7339876
+      },
+      "title": "Season Four Finale",
+      "number": 8,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1190634",
+        "plex": {
+          "guid": "5d9c08f246115600200ae0f6",
+          "slug": "the-boys"
+        },
+        "slug": "the-boys-2019",
+        "tmdb": 76479,
+        "tvdb": 355567,
+        "trakt": 139960
+      },
+      "year": 2019,
+      "title": "The Boys",
+      "aired_episodes": 40
+    }
+  },
+  {
+    "id": 9848671434,
+    "watched_at": "2024-07-20T08:05:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt2102015",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1009297,
+        "tvdb": 4163800,
+        "trakt": 1067276
+      },
+      "title": "Episode 12",
+      "number": 12,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2040020",
+        "plex": {
+          "guid": "5d9c08474eefaa001f5d9987",
+          "slug": "platane"
+        },
+        "slug": "platane",
+        "tmdb": 61375,
+        "tvdb": 244701,
+        "trakt": 64205
+      },
+      "year": 2011,
+      "title": "Platane",
+      "aired_episodes": 32
+    }
+  },
+  {
+    "id": 9818773291,
+    "watched_at": "2024-07-09T21:09:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0081286",
+        "plex": {
+          "guid": "5d77688b1999bc0020dc8b72",
+          "slug": "murder-syndrome"
+        },
+        "slug": "murder-obsession-1981",
+        "tmdb": 50425,
+        "trakt": 35252
+      },
+      "year": 1981,
+      "title": "Murder Obsession"
+    }
+  },
+  {
+    "id": 9814259303,
+    "watched_at": "2024-07-07T21:55:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt32094375",
+        "plex": {
+          "guid": "661ad2e36e2286e0e03119de",
+          "slug": null
+        },
+        "slug": "die-hart-2-die-harter-2024-05-30",
+        "tmdb": 1506717,
+        "trakt": 1236163
+      },
+      "year": 2024,
+      "title": "Die Hart 2: Die Harter"
+    }
+  },
+  {
+    "id": 9809366420,
+    "watched_at": "2024-07-05T21:59:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt28636981",
+        "plex": {
+          "guid": "64d9239eb1969778e2532789",
+          "slug": "like-a-son"
+        },
+        "slug": "like-a-son-2024",
+        "tmdb": 1089309,
+        "trakt": 875966
+      },
+      "year": 2024,
+      "title": "Like a Son"
+    }
+  },
+  {
+    "id": 9809365970,
+    "watched_at": "2024-07-03T21:58:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt12283422",
+        "plex": {
+          "guid": "61c9e34f74d496992c1898e6"
+        },
+        "tmdb": 3409597,
+        "tvdb": 8888391,
+        "trakt": 5793276
+      },
+      "title": "Episode 6",
+      "number": 6,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt8398600",
+        "plex": {
+          "guid": "5d9d5aef0e03f8001ef8ec15",
+          "slug": "after-life"
+        },
+        "slug": "after-life",
+        "tmdb": 79410,
+        "tvdb": 347507,
+        "trakt": 130511
+      },
+      "year": 2019,
+      "title": "After Life",
+      "aired_episodes": 18
+    }
+  },
+  {
+    "id": 9809364741,
+    "watched_at": "2024-07-01T21:58:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt11782102",
+        "plex": {
+          "guid": "5e4d2381f66fbd003e4cf05e"
+        },
+        "tmdb": 2163713,
+        "tvdb": 7656354,
+        "trakt": 4080386
+      },
+      "title": "Episode 6",
+      "number": 6,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt8398600",
+        "plex": {
+          "guid": "5d9d5aef0e03f8001ef8ec15",
+          "slug": "after-life"
+        },
+        "slug": "after-life",
+        "tmdb": 79410,
+        "tvdb": 347507,
+        "trakt": 130511
+      },
+      "year": 2019,
+      "title": "After Life",
+      "aired_episodes": 18
+    }
+  },
+  {
+    "id": 9795911000,
+    "watched_at": "2024-06-29T21:36:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073554",
+        "plex": {
+          "guid": "5d776917f617c9002015d23d",
+          "slug": "the-police-are-blundering-in-the-dark"
+        },
+        "slug": "the-police-are-blundering-in-the-dark-1972",
+        "tmdb": 105429,
+        "trakt": 75029
+      },
+      "year": 1972,
+      "title": "The Police Are Blundering in the Dark"
+    }
+  },
+  {
+    "id": 9795907326,
+    "watched_at": "2024-06-28T21:35:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt10720352",
+        "plex": {
+          "guid": "5e163310fef2d4003e895680",
+          "slug": "arthur-the-king-2024"
+        },
+        "slug": "arthur-the-king-2024",
+        "tmdb": 618588,
+        "trakt": 461598
+      },
+      "year": 2024,
+      "title": "Arthur the King"
+    }
+  },
+  {
+    "id": 9793394189,
+    "watched_at": "2024-06-27T09:29:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt8664284",
+        "plex": {
+          "guid": "5de908147650d5001d24cdd0"
+        },
+        "tmdb": 1722004,
+        "tvdb": 6915457,
+        "trakt": 3250540
+      },
+      "title": "Episode 6",
+      "number": 6,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt8398600",
+        "plex": {
+          "guid": "5d9d5aef0e03f8001ef8ec15",
+          "slug": "after-life"
+        },
+        "slug": "after-life",
+        "tmdb": 79410,
+        "tvdb": 347507,
+        "trakt": 130511
+      },
+      "year": 2019,
+      "title": "After Life",
+      "aired_episodes": 18
+    }
+  },
+  {
+    "id": 9780500746,
+    "watched_at": "2024-06-21T22:29:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt18113118",
+        "plex": {
+          "guid": "620e053519bc09fe7fce3f15",
+          "slug": "cat-and-dog"
+        },
+        "slug": "cat-and-dog-2024",
+        "tmdb": 977331,
+        "trakt": 785404
+      },
+      "year": 2024,
+      "title": "Cat and Dog"
+    }
+  },
+  {
+    "id": 9778778759,
+    "watched_at": "2024-06-21T21:19:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt17375596",
+        "plex": {
+          "guid": "61fd0955754e029a1454f72a",
+          "slug": "the-empire-2024"
+        },
+        "slug": "the-empire-2024",
+        "tmdb": 929831,
+        "trakt": 745707
+      },
+      "year": 2024,
+      "title": "The Empire"
+    }
+  },
+  {
+    "id": 9778386232,
+    "watched_at": "2024-06-20T13:30:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt11152168",
+        "plex": {
+          "guid": "5e1623b163a68b003fcb7977",
+          "slug": "if-2024"
+        },
+        "slug": "if-2024",
+        "tmdb": 639720,
+        "trakt": 478218
+      },
+      "year": 2024,
+      "title": "IF"
+    }
+  },
+  {
+    "id": 9770440181,
+    "watched_at": "2024-06-16T22:37:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt32089685",
+        "plex": {
+          "guid": "67903815e1c41b3bff711258"
+        },
+        "tmdb": 5236874,
+        "tvdb": 10405252,
+        "trakt": 11678426
+      },
+      "title": "Lofoten up!",
+      "number": 6,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt13929916",
+        "plex": {
+          "guid": "6067dc2843a16c002cc20d75",
+          "slug": "lol-last-one-laughing-germany"
+        },
+        "slug": "lol-last-one-laughing-2021-177070",
+        "tmdb": 122241,
+        "tvdb": 400263,
+        "trakt": 177070
+      },
+      "year": 2021,
+      "title": "LOL: Last One Laughing",
+      "aired_episodes": 42
+    }
+  },
+  {
+    "id": 9770191596,
+    "watched_at": "2024-06-16T20:51:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt30442373",
+        "plex": {
+          "guid": "657c46c9c3dbf65a9f9198b9"
+        },
+        "tmdb": 4998036,
+        "tvdb": 10191857,
+        "trakt": 11210586
+      },
+      "title": "No Lessons Learned",
+      "number": 10,
+      "season": 12
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0264235",
+        "plex": {
+          "guid": "5d9c086b4eefaa001f5dcd8b",
+          "slug": "curb-your-enthusiasm"
+        },
+        "slug": "curb-your-enthusiasm",
+        "tmdb": 4546,
+        "tvdb": 76203,
+        "trakt": 4522
+      },
+      "year": 2000,
+      "title": "Curb Your Enthusiasm",
+      "aired_episodes": 120
+    }
+  },
+  {
+    "id": 9770186102,
+    "watched_at": "2024-06-14T20:50:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": "65d88a4eb0ab338182bae2ab"
+        },
+        "tmdb": 5164539,
+        "tvdb": 10327992,
+        "trakt": 11537225
+      },
+      "title": "Final face to face (to face)",
+      "number": 7,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt13696152",
+        "plex": {
+          "guid": "6067dc29e2d4db002c9b2801",
+          "slug": "lol-last-one-laughing-fr"
+        },
+        "slug": "lol-qui-rit-sort",
+        "tmdb": 122228,
+        "tvdb": 400292,
+        "trakt": 176980
+      },
+      "year": 2021,
+      "title": "LOL : Qui rit, sort !",
+      "aired_episodes": 39
+    }
+  },
+  {
+    "id": 9754203640,
+    "watched_at": "2024-06-07T21:11:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069734",
+        "plex": {
+          "guid": "5d77685beb5d26001f1e7b15",
+          "slug": "the-killer-is-one-of-13"
+        },
+        "slug": "the-killer-is-one-of-thirteen-1973",
+        "tmdb": 30422,
+        "trakt": 19291
+      },
+      "year": 1973,
+      "title": "The Killer Is One of Thirteen"
+    }
+  },
+  {
+    "id": 9753979213,
+    "watched_at": "2024-06-07T18:07:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt32227365",
+        "plex": {
+          "guid": "65df741380e2a6434615dd21"
+        },
+        "tmdb": 5175714,
+        "tvdb": 10339875,
+        "trakt": 11555659
+      },
+      "title": "Dad",
+      "number": 6,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt31491435",
+        "plex": {
+          "guid": "65df741280e2a6434615dcf0",
+          "slug": "tires-2"
+        },
+        "slug": "tires",
+        "tmdb": 247522,
+        "tvdb": 446718,
+        "trakt": 228099
+      },
+      "year": 2024,
+      "title": "Tires",
+      "aired_episodes": 18
+    }
+  },
+  {
+    "id": 9750191233,
+    "watched_at": "2024-06-04T14:41:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt12368770",
+        "plex": {
+          "guid": "67e62ee92db2e950f971989e"
+        },
+        "tmdb": 2279261,
+        "tvdb": 7750025,
+        "trakt": 4183603
+      },
+      "title": "Well Boys, I Guess I Gotta Get Dead",
+      "number": 10,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt9814900",
+        "plex": {
+          "guid": "5d9c091e08fddd001f2a83a4",
+          "slug": "trailer-park-boys-the-animated-series"
+        },
+        "slug": "trailer-park-boys-the-animated-series",
+        "tmdb": 88071,
+        "tvdb": 361544,
+        "trakt": 145759
+      },
+      "year": 2019,
+      "title": "Trailer Park Boys: The Animated Series",
+      "aired_episodes": 20
+    }
+  },
+  {
+    "id": 9743596963,
+    "watched_at": "2024-06-01T20:09:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt31778536",
+        "plex": {
+          "guid": "65f34d37f60e6241316646f4"
+        },
+        "tmdb": 5209641,
+        "tvdb": 10318839,
+        "trakt": 11626639
+      },
+      "title": "Justice",
+      "number": 4,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt31358077",
+        "plex": {
+          "guid": "65d6ed7c77653e27bd4330c5",
+          "slug": "the-outreau-case-a-french-nightmare"
+        },
+        "slug": "the-outreau-case-a-french-nightmare",
+        "tmdb": 247665,
+        "tvdb": 446358,
+        "trakt": 228506
+      },
+      "year": 2024,
+      "title": "The Outreau Case: A French Nightmare",
+      "aired_episodes": 4
+    }
+  },
+  {
+    "id": 9739916169,
+    "watched_at": "2024-05-30T14:27:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0076885",
+        "plex": {
+          "guid": "5d7768577a53e9001e6cdb0d",
+          "slug": "trauma-1978"
+        },
+        "slug": "trauma-1978",
+        "tmdb": 28487,
+        "trakt": 17770
+      },
+      "year": 1978,
+      "title": "Trauma"
+    }
+  },
+  {
+    "id": 9736885128,
+    "watched_at": "2024-05-28T18:33:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt9818306",
+        "plex": {
+          "guid": "5e161e58b0b6c1003fd48b1f"
+        },
+        "tmdb": 1743721,
+        "tvdb": 7110304,
+        "trakt": 3453294
+      },
+      "title": "Trailerstock",
+      "number": 10,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt9814900",
+        "plex": {
+          "guid": "5d9c091e08fddd001f2a83a4",
+          "slug": "trailer-park-boys-the-animated-series"
+        },
+        "slug": "trailer-park-boys-the-animated-series",
+        "tmdb": 88071,
+        "tvdb": 361544,
+        "trakt": 145759
+      },
+      "year": 2019,
+      "title": "Trailer Park Boys: The Animated Series",
+      "aired_episodes": 20
+    }
+  },
+  {
+    "id": 9735496606,
+    "watched_at": "2024-05-27T21:28:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0072007",
+        "plex": {
+          "guid": "5d7768ae47dd6e001f6bd6b3",
+          "slug": "what-have-they-done-to-your-daughters"
+        },
+        "slug": "what-have-they-done-to-your-daughters-1974",
+        "tmdb": 69578,
+        "trakt": 50845
+      },
+      "year": 1974,
+      "title": "What Have They Done to Your Daughters?"
+    }
+  },
+  {
+    "id": 9733286666,
+    "watched_at": "2024-05-26T21:31:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0066988",
+        "plex": {
+          "guid": "5d776dfcad5437001f7e6faa",
+          "slug": "why"
+        },
+        "slug": "why-1971",
+        "tmdb": 73827,
+        "trakt": 54292
+      },
+      "year": 1971,
+      "title": "Why"
+    }
+  },
+  {
+    "id": 9733183221,
+    "watched_at": "2024-05-25T20:35:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1684562",
+        "plex": {
+          "guid": "5d776ba123d5a3001f5128df",
+          "slug": "the-fall-guy-2024"
+        },
+        "slug": "the-fall-guy-2024",
+        "tmdb": 746036,
+        "trakt": 586621
+      },
+      "year": 2024,
+      "title": "The Fall Guy"
+    }
+  },
+  {
+    "id": 9733184377,
+    "watched_at": "2024-05-23T20:37:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt9359012",
+        "plex": {
+          "guid": "5e161d4f4f2292003e90e0e9"
+        },
+        "tmdb": 1867328,
+        "tvdb": 7321510,
+        "trakt": 3646989
+      },
+      "title": "End of the World",
+      "number": 10,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt5016504",
+        "plex": {
+          "guid": "5d9c080d4eefaa001f5d48cd",
+          "slug": "preacher"
+        },
+        "slug": "preacher",
+        "tmdb": 64230,
+        "tvdb": 300472,
+        "trakt": 102034
+      },
+      "year": 2016,
+      "title": "Preacher",
+      "aired_episodes": 43
+    }
+  },
+  {
+    "id": 9725864042,
+    "watched_at": "2024-05-22T21:07:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0054442",
+        "plex": {
+          "guid": "5d77689f6f6af7001ee58dd5",
+          "slug": "il-vigile"
+        },
+        "slug": "the-traffic-policeman-1960",
+        "tmdb": 60046,
+        "trakt": 42963
+      },
+      "year": 1960,
+      "title": "The Traffic Policeman"
+    }
+  },
+  {
+    "id": 9720217975,
+    "watched_at": "2024-05-19T20:32:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0365830",
+        "plex": {
+          "guid": "5d77682a8a7581001f12c39f",
+          "slug": "tenacious-d-in-the-pick-of-destiny"
+        },
+        "slug": "tenacious-d-in-the-pick-of-destiny-2006",
+        "tmdb": 2179,
+        "trakt": 1516
+      },
+      "year": 2006,
+      "title": "Tenacious D in The Pick of Destiny"
+    }
+  },
+  {
+    "id": 9717529008,
+    "watched_at": "2024-05-14T09:15:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt8023472",
+        "plex": {
+          "guid": "5d9c0d8e7b5c2e001e68a8e5"
+        },
+        "tmdb": 1514268,
+        "tvdb": 6726302,
+        "trakt": 3044619
+      },
+      "title": "The Light Above",
+      "number": 10,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt5016504",
+        "plex": {
+          "guid": "5d9c080d4eefaa001f5d48cd",
+          "slug": "preacher"
+        },
+        "slug": "preacher",
+        "tmdb": 64230,
+        "tvdb": 300472,
+        "trakt": 102034
+      },
+      "year": 2016,
+      "title": "Preacher",
+      "aired_episodes": 43
+    }
+  },
+  {
+    "id": 9707078324,
+    "watched_at": "2024-05-11T06:27:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt21235248",
+        "plex": {
+          "guid": "62d28d0778143f352f9d02e4",
+          "slug": "ghostbusters-frozen-empire"
+        },
+        "slug": "ghostbusters-frozen-empire-2024",
+        "tmdb": 967847,
+        "trakt": 778125
+      },
+      "year": 2024,
+      "title": "Ghostbusters: Frozen Empire"
+    }
+  },
+  {
+    "id": 9707077328,
+    "watched_at": "2024-05-10T06:26:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0050817",
+        "plex": {
+          "guid": "5d77689947dd6e001f6bc09b",
+          "slug": "scandal-in-sorrento"
+        },
+        "slug": "scandal-in-sorrento-1955",
+        "tmdb": 56287,
+        "trakt": 40103
+      },
+      "year": 1955,
+      "title": "Scandal in Sorrento"
+    }
+  },
+  {
+    "id": 9697662779,
+    "watched_at": "2024-05-04T17:02:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt5853500",
+        "plex": {
+          "guid": "5d9c0d8effd9ef001e9c3bc5"
+        },
+        "tmdb": 1358995,
+        "tvdb": 6257495,
+        "trakt": 2691595
+      },
+      "title": "The End of the Road",
+      "number": 13,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt5016504",
+        "plex": {
+          "guid": "5d9c080d4eefaa001f5d48cd",
+          "slug": "preacher"
+        },
+        "slug": "preacher",
+        "tmdb": 64230,
+        "tvdb": 300472,
+        "trakt": 102034
+      },
+      "year": 2016,
+      "title": "Preacher",
+      "aired_episodes": 43
+    }
+  },
+  {
+    "id": 9691343975,
+    "watched_at": "2024-05-01T08:17:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt19381382",
+        "plex": {
+          "guid": "624ff66555825d9b5bae7044",
+          "slug": "cocorico-2024"
+        },
+        "slug": "cocorico-2024",
+        "tmdb": 973912,
+        "trakt": 782646
+      },
+      "year": 2024,
+      "title": "Cocorico"
+    }
+  },
+  {
+    "id": 9678954258,
+    "watched_at": "2024-04-24T17:50:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt2582802",
+        "plex": {
+          "guid": "5d776a87ad5437001f7809ad",
+          "slug": "whiplash-2014"
+        },
+        "slug": "whiplash-2014",
+        "tmdb": 244786,
+        "trakt": 149047
+      },
+      "year": 2014,
+      "title": "Whiplash"
+    }
+  },
+  {
+    "id": 9678953592,
+    "watched_at": "2024-04-23T17:49:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0047327",
+        "plex": {
+          "guid": "5d776cf623d5a3001f51f379",
+          "slug": "frisky-1954"
+        },
+        "slug": "frisky-1954",
+        "tmdb": 57991,
+        "trakt": 41469
+      },
+      "year": 1954,
+      "title": "Frisky"
+    }
+  },
+  {
+    "id": 9670613882,
+    "watched_at": "2024-04-21T21:18:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt21335356",
+        "plex": {
+          "guid": "62f6918e62508205918cd3fa",
+          "slug": "please-dont-destroy-the-treasure-of-foggy-mountain"
+        },
+        "slug": "please-don-t-destroy-the-treasure-of-foggy-mountain-2023",
+        "tmdb": 1002315,
+        "trakt": 805594
+      },
+      "year": 2023,
+      "title": "Please Don't Destroy: The Treasure of Foggy Mountain"
+    }
+  },
+  {
+    "id": 9662342239,
+    "watched_at": "2024-04-17T11:27:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt5236142",
+        "plex": {
+          "guid": "5d9c0d8e46115600200be009"
+        },
+        "tmdb": 1204925,
+        "tvdb": 5672161,
+        "trakt": 2260235
+      },
+      "title": "Call and Response",
+      "number": 10,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt5016504",
+        "plex": {
+          "guid": "5d9c080d4eefaa001f5d48cd",
+          "slug": "preacher"
+        },
+        "slug": "preacher",
+        "tmdb": 64230,
+        "tvdb": 300472,
+        "trakt": 102034
+      },
+      "year": 2016,
+      "title": "Preacher",
+      "aired_episodes": 43
+    }
+  },
+  {
+    "id": 9662336704,
+    "watched_at": "2024-04-12T11:22:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0143147",
+        "plex": {
+          "guid": "5d7768a547dd6e001f6bccf3",
+          "slug": "good-luck-1935"
+        },
+        "slug": "good-luck-1935",
+        "tmdb": 63768,
+        "trakt": 45957
+      },
+      "year": 1935,
+      "title": "Good Luck"
+    }
+  },
+  {
+    "id": 10032589172,
+    "watched_at": "2024-04-09T08:19:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078916",
+        "plex": {
+          "guid": "5d77682e151a60001f24c5e3",
+          "slug": "beyond-the-darkness"
+        },
+        "slug": "beyond-the-darkness-1979",
+        "tmdb": 5425,
+        "trakt": 3079
+      },
+      "year": 1979,
+      "title": "Beyond the Darkness"
+    }
+  },
+  {
+    "id": 9641641571,
+    "watched_at": "2024-04-06T21:14:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt3599642",
+        "plex": {
+          "guid": "5d776bebfb0d55001f577372",
+          "slug": "swearnet-live"
+        },
+        "slug": "swearnet-live-2014",
+        "tmdb": 365037,
+        "trakt": 223423
+      },
+      "year": 2014,
+      "title": "Swearnet Live"
+    }
+  },
+  {
+    "id": 9636590280,
+    "watched_at": "2024-04-04T08:31:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt2380564",
+        "plex": {
+          "guid": "5d776a08fb0d55001f538306",
+          "slug": "swearnet"
+        },
+        "slug": "swearnet-the-movie-2014",
+        "tmdb": 186610,
+        "trakt": 116899
+      },
+      "year": 2014,
+      "title": "Swearnet: The Movie"
+    }
+  },
+  {
+    "id": 9633012290,
+    "watched_at": "2024-04-01T13:18:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt7122096",
+        "plex": {
+          "guid": null
+        },
+        "tmdb": 1396877,
+        "tvdb": 6422623,
+        "trakt": 7173173
+      },
+      "title": "Los Angeles (2)",
+      "number": 8,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": null,
+        "plex": {
+          "guid": "5d9c08e97b5c2e001e663792",
+          "slug": "trailer-park-boys-out-of-the-park-usa"
+        },
+        "slug": "trailer-park-boys-out-of-the-park-usa",
+        "tmdb": 75293,
+        "tvdb": null,
+        "trakt": 201443
+      },
+      "year": 2017,
+      "title": "Trailer Park Boys: Out of the Park: USA",
+      "aired_episodes": 8
+    }
+  },
+  {
+    "id": 9627938637,
+    "watched_at": "2024-03-31T22:33:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0046159",
+        "plex": {
+          "guid": "5d77689923d5a3001f4ee906",
+          "slug": "bread-love-and-dreams"
+        },
+        "slug": "bread-love-and-dreams-1953",
+        "tmdb": 56402,
+        "trakt": 40204
+      },
+      "year": 1953,
+      "title": "Bread, Love and Dreams"
+    }
+  },
+  {
+    "id": 9627509018,
+    "watched_at": "2024-03-31T19:26:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583433",
+        "plex": {
+          "guid": "5d9c12a3e9d5a1001f4ffd50"
+        },
+        "tmdb": 87632,
+        "tvdb": 852891,
+        "trakt": 98226
+      },
+      "title": "The Last One",
+      "number": 17,
+      "season": 10
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9623183121,
+    "watched_at": "2024-03-29T21:13:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0047024",
+        "plex": {
+          "guid": "5d776ae5ad5437001f78c296",
+          "slug": "days-of-love-1954"
+        },
+        "slug": "days-of-love-1954",
+        "tmdb": 273607,
+        "trakt": 171484
+      },
+      "year": 1954,
+      "title": "Days of Love"
+    }
+  },
+  {
+    "id": 9624063484,
+    "watched_at": "2024-03-29T08:01:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt5944028",
+        "plex": {
+          "guid": "5d9c0d971cae62001f760778"
+        },
+        "tmdb": 6825483,
+        "tvdb": 5761077,
+        "trakt": 2350414
+      },
+      "title": "Amsterdam (2)",
+      "number": 8,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt5937754",
+        "plex": {
+          "guid": "5d9c080e170e24001f2a7298",
+          "slug": "trailer-park-boys-out-of-the-park"
+        },
+        "slug": "trailer-park-boys-out-of-the-park",
+        "tmdb": 68375,
+        "tvdb": 317325,
+        "trakt": 111449
+      },
+      "year": 2016,
+      "title": "Trailer Park Boys: Out of the Park",
+      "aired_episodes": 16
+    }
+  },
+  {
+    "id": 9621522630,
+    "watched_at": "2024-03-29T01:38:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075793",
+        "plex": {
+          "guid": "5d776878f59e58002189e071",
+          "slug": "we-all-loved-each-other-so-much"
+        },
+        "slug": "we-all-loved-each-other-so-much-1974",
+        "tmdb": 42269,
+        "trakt": 28172
+      },
+      "year": 1974,
+      "title": "We All Loved Each Other So Much"
+    }
+  },
+  {
+    "id": 9619462490,
+    "watched_at": "2024-03-26T23:04:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069019",
+        "plex": {
+          "guid": "5d776888ebdf2200209c1ab2",
+          "slug": "dont-torture-a-duckling"
+        },
+        "slug": "don-t-torture-a-duckling-1972",
+        "tmdb": 49361,
+        "trakt": 34367
+      },
+      "year": 1972,
+      "title": "Don't Torture a Duckling"
+    }
+  },
+  {
+    "id": 9614035993,
+    "watched_at": "2024-03-24T22:09:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt5087462",
+        "plex": {
+          "guid": "5d9f3ce6adeb7a0021ce9b6a",
+          "slug": "trailer-park-boys-drunk-high-and-unemployed"
+        },
+        "slug": "trailer-park-boys-drunk-high-and-unemployed-2015",
+        "tmdb": 372337,
+        "trakt": 224317
+      },
+      "year": 2015,
+      "title": "Trailer Park Boys: Drunk, High and Unemployed"
+    }
+  },
+  {
+    "id": 9613929694,
+    "watched_at": "2024-03-24T21:26:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583497",
+        "plex": {
+          "guid": "5d9c12a2ba6eb9001fc17a7f"
+        },
+        "tmdb": 87480,
+        "tvdb": 304038,
+        "trakt": 98208
+      },
+      "title": "The One in Barbados",
+      "number": 23,
+      "season": 9
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9611911746,
+    "watched_at": "2024-03-22T23:07:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0064846",
+        "plex": {
+          "guid": "5d7768c851dd69001fe10bc1",
+          "slug": "il-prof-dott-guido-tersilli-primario-della-clinica-villa-celeste-convenzionata-con-le-mutue"
+        },
+        "slug": "medicine-italian-style-1969",
+        "tmdb": 82372,
+        "trakt": 61592
+      },
+      "year": 1969,
+      "title": "Medicine Italian Style"
+    }
+  },
+  {
+    "id": 9603051870,
+    "watched_at": "2024-03-18T06:50:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0066924",
+        "plex": {
+          "guid": "5d776d12fb0d55001f5967db",
+          "slug": "the-case-of-the-scorpions-tail"
+        },
+        "slug": "the-case-of-the-scorpion-s-tail-1971",
+        "tmdb": 16825,
+        "trakt": 10298
+      },
+      "year": 1971,
+      "title": "The Case of the Scorpion's Tail"
+    }
+  },
+  {
+    "id": 9598052037,
+    "watched_at": "2024-03-15T16:21:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt3580052",
+        "plex": {
+          "guid": "5d776ae796b655001fdfd3a4",
+          "slug": "trailer-park-boys-live-in-fkin-dublin"
+        },
+        "slug": "trailer-park-boys-live-in-f-kin-dublin-2014",
+        "tmdb": 274326,
+        "trakt": 172173
+      },
+      "year": 2014,
+      "title": "Trailer Park Boys: Live in F**kin' Dublin"
+    }
+  },
+  {
+    "id": 9587949579,
+    "watched_at": "2024-03-10T22:34:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0072196",
+        "plex": {
+          "guid": "5d776cf6ad5437001f7c9865",
+          "slug": "spasmo"
+        },
+        "slug": "spasmo-1974",
+        "tmdb": 94069,
+        "trakt": 69104
+      },
+      "year": 1974,
+      "title": "Spasmo"
+    }
+  },
+  {
+    "id": 9588881809,
+    "watched_at": "2024-03-10T08:42:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583471",
+        "plex": {
+          "guid": "5d9c12a22192ba001f386087"
+        },
+        "tmdb": 87405,
+        "tvdb": 304014,
+        "trakt": 98184
+      },
+      "title": "The One Where Rachel Has a Baby",
+      "number": 23,
+      "season": 8
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9583912284,
+    "watched_at": "2024-03-07T23:43:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073582",
+        "plex": {
+          "guid": "5d776d1451dd69001fe3fc5d",
+          "slug": "deep-red"
+        },
+        "slug": "deep-red-1975",
+        "tmdb": 20126,
+        "trakt": 12352
+      },
+      "year": 1975,
+      "title": "Deep Red"
+    }
+  },
+  {
+    "id": 9582688573,
+    "watched_at": "2024-03-07T07:18:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0395699",
+        "plex": {
+          "guid": "5d776834f54112001f5bd59b",
+          "slug": "the-pacifier"
+        },
+        "slug": "the-pacifier-2005",
+        "tmdb": 10022,
+        "trakt": 5247
+      },
+      "year": 2005,
+      "title": "The Pacifier"
+    }
+  },
+  {
+    "id": 9580565792,
+    "watched_at": "2024-03-07T00:29:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt3596200",
+        "plex": {
+          "guid": "5d776b4347dd6e001f6dd1e4",
+          "slug": "trailer-park-boys-live-at-the-north-pole"
+        },
+        "slug": "trailer-park-boys-live-at-the-north-pole-2014",
+        "tmdb": 303742,
+        "trakt": 193889
+      },
+      "year": 2014,
+      "title": "Trailer Park Boys: Live at the North Pole"
+    }
+  },
+  {
+    "id": 9580566261,
+    "watched_at": "2024-03-06T00:30:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt13941852",
+        "plex": {
+          "guid": "601d035de2aeb6002d052f37",
+          "slug": "licence-to-build"
+        },
+        "slug": "permis-de-construire-2021",
+        "tmdb": 886563,
+        "trakt": 710845
+      },
+      "year": 2021,
+      "title": "Permis de construire"
+    }
+  },
+  {
+    "id": 9575804087,
+    "watched_at": "2024-03-03T07:49:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078288",
+        "plex": {
+          "guid": "5d776904ad5437001f755bf6",
+          "slug": "the-bloodstained-shadow"
+        },
+        "slug": "the-bloodstained-shadow-1978",
+        "tmdb": 99261,
+        "trakt": 71610
+      },
+      "year": 1978,
+      "title": "The Bloodstained Shadow"
+    }
+  },
+  {
+    "id": 9573107248,
+    "watched_at": "2024-03-03T00:54:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt3244992",
+        "plex": {
+          "guid": "5d776aa9ad5437001f784e02",
+          "slug": "trailer-park-boys-dont-legalize-it"
+        },
+        "slug": "trailer-park-boys-don-t-legalize-it-2014",
+        "tmdb": 257451,
+        "trakt": 157179
+      },
+      "year": 2014,
+      "title": "Trailer Park Boys: Don't Legalize It"
+    }
+  },
+  {
+    "id": 9573106548,
+    "watched_at": "2024-03-02T00:53:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt29198701",
+        "plex": {
+          "guid": "650a341de3797c4a45825db3",
+          "slug": "inestimable"
+        },
+        "slug": "inestimable-2023",
+        "tmdb": 1100474,
+        "trakt": 885319
+      },
+      "year": 2023,
+      "title": "Inestimable"
+    }
+  },
+  {
+    "id": 9570914742,
+    "watched_at": "2024-03-02T00:18:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1337032",
+        "plex": {
+          "guid": "5e397bf1e3e43a003c85759f",
+          "slug": "trailer-park-boys-countdown-to-liquor-day"
+        },
+        "slug": "trailer-park-boys-countdown-to-liquor-day-2009",
+        "tmdb": 27561,
+        "trakt": 16971
+      },
+      "year": 2009,
+      "title": "Trailer Park Boys: Countdown to Liquor Day"
+    }
+  },
+  {
+    "id": 9570653079,
+    "watched_at": "2024-03-01T21:30:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092516",
+        "plex": {
+          "guid": "5d776873fb0d55001f510904",
+          "slug": "aenigma"
+        },
+        "slug": "aenigma-1987",
+        "tmdb": 40461,
+        "trakt": 26575
+      },
+      "year": 1987,
+      "title": "Ænigma"
+    }
+  },
+  {
+    "id": 9569173126,
+    "watched_at": "2024-03-01T00:16:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0439856",
+        "plex": {
+          "guid": "5d9f39476fc551001ef84a92",
+          "slug": "the-trailer-park-boys-christmas-special"
+        },
+        "slug": "the-trailer-park-boys-xmas-special-2004",
+        "tmdb": 217720,
+        "trakt": 134226
+      },
+      "year": 2004,
+      "title": "The Trailer Park Boys Xmas Special"
+    }
+  },
+  {
+    "id": 9569015127,
+    "watched_at": "2024-02-29T22:40:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0101493",
+        "plex": {
+          "guid": "5d77685a961905001eb99d61",
+          "slug": "body-puzzle"
+        },
+        "slug": "body-puzzle-1992",
+        "tmdb": 29954,
+        "trakt": 18959
+      },
+      "year": 1992,
+      "title": "Body Puzzle"
+    }
+  },
+  {
+    "id": 9567199145,
+    "watched_at": "2024-02-28T21:20:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068206",
+        "plex": {
+          "guid": "5d7768a67e5fa10020bf3509",
+          "slug": "amuck"
+        },
+        "slug": "amuck-1972",
+        "tmdb": 64528,
+        "trakt": 46600
+      },
+      "year": 1972,
+      "title": "Amuck!"
+    }
+  },
+  {
+    "id": 9565488571,
+    "watched_at": "2024-02-27T22:49:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1324027",
+        "plex": {
+          "guid": "5d9f35629dd5f4001e8443c1",
+          "slug": "say-goodnight-to-the-bad-guys"
+        },
+        "slug": "trailer-park-boys-say-goodnight-to-the-bad-guys-2008",
+        "tmdb": 26461,
+        "trakt": 16090
+      },
+      "year": 2008,
+      "title": "Trailer Park Boys: Say Goodnight to the Bad Guys"
+    }
+  },
+  {
+    "id": 9565296851,
+    "watched_at": "2024-02-27T21:11:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067489",
+        "plex": {
+          "guid": "5d77695e7a53e9001e6e424f",
+          "slug": "what-the-peeper-saw"
+        },
+        "slug": "what-the-peeper-saw-1972",
+        "tmdb": 112355,
+        "trakt": 78995
+      },
+      "year": 1972,
+      "title": "What the Peeper Saw"
+    }
+  },
+  {
+    "id": 9563565943,
+    "watched_at": "2024-02-26T22:44:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0425601",
+        "plex": {
+          "guid": "5d77683485719b001f3a3595",
+          "slug": "trailer-park-boys-the-movie"
+        },
+        "slug": "trailer-park-boys-the-movie-2006",
+        "tmdb": 9958,
+        "trakt": 5188
+      },
+      "year": 2006,
+      "title": "Trailer Park Boys: The Movie"
+    }
+  },
+  {
+    "id": 9563449877,
+    "watched_at": "2024-02-26T21:23:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0076068",
+        "plex": {
+          "guid": "5d776cf07a53e9001e74d192",
+          "slug": "watch-me-when-i-kill"
+        },
+        "slug": "watch-me-when-i-kill-1977",
+        "tmdb": 40261,
+        "trakt": 26385
+      },
+      "year": 1977,
+      "title": "Watch Me When I Kill"
+    }
+  },
+  {
+    "id": 9562782923,
+    "watched_at": "2024-02-26T13:58:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583531",
+        "plex": {
+          "guid": "5d9c12a27b5c2e001e6c9a52"
+        },
+        "tmdb": 87181,
+        "tvdb": 303989,
+        "trakt": 98160
+      },
+      "title": "The One with Chandler and Monica's Wedding",
+      "number": 23,
+      "season": 7
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9561582564,
+    "watched_at": "2024-02-25T21:57:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0047876",
+        "plex": {
+          "guid": "5d776d0796b655001fe3d340",
+          "slug": "the-swindle-1955"
+        },
+        "slug": "the-swindle-1955",
+        "tmdb": 36102,
+        "trakt": 22894
+      },
+      "year": 1955,
+      "title": "The Swindle"
+    }
+  },
+  {
+    "id": 9559190088,
+    "watched_at": "2024-02-23T23:26:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0063508",
+        "plex": {
+          "guid": "5d7768ad96b655001fdbef6f",
+          "slug": "will-our-heroes-be-able-to-find-their-friend-who-has-mysteriously-disappeared-in-africa"
+        },
+        "slug": "will-our-heroes-be-able-to-find-their-friend-who-has-mysteriously-disappeared-in-africa-1968",
+        "tmdb": 68816,
+        "trakt": 50215
+      },
+      "year": 1968,
+      "title": "Will Our Heroes Be Able to Find Their Friend Who Has Mysteriously Disappeared in Africa?"
+    }
+  },
+  {
+    "id": 9556836179,
+    "watched_at": "2024-02-23T22:54:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt27712015",
+        "plex": {
+          "guid": "645d6bd5b31ecd515d0760e0",
+          "slug": "only-3-days-left"
+        },
+        "slug": "3-days-max-2023",
+        "tmdb": 967582,
+        "trakt": 777568
+      },
+      "year": 2023,
+      "title": "3 Days Max"
+    }
+  },
+  {
+    "id": 9553208212,
+    "watched_at": "2024-02-21T21:50:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075852",
+        "plex": {
+          "guid": "5d776cf97a53e9001e74d9ae",
+          "slug": "the-cynic-the-rat-and-the-fist"
+        },
+        "slug": "the-cynic-the-rat-the-fist-1977",
+        "tmdb": 52810,
+        "trakt": 37230
+      },
+      "year": 1977,
+      "title": "The Cynic, the Rat & the Fist"
+    }
+  },
+  {
+    "id": 9552157813,
+    "watched_at": "2024-02-20T06:56:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069390",
+        "plex": {
+          "guid": "5d776d1696b655001fe3f081",
+          "slug": "theyre-coming-to-get-you-1972"
+        },
+        "slug": "all-the-colours-of-the-dark-1972",
+        "tmdb": 30901,
+        "trakt": 19668
+      },
+      "year": 1972,
+      "title": "All the Colours of the Dark"
+    }
+  },
+  {
+    "id": 9549603066,
+    "watched_at": "2024-02-20T00:20:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt7122158",
+        "plex": {
+          "guid": "5d9c0c744eefaa001f601b94"
+        },
+        "tmdb": 1465045,
+        "tvdb": 6616930,
+        "trakt": 2937773
+      },
+      "title": "F**kin' F**ked Out of Our F**kin' Minds",
+      "number": 10,
+      "season": 12
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9549601399,
+    "watched_at": "2024-02-19T00:18:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068971",
+        "plex": {
+          "guid": "5d7768ed51dd69001fe127e7",
+          "slug": "death-walks-at-midnight"
+        },
+        "slug": "death-walks-at-midnight-1972",
+        "tmdb": 91255,
+        "trakt": 67713
+      },
+      "year": 1972,
+      "title": "Death Walks at Midnight"
+    }
+  },
+  {
+    "id": 9549599105,
+    "watched_at": "2024-02-18T00:16:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067446",
+        "plex": {
+          "guid": "5d776d0bfb0d55001f59586a",
+          "slug": "death-walks-on-high-heels"
+        },
+        "slug": "death-walks-on-high-heels-1971",
+        "tmdb": 77029,
+        "trakt": 56943
+      },
+      "year": 1971,
+      "title": "Death Walks on High Heels"
+    }
+  },
+  {
+    "id": 9542296219,
+    "watched_at": "2024-02-16T22:41:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0220827",
+        "plex": {
+          "guid": "5d776d167a53e9001e7507ec",
+          "slug": "sleepless-2001"
+        },
+        "slug": "sleepless-2001",
+        "tmdb": 39436,
+        "trakt": 25632
+      },
+      "year": 2001,
+      "title": "Sleepless"
+    }
+  },
+  {
+    "id": 9537436241,
+    "watched_at": "2024-02-14T22:06:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0074252",
+        "plex": {
+          "guid": "5d776d0d23d5a3001f51faa9",
+          "slug": "ugly-dirty-and-bad"
+        },
+        "slug": "ugly-dirty-and-bad-1976",
+        "tmdb": 19413,
+        "trakt": 11959
+      },
+      "year": 1976,
+      "title": "Ugly, Dirty and Bad"
+    }
+  },
+  {
+    "id": 9536529017,
+    "watched_at": "2024-02-14T12:10:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583636",
+        "plex": {
+          "guid": "5fc6f4a574c1e4002d8c4753"
+        },
+        "tmdb": 86979,
+        "tvdb": 303965,
+        "trakt": 98136
+      },
+      "title": "The One with the Proposal",
+      "number": 23,
+      "season": 6
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9534599294,
+    "watched_at": "2024-02-11T12:34:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt5509348",
+        "plex": {
+          "guid": "5d9c0c742df347001e3d6a6f"
+        },
+        "tmdb": 1297686,
+        "tvdb": 6019443,
+        "trakt": 2532583
+      },
+      "title": "The All You Can Eat Sh*t Buffet",
+      "number": 10,
+      "season": 11
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9534795577,
+    "watched_at": "2024-02-09T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0057171",
+        "plex": {
+          "guid": "5d776d1247dd6e001f6efadf",
+          "slug": "yesterday-today-and-tomorrow"
+        },
+        "slug": "yesterday-today-and-tomorrow-1963",
+        "tmdb": 42801,
+        "trakt": 28662
+      },
+      "year": 1963,
+      "title": "Yesterday, Today and Tomorrow"
+    }
+  },
+  {
+    "id": 9534797488,
+    "watched_at": "2024-02-07T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt4725418",
+        "plex": {
+          "guid": "5d9c0c74705e7a001e70f35d"
+        },
+        "tmdb": 1180166,
+        "tvdb": 5515264,
+        "trakt": 2149909
+      },
+      "title": "Looks Like the Liquor Wins",
+      "number": 10,
+      "season": 10
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9534798230,
+    "watched_at": "2024-02-05T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0056512",
+        "plex": {
+          "guid": "5d776cfbad5437001f7c9f69",
+          "slug": "the-easy-life-1962"
+        },
+        "slug": "il-sorpasso-1962",
+        "tmdb": 24188,
+        "trakt": 14540
+      },
+      "year": 1962,
+      "title": "Il Sorpasso"
+    }
+  },
+  {
+    "id": 9534529907,
+    "watched_at": "2024-02-04T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt9663764",
+        "plex": {
+          "guid": "5d7770b2594b2b001e74fb7e",
+          "slug": "aquaman-and-the-lost-kingdom"
+        },
+        "slug": "aquaman-and-the-lost-kingdom-2023",
+        "tmdb": 572802,
+        "trakt": 423775
+      },
+      "year": 2023,
+      "title": "Aquaman and the Lost Kingdom"
+    }
+  },
+  {
+    "id": 9534801603,
+    "watched_at": "2024-02-02T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt18298524",
+        "plex": {
+          "guid": "6220b0c9a076527f2d3f3ae6",
+          "slug": "killing-blues"
+        },
+        "slug": "killing-blues-2023",
+        "tmdb": 984307,
+        "trakt": 791234
+      },
+      "year": 2023,
+      "title": "Killing Blues"
+    }
+  },
+  {
+    "id": 9534803462,
+    "watched_at": "2024-02-02T15:12:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0050181",
+        "plex": {
+          "guid": "5d7768c296b655001fdc118b",
+          "slug": "poor-girl-pretty-girl"
+        },
+        "slug": "poor-girl-pretty-girl-1957",
+        "tmdb": 80439,
+        "trakt": 59895
+      },
+      "year": 1957,
+      "title": "Poor Girl, Pretty Girl"
+    }
+  },
+  {
+    "id": 9534802785,
+    "watched_at": "2024-02-02T15:11:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0053185",
+        "plex": {
+          "guid": "5d776b15ad5437001f79297f",
+          "slug": "poor-millionaires-1959"
+        },
+        "slug": "poor-millionaires-1959",
+        "tmdb": 288921,
+        "trakt": 185914
+      },
+      "year": 1959,
+      "title": "Poor Millionaires"
+    }
+  },
+  {
+    "id": 10086272582,
+    "watched_at": "2024-02-02T09:09:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt6832138",
+        "plex": {
+          "guid": "5d776d7e23d5a3001f523af5",
+          "slug": "looking-for-teddy"
+        },
+        "slug": "looking-for-teddy-2018",
+        "tmdb": 486520,
+        "trakt": 333527
+      },
+      "year": 2018,
+      "title": "Looking for Teddy"
+    }
+  },
+  {
+    "id": 9534803833,
+    "watched_at": "2024-01-31T15:13:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0049634",
+        "plex": {
+          "guid": "5d7768a2ebdf2200209c4501",
+          "slug": "poor-but-beautiful-1957"
+        },
+        "slug": "poor-but-beautiful-1957",
+        "tmdb": 61829,
+        "trakt": 44373
+      },
+      "year": 1957,
+      "title": "Poor But Beautiful"
+    }
+  },
+  {
+    "id": 9534844146,
+    "watched_at": "2024-01-29T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583500",
+        "plex": {
+          "guid": "5d9c12a22192ba001f38605d"
+        },
+        "tmdb": 86620,
+        "tvdb": 303940,
+        "trakt": 98111
+      },
+      "title": "The One in Vegas",
+      "number": 23,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9534847920,
+    "watched_at": "2024-01-24T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0070669",
+        "plex": {
+          "guid": "5d7769fd96b655001fde0153",
+          "slug": "how-funny-can-sex-be"
+        },
+        "slug": "how-funny-can-sex-be-1973",
+        "tmdb": 180719,
+        "trakt": 113840
+      },
+      "year": 1973,
+      "title": "How Funny Can Sex Be?"
+    }
+  },
+  {
+    "id": 9534848711,
+    "watched_at": "2024-01-23T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0134668",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "il-gaucho-1964",
+        "tmdb": 186630,
+        "trakt": 116913
+      },
+      "year": 1964,
+      "title": "Il gaucho"
+    }
+  },
+  {
+    "id": 9534849763,
+    "watched_at": "2024-01-23T15:58:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0054068",
+        "plex": {
+          "guid": "5d7768c8fb0d55001f5197f9",
+          "slug": "love-and-larceny"
+        },
+        "slug": "love-and-larceny-1960",
+        "tmdb": 82368,
+        "trakt": 61589
+      },
+      "year": 1960,
+      "title": "Love and Larceny"
+    }
+  },
+  {
+    "id": 9534851584,
+    "watched_at": "2024-01-21T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0058335",
+        "plex": {
+          "guid": "5d9f35844441b1001fa0f482",
+          "slug": "marriage-italian-style"
+        },
+        "slug": "marriage-italian-style-1964",
+        "tmdb": 49687,
+        "trakt": 34634
+      },
+      "year": 1964,
+      "title": "Marriage Italian Style"
+    }
+  },
+  {
+    "id": 9534852474,
+    "watched_at": "2024-01-19T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt10676048",
+        "plex": {
+          "guid": "5e1632dcbc1372003ea67158",
+          "slug": "the-marvels"
+        },
+        "slug": "the-marvels-2023",
+        "tmdb": 609681,
+        "trakt": 454832
+      },
+      "year": 2023,
+      "title": "The Marvels"
+    }
+  },
+  {
+    "id": 9534853015,
+    "watched_at": "2024-01-18T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt27736473",
+        "plex": {
+          "guid": "645feadab7cd90c6c045541e",
+          "slug": "les-blagues-de-toto-2-classe-verte-2023"
+        },
+        "slug": "les-blagues-de-toto-2-classe-verte-2023",
+        "tmdb": 944387,
+        "trakt": 758366
+      },
+      "year": 2023,
+      "title": "Les Blagues de Toto 2 - Classe verte"
+    }
+  },
+  {
+    "id": 9534853927,
+    "watched_at": "2024-01-17T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0081505",
+        "plex": {
+          "guid": "5d7768287e9a3c0020c6ad28",
+          "slug": "the-shining"
+        },
+        "slug": "the-shining-1980",
+        "tmdb": 694,
+        "trakt": 566
+      },
+      "year": 1980,
+      "title": "The Shining"
+    }
+  },
+  {
+    "id": 9534854811,
+    "watched_at": "2024-01-08T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073470",
+        "plex": {
+          "guid": "5d776d13ad5437001f7cc5d2",
+          "slug": "strip-nude-for-your-killer"
+        },
+        "slug": "strip-nude-for-your-killer-1975",
+        "tmdb": 11226,
+        "trakt": 6352
+      },
+      "year": 1975,
+      "title": "Strip Nude for Your Killer"
+    }
+  },
+  {
+    "id": 9534856972,
+    "watched_at": "2024-01-07T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0034063",
+        "plex": {
+          "guid": "5d776cd0594b2b001e6fd04d",
+          "slug": "her-first-affair"
+        },
+        "slug": "her-first-affair-1941",
+        "tmdb": 333269,
+        "trakt": 214208
+      },
+      "year": 1941,
+      "title": "Her First Affair"
+    }
+  },
+  {
+    "id": 9534863115,
+    "watched_at": "2024-01-06T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0056883",
+        "plex": {
+          "guid": "5d9f35cae4fc29001eb6874c",
+          "slug": "the-boom"
+        },
+        "slug": "the-boom-1963",
+        "tmdb": 81831,
+        "trakt": 61128
+      },
+      "year": 1963,
+      "title": "The Boom"
+    }
+  },
+  {
+    "id": 9534862026,
+    "watched_at": "2024-01-06T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt3757718",
+        "plex": {
+          "guid": "5d9c0c74ffd9ef001e9b962f"
+        },
+        "tmdb": 1091311,
+        "tvdb": 5104161,
+        "trakt": 1714590
+      },
+      "title": "The Liquor Snurf",
+      "number": 10,
+      "season": 9
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9534858834,
+    "watched_at": "2024-01-06T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0031084",
+        "plex": {
+          "guid": "5d776aa796b655001fdf51b1",
+          "slug": "beating-heart"
+        },
+        "slug": "beating-heart-1940",
+        "tmdb": 257050,
+        "trakt": 156860
+      },
+      "year": 1940,
+      "title": "Beating Heart"
+    }
+  },
+  {
+    "id": 9534866719,
+    "watched_at": "2024-01-05T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0055913",
+        "plex": {
+          "guid": "5d9f3541dfd12800208a097e",
+          "slug": "divorce-italian-style"
+        },
+        "slug": "divorce-italian-style-1961",
+        "tmdb": 20271,
+        "trakt": 12433
+      },
+      "year": 1961,
+      "title": "Divorce Italian Style"
+    }
+  },
+  {
+    "id": 9534873244,
+    "watched_at": "2024-01-04T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583566",
+        "plex": {
+          "guid": "5d9c12a2ffd9ef001ea02973"
+        },
+        "tmdb": 86432,
+        "tvdb": 303916,
+        "trakt": 98087
+      },
+      "title": "The One with Ross's Wedding",
+      "number": 23,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9534870943,
+    "watched_at": "2024-01-04T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt9362722",
+        "plex": {
+          "guid": "5d7770acad5437001f8281cf",
+          "slug": "spider-man-across-the-spider-verse"
+        },
+        "slug": "spider-man-across-the-spider-verse-2023",
+        "tmdb": 569094,
+        "trakt": 420606
+      },
+      "year": 2023,
+      "title": "Spider-Man: Across the Spider-Verse"
+    }
+  },
+  {
+    "id": 9534869309,
+    "watched_at": "2024-01-04T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt3174930",
+        "plex": {
+          "guid": "5d9c0c741cae62001f75c503"
+        },
+        "tmdb": 1017212,
+        "tvdb": 4817214,
+        "trakt": 1385701
+      },
+      "title": "Crawling Through the Shitpipe",
+      "number": 10,
+      "season": 8
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9534871656,
+    "watched_at": "2023-12-31T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0099785",
+        "plex": {
+          "guid": "5d7768275af944001f1f6dc9",
+          "slug": "home-alone"
+        },
+        "slug": "home-alone-1990",
+        "tmdb": 771,
+        "trakt": 614
+      },
+      "year": 1990,
+      "title": "Home Alone"
+    }
+  },
+  {
+    "id": 9536559600,
+    "watched_at": "2023-12-30T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt1026366",
+        "plex": {
+          "guid": "5d9c0c7408fddd001f2cb442"
+        },
+        "tmdb": 266518,
+        "tvdb": 329133,
+        "trakt": 275053
+      },
+      "title": "A Shit River Runs Through It",
+      "number": 10,
+      "season": 7
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9536560876,
+    "watched_at": "2023-12-29T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583496",
+        "plex": {
+          "guid": "5d9c12a2705e7a001e7617cd"
+        },
+        "tmdb": 86330,
+        "tvdb": 303893,
+        "trakt": 98064
+      },
+      "title": "The One at the Beach",
+      "number": 25,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9536562102,
+    "watched_at": "2023-12-25T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0809898",
+        "plex": {
+          "guid": "5d9c0c74e264b7001fc6849c"
+        },
+        "tmdb": 266448,
+        "tvdb": 307239,
+        "trakt": 275043
+      },
+      "title": "Gimme My Fucking Money or Randy's Dead",
+      "number": 6,
+      "season": 6
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9536564406,
+    "watched_at": "2023-12-21T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0053779",
+        "plex": {
+          "guid": "5d7768266f4521001ea98bd6",
+          "slug": "la-dolce-vita"
+        },
+        "slug": "la-dolce-vita-1960",
+        "tmdb": 439,
+        "trakt": 350
+      },
+      "year": 1960,
+      "title": "La Dolce Vita"
+    }
+  },
+  {
+    "id": 9536562860,
+    "watched_at": "2023-12-19T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt31498817",
+        "plex": {
+          "guid": "644cbcef04d05760ec9e97f5",
+          "slug": "redouane-bougheraba-on-mappelle-marseille"
+        },
+        "slug": "redouane-bougheraba-on-m-appelle-marseille-2022",
+        "tmdb": 1118853,
+        "trakt": 900311
+      },
+      "year": 2022,
+      "title": "Redouane Bougheraba : On m'appelle Marseille"
+    }
+  },
+  {
+    "id": 9536713874,
+    "watched_at": "2023-12-17T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0732927",
+        "plex": {
+          "guid": "5d9c0c74e98e47001eb36485"
+        },
+        "tmdb": 955293,
+        "tvdb": 12593,
+        "trakt": 275037
+      },
+      "title": "The Shit Blizzard",
+      "number": 10,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9536718730,
+    "watched_at": "2023-12-14T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt22397880",
+        "plex": {
+          "guid": "6337e9eed63535b131ddb639",
+          "slug": "veuillez-nous-excuser-pour-la-gene-occasionnee-2023"
+        },
+        "slug": "the-madness-express-2023",
+        "tmdb": 999134,
+        "trakt": 803227
+      },
+      "year": 2023,
+      "title": "The Madness Express"
+    }
+  },
+  {
+    "id": 9536714688,
+    "watched_at": "2023-12-14T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0732934",
+        "plex": {
+          "guid": "5d9c0c743c3f87001f377259"
+        },
+        "tmdb": 266469,
+        "tvdb": 12583,
+        "trakt": 275027
+      },
+      "title": "Workin' Man",
+      "number": 8,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9536720180,
+    "watched_at": "2023-12-13T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0056801",
+        "plex": {
+          "guid": "5d776826eb5d26001f1dd405",
+          "slug": "81-2"
+        },
+        "slug": "8-1963",
+        "tmdb": 422,
+        "trakt": 334
+      },
+      "year": 1963,
+      "title": "8½"
+    }
+  },
+  {
+    "id": 9536722583,
+    "watched_at": "2023-12-12T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583514",
+        "plex": {
+          "guid": "5d9c12a24eefaa001f646829"
+        },
+        "tmdb": 86229,
+        "tvdb": 303868,
+        "trakt": 98039
+      },
+      "title": "The One with Barry and Mindy's Wedding",
+      "number": 24,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9536724390,
+    "watched_at": "2023-12-11T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0732900",
+        "plex": {
+          "guid": "5d9c0c74ba6eb9001fbca7c5"
+        },
+        "tmdb": 266437,
+        "tvdb": 12573,
+        "trakt": 275019
+      },
+      "title": "A Shit Leopard Can't Change Its Spots",
+      "number": 8,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9536725138,
+    "watched_at": "2023-12-10T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt20424172",
+        "plex": {
+          "guid": "629734ea40ed2eb7ff4b7185",
+          "slug": "alibi-com-2-2023"
+        },
+        "slug": "alibi-com-2-2023",
+        "tmdb": 967585,
+        "trakt": 777583
+      },
+      "year": 2023,
+      "title": "Alibi.com 2"
+    }
+  },
+  {
+    "id": 9536726678,
+    "watched_at": "2023-11-30T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0732923",
+        "plex": {
+          "guid": "5d9c0c7402391c001f5af6c9"
+        },
+        "tmdb": 266507,
+        "tvdb": 12565,
+        "trakt": 275011
+      },
+      "title": "The Bare Pimp Project",
+      "number": 7,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0290988",
+        "plex": {
+          "guid": "5d9c0800705e7a001e6cf206",
+          "slug": "trailer-park-boys"
+        },
+        "slug": "trailer-park-boys",
+        "tmdb": 3796,
+        "tvdb": 70566,
+        "trakt": 3773
+      },
+      "year": 2001,
+      "title": "Trailer Park Boys",
+      "aired_episodes": 105
+    }
+  },
+  {
+    "id": 9540359571,
+    "watched_at": "2023-11-27T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0583469",
+        "plex": {
+          "guid": "5d9c12a22df347001e41e5a6"
+        },
+        "tmdb": 86095,
+        "tvdb": 303844,
+        "trakt": 98015
+      },
+      "title": "The One Where Rachel Finds Out",
+      "number": 24,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0108778",
+        "plex": {
+          "guid": "5d9c086d2192ba001f3101c6",
+          "slug": "friends-1"
+        },
+        "slug": "friends",
+        "tmdb": 1668,
+        "tvdb": 79168,
+        "trakt": 1657
+      },
+      "year": 1994,
+      "title": "Friends",
+      "aired_episodes": 228
+    }
+  },
+  {
+    "id": 9540362233,
+    "watched_at": "2023-11-19T23:00:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt28485909",
+        "plex": {
+          "guid": "64bb20809d8f14501b81bc9b"
+        },
+        "tmdb": 4591464,
+        "tvdb": 9907873,
+        "trakt": 10784214
+      },
+      "title": "Guardians of Godolkin",
+      "number": 8,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt13159924",
+        "plex": {
+          "guid": "6294e6012dcf10c05a6f46c9",
+          "slug": "gen-v-1"
+        },
+        "slug": "gen-v",
+        "tmdb": 205715,
+        "tvdb": 417909,
+        "trakt": 196842
+      },
+      "year": 2023,
+      "title": "Gen V",
+      "aired_episodes": 16
+    }
+  },
+  {
+    "id": 9540362931,
+    "watched_at": "2023-11-17T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0383216",
+        "plex": {
+          "guid": "5d7768382e80df001ebdea95",
+          "slug": "the-pink-panther-2006"
+        },
+        "slug": "the-pink-panther-2006",
+        "tmdb": 12096,
+        "trakt": 7014
+      },
+      "year": 2006,
+      "title": "The Pink Panther"
+    }
+  },
+  {
+    "id": 9540364360,
+    "watched_at": "2023-11-15T23:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt4589218",
+        "plex": {
+          "guid": "5d77705581ba41001faedbf1",
+          "slug": "five-nights-at-freddys"
+        },
+        "slug": "five-nights-at-freddy-s-2023",
+        "tmdb": 507089,
+        "trakt": 354192
+      },
+      "year": 2023,
+      "title": "Five Nights at Freddy's"
+    }
+  },
+  {
+    "id": 9540371973,
+    "watched_at": "2023-11-07T10:30:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt1429422",
+        "plex": {
+          "guid": "5d9c13e3ba6eb9001fc268ed"
+        },
+        "tmdb": 170433,
+        "tvdb": 575601,
+        "trakt": 182370
+      },
+      "title": "Dodge's Dad",
+      "number": 27,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0460091",
+        "plex": {
+          "guid": "5d9c0874cb3ffa001f1b582c",
+          "slug": "my-name-is-earl"
+        },
+        "slug": "my-name-is-earl",
+        "tmdb": 2317,
+        "tvdb": 75397,
+        "trakt": 2303
+      },
+      "year": 2005,
+      "title": "My Name Is Earl",
+      "aired_episodes": 92
+    }
+  },
+  {
+    "id": 9540372593,
+    "watched_at": "2023-11-02T10:31:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0133385",
+        "plex": {
+          "guid": "5d776833f59e580021898866",
+          "slug": "asterix-and-obelix-vs-caesar"
+        },
+        "slug": "asterix-and-obelix-take-on-caesar-1999",
+        "tmdb": 9564,
+        "trakt": 4842
+      },
+      "year": 1999,
+      "title": "Asterix and Obelix Take On Caesar"
+    }
+  },
+  {
+    "id": 9540375763,
+    "watched_at": "2023-11-01T10:35:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt21331016",
+        "plex": {
+          "guid": "62f69187cc744313603e0302",
+          "slug": "mr-putifars-wacky-plan-2022"
+        },
+        "slug": "les-vengeances-de-maitre-poutifard-2023",
+        "tmdb": 1005685,
+        "trakt": 808532
+      },
+      "year": 2023,
+      "title": "Les Vengeances de Maître Poutifard"
+    }
+  },
+  {
+    "id": 9540376233,
+    "watched_at": "2023-10-31T10:36:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt7349950",
+        "plex": {
+          "guid": "5d776d6cfb0d55001f59fdfc",
+          "slug": "it-chapter-two"
+        },
+        "slug": "it-chapter-two-2019",
+        "tmdb": 474350,
+        "trakt": 322000
+      },
+      "year": 2019,
+      "title": "It Chapter Two"
+    }
+  },
+  {
+    "id": 9540606570,
+    "watched_at": "2023-10-25T13:38:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt1031437",
+        "plex": {
+          "guid": "5d9c13e3ec357c001f9d5b94"
+        },
+        "tmdb": 170358,
+        "tvdb": 364339,
+        "trakt": 182342
+      },
+      "title": "Camdenites",
+      "number": 18,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0460091",
+        "plex": {
+          "guid": "5d9c0874cb3ffa001f1b582c",
+          "slug": "my-name-is-earl"
+        },
+        "slug": "my-name-is-earl",
+        "tmdb": 2317,
+        "tvdb": 75397,
+        "trakt": 2303
+      },
+      "year": 2005,
+      "title": "My Name Is Earl",
+      "aired_episodes": 92
+    }
+  },
+  {
+    "id": 9540607859,
+    "watched_at": "2023-10-20T13:39:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt1021817",
+        "plex": {
+          "guid": "5d9c13e3170e24001f2d51b5"
+        },
+        "tmdb": 170406,
+        "tvdb": 328650,
+        "trakt": 182321
+      },
+      "title": "The Trial",
+      "number": 23,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0460091",
+        "plex": {
+          "guid": "5d9c0874cb3ffa001f1b582c",
+          "slug": "my-name-is-earl"
+        },
+        "slug": "my-name-is-earl",
+        "tmdb": 2317,
+        "tvdb": 75397,
+        "trakt": 2303
+      },
+      "year": 2005,
+      "title": "My Name Is Earl",
+      "aired_episodes": 92
+    }
+  },
+  {
+    "id": 10086764088,
+    "watched_at": "2023-10-18T13:17:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1524930",
+        "plex": {
+          "guid": "5d776b2c594b2b001e6d1c9c",
+          "slug": "vacation-2015"
+        },
+        "slug": "vacation-2015",
+        "tmdb": 296099,
+        "trakt": 195432
+      },
+      "year": 2015,
+      "title": "Vacation"
+    }
+  },
+  {
+    "id": 9552480808,
+    "watched_at": "2023-10-10T11:47:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1517268",
+        "plex": {
+          "guid": "5d776bb6ad5437001f7a7b68",
+          "slug": "barbie-2023-4"
+        },
+        "slug": "barbie-2023",
+        "tmdb": 346698,
+        "trakt": 242104
+      },
+      "year": 2023,
+      "title": "Barbie"
+    }
+  },
+  {
+    "id": 9552481959,
+    "watched_at": "2023-10-08T11:48:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0763831",
+        "plex": {
+          "guid": "5d7768b551dd69001fe0fc77",
+          "slug": "a-thousand-words"
+        },
+        "slug": "a-thousand-words-2012",
+        "tmdb": 72358,
+        "trakt": 53139
+      },
+      "year": 2012,
+      "title": "A Thousand Words"
+    }
+  },
+  {
+    "id": 9554249800,
+    "watched_at": "2023-10-05T14:20:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt0802051",
+        "plex": {
+          "guid": "5d9c13e3e9d5a1001f504598"
+        },
+        "tmdb": 170381,
+        "tvdb": 307047,
+        "trakt": 182298
+      },
+      "title": "Number One",
+      "number": 24,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt0460091",
+        "plex": {
+          "guid": "5d9c0874cb3ffa001f1b582c",
+          "slug": "my-name-is-earl"
+        },
+        "slug": "my-name-is-earl",
+        "tmdb": 2317,
+        "tvdb": 75397,
+        "trakt": 2303
+      },
+      "year": 2005,
+      "title": "My Name Is Earl",
+      "aired_episodes": 92
+    }
+  },
+  {
+    "id": 9554252733,
+    "watched_at": "2023-10-03T14:24:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt27128442",
+        "plex": {
+          "guid": "6412129f1509fe53ae221b3f",
+          "slug": "our-tiny-little-wedding-2023"
+        },
+        "slug": "our-tiny-little-wedding-2023",
+        "tmdb": 982186,
+        "trakt": 789366
+      },
+      "year": 2023,
+      "title": "Our Tiny Little Wedding"
+    }
+  },
+  {
+    "id": 9554265781,
+    "watched_at": "2023-09-30T14:37:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1462764",
+        "plex": {
+          "guid": "5d776b95fb0d55001f56c2c7",
+          "slug": "indiana-jones-and-the-dial-of-destiny"
+        },
+        "slug": "indiana-jones-and-the-dial-of-destiny-2023",
+        "tmdb": 335977,
+        "trakt": 216712
+      },
+      "year": 2023,
+      "title": "Indiana Jones and the Dial of Destiny"
+    }
+  },
+  {
+    "id": 9554266790,
+    "watched_at": "2023-09-29T14:39:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt5302844",
+        "plex": {
+          "guid": "5d776c0696b655001fe239a1",
+          "slug": "ein-mord-mit-aussicht"
+        },
+        "slug": "ein-mord-mit-aussicht-2015",
+        "tmdb": 374868,
+        "trakt": 224773
+      },
+      "year": 2015,
+      "title": "Ein Mord mit Aussicht"
+    }
+  },
+  {
+    "id": 9554262054,
+    "watched_at": "2023-09-04T14:35:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt18569624",
+        "plex": {
+          "guid": "661fc04fc4b593fbcc07eac8"
+        },
+        "tmdb": 3478133,
+        "tvdb": 8972459,
+        "trakt": 5864344
+      },
+      "title": "TBA",
+      "number": 6,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1163573",
+        "plex": {
+          "guid": "61b1670a019f58c225413921",
+          "slug": "homicide-hills"
+        },
+        "slug": "murder-with-a-view",
+        "tmdb": 41132,
+        "tvdb": 82638,
+        "trakt": 40933
+      },
+      "year": 2008,
+      "title": "Murder With A View",
+      "aired_episodes": 58
+    }
+  },
+  {
+    "id": 9554263658,
+    "watched_at": "2023-09-01T14:35:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0444505",
+        "plex": {
+          "guid": "5d776829103a2d001f564b51",
+          "slug": "torrente-3-el-protector"
+        },
+        "slug": "torrente-3-the-protector-2005",
+        "tmdb": 1285,
+        "trakt": 895
+      },
+      "year": 2005,
+      "title": "Torrente 3: The Protector"
+    }
+  },
+  {
+    "id": 9582850519,
+    "watched_at": "2023-09-01T09:07:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt14305738",
+        "plex": {
+          "guid": "5fbd2ea82f3e59002d0faef6",
+          "slug": "the-mercator-trail"
+        },
+        "slug": "the-mercator-trail-2022",
+        "tmdb": 767852,
+        "trakt": 605925
+      },
+      "year": 2022,
+      "title": "The Mercator Trail"
+    }
+  },
+  {
+    "id": 12005320105,
+    "watched_at": "2023-08-27T22:03:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "",
+        "plex": {
+          "guid": "661fc051c4b593fbcc07eb84"
+        },
+        "tmdb": 1314943,
+        "tvdb": 4367639,
+        "trakt": 1488786
+      },
+      "title": "TBA",
+      "number": 1,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1163573",
+        "plex": {
+          "guid": "61b1670a019f58c225413921",
+          "slug": "homicide-hills"
+        },
+        "slug": "murder-with-a-view",
+        "tmdb": 41132,
+        "tvdb": 82638,
+        "trakt": 40933
+      },
+      "year": 2008,
+      "title": "Murder With A View",
+      "aired_episodes": 58
+    }
+  },
+  {
+    "id": 9554287653,
+    "watched_at": "2023-08-25T14:57:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt13345606",
+        "plex": {
+          "guid": "5d776e577a53e9001e773ec1",
+          "slug": "evil-dead-rise"
+        },
+        "slug": "evil-dead-rise-2023",
+        "tmdb": 713704,
+        "trakt": 556530
+      },
+      "year": 2023,
+      "title": "Evil Dead Rise"
+    }
+  },
+  {
+    "id": 9554290056,
+    "watched_at": "2023-08-24T14:59:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt5606664",
+        "plex": {
+          "guid": "5d776da0594b2b001e70ddb5",
+          "slug": "doctor-sleep"
+        },
+        "slug": "doctor-sleep-2019",
+        "tmdb": 501170,
+        "trakt": 353053
+      },
+      "year": 2019,
+      "title": "Doctor Sleep"
+    }
+  },
+  {
+    "id": 9554292118,
+    "watched_at": "2023-08-22T15:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0257231",
+        "plex": {
+          "guid": "5d7768298718ba001e312381",
+          "slug": "torrente-2-mission-in-marbella"
+        },
+        "slug": "torrente-2-mission-in-marbella-2001",
+        "tmdb": 1284,
+        "trakt": 894
+      },
+      "year": 2001,
+      "title": "Torrente 2: Mission in Marbella"
+    }
+  },
+  {
+    "id": 9554294465,
+    "watched_at": "2023-08-20T15:02:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0100419",
+        "plex": {
+          "guid": "5d7768366f4521001ea9c2e3",
+          "slug": "problem-child"
+        },
+        "slug": "problem-child-1990",
+        "tmdb": 11077,
+        "trakt": 6214
+      },
+      "year": 1990,
+      "title": "Problem Child"
+    }
+  },
+  {
+    "id": 9554295007,
+    "watched_at": "2023-08-18T15:02:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt3762944",
+        "plex": {
+          "guid": "5d9f3c826fc551001ef8927c",
+          "slug": "hello-ladies-the-movie"
+        },
+        "slug": "hello-ladies-the-movie-2014",
+        "tmdb": 303623,
+        "trakt": 193861
+      },
+      "year": 2014,
+      "title": "Hello Ladies: The Movie"
+    }
+  },
+  {
+    "id": 9554298026,
+    "watched_at": "2023-08-17T15:05:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt15789038",
+        "plex": {
+          "guid": "617d3aaf6d9bee0ff53feabb",
+          "slug": "elemental-2023-1"
+        },
+        "slug": "elemental-2023",
+        "tmdb": 976573,
+        "trakt": 784814
+      },
+      "year": 2023,
+      "title": "Elemental"
+    }
+  },
+  {
+    "id": 9554298904,
+    "watched_at": "2023-08-14T15:06:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0081505",
+        "plex": {
+          "guid": "5d7768287e9a3c0020c6ad28",
+          "slug": "the-shining"
+        },
+        "slug": "the-shining-1980",
+        "tmdb": 694,
+        "trakt": 566
+      },
+      "year": 1980,
+      "title": "The Shining"
+    }
+  },
+  {
+    "id": 9554302595,
+    "watched_at": "2023-08-13T15:08:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt16983432",
+        "plex": {
+          "guid": "61e5253e04501dc8cad25476",
+          "slug": "10-jours-encore-sans-maman"
+        },
+        "slug": "how-to-survive-without-mum-2023",
+        "tmdb": 898994,
+        "trakt": 721445
+      },
+      "year": 2023,
+      "title": "How to Survive Without Mum"
+    }
+  },
+  {
+    "id": 9554304780,
+    "watched_at": "2023-08-12T15:09:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt6878038",
+        "plex": {
+          "guid": "5d776d3896b655001fe42d7e",
+          "slug": "a-taxi-driver"
+        },
+        "slug": "a-taxi-driver-2017",
+        "tmdb": 437068,
+        "trakt": 294048
+      },
+      "year": 2017,
+      "title": "A Taxi Driver"
+    }
+  },
+  {
+    "id": 9554316874,
+    "watched_at": "2023-08-11T15:20:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt2550332",
+        "plex": {
+          "guid": "661fc051c4b593fbcc07eb91"
+        },
+        "tmdb": 1019392,
+        "tvdb": 4981828,
+        "trakt": 1002045
+      },
+      "title": "The Shame Tree",
+      "number": 13,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1163573",
+        "plex": {
+          "guid": "61b1670a019f58c225413921",
+          "slug": "homicide-hills"
+        },
+        "slug": "murder-with-a-view",
+        "tmdb": 41132,
+        "tvdb": 82638,
+        "trakt": 40933
+      },
+      "year": 2008,
+      "title": "Murder With A View",
+      "aired_episodes": 58
+    }
+  },
+  {
+    "id": 9554306230,
+    "watched_at": "2023-08-08T15:10:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0070047",
+        "plex": {
+          "guid": "5d7768333c3c2a001fbcdab7",
+          "slug": "the-exorcist"
+        },
+        "slug": "the-exorcist-1973",
+        "tmdb": 9552,
+        "trakt": 4830
+      },
+      "year": 1973,
+      "title": "The Exorcist"
+    }
+  },
+  {
+    "id": 9554307653,
+    "watched_at": "2023-08-07T15:11:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt7282468",
+        "plex": {
+          "guid": "5d776f1af617c90020198e25",
+          "slug": "burning-2018"
+        },
+        "slug": "burning-2018",
+        "tmdb": 491584,
+        "trakt": 338552
+      },
+      "year": 2018,
+      "title": "Burning"
+    }
+  },
+  {
+    "id": 9554309053,
+    "watched_at": "2023-08-06T15:13:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt2330866",
+        "plex": {
+          "guid": "5d9f38f268e4c8001fb620e7",
+          "slug": "the-thieves-2012"
+        },
+        "slug": "the-thieves-2012",
+        "tmdb": 124157,
+        "trakt": 85544
+      },
+      "year": 2012,
+      "title": "The Thieves"
+    }
+  },
+  {
+    "id": 9554309669,
+    "watched_at": "2023-08-05T15:14:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt2186819",
+        "plex": {
+          "guid": "5d776967fb0d55001f5253f0",
+          "slug": "howling"
+        },
+        "slug": "howling-2012",
+        "tmdb": 116227,
+        "trakt": 81117
+      },
+      "year": 2012,
+      "title": "Howling"
+    }
+  },
+  {
+    "id": 9554312107,
+    "watched_at": "2023-08-04T15:15:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0310775",
+        "plex": {
+          "guid": "5d9f34f268e4c8001fb5d814",
+          "slug": "sympathy-for-mr-vengeance-2002"
+        },
+        "slug": "sympathy-for-mr-vengeance-2002",
+        "tmdb": 4689,
+        "trakt": 2750
+      },
+      "year": 2002,
+      "title": "Sympathy for Mr. Vengeance"
+    }
+  },
+  {
+    "id": 9554313061,
+    "watched_at": "2023-08-03T15:16:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1190539",
+        "plex": {
+          "guid": "5d776cf69ab544002151a89c",
+          "slug": "the-chaser-2008"
+        },
+        "slug": "the-chaser-2008",
+        "tmdb": 13855,
+        "trakt": 8239
+      },
+      "year": 2008,
+      "title": "The Chaser"
+    }
+  },
+  {
+    "id": 9554306801,
+    "watched_at": "2023-08-02T15:10:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt5700672",
+        "plex": {
+          "guid": "5d776c3d51dd69001fe39387",
+          "slug": "train-to-busan"
+        },
+        "slug": "train-to-busan-2016",
+        "tmdb": 396535,
+        "trakt": 239425
+      },
+      "year": 2016,
+      "title": "Train to Busan"
+    }
+  },
+  {
+    "id": 9554317622,
+    "watched_at": "2023-08-01T15:21:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt1714802",
+        "plex": {
+          "guid": "661fc052c4b593fbcc07ebdb"
+        },
+        "tmdb": 1019386,
+        "tvdb": 4981159,
+        "trakt": 1002036
+      },
+      "title": "After six at the zoo",
+      "number": 13,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt1163573",
+        "plex": {
+          "guid": "61b1670a019f58c225413921",
+          "slug": "homicide-hills"
+        },
+        "slug": "murder-with-a-view",
+        "tmdb": 41132,
+        "tvdb": 82638,
+        "trakt": 40933
+      },
+      "year": 2008,
+      "title": "Murder With A View",
+      "aired_episodes": 58
+    }
+  },
+  {
+    "id": 9554313349,
+    "watched_at": "2023-08-01T15:16:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0353969",
+        "plex": {
+          "guid": "5d776836eb5d26001f1e1022",
+          "slug": "memories-of-murder"
+        },
+        "slug": "memories-of-murder-2003",
+        "tmdb": 11423,
+        "trakt": 6518
+      },
+      "year": 2003,
+      "title": "Memories of Murder"
+    }
+  },
+  {
+    "id": 9554314444,
+    "watched_at": "2023-07-31T15:17:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt1588170",
+        "plex": {
+          "guid": "5d77688af59e58002189f0bd",
+          "slug": "i-saw-the-devil"
+        },
+        "slug": "i-saw-the-devil-2010",
+        "tmdb": 49797,
+        "trakt": 34728
+      },
+      "year": 2010,
+      "title": "I Saw the Devil"
+    }
+  },
+  {
+    "id": 9577818670,
+    "watched_at": "2023-07-30T07:56:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt21364552",
+        "plex": {
+          "guid": "62f691b80c676f50bfd8b518",
+          "slug": "the-roundup-no-way-out"
+        },
+        "slug": "the-roundup-no-way-out-2023",
+        "tmdb": 955555,
+        "trakt": 768242
+      },
+      "year": 2023,
+      "title": "The Roundup: No Way Out"
+    }
+  },
+  {
+    "id": 9577821524,
+    "watched_at": "2023-07-29T08:00:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt6175078",
+        "plex": {
+          "guid": "5d776c8196b655001fe330e6",
+          "slug": "luck-key"
+        },
+        "slug": "luck-key-2016",
+        "tmdb": 421928,
+        "trakt": 266378
+      },
+      "year": 2016,
+      "title": "Luck-Key"
+    }
+  },
+  {
+    "id": 9577825718,
+    "watched_at": "2023-07-28T08:03:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0457400",
+        "plex": {
+          "guid": "5d7768412ec6b5001f6be14d",
+          "slug": "land-of-the-lost"
+        },
+        "slug": "land-of-the-lost-2009",
+        "tmdb": 18162,
+        "trakt": 11103
+      },
+      "year": 2009,
+      "title": "Land of the Lost"
+    }
+  },
+  {
+    "id": 9577826111,
+    "watched_at": "2023-07-19T08:04:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt21111120",
+        "plex": {
+          "guid": "62ce9856fdd249cd7423e39a",
+          "slug": "the-point-men-2023"
+        },
+        "slug": "the-point-men-2023",
+        "tmdb": 606400,
+        "trakt": 451054
+      },
+      "year": 2023,
+      "title": "The Point Men"
+    }
+  },
+  {
+    "id": 9577826846,
+    "watched_at": "2023-07-18T08:05:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt5090568",
+        "plex": {
+          "guid": "5e35ecaa5b6514003f658eb2",
+          "slug": "transformers-rise-of-the-beasts"
+        },
+        "slug": "transformers-rise-of-the-beasts-2023",
+        "tmdb": 667538,
+        "trakt": 501235
+      },
+      "year": 2023,
+      "title": "Transformers: Rise of the Beasts"
+    }
+  },
+  {
+    "id": 9577827966,
+    "watched_at": "2023-07-14T08:06:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt9541602",
+        "plex": {
+          "guid": "5d7770a935102a0020ed8a9b",
+          "slug": "extreme-job"
+        },
+        "slug": "extreme-job-2019",
+        "tmdb": 567646,
+        "trakt": 422210
+      },
+      "year": 2019,
+      "title": "Extreme Job"
+    }
+  },
+  {
+    "id": 9577817200,
+    "watched_at": "2023-07-13T07:54:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt15838850",
+        "plex": {
+          "guid": "5e162347bea6ac00412786b8",
+          "slug": "the-roundup-2022"
+        },
+        "slug": "the-roundup-2022",
+        "tmdb": 619803,
+        "trakt": 476050
+      },
+      "year": 2022,
+      "title": "The Roundup"
+    }
+  },
+  {
+    "id": 9577819721,
+    "watched_at": "2023-07-11T07:57:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt7468056",
+        "plex": {
+          "guid": "5d776d7796b655001fe49a80",
+          "slug": "the-outlaws-2017"
+        },
+        "slug": "the-outlaws-2017",
+        "tmdb": 479718,
+        "trakt": 326888
+      },
+      "year": 2017,
+      "title": "The Outlaws"
+    }
+  },
+  {
+    "id": 9577828698,
+    "watched_at": "2023-07-02T08:07:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0115658",
+        "plex": {
+          "guid": "5d7768452e80df001ebe035a",
+          "slug": "bernie"
+        },
+        "slug": "bernie-1996",
+        "tmdb": 19963,
+        "trakt": 12251
+      },
+      "year": 1996,
+      "title": "Bernie"
+    }
+  },
+  {
+    "id": 9577829082,
+    "watched_at": "2023-07-01T08:08:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0099528",
+        "plex": {
+          "guid": "5d7768377e9a3c0020c6d298",
+          "slug": "the-exorcist-iii"
+        },
+        "slug": "the-exorcist-iii-1990",
+        "tmdb": 11587,
+        "trakt": 6664
+      },
+      "year": 1990,
+      "title": "The Exorcist III"
+    }
+  },
+  {
+    "id": 9577834928,
+    "watched_at": "2023-06-30T08:15:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt9293964",
+        "plex": {
+          "guid": "5d9c0f367b5c2e001e69fcb0"
+        },
+        "tmdb": 1639275,
+        "tvdb": 6890908,
+        "trakt": 3223547
+      },
+      "title": "Thirty-one",
+      "number": 4,
+      "season": 7
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2147995",
+        "plex": {
+          "guid": "5d9c082b02391c001f582eaa",
+          "slug": "crime-scene-cleaner"
+        },
+        "slug": "crime-scene-cleaner",
+        "tmdb": 51488,
+        "tvdb": 289561,
+        "trakt": 93715
+      },
+      "year": 2011,
+      "title": "Crime Scene Cleaner",
+      "aired_episodes": 31
+    }
+  },
+  {
+    "id": 9577834728,
+    "watched_at": "2023-06-25T08:15:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt6344618",
+        "plex": {
+          "guid": "5d9c0f36705e7a001e7339bb"
+        },
+        "tmdb": 1238584,
+        "tvdb": 5827990,
+        "trakt": 2396445
+      },
+      "title": "Stop Laughing",
+      "number": 3,
+      "season": 6
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2147995",
+        "plex": {
+          "guid": "5d9c082b02391c001f582eaa",
+          "slug": "crime-scene-cleaner"
+        },
+        "slug": "crime-scene-cleaner",
+        "tmdb": 51488,
+        "tvdb": 289561,
+        "trakt": 93715
+      },
+      "year": 2011,
+      "title": "Crime Scene Cleaner",
+      "aired_episodes": 31
+    }
+  },
+  {
+    "id": 9577834243,
+    "watched_at": "2023-06-20T08:14:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt5287980",
+        "plex": {
+          "guid": "5d9c0f362192ba001f3596e5"
+        },
+        "tmdb": 1148269,
+        "tvdb": 5433971,
+        "trakt": 2080359
+      },
+      "title": "Friends",
+      "number": 6,
+      "season": 5
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2147995",
+        "plex": {
+          "guid": "5d9c082b02391c001f582eaa",
+          "slug": "crime-scene-cleaner"
+        },
+        "slug": "crime-scene-cleaner",
+        "tmdb": 51488,
+        "tvdb": 289561,
+        "trakt": 93715
+      },
+      "year": 2011,
+      "title": "Crime Scene Cleaner",
+      "aired_episodes": 31
+    }
+  },
+  {
+    "id": 9577831939,
+    "watched_at": "2023-06-20T08:09:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt28183832",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "pfff-a-lecture-by-pierre-emmanuel-barre-guests-2023",
+        "tmdb": 1143977,
+        "trakt": 921378
+      },
+      "year": 2023,
+      "title": "Pfff... A lecture by Pierre-Emmanuel Barré & Guests"
+    }
+  },
+  {
+    "id": 9577834005,
+    "watched_at": "2023-06-15T08:14:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt4179938",
+        "plex": {
+          "guid": "5d9c0f362192ba001f3596fa"
+        },
+        "tmdb": 1029733,
+        "tvdb": 5076592,
+        "trakt": 1390959
+      },
+      "title": "Transactions",
+      "number": 5,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2147995",
+        "plex": {
+          "guid": "5d9c082b02391c001f582eaa",
+          "slug": "crime-scene-cleaner"
+        },
+        "slug": "crime-scene-cleaner",
+        "tmdb": 51488,
+        "tvdb": 289561,
+        "trakt": 93715
+      },
+      "year": 2011,
+      "title": "Crime Scene Cleaner",
+      "aired_episodes": 31
+    }
+  },
+  {
+    "id": 9577853978,
+    "watched_at": "2023-06-12T08:35:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0059095",
+        "plex": {
+          "guid": "5d776d12ad5437001f7cc420",
+          "slug": "the-10th-victim"
+        },
+        "slug": "the-10th-victim-1965",
+        "tmdb": 65632,
+        "trakt": 47496
+      },
+      "year": 1965,
+      "title": "The 10th Victim"
+    }
+  },
+  {
+    "id": 9577833597,
+    "watched_at": "2023-06-10T08:13:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt3523150",
+        "plex": {
+          "guid": "5d9c0f363c3f87001f397aaa"
+        },
+        "tmdb": 1014589,
+        "tvdb": 5076596,
+        "trakt": 1390954
+      },
+      "title": "Yes, I Do",
+      "number": 4,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2147995",
+        "plex": {
+          "guid": "5d9c082b02391c001f582eaa",
+          "slug": "crime-scene-cleaner"
+        },
+        "slug": "crime-scene-cleaner",
+        "tmdb": 51488,
+        "tvdb": 289561,
+        "trakt": 93715
+      },
+      "year": 2011,
+      "title": "Crime Scene Cleaner",
+      "aired_episodes": 31
+    }
+  },
+  {
+    "id": 9577841440,
+    "watched_at": "2023-06-07T08:24:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt7801806",
+        "plex": {
+          "guid": "5d9c10fb08fddd001f30681e"
+        },
+        "tmdb": 1473212,
+        "tvdb": 6533381,
+        "trakt": 2877902
+      },
+      "title": "The Mettle of Man",
+      "number": 10,
+      "season": 3
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4189022",
+        "plex": {
+          "guid": "5d9c08522df347001e3af97f",
+          "slug": "ash-vs-evil-dead"
+        },
+        "slug": "ash-vs-evil-dead",
+        "tmdb": 62264,
+        "tvdb": 296295,
+        "trakt": 99460
+      },
+      "year": 2015,
+      "title": "Ash vs Evil Dead",
+      "aired_episodes": 30
+    }
+  },
+  {
+    "id": 9577841888,
+    "watched_at": "2023-06-06T08:25:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092991",
+        "plex": {
+          "guid": "5d7768275af944001f1f6dc5",
+          "slug": "evil-dead-ii"
+        },
+        "slug": "evil-dead-ii-1987",
+        "tmdb": 765,
+        "trakt": 608
+      },
+      "year": 1987,
+      "title": "Evil Dead II"
+    }
+  },
+  {
+    "id": 9577833248,
+    "watched_at": "2023-06-05T08:13:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt2839076",
+        "plex": {
+          "guid": "5d9c0f363c3f87001f397ab6"
+        },
+        "tmdb": 919598,
+        "tvdb": 5076601,
+        "trakt": 1390950
+      },
+      "title": "Assignment from Beyond",
+      "number": 5,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2147995",
+        "plex": {
+          "guid": "5d9c082b02391c001f582eaa",
+          "slug": "crime-scene-cleaner"
+        },
+        "slug": "crime-scene-cleaner",
+        "tmdb": 51488,
+        "tvdb": 289561,
+        "trakt": 93715
+      },
+      "year": 2011,
+      "title": "Crime Scene Cleaner",
+      "aired_episodes": 31
+    }
+  },
+  {
+    "id": 9577841170,
+    "watched_at": "2023-06-03T08:23:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt5197286",
+        "plex": {
+          "guid": "5fbd73f80f5e7b002d3a89dc"
+        },
+        "tmdb": 1225862,
+        "tvdb": 5704165,
+        "trakt": 2305771
+      },
+      "title": "Second Coming",
+      "number": 10,
+      "season": 2
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4189022",
+        "plex": {
+          "guid": "5d9c08522df347001e3af97f",
+          "slug": "ash-vs-evil-dead"
+        },
+        "slug": "ash-vs-evil-dead",
+        "tmdb": 62264,
+        "tvdb": 296295,
+        "trakt": 99460
+      },
+      "year": 2015,
+      "title": "Ash vs Evil Dead",
+      "aired_episodes": 30
+    }
+  },
+  {
+    "id": 9577833107,
+    "watched_at": "2023-06-01T08:12:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt2170813",
+        "plex": {
+          "guid": "5d9c0f362df347001e3f5f84"
+        },
+        "tmdb": 919591,
+        "tvdb": 5076605,
+        "trakt": 1390945
+      },
+      "title": "A Matter Of Taste",
+      "number": 4,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt2147995",
+        "plex": {
+          "guid": "5d9c082b02391c001f582eaa",
+          "slug": "crime-scene-cleaner"
+        },
+        "slug": "crime-scene-cleaner",
+        "tmdb": 51488,
+        "tvdb": 289561,
+        "trakt": 93715
+      },
+      "year": 2011,
+      "title": "Crime Scene Cleaner",
+      "aired_episodes": 31
+    }
+  },
+  {
+    "id": 10830871411,
+    "watched_at": "2023-05-30T21:06:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt22041958",
+        "plex": {
+          "guid": "63eba99529d8cac79715b090"
+        },
+        "tmdb": 4233442,
+        "tvdb": 9354560,
+        "trakt": 7431284
+      },
+      "title": "Focus, dawg! Focus!",
+      "number": 1,
+      "season": 4
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt13929916",
+        "plex": {
+          "guid": "6067dc2843a16c002cc20d75",
+          "slug": "lol-last-one-laughing-germany"
+        },
+        "slug": "lol-last-one-laughing-2021-177070",
+        "tmdb": 122241,
+        "tvdb": 400263,
+        "trakt": 177070
+      },
+      "year": 2021,
+      "title": "LOL: Last One Laughing",
+      "aired_episodes": 42
+    }
+  },
+  {
+    "id": 9577839208,
+    "watched_at": "2023-05-29T08:22:00.000Z",
+    "action": "watch",
+    "type": "episode",
+    "episode": {
+      "ids": {
+        "imdb": "tt4427982",
+        "plex": {
+          "guid": "5d9c10fbe98e47001eb7254c"
+        },
+        "tmdb": 1131017,
+        "tvdb": 5324546,
+        "trakt": 1979569
+      },
+      "title": "The Dark One",
+      "number": 10,
+      "season": 1
+    },
+    "show": {
+      "ids": {
+        "imdb": "tt4189022",
+        "plex": {
+          "guid": "5d9c08522df347001e3af97f",
+          "slug": "ash-vs-evil-dead"
+        },
+        "slug": "ash-vs-evil-dead",
+        "tmdb": 62264,
+        "tvdb": 296295,
+        "trakt": 99460
+      },
+      "year": 2015,
+      "title": "Ash vs Evil Dead",
+      "aired_episodes": 30
+    }
+  },
+  {
+    "id": 9577842267,
+    "watched_at": "2023-05-28T08:25:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0083907",
+        "plex": {
+          "guid": "5d7768282e80df001ebdcebf",
+          "slug": "the-evil-dead-1981"
+        },
+        "slug": "the-evil-dead-1981",
+        "tmdb": 764,
+        "trakt": 607
+      },
+      "year": 1981,
+      "title": "The Evil Dead"
+    }
+  },
+  {
+    "id": 9577844896,
+    "watched_at": "2023-05-27T08:27:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0087800",
+        "plex": {
+          "guid": "5d776d17594b2b001e7011d1",
+          "slug": "a-nightmare-on-elm-street-1984"
+        },
+        "slug": "a-nightmare-on-elm-street-1984",
+        "tmdb": 377,
+        "trakt": 301
+      },
+      "year": 1984,
+      "title": "A Nightmare on Elm Street"
+    }
+  },
+  {
+    "id": 9577846421,
+    "watched_at": "2023-05-26T08:29:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt15038118",
+        "plex": {
+          "guid": "60eff7d3e22797002c55c1cc",
+          "slug": "blues-big-city-adventure-2022"
+        },
+        "slug": "blue-s-big-city-adventure-2022",
+        "tmdb": 939210,
+        "trakt": 753604
+      },
+      "year": 2022,
+      "title": "Blue's Big City Adventure"
+    }
+  },
+  {
+    "id": 9577835991,
+    "watched_at": "2023-05-25T08:17:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0106308",
+        "plex": {
+          "guid": "5d7768282ec6b5001f6ba4df",
+          "slug": "army-of-darkness"
+        },
+        "slug": "army-of-darkness-1992",
+        "tmdb": 766,
+        "trakt": 609
+      },
+      "year": 1992,
+      "title": "Army of Darkness"
+    }
+  },
+  {
+    "id": 9577855901,
+    "watched_at": "2023-05-20T08:37:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0084298",
+        "plex": {
+          "guid": "5d77685d7228e5001f1e30d9",
+          "slug": "manhattan-baby"
+        },
+        "slug": "manhattan-baby-1982",
+        "tmdb": 30875,
+        "trakt": 19643
+      },
+      "year": 1982,
+      "title": "Manhattan Baby"
+    }
+  },
+  {
+    "id": 9577837367,
+    "watched_at": "2023-05-20T08:19:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0054640",
+        "plex": {
+          "guid": "5d9f3580d74e670020022570",
+          "slug": "the-assassin-1961"
+        },
+        "slug": "the-assassin-1961",
+        "tmdb": 47240,
+        "trakt": 32575
+      },
+      "year": 1961,
+      "title": "The Assassin"
+    }
+  },
+  {
+    "id": 9577856617,
+    "watched_at": "2023-05-19T08:38:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt17663992",
+        "plex": {
+          "guid": "61fd36229847c85e0511ff5f",
+          "slug": "scream-vi"
+        },
+        "slug": "scream-vi-2023",
+        "tmdb": 934433,
+        "trakt": 749392
+      },
+      "year": 2023,
+      "title": "Scream VI"
+    }
+  },
+  {
+    "id": 9577857035,
+    "watched_at": "2023-05-17T08:39:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt11210390",
+        "plex": {
+          "guid": "5e16138e04b9ad001e9a74ca",
+          "slug": "asterix-and-obelix-the-middle-kingdom"
+        },
+        "slug": "asterix-obelix-the-middle-kingdom-2023",
+        "tmdb": 643215,
+        "trakt": 481249
+      },
+      "year": 2023,
+      "title": "Asterix & Obelix: The Middle Kingdom"
+    }
+  },
+  {
+    "id": 9577857719,
+    "watched_at": "2023-05-16T08:40:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt13345606",
+        "plex": {
+          "guid": "5d776e577a53e9001e773ec1",
+          "slug": "evil-dead-rise"
+        },
+        "slug": "evil-dead-rise-2023",
+        "tmdb": 713704,
+        "trakt": 556530
+      },
+      "year": 2023,
+      "title": "Evil Dead Rise"
+    }
+  },
+  {
+    "id": 9577858860,
+    "watched_at": "2023-05-15T08:41:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0094860",
+        "plex": {
+          "guid": "5d776d16594b2b001e70116c",
+          "slug": "the-church-1989"
+        },
+        "slug": "the-church-1989",
+        "tmdb": 40364,
+        "trakt": 26485
+      },
+      "year": 1989,
+      "title": "The Church"
+    }
+  },
+  {
+    "id": 9577859168,
+    "watched_at": "2023-05-05T08:42:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt2906216",
+        "plex": {
+          "guid": "5d776f15f617c90020198be4",
+          "slug": "dungeons-and-dragons-honor-among-thieves"
+        },
+        "slug": "dungeons-dragons-honor-among-thieves-2023",
+        "tmdb": 493529,
+        "trakt": 340442
+      },
+      "year": 2023,
+      "title": "Dungeons & Dragons: Honor Among Thieves"
+    }
+  },
+  {
+    "id": 9577864345,
+    "watched_at": "2023-05-01T08:49:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt11245972",
+        "plex": {
+          "guid": "5ee71917432dd70042dcb353",
+          "slug": "scream-2022"
+        },
+        "slug": "scream-2022",
+        "tmdb": 646385,
+        "trakt": 483615
+      },
+      "year": 2022,
+      "title": "Scream"
+    }
+  },
+  {
+    "id": 9577859933,
+    "watched_at": "2023-05-01T08:43:00.000Z",
+    "action": "watch",
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt27547750",
+        "plex": {
+          "guid": "643ed4d8ad09ec142c791254",
+          "slug": "fabrice-eboue-adieu-hier-2023"
+        },
+        "slug": "fabrice-eboue-adieu-hier-2023",
+        "tmdb": 1111957,
+        "trakt": 894710
+      },
+      "year": 2023,
+      "title": "Fabrice Éboué - Adieu Hier"
+    }
+  }
+]

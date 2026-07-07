@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/models/collection_item.dart';
+import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../data/repositories/favorites_repository.dart';
 import '../../tmdb/models/person_details.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../home/detail_app_bar.dart';
 import '../home/selected_media.dart';
@@ -23,10 +25,27 @@ class PersonScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final async = ref.watch(personDetailsProvider(personId));
+    final isFav = ref.watch(isFavoriteProvider(personId));
+    final details = async.value;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Acteur'),
         leading: DetailLeadingButton(embedded: embedded),
+        actions: [
+          IconButton(
+            tooltip: isFav ? 'Retirer des favoris' : 'Ajouter aux favoris',
+            icon: Icon(isFav ? Icons.star : Icons.star_border,
+                color: isFav ? Colors.amber : null),
+            // Activable seulement une fois les infos (nom/photo) chargées.
+            onPressed: details == null
+                ? null
+                : () => ref.read(favoritesProvider.notifier).toggle(
+                      personId: personId,
+                      name: details.name,
+                      profilePath: details.profilePath,
+                    ),
+          ),
+        ],
       ),
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -53,9 +72,19 @@ class _PersonBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final collection = ref.watch(collectionStreamProvider).value ?? [];
-    final byKey = <String, CollectionItem>{
-      for (final c in collection) '${c.mediaType}_${c.tmdbId}': c,
-    };
+    final history = ref.watch(historyStreamProvider).value ?? [];
+    // Statut par œuvre (clé TMDB) : possédé (support) / vu / note.
+    final byKey = <String, _MediaStatus>{};
+    for (final c in collection) {
+      final s = byKey[c.film.mediaKey] ??= _MediaStatus();
+      s.medium ??= c.medium;
+    }
+    for (final v in history) {
+      // L'historique est trié du plus récent au plus ancien → 1re note = la dernière.
+      final s = byKey[v.film.mediaKey] ??= _MediaStatus();
+      s.watched = true;
+      s.rating ??= v.rating;
+    }
     final age = person.ageAt(DateTime.now());
 
     // Regroupe la filmographie par catégorie (le tri par année est déjà appliqué).
@@ -100,7 +129,7 @@ class _PersonBody extends ConsumerWidget {
             final f = items[i];
             return _FilmographyCard(
               item: f,
-              collectionItem: byKey['${f.mediaType}_${f.tmdbId}'],
+              status: byKey['${f.mediaType}:${f.tmdbId}'],
             );
           },
         ),
@@ -109,9 +138,9 @@ class _PersonBody extends ConsumerWidget {
 
     // En tête : les œuvres de cet acteur présentes dans votre collection.
     final inCollection = person.filmography
-        .where((f) => byKey.containsKey('${f.mediaType}_${f.tmdbId}'))
+        .where((f) => byKey.containsKey('${f.mediaType}:${f.tmdbId}'))
         .toList();
-    addSection('De ta collection', inCollection);
+    addSection('Dans ta bibliothèque', inCollection);
 
     // Puis les sections par type.
     for (final cat in order) {
@@ -224,19 +253,28 @@ class _BiographyState extends State<_Biography> {
   }
 }
 
+/// Statut d'une œuvre vis-à-vis de la bibliothèque de l'utilisateur.
+class _MediaStatus {
+  Medium? medium; // support possédé (null si non possédé)
+  bool watched = false;
+  double? rating; // note du dernier visionnage
+
+  bool get owned => medium != null;
+}
+
 /// Carte d'un film de la filmographie (format grille d'affiches), avec repères
-/// possédé / vu / note s'il est dans la collection.
+/// possédé / vu / note s'il est dans la bibliothèque.
 class _FilmographyCard extends ConsumerWidget {
-  const _FilmographyCard({required this.item, required this.collectionItem});
+  const _FilmographyCard({required this.item, required this.status});
 
   final FilmographyItem item;
-  final CollectionItem? collectionItem;
+  final _MediaStatus? status;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final c = collectionItem;
+    final c = status;
     // Met en valeur les films possédés ou vus.
     final highlight = c != null && (c.owned || c.watched);
     return InkWell(
@@ -277,11 +315,11 @@ class _FilmographyCard extends ConsumerWidget {
                     child: PosterImage(posterPath: item.posterPath),
                   ),
                 ),
-                if (c != null && c.owned)
+                if (c != null && c.medium != null)
                   Positioned(
                     top: 6,
                     left: 6,
-                    child: _badge(Icons.inventory_2, null),
+                    child: MediumBadge(medium: c.medium!),
                   ),
                 if (c != null && c.watched)
                   Positioned(
@@ -289,12 +327,11 @@ class _FilmographyCard extends ConsumerWidget {
                     right: 6,
                     child: _badge(Icons.visibility, 'Vu'),
                   ),
-                if (c?.userRating != null)
+                if (c?.rating != null)
                   Positioned(
                     bottom: 6,
                     left: 6,
-                    child:
-                        _badge(Icons.star, c!.userRating!.toStringAsFixed(1)),
+                    child: _badge(Icons.star, c!.rating!.toStringAsFixed(1)),
                   ),
               ],
               ),

@@ -1,0 +1,1256 @@
+[
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092722",
+        "plex": {
+          "guid": "5d77689a23d5a3001f4eeb13",
+          "slug": "sweets-from-a-stranger"
+        },
+        "slug": "sweets-from-a-stranger-1987",
+        "tmdb": 57115,
+        "trakt": 40776
+      },
+      "year": 1987,
+      "title": "Sweets from a Stranger"
+    },
+    "rank": 1,
+    "id": 1176102424,
+    "listed_at": "2025-02-20T22:41:22.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0095834",
+        "plex": {
+          "guid": "5d77685833f255001e8536e1",
+          "slug": "obsession-a-taste-for-fear"
+        },
+        "slug": "obsession-a-taste-for-fear-1988",
+        "tmdb": 29189,
+        "trakt": 18323
+      },
+      "year": 1988,
+      "title": "Obsession: A Taste for Fear"
+    },
+    "rank": 2,
+    "id": 1176102502,
+    "listed_at": "2025-02-20T22:41:36.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0085983",
+        "plex": {
+          "guid": "5d77692196b655001fdcb067",
+          "slug": "dagger-eyes"
+        },
+        "slug": "dagger-eyes-1983",
+        "tmdb": 108074,
+        "trakt": 76575
+      },
+      "year": 1983,
+      "title": "Dagger Eyes"
+    },
+    "rank": 3,
+    "id": 1176102575,
+    "listed_at": "2025-02-20T22:41:43.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0061994",
+        "plex": {
+          "guid": "5d776cf747dd6e001f6ef2fd",
+          "slug": "death-laid-an-egg"
+        },
+        "slug": "death-laid-an-egg-1968",
+        "tmdb": 126243,
+        "trakt": 86681
+      },
+      "year": 1968,
+      "title": "Death Laid an Egg"
+    },
+    "rank": 4,
+    "id": 1176102578,
+    "listed_at": "2025-02-20T22:41:48.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0071167",
+        "plex": {
+          "guid": "5d776905594b2b001e69afa4",
+          "slug": "the-killer-reserved-nine-seats"
+        },
+        "slug": "the-killer-reserved-nine-seats-1974",
+        "tmdb": 99438,
+        "trakt": 71703
+      },
+      "year": 1974,
+      "title": "The Killer Reserved Nine Seats"
+    },
+    "rank": 5,
+    "id": 1176102594,
+    "listed_at": "2025-02-20T22:41:59.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0117658",
+        "plex": {
+          "guid": "5d776d1496b655001fe3ebf4",
+          "slug": "the-stendhal-syndrome"
+        },
+        "slug": "the-stendhal-syndrome-1996",
+        "tmdb": 39434,
+        "trakt": 25630
+      },
+      "year": 1996,
+      "title": "The Stendhal Syndrome"
+    },
+    "rank": 6,
+    "id": 1176102596,
+    "listed_at": "2025-02-20T22:42:03.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0080764",
+        "plex": {
+          "guid": "5d7768ab6f6af7001ee5a709",
+          "slug": "macabre-1980"
+        },
+        "slug": "macabre-1980",
+        "tmdb": 67737,
+        "trakt": 49282
+      },
+      "year": 1980,
+      "title": "Macabre"
+    },
+    "rank": 7,
+    "id": 1176102601,
+    "listed_at": "2025-02-20T22:42:07.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0086636",
+        "plex": {
+          "guid": "5d77686c33f255001e855c23",
+          "slug": "revenge-of-the-dead"
+        },
+        "slug": "revenge-of-the-dead-1983",
+        "tmdb": 38074,
+        "trakt": 24523
+      },
+      "year": 1983,
+      "title": "Revenge of the Dead"
+    },
+    "rank": 8,
+    "id": 1176102610,
+    "listed_at": "2025-02-20T22:42:12.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0063370",
+        "plex": {
+          "guid": "5d776856880197001ec9939e",
+          "slug": "naked-you-die"
+        },
+        "slug": "naked-you-die-1968",
+        "tmdb": 28064,
+        "trakt": 17408
+      },
+      "year": 1968,
+      "title": "Naked You Die"
+    },
+    "rank": 9,
+    "id": 1176102614,
+    "listed_at": "2025-02-20T22:42:16.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069064",
+        "plex": {
+          "guid": "5d7768b6431c830024c142c4",
+          "slug": "death-carries-a-cane"
+        },
+        "slug": "death-carries-a-cane-1973",
+        "tmdb": 74087,
+        "trakt": 54521
+      },
+      "year": 1973,
+      "title": "Death Carries a Cane"
+    },
+    "rank": 10,
+    "id": 1176102618,
+    "listed_at": "2025-02-20T22:42:20.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068186",
+        "plex": {
+          "guid": "5d7768b21999bc0020dce278",
+          "slug": "tropic-of-cancer"
+        },
+        "slug": "tropic-of-cancer-1972",
+        "tmdb": 71538,
+        "trakt": 52479
+      },
+      "year": 1972,
+      "title": "Tropic of Cancer"
+    },
+    "rank": 11,
+    "id": 1176102729,
+    "listed_at": "2025-02-20T22:42:26.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0074979",
+        "plex": {
+          "guid": "5d776918f617c9002015d2fe",
+          "slug": "nine-guests-for-a-crime"
+        },
+        "slug": "nine-guests-for-a-crime-1977",
+        "tmdb": 105663,
+        "trakt": 75156
+      },
+      "year": 1977,
+      "title": "Nine Guests for a Crime"
+    },
+    "rank": 12,
+    "id": 1176102738,
+    "listed_at": "2025-02-20T22:42:31.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068272",
+        "plex": {
+          "guid": "5d77691423d5a3001f4f5613",
+          "slug": "a-white-dress-for-mariale"
+        },
+        "slug": "a-white-dress-for-mariale-1972",
+        "tmdb": 104360,
+        "trakt": 74407
+      },
+      "year": 1972,
+      "title": "A White Dress for Marialé"
+    },
+    "rank": 13,
+    "id": 1176102781,
+    "listed_at": "2025-02-20T22:42:37.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0330691",
+        "plex": {
+          "guid": "5d776d137a53e9001e750280",
+          "slug": "the-card-player"
+        },
+        "slug": "the-card-player-2004",
+        "tmdb": 15483,
+        "trakt": 9411
+      },
+      "year": 2004,
+      "title": "The Card Player"
+    },
+    "rank": 14,
+    "id": 1176102837,
+    "listed_at": "2025-02-20T22:42:43.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068394",
+        "plex": {
+          "guid": "5d776857103a2d001f56e563",
+          "slug": "knife-of-ice"
+        },
+        "slug": "knife-of-ice-1972",
+        "tmdb": 28488,
+        "trakt": 17771
+      },
+      "year": 1972,
+      "title": "Knife of Ice"
+    },
+    "rank": 15,
+    "id": 1176102842,
+    "listed_at": "2025-02-20T22:42:47.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0064243",
+        "plex": {
+          "guid": "5d7768a796b655001fdbe1ae",
+          "slug": "the-sweet-body-of-deborah"
+        },
+        "slug": "the-sweet-body-of-deborah-1968",
+        "tmdb": 64628,
+        "trakt": 46678
+      },
+      "year": 1968,
+      "title": "The Sweet Body of Deborah"
+    },
+    "rank": 16,
+    "id": 1176102846,
+    "listed_at": "2025-02-20T22:42:52.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0087759",
+        "plex": {
+          "guid": "5d776d07f617c900201857ec",
+          "slug": "murder-rock-dancing-death"
+        },
+        "slug": "murder-rock-dancing-death-1984",
+        "tmdb": 40145,
+        "trakt": 26281
+      },
+      "year": 1984,
+      "title": "Murder-Rock: Dancing Death"
+    },
+    "rank": 17,
+    "id": 1176104120,
+    "listed_at": "2025-02-20T22:43:17.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092577",
+        "plex": {
+          "guid": "5d77692123d5a3001f4f60b3",
+          "slug": "arabella-black-angel"
+        },
+        "slug": "arabella-black-angel-1989",
+        "tmdb": 108101,
+        "trakt": 76592
+      },
+      "year": 1989,
+      "title": "Arabella: Black Angel"
+    },
+    "rank": 18,
+    "id": 1176104124,
+    "listed_at": "2025-02-20T22:43:23.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0088745",
+        "plex": {
+          "guid": "5d7768d8ad5437001f750de2",
+          "slug": "the-killer-is-still-among-us"
+        },
+        "slug": "the-killer-is-still-among-us-1986",
+        "tmdb": 85139,
+        "trakt": 63888
+      },
+      "year": 1986,
+      "title": "The Killer Is Still Among Us"
+    },
+    "rank": 19,
+    "id": 1176104130,
+    "listed_at": "2025-02-20T22:43:29.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078300",
+        "plex": {
+          "guid": "5d7768ed594b2b001e6987c1",
+          "slug": "the-sister-of-ursula"
+        },
+        "slug": "the-sister-of-ursula-1978",
+        "tmdb": 91256,
+        "trakt": 67714
+      },
+      "year": 1978,
+      "title": "The Sister of Ursula"
+    },
+    "rank": 20,
+    "id": 1176104132,
+    "listed_at": "2025-02-20T22:43:33.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069017",
+        "plex": {
+          "guid": "5d7768546f4521001eaa1da3",
+          "slug": "night-of-the-devils"
+        },
+        "slug": "the-night-of-the-devils-1972",
+        "tmdb": 27409,
+        "trakt": 16832
+      },
+      "year": 1972,
+      "title": "The Night of the Devils"
+    },
+    "rank": 21,
+    "id": 1176104317,
+    "listed_at": "2025-02-20T22:44:21.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067084",
+        "plex": {
+          "guid": "5d9f3568b0262f001f6eae55",
+          "slug": "the-bloodstained-butterfly"
+        },
+        "slug": "the-bloodstained-butterfly-1971",
+        "tmdb": 29482,
+        "trakt": 18558
+      },
+      "year": 1971,
+      "title": "The Bloodstained Butterfly"
+    },
+    "rank": 22,
+    "id": 1176104319,
+    "listed_at": "2025-02-20T22:44:26.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073406",
+        "plex": {
+          "guid": "5d7768c151dd69001fe106d6",
+          "slug": "the-suspicious-death-of-a-minor"
+        },
+        "slug": "the-suspicious-death-of-a-minor-1975",
+        "tmdb": 80067,
+        "trakt": 59566
+      },
+      "year": 1975,
+      "title": "The Suspicious Death of a Minor"
+    },
+    "rank": 23,
+    "id": 1176104373,
+    "listed_at": "2025-02-20T22:44:30.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0058567",
+        "plex": {
+          "guid": "5d7768562e80df001ebe1bc8",
+          "slug": "blood-and-black-lace"
+        },
+        "slug": "blood-and-black-lace-1964",
+        "tmdb": 28055,
+        "trakt": 17400
+      },
+      "year": 1964,
+      "title": "Blood and Black Lace"
+    },
+    "rank": 24,
+    "id": 1176104377,
+    "listed_at": "2025-02-20T22:44:35.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0155360",
+        "plex": {
+          "guid": "5d776918f617c9002015d302",
+          "slug": "crazy-desires-of-a-murderer"
+        },
+        "slug": "crazy-desires-of-a-murderer-1977",
+        "tmdb": 105659,
+        "trakt": 75152
+      },
+      "year": 1977,
+      "title": "Crazy Desires of a Murderer"
+    },
+    "rank": 25,
+    "id": 1176104387,
+    "listed_at": "2025-02-20T22:44:42.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067396",
+        "plex": {
+          "guid": "5d776917fb0d55001f5215f8",
+          "slug": "the-murder-mansion"
+        },
+        "slug": "murder-mansion-1972",
+        "tmdb": 105110,
+        "trakt": 74871
+      },
+      "year": 1972,
+      "title": "Murder Mansion"
+    },
+    "rank": 26,
+    "id": 1176104445,
+    "listed_at": "2025-02-20T22:44:47.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073327",
+        "plex": {
+          "guid": "5d7768fb594b2b001e69a0d9",
+          "slug": "autopsy-1975"
+        },
+        "slug": "autopsy-1975",
+        "tmdb": 96167,
+        "trakt": 70140
+      },
+      "year": 1975,
+      "title": "Autopsy"
+    },
+    "rank": 27,
+    "id": 1176104446,
+    "listed_at": "2025-02-20T22:44:51.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0074287",
+        "plex": {
+          "guid": "5d77689a47dd6e001f6bc25c",
+          "slug": "the-house-with-laughing-windows"
+        },
+        "slug": "the-house-with-laughing-windows-1976",
+        "tmdb": 57447,
+        "trakt": 41021
+      },
+      "year": 1976,
+      "title": "The House with Laughing Windows"
+    },
+    "rank": 28,
+    "id": 1176104453,
+    "listed_at": "2025-02-20T22:44:58.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0075814",
+        "plex": {
+          "guid": "5d7768ff7a53e9001e6deb8c",
+          "slug": "the-girl-in-room-2a"
+        },
+        "slug": "the-girl-in-room-2a-1974",
+        "tmdb": 97527,
+        "trakt": 70830
+      },
+      "year": 1974,
+      "title": "The Girl in Room 2A"
+    },
+    "rank": 29,
+    "id": 1176104559,
+    "listed_at": "2025-02-20T22:45:04.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069850",
+        "plex": {
+          "guid": "5d776cf1ad5437001f7c94fc",
+          "slug": "the-french-sex-murders"
+        },
+        "slug": "the-french-sex-murders-1972",
+        "tmdb": 39910,
+        "trakt": 26067
+      },
+      "year": 1972,
+      "title": "The French Sex Murders"
+    },
+    "rank": 30,
+    "id": 1176104564,
+    "listed_at": "2025-02-20T22:45:07.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067434",
+        "plex": {
+          "guid": "5d776cf896b655001fe3bd4e",
+          "slug": "my-dear-killer"
+        },
+        "slug": "my-dear-killer-1972",
+        "tmdb": 69579,
+        "trakt": 50846
+      },
+      "year": 1972,
+      "title": "My Dear Killer"
+    },
+    "rank": 31,
+    "id": 1176104571,
+    "listed_at": "2025-02-20T22:45:15.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0081286",
+        "plex": {
+          "guid": "5d77688b1999bc0020dc8b72",
+          "slug": "murder-syndrome"
+        },
+        "slug": "murder-obsession-1981",
+        "tmdb": 50425,
+        "trakt": 35252
+      },
+      "year": 1981,
+      "title": "Murder Obsession"
+    },
+    "rank": 32,
+    "id": 1176104678,
+    "listed_at": "2025-02-20T22:45:22.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073554",
+        "plex": {
+          "guid": "5d776917f617c9002015d23d",
+          "slug": "the-police-are-blundering-in-the-dark"
+        },
+        "slug": "the-police-are-blundering-in-the-dark-1972",
+        "tmdb": 105429,
+        "trakt": 75029
+      },
+      "year": 1972,
+      "title": "The Police Are Blundering in the Dark"
+    },
+    "rank": 33,
+    "id": 1176104692,
+    "listed_at": "2025-02-20T22:45:30.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069734",
+        "plex": {
+          "guid": "5d77685beb5d26001f1e7b15",
+          "slug": "the-killer-is-one-of-13"
+        },
+        "slug": "the-killer-is-one-of-thirteen-1973",
+        "tmdb": 30422,
+        "trakt": 19291
+      },
+      "year": 1973,
+      "title": "The Killer Is One of Thirteen"
+    },
+    "rank": 34,
+    "id": 1176104825,
+    "listed_at": "2025-02-20T22:45:46.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0076885",
+        "plex": {
+          "guid": "5d7768577a53e9001e6cdb0d",
+          "slug": "trauma-1978"
+        },
+        "slug": "trauma-1978",
+        "tmdb": 28487,
+        "trakt": 17770
+      },
+      "year": 1978,
+      "title": "Trauma"
+    },
+    "rank": 35,
+    "id": 1176104883,
+    "listed_at": "2025-02-20T22:45:54.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0072007",
+        "plex": {
+          "guid": "5d7768ae47dd6e001f6bd6b3",
+          "slug": "what-have-they-done-to-your-daughters"
+        },
+        "slug": "what-have-they-done-to-your-daughters-1974",
+        "tmdb": 69578,
+        "trakt": 50845
+      },
+      "year": 1974,
+      "title": "What Have They Done to Your Daughters?"
+    },
+    "rank": 36,
+    "id": 1176104935,
+    "listed_at": "2025-02-20T22:45:59.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078916",
+        "plex": {
+          "guid": "5d77682e151a60001f24c5e3",
+          "slug": "beyond-the-darkness"
+        },
+        "slug": "beyond-the-darkness-1979",
+        "tmdb": 5425,
+        "trakt": 3079
+      },
+      "year": 1979,
+      "title": "Beyond the Darkness"
+    },
+    "rank": 37,
+    "id": 1176105099,
+    "listed_at": "2025-02-20T22:46:23.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069019",
+        "plex": {
+          "guid": "5d776888ebdf2200209c1ab2",
+          "slug": "dont-torture-a-duckling"
+        },
+        "slug": "don-t-torture-a-duckling-1972",
+        "tmdb": 49361,
+        "trakt": 34367
+      },
+      "year": 1972,
+      "title": "Don't Torture a Duckling"
+    },
+    "rank": 38,
+    "id": 1176105517,
+    "listed_at": "2025-02-20T22:46:32.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0066924",
+        "plex": {
+          "guid": "5d776d12fb0d55001f5967db",
+          "slug": "the-case-of-the-scorpions-tail"
+        },
+        "slug": "the-case-of-the-scorpion-s-tail-1971",
+        "tmdb": 16825,
+        "trakt": 10298
+      },
+      "year": 1971,
+      "title": "The Case of the Scorpion's Tail"
+    },
+    "rank": 39,
+    "id": 1176105526,
+    "listed_at": "2025-02-20T22:46:38.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0072196",
+        "plex": {
+          "guid": "5d776cf6ad5437001f7c9865",
+          "slug": "spasmo"
+        },
+        "slug": "spasmo-1974",
+        "tmdb": 94069,
+        "trakt": 69104
+      },
+      "year": 1974,
+      "title": "Spasmo"
+    },
+    "rank": 40,
+    "id": 1176105585,
+    "listed_at": "2025-02-20T22:46:43.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073582",
+        "plex": {
+          "guid": "5d776d1451dd69001fe3fc5d",
+          "slug": "deep-red"
+        },
+        "slug": "deep-red-1975",
+        "tmdb": 20126,
+        "trakt": 12352
+      },
+      "year": 1975,
+      "title": "Deep Red"
+    },
+    "rank": 41,
+    "id": 1176105588,
+    "listed_at": "2025-02-20T22:46:48.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0078288",
+        "plex": {
+          "guid": "5d776904ad5437001f755bf6",
+          "slug": "the-bloodstained-shadow"
+        },
+        "slug": "the-bloodstained-shadow-1978",
+        "tmdb": 99261,
+        "trakt": 71610
+      },
+      "year": 1978,
+      "title": "The Bloodstained Shadow"
+    },
+    "rank": 42,
+    "id": 1176105595,
+    "listed_at": "2025-02-20T22:46:53.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0092516",
+        "plex": {
+          "guid": "5d776873fb0d55001f510904",
+          "slug": "aenigma"
+        },
+        "slug": "aenigma-1987",
+        "tmdb": 40461,
+        "trakt": 26575
+      },
+      "year": 1987,
+      "title": "Ænigma"
+    },
+    "rank": 43,
+    "id": 1176105701,
+    "listed_at": "2025-02-20T22:46:59.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0101493",
+        "plex": {
+          "guid": "5d77685a961905001eb99d61",
+          "slug": "body-puzzle"
+        },
+        "slug": "body-puzzle-1992",
+        "tmdb": 29954,
+        "trakt": 18959
+      },
+      "year": 1992,
+      "title": "Body Puzzle"
+    },
+    "rank": 44,
+    "id": 1176105703,
+    "listed_at": "2025-02-20T22:47:03.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068206",
+        "plex": {
+          "guid": "5d7768a67e5fa10020bf3509",
+          "slug": "amuck"
+        },
+        "slug": "amuck-1972",
+        "tmdb": 64528,
+        "trakt": 46600
+      },
+      "year": 1972,
+      "title": "Amuck!"
+    },
+    "rank": 45,
+    "id": 1176105706,
+    "listed_at": "2025-02-20T22:47:07.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067489",
+        "plex": {
+          "guid": "5d77695e7a53e9001e6e424f",
+          "slug": "what-the-peeper-saw"
+        },
+        "slug": "what-the-peeper-saw-1972",
+        "tmdb": 112355,
+        "trakt": 78995
+      },
+      "year": 1972,
+      "title": "What the Peeper Saw"
+    },
+    "rank": 46,
+    "id": 1176105708,
+    "listed_at": "2025-02-20T22:47:14.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0076068",
+        "plex": {
+          "guid": "5d776cf07a53e9001e74d192",
+          "slug": "watch-me-when-i-kill"
+        },
+        "slug": "watch-me-when-i-kill-1977",
+        "tmdb": 40261,
+        "trakt": 26385
+      },
+      "year": 1977,
+      "title": "Watch Me When I Kill"
+    },
+    "rank": 47,
+    "id": 1176105714,
+    "listed_at": "2025-02-20T22:47:18.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0069390",
+        "plex": {
+          "guid": "5d776d1696b655001fe3f081",
+          "slug": "theyre-coming-to-get-you-1972"
+        },
+        "slug": "all-the-colours-of-the-dark-1972",
+        "tmdb": 30901,
+        "trakt": 19668
+      },
+      "year": 1972,
+      "title": "All the Colours of the Dark"
+    },
+    "rank": 48,
+    "id": 1176105770,
+    "listed_at": "2025-02-20T22:47:28.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068971",
+        "plex": {
+          "guid": "5d7768ed51dd69001fe127e7",
+          "slug": "death-walks-at-midnight"
+        },
+        "slug": "death-walks-at-midnight-1972",
+        "tmdb": 91255,
+        "trakt": 67713
+      },
+      "year": 1972,
+      "title": "Death Walks at Midnight"
+    },
+    "rank": 49,
+    "id": 1176105776,
+    "listed_at": "2025-02-20T22:47:33.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0067446",
+        "plex": {
+          "guid": "5d776d0bfb0d55001f59586a",
+          "slug": "death-walks-on-high-heels"
+        },
+        "slug": "death-walks-on-high-heels-1971",
+        "tmdb": 77029,
+        "trakt": 56943
+      },
+      "year": 1971,
+      "title": "Death Walks on High Heels"
+    },
+    "rank": 50,
+    "id": 1176105780,
+    "listed_at": "2025-02-20T22:47:37.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0220827",
+        "plex": {
+          "guid": "5d776d167a53e9001e7507ec",
+          "slug": "sleepless-2001"
+        },
+        "slug": "sleepless-2001",
+        "tmdb": 39436,
+        "trakt": 25632
+      },
+      "year": 2001,
+      "title": "Sleepless"
+    },
+    "rank": 51,
+    "id": 1176105786,
+    "listed_at": "2025-02-20T22:47:40.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0073470",
+        "plex": {
+          "guid": "5d776d13ad5437001f7cc5d2",
+          "slug": "strip-nude-for-your-killer"
+        },
+        "slug": "strip-nude-for-your-killer-1975",
+        "tmdb": 11226,
+        "trakt": 6352
+      },
+      "year": 1975,
+      "title": "Strip Nude for Your Killer"
+    },
+    "rank": 52,
+    "id": 1176106301,
+    "listed_at": "2025-02-20T22:48:06.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0059095",
+        "plex": {
+          "guid": "5d776d12ad5437001f7cc420",
+          "slug": "the-10th-victim"
+        },
+        "slug": "the-10th-victim-1965",
+        "tmdb": 65632,
+        "trakt": 47496
+      },
+      "year": 1965,
+      "title": "The 10th Victim"
+    },
+    "rank": 53,
+    "id": 1176108846,
+    "listed_at": "2025-02-20T22:49:11.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0084298",
+        "plex": {
+          "guid": "5d77685d7228e5001f1e30d9",
+          "slug": "manhattan-baby"
+        },
+        "slug": "manhattan-baby-1982",
+        "tmdb": 30875,
+        "trakt": 19643
+      },
+      "year": 1982,
+      "title": "Manhattan Baby"
+    },
+    "rank": 54,
+    "id": 1176108866,
+    "listed_at": "2025-02-20T22:49:27.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0066412",
+        "plex": {
+          "guid": "5d776d16ad5437001f7ccc3e",
+          "slug": "the-strange-vice-of-mrs-wardh"
+        },
+        "slug": "the-strange-vice-of-mrs-wardh-1971",
+        "tmdb": 30903,
+        "trakt": 19670
+      },
+      "year": 1971,
+      "title": "The Strange Vice of Mrs Wardh"
+    },
+    "rank": 55,
+    "id": 1176108875,
+    "listed_at": "2025-02-20T22:49:37.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt10935560",
+        "plex": {
+          "guid": "5e16598ccd0850003b781c2c",
+          "slug": "dark-glasses"
+        },
+        "slug": "dark-glasses-2022",
+        "tmdb": 630720,
+        "trakt": 475089
+      },
+      "year": 2022,
+      "title": "Dark Glasses"
+    },
+    "rank": 56,
+    "id": 1176108878,
+    "listed_at": "2025-02-20T22:49:41.000Z",
+    "notes": null,
+    "my_rating": null
+  },
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0093677",
+        "plex": {
+          "guid": "5d77684585719b001f3a6b5c",
+          "slug": "opera"
+        },
+        "slug": "opera-1987",
+        "tmdb": 20115,
+        "trakt": 12345
+      },
+      "year": 1987,
+      "title": "Opera"
+    },
+    "rank": 57,
+    "id": 1176109437,
+    "listed_at": "2025-02-20T22:51:07.000Z",
+    "notes": null,
+    "my_rating": null
+  }
+]

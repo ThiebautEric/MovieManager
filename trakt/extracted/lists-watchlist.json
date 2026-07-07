@@ -1,0 +1,24 @@
+[
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0068206",
+        "plex": {
+          "guid": "5d7768a67e5fa10020bf3509",
+          "slug": "amuck"
+        },
+        "slug": "amuck-1972",
+        "tmdb": 64528,
+        "trakt": 46600
+      },
+      "year": 1972,
+      "title": "Amuck!"
+    },
+    "rank": 1,
+    "id": 1176109319,
+    "listed_at": "2025-02-20T22:50:57.000Z",
+    "notes": null,
+    "my_rating": null
+  }
+]

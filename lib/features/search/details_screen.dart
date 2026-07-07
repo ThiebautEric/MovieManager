@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../data/models/collection_item.dart';
+import '../../data/models/collection_entry.dart';
+import '../../data/models/film.dart';
+import '../../data/models/film_season.dart';
+import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_details.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../home/detail_app_bar.dart';
 import '../home/selected_media.dart';
 
-/// Fiche détaillée d'un film/série TMDB (infos + contrôles de collection).
+/// Fiche détaillée d'un film/série TMDB (infos + collection + historique).
 class DetailsScreen extends ConsumerWidget {
   const DetailsScreen({
     super.key,
@@ -22,18 +26,13 @@ class DetailsScreen extends ConsumerWidget {
   final String mediaType;
   final int tmdbId;
 
-  /// Vrai quand la fiche est affichée dans la zone droite (grand écran) plutôt
-  /// que poussée en plein écran : la fermeture vide alors la sélection.
+  /// Vrai quand la fiche est affichée dans la zone droite (grand écran).
   final bool embedded;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final detailsAsync =
         ref.watch(mediaDetailsProvider((id: tmdbId, type: mediaType)));
-    final collection = ref.watch(collectionStreamProvider).value ?? [];
-    final existing = collection
-        .where((e) => e.tmdbId == tmdbId && e.mediaType == mediaType)
-        .firstOrNull;
 
     return Scaffold(
       appBar: AppBar(
@@ -43,38 +42,37 @@ class DetailsScreen extends ConsumerWidget {
       body: detailsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Erreur : $e')),
-        data: (d) => _DetailsBody(details: d, existing: existing),
+        data: (d) => _DetailsBody(details: d),
       ),
     );
   }
 }
 
-class _DetailsBody extends ConsumerWidget {
-  const _DetailsBody({required this.details, required this.existing});
+class _DetailsBody extends ConsumerStatefulWidget {
+  const _DetailsBody({required this.details});
 
   final MediaDetails details;
-  final CollectionItem? existing;
 
-  Future<void> _addToCollection(BuildContext context, WidgetRef ref) async {
-    try {
-      await ref
-          .read(collectionRepositoryProvider)
-          .upsert(CollectionItem.fromDetails(details));
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Ajouté à votre collection.')),
-        );
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Erreur : $e')));
-      }
-    }
+  @override
+  ConsumerState<_DetailsBody> createState() => _DetailsBodyState();
+}
+
+class _DetailsBodyState extends ConsumerState<_DetailsBody> {
+  @override
+  void initState() {
+    super.initState();
+    // Backfill : si ce titre est déjà dans la bibliothèque mais sans métadonnées
+    // récentes (pays/casting), on les complète depuis la fiche TMDB fraîche.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(libraryRepositoryProvider)
+          .backfillFilm(Film.fromDetails(widget.details));
+    });
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final details = widget.details;
     final theme = Theme.of(context);
     final isMovie = details.mediaType == 'movie';
     final showOriginal = details.originalTitle.isNotEmpty &&
@@ -91,7 +89,8 @@ class _DetailsBody extends ConsumerWidget {
               height: 180,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: PosterImage(posterPath: details.posterPath, size: 'w342'),
+                child:
+                    PosterImage(posterPath: details.posterPath, size: 'w342'),
               ),
             ),
             const SizedBox(width: 16),
@@ -125,10 +124,37 @@ class _DetailsBody extends ConsumerWidget {
                   ),
                   if (details.directors.isNotEmpty) ...[
                     const SizedBox(height: 8),
-                    Text(
-                      '${isMovie ? 'Réalisation' : 'Création'} : '
-                      '${details.directors.join(', ')}',
-                      style: theme.textTheme.bodyMedium,
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 2,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text('${isMovie ? 'Réalisation' : 'Création'} :',
+                            style: theme.textTheme.bodyMedium),
+                        for (final d in details.directors)
+                          InkWell(
+                            onTap: d.id == 0
+                                ? null
+                                : () => openPerson(
+                                      context,
+                                      ref,
+                                      id: d.id,
+                                      name: d.name,
+                                      profilePath: d.profilePath,
+                                    ),
+                            child: Text(
+                              d.name,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: d.id == 0
+                                    ? null
+                                    : theme.colorScheme.primary,
+                                decoration: d.id == 0
+                                    ? null
+                                    : TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   ],
                   const SizedBox(height: 12),
@@ -148,16 +174,7 @@ class _DetailsBody extends ConsumerWidget {
           ],
         ),
         const SizedBox(height: 16),
-        // Contrôles de collection : édition auto-sauvegardée si déjà présent,
-        // sinon bouton d'ajout.
-        if (existing != null)
-          _CollectionControls(item: existing!)
-        else
-          FilledButton.icon(
-            onPressed: () => _addToCollection(context, ref),
-            icon: const Icon(Icons.add),
-            label: const Text('Ajouter à ma collection'),
-          ),
+        _LibraryControls(details: details),
         if (details.overview.isNotEmpty) ...[
           const SizedBox(height: 24),
           Text('Synopsis', style: theme.textTheme.titleMedium),
@@ -239,104 +256,310 @@ class _DetailsBody extends ConsumerWidget {
   }
 }
 
-/// Contrôles éditables d'un film présent dans la collection : possédé (+ date
-/// d'acquisition), dates de visionnage (multiples), note. Tout est **enregistré
-/// automatiquement**. + suppression.
-class _CollectionControls extends ConsumerStatefulWidget {
-  const _CollectionControls({required this.item});
+String _fmtDate(DateTime d) =>
+    '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
 
-  final CollectionItem item;
+/// Deux sections INDÉPENDANTES : la collection (possessions) et l'historique
+/// (visionnages). Ajout/suppression de chacune sans effet sur l'autre. Pour les
+/// séries, on peut viser l'œuvre entière ou une saison précise.
+class _LibraryControls extends ConsumerWidget {
+  const _LibraryControls({required this.details});
+
+  final MediaDetails details;
+
+  bool get _isSeries => details.mediaType == 'tv' && details.seasons.isNotEmpty;
+
+  Film get _film => Film.fromDetails(details);
+
+  FilmSeason? _season(int? n) {
+    if (n == null) return null;
+    for (final s in details.seasons) {
+      if (s.seasonNumber == n) return FilmSeason.fromInfo(s);
+    }
+    return FilmSeason(seasonNumber: n);
+  }
+
+  String _scopeLabel(int? season) =>
+      season == null ? (details.mediaType == 'movie' ? 'Film' : 'Série entière') : 'Saison $season';
 
   @override
-  ConsumerState<_CollectionControls> createState() =>
-      _CollectionControlsState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final repo = ref.read(libraryRepositoryProvider);
+    final key = '${details.mediaType}:${details.tmdbId}';
+    final collection = (ref.watch(collectionStreamProvider).value ?? [])
+        .where((c) => c.film.mediaKey == key)
+        .toList();
+    final history = (ref.watch(historyStreamProvider).value ?? [])
+        .where((h) => h.film.mediaKey == key)
+        .toList();
 
-class _CollectionControlsState extends ConsumerState<_CollectionControls> {
-  late bool _owned = widget.item.owned;
-  late DateTime? _ownedAt = widget.item.ownedAt;
-  late double _rating = widget.item.userRating ?? 0;
-  late final List<DateTime> _watchDates = [...widget.item.watchDates];
+    // Films : collection + historique sur l'œuvre entière.
+    if (!_isSeries) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _CollectionSection(
+            entries: collection,
+            isSeries: false,
+            scopeLabel: _scopeLabel,
+            onAdd: () => _addCollection(context, repo, season: null),
+            onRemove: (id) => _confirmRemoveCollection(context, repo, id),
+          ),
+          const SizedBox(height: 12),
+          _HistorySection(
+            entries: history,
+            isSeries: false,
+            scopeLabel: _scopeLabel,
+            onAdd: () => _addHistory(context, repo, season: null),
+            onEdit: (e) => _editHistory(context, repo, e),
+            onRemove: (id) => _confirmRemoveHistory(context, repo, id),
+          ),
+        ],
+      );
+    }
 
-  late final CollectionRepository _repo =
-      ref.read(collectionRepositoryProvider);
+    // Séries : suivi PAR SAISON (la série entière n'est jamais ajoutable).
+    final collBySeason = <int, List<CollectionView>>{};
+    for (final c in collection) {
+      if (c.seasonNumber != null) {
+        (collBySeason[c.seasonNumber!] ??= []).add(c);
+      }
+    }
+    final histBySeason = <int, List<HistoryView>>{};
+    for (final h in history) {
+      if (h.seasonNumber != null) {
+        (histBySeason[h.seasonNumber!] ??= []).add(h);
+      }
+    }
 
-  static String _fmt(DateTime d) =>
-      '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
-
-  Future<DateTime?> _pickDate({DateTime? initial}) {
-    final now = DateTime.now();
-    return showDatePicker(
-      context: context,
-      initialDate: initial ?? now,
-      firstDate: DateTime(1900),
-      lastDate: now,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Text('Saisons', style: theme.textTheme.titleMedium),
+        ),
+        Text(
+          'Suis cette série saison par saison : possession et visionnages se '
+          'gèrent pour chaque saison.',
+          style:
+              theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
+        ),
+        const SizedBox(height: 8),
+        for (final s in details.seasons)
+          _seasonTile(
+            context,
+            repo,
+            s,
+            collBySeason[s.seasonNumber] ?? const [],
+            histBySeason[s.seasonNumber] ?? const [],
+          ),
+      ],
     );
   }
 
-  Future<void> _save() async {
-    try {
-      await _repo.update(widget.item.copyWith(
-        owned: _owned,
-        ownedAt: _ownedAt,
-        clearOwnedAt: !_owned || _ownedAt == null,
-        userRating: _rating > 0 ? _rating : null,
-        clearRating: _rating == 0,
-        watchDates: List.of(_watchDates),
-      ));
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Erreur : $e')));
-      }
-    }
-  }
+  Widget _seasonTile(
+    BuildContext context,
+    LibraryRepository repo,
+    SeasonInfo info,
+    List<CollectionView> coll,
+    List<HistoryView> hist,
+  ) {
+    final theme = Theme.of(context);
+    final title =
+        info.name.isNotEmpty ? info.name : 'Saison ${info.seasonNumber}';
+    final meta = [
+      if (info.episodeCount > 0) '${info.episodeCount} épisodes',
+      if (info.year != null) '${info.year}',
+    ].join(' · ');
+    final summary = (coll.isEmpty && hist.isEmpty)
+        ? 'Non suivie'
+        : '${coll.length} support(s) · ${hist.length} visionnage(s)';
 
-  Future<void> _addWatchDate() async {
-    final picked = await _pickDate();
-    if (picked == null) return;
-    setState(() => _watchDates.add(picked));
-    _save();
-  }
-
-  Future<void> _editOwnedDate() async {
-    final picked = await _pickDate(initial: _ownedAt);
-    if (picked == null) return;
-    setState(() => _ownedAt = picked);
-    _save();
-  }
-
-  Future<void> _delete() async {
-    if (widget.item.id == null) return;
-    final confirm = await showDialog<bool>(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Supprimer ?'),
-        content:
-            Text('Retirer « ${widget.item.title} » de votre collection ?'),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Annuler')),
-          FilledButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('Supprimer')),
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+        leading: SizedBox(
+          width: 46,
+          height: 69,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: PosterImage(posterPath: info.posterPath, size: 'w185'),
+          ),
+        ),
+        title: Text(title, style: theme.textTheme.titleSmall),
+        subtitle: Text(
+          [if (meta.isNotEmpty) meta, summary].join('\n'),
+          style: theme.textTheme.bodySmall,
+        ),
+        children: [
+          _CollectionSection(
+            entries: coll,
+            isSeries: true,
+            scopeLabel: _scopeLabel,
+            onAdd: () =>
+                _addCollection(context, repo, season: info.seasonNumber),
+            onRemove: (id) => _confirmRemoveCollection(context, repo, id),
+          ),
+          const SizedBox(height: 8),
+          _HistorySection(
+            entries: hist,
+            isSeries: true,
+            scopeLabel: _scopeLabel,
+            onAdd: () => _addHistory(context, repo, season: info.seasonNumber),
+            onEdit: (e) => _editHistory(context, repo, e),
+            onRemove: (id) => _confirmRemoveHistory(context, repo, id),
+          ),
         ],
       ),
     );
-    if (confirm != true) return;
+  }
+
+  Future<void> _addCollection(BuildContext context, LibraryRepository repo,
+      {required int? season}) async {
+    final res = await showDialog<_CollChoice>(
+      context: context,
+      builder: (_) => const _AddCollectionDialog(),
+    );
+    if (res == null) return;
     try {
-      await _repo.delete(widget.item.id!);
-      // Ferme la fiche : dépile (grand écran) et pop la route (mobile).
-      popDetail(ref);
-      if (mounted) Navigator.of(context).maybePop();
+      await repo.addToCollection(
+        _film,
+        season: _season(season),
+        medium: res.medium,
+        addedAt: res.date,
+      );
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Erreur : $e')));
-      }
+      if (context.mounted) _toast(context, 'Erreur : $e');
     }
   }
+
+  Future<void> _addHistory(BuildContext context, LibraryRepository repo,
+      {required int? season}) async {
+    final res = await showDialog<_HistChoice>(
+      context: context,
+      builder: (_) => const _AddHistoryDialog(),
+    );
+    if (res == null) return;
+    try {
+      await repo.addToHistory(
+        _film,
+        season: _season(season),
+        watchedAt: res.date,
+        rating: res.rating,
+        comment: res.comment,
+      );
+    } catch (e) {
+      if (context.mounted) _toast(context, 'Erreur : $e');
+    }
+  }
+
+  Future<void> _editHistory(
+      BuildContext context, LibraryRepository repo, HistoryView e) async {
+    final res = await showDialog<_HistChoice>(
+      context: context,
+      builder: (_) => _AddHistoryDialog(
+        initialDate: e.watchedAt,
+        initialRating: e.rating,
+        initialComment: e.comment,
+        title: 'Modifier le visionnage',
+      ),
+    );
+    if (res == null || e.id == null) return;
+    try {
+      await repo.updateHistory(e.id!,
+          watchedAt: res.date, rating: res.rating, comment: res.comment);
+    } catch (err) {
+      if (context.mounted) _toast(context, 'Erreur : $err');
+    }
+  }
+
+  Future<void> _confirmRemoveCollection(
+      BuildContext context, LibraryRepository repo, String id) async {
+    final ok = await _confirm(
+      context,
+      title: 'Retirer de la collection ?',
+      body:
+          'Cette possession est retirée de ta collection. Ton historique de visionnage n\'est pas affecté.',
+      action: 'Retirer',
+    );
+    if (!ok) return;
+    try {
+      await repo.removeFromCollection(id);
+    } catch (e) {
+      if (context.mounted) _toast(context, 'Erreur : $e');
+    }
+  }
+
+  Future<void> _confirmRemoveHistory(
+      BuildContext context, LibraryRepository repo, String id) async {
+    final ok = await _confirm(
+      context,
+      title: 'Supprimer ce visionnage ?',
+      body: 'Cette séance est définitivement supprimée de l\'historique. '
+          'Action irréversible.',
+      action: 'Supprimer',
+    );
+    if (!ok) return;
+    try {
+      await repo.removeFromHistory(id);
+    } catch (e) {
+      if (context.mounted) _toast(context, 'Erreur : $e');
+    }
+  }
+}
+
+void _toast(BuildContext context, String msg) {
+  if (context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  }
+}
+
+Future<bool> _confirm(
+  BuildContext context, {
+  required String title,
+  required String body,
+  required String action,
+}) async {
+  final res = await showDialog<bool>(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: Text(title),
+      content: Text(body),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Annuler')),
+        FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(action)),
+      ],
+    ),
+  );
+  return res == true;
+}
+
+// ---------------------------------------------------------------------------
+// Section Collection
+// ---------------------------------------------------------------------------
+class _CollectionSection extends StatelessWidget {
+  const _CollectionSection({
+    required this.entries,
+    required this.isSeries,
+    required this.scopeLabel,
+    required this.onAdd,
+    required this.onRemove,
+  });
+
+  final List<CollectionView> entries;
+  final bool isSeries;
+  final String Function(int?) scopeLabel;
+  final VoidCallback onAdd;
+  final void Function(String id) onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -349,99 +572,258 @@ class _CollectionControlsState extends ConsumerState<_CollectionControls> {
           children: [
             Row(
               children: [
-                Icon(Icons.cloud_done_outlined,
-                    size: 16, color: theme.colorScheme.outline),
-                const SizedBox(width: 6),
-                Text('Dans votre collection · enregistré automatiquement',
-                    style: theme.textTheme.bodySmall),
-              ],
-            ),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Possédé'),
-              value: _owned,
-              onChanged: (v) {
-                setState(() {
-                  _owned = v;
-                  if (v) _ownedAt ??= DateTime.now();
-                });
-                _save();
-              },
-            ),
-            if (_owned)
-              Padding(
-                padding: const EdgeInsets.only(left: 8, bottom: 4),
-                child: Row(
-                  children: [
-                    Icon(Icons.event_available,
-                        size: 18, color: theme.colorScheme.outline),
-                    const SizedBox(width: 8),
-                    Text(_ownedAt != null
-                        ? 'Acquis le ${_fmt(_ownedAt!)}'
-                        : 'Date d\'acquisition non définie'),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: _editOwnedDate,
-                      child: Text(_ownedAt != null ? 'Modifier' : 'Définir'),
-                    ),
-                  ],
-                ),
-              ),
-            const Divider(),
-            // Visionnages (un film peut être vu plusieurs fois).
-            Row(
-              children: [
+                Icon(Icons.inventory_2_outlined,
+                    size: 18, color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
                 Expanded(
-                  child: Text('Visionnages (${_watchDates.length})',
-                      style: theme.textTheme.titleSmall),
-                ),
+                    child: Text('Ma collection',
+                        style: theme.textTheme.titleSmall)),
                 TextButton.icon(
-                  onPressed: _addWatchDate,
+                  onPressed: onAdd,
                   icon: const Icon(Icons.add),
                   label: const Text('Ajouter'),
                 ),
               ],
             ),
-            if (_watchDates.isEmpty)
+            if (entries.isEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text('Pas dans ta collection.',
+                    style: theme.textTheme.bodySmall),
+              )
+            else
+              ...entries.map((e) => ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    leading: MediumBadge(medium: e.medium, compact: true),
+                    title: Text(
+                      '${scopeLabel(e.seasonNumber)} · ${e.medium.label}',
+                    ),
+                    subtitle: e.addedAt != null
+                        ? Text('Acquis le ${_fmtDate(e.addedAt!)}')
+                        : null,
+                    trailing: IconButton(
+                      tooltip: 'Retirer de la collection',
+                      icon: const Icon(Icons.close, size: 18),
+                      onPressed: e.id == null ? null : () => onRemove(e.id!),
+                    ),
+                  )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Section Historique
+// ---------------------------------------------------------------------------
+class _HistorySection extends StatelessWidget {
+  const _HistorySection({
+    required this.entries,
+    required this.isSeries,
+    required this.scopeLabel,
+    required this.onAdd,
+    required this.onEdit,
+    required this.onRemove,
+  });
+
+  final List<HistoryView> entries;
+  final bool isSeries;
+  final String Function(int?) scopeLabel;
+  final VoidCallback onAdd;
+  final void Function(HistoryView e) onEdit;
+  final void Function(String id) onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.history,
+                    size: 18, color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
+                Expanded(
+                    child: Text('Historique de visionnage (${entries.length})',
+                        style: theme.textTheme.titleSmall)),
+                TextButton.icon(
+                  onPressed: onAdd,
+                  icon: const Icon(Icons.add),
+                  label: const Text('Visionnage'),
+                ),
+              ],
+            ),
+            if (entries.isEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Text('Aucun visionnage enregistré.',
                     style: theme.textTheme.bodySmall),
               )
             else
-              ...(_watchDates.toList()..sort((a, b) => b.compareTo(a)))
-                  .map((d) => ListTile(
-                        dense: true,
-                        contentPadding: EdgeInsets.zero,
-                        leading: const Icon(Icons.visibility, size: 20),
-                        title: Text('Vu le ${_fmt(d)}'),
-                        trailing: IconButton(
-                          tooltip: 'Retirer ce visionnage',
-                          icon: const Icon(Icons.close, size: 18),
-                          onPressed: () {
-                            setState(() => _watchDates.remove(d));
-                            _save();
-                          },
-                        ),
-                      )),
-            const Divider(),
+              ...entries.map((e) => ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.visibility, size: 20),
+                    title: Text(
+                      'Vu le ${_fmtDate(e.watchedAt)}'
+                      '${e.seasonNumber != null ? ' · ${scopeLabel(e.seasonNumber)}' : ''}'
+                      '${e.rating != null ? ' · ${e.rating!.toStringAsFixed(1)}/10' : ''}',
+                    ),
+                    subtitle: (e.comment ?? '').isNotEmpty
+                        ? Text(e.comment!,
+                            style:
+                                const TextStyle(fontStyle: FontStyle.italic))
+                        : null,
+                    onTap: () => onEdit(e),
+                    trailing: IconButton(
+                      tooltip: 'Supprimer ce visionnage',
+                      icon: const Icon(Icons.close, size: 18),
+                      onPressed: e.id == null ? null : () => onRemove(e.id!),
+                    ),
+                  )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Dialogues d'ajout
+// ---------------------------------------------------------------------------
+class _CollChoice {
+  _CollChoice(this.medium, this.date);
+  final Medium medium;
+  final DateTime date;
+}
+
+class _HistChoice {
+  _HistChoice(this.date, this.rating, this.comment);
+  final DateTime date;
+  final double? rating;
+  final String? comment;
+}
+
+class _AddCollectionDialog extends StatefulWidget {
+  const _AddCollectionDialog();
+
+  @override
+  State<_AddCollectionDialog> createState() => _AddCollectionDialogState();
+}
+
+class _AddCollectionDialogState extends State<_AddCollectionDialog> {
+  Medium _medium = Medium.dvd;
+  DateTime _date = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Ajouter à la collection'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Support'),
+            const SizedBox(height: 6),
+            Wrap(
+              spacing: 8,
+              children: Medium.values
+                  .map((m) => ChoiceChip(
+                        label: Text(m.label),
+                        avatar: Icon(m.icon, size: 18),
+                        selected: _medium == m,
+                        onSelected: (_) => setState(() => _medium = m),
+                      ))
+                  .toList(),
+            ),
+            const SizedBox(height: 12),
+            _DateRow(
+              label: 'Acquis le',
+              date: _date,
+              onPick: (d) => setState(() => _date = d),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Annuler')),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, _CollChoice(_medium, _date)),
+          child: const Text('Ajouter'),
+        ),
+      ],
+    );
+  }
+}
+
+class _AddHistoryDialog extends StatefulWidget {
+  const _AddHistoryDialog({
+    this.initialDate,
+    this.initialRating,
+    this.initialComment,
+    this.title = 'Ajouter un visionnage',
+  });
+
+  final DateTime? initialDate;
+  final double? initialRating;
+  final String? initialComment;
+  final String title;
+
+  @override
+  State<_AddHistoryDialog> createState() => _AddHistoryDialogState();
+}
+
+class _AddHistoryDialogState extends State<_AddHistoryDialog> {
+  late DateTime _date = widget.initialDate ?? DateTime.now();
+  late double _rating = widget.initialRating ?? 0;
+  late final TextEditingController _comment =
+      TextEditingController(text: widget.initialComment ?? '');
+
+  @override
+  void dispose() {
+    _comment.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(widget.title),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _DateRow(
+              label: 'Vu le',
+              date: _date,
+              onPick: (d) => setState(() => _date = d),
+            ),
+            const SizedBox(height: 8),
             Row(
               children: [
-                const Text('Ma note'),
+                const Text('Note'),
                 Expanded(
                   child: Slider(
                     value: _rating,
                     min: 0,
                     max: 10,
                     divisions: 20,
-                    label:
-                        _rating == 0 ? 'Aucune' : _rating.toStringAsFixed(1),
+                    label: _rating == 0 ? 'Aucune' : _rating.toStringAsFixed(1),
                     onChanged: (v) => setState(() => _rating = v),
-                    onChangeEnd: (_) => _save(),
                   ),
                 ),
                 SizedBox(
-                  width: 48,
+                  width: 40,
                   child: Text(
                     _rating == 0 ? '—' : _rating.toStringAsFixed(1),
                     textAlign: TextAlign.end,
@@ -449,17 +831,64 @@ class _CollectionControlsState extends ConsumerState<_CollectionControls> {
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton.icon(
-                onPressed: _delete,
-                icon: const Icon(Icons.delete_outline),
-                label: const Text('Supprimer de la collection'),
+            TextField(
+              controller: _comment,
+              maxLines: 2,
+              decoration: const InputDecoration(
+                labelText: 'Commentaire (facultatif)',
+                hintText: 'Ex. vu au cinéma, revu avec les enfants…',
               ),
             ),
           ],
         ),
       ),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Annuler')),
+        FilledButton(
+          onPressed: () => Navigator.pop(
+            context,
+            _HistChoice(
+              _date,
+              _rating > 0 ? _rating : null,
+              _comment.text.trim().isEmpty ? null : _comment.text.trim(),
+            ),
+          ),
+          child: const Text('Enregistrer'),
+        ),
+      ],
+    );
+  }
+}
+
+class _DateRow extends StatelessWidget {
+  const _DateRow(
+      {required this.label, required this.date, required this.onPick});
+
+  final String label;
+  final DateTime date;
+  final void Function(DateTime) onPick;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: Text('$label ${_fmtDate(date)}')),
+        TextButton(
+          onPressed: () async {
+            final now = DateTime.now();
+            final picked = await showDatePicker(
+              context: context,
+              initialDate: date,
+              firstDate: DateTime(1900),
+              lastDate: now,
+            );
+            if (picked != null) onPick(picked);
+          },
+          child: const Text('Modifier'),
+        ),
+      ],
     );
   }
 }

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/config/app_config.dart';
+import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/poster_image.dart';
 import '../auth/auth_controller.dart';
 import '../collection/collection_screen.dart';
+import '../collection/physical_collection_screen.dart';
+import '../favorites/favorites_screen.dart';
 import '../search/details_screen.dart';
 import '../search/person_screen.dart';
 import '../search/search_screen.dart';
@@ -27,10 +31,64 @@ class _HomeShellState extends ConsumerState<HomeShell>
     with WidgetsBindingObserver {
   int _index = 0;
 
+  bool _backfilling = false;
+
+  /// Version des métadonnées capturées. À incrémenter quand on enrichit le
+  /// modèle (v1 : pays/casting ; v2 : + réalisateurs). Un changement de version
+  /// déclenche un rafraîchissement complet **une seule fois**.
+  static const _backfillVersion = 2;
+  static const _backfillKey = 'metadata_backfill_version';
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _backfillMetadata());
+  }
+
+  /// Rafraîchit automatiquement les métadonnées (pays, casting, réalisateurs)
+  /// de TOUTE la bibliothèque depuis TMDB — **une seule fois par version**, puis
+  /// se tait (mémorisé dans SharedPreferences). `backfillFilm` n'écrit en base
+  /// que si quelque chose a changé. Mode cloud uniquement (le local est complet
+  /// dès l'ajout). Plus besoin de rouvrir chaque fiche.
+  Future<void> _backfillMetadata() async {
+    if (_backfilling || !AppConfig.hasSupabase) return;
+    _backfilling = true;
+    try {
+      final prefs = ref.read(sharedPreferencesProvider);
+      // Refresh COMPLET une fois par version (nouveau type de métadonnée) ;
+      // sinon on ne traite QUE les films aux métadonnées vides (ex. titres
+      // importés), pour ne pas refaire d'appels TMDB inutiles.
+      final fullRefresh = (prefs.getInt(_backfillKey) ?? 0) < _backfillVersion;
+
+      final coll = await ref.read(collectionStreamProvider.future);
+      final hist = await ref.read(historyStreamProvider.future);
+      final films = <String, Film>{
+        for (final c in coll) c.film.mediaKey: c.film,
+        for (final h in hist) h.film.mediaKey: h.film,
+      };
+      final targets = fullRefresh
+          ? films.values.toList()
+          : films.values.where((f) => f.castIds.isEmpty).toList();
+
+      final repo = ref.read(libraryRepositoryProvider);
+      final tmdb = ref.read(tmdbClientProvider);
+      for (final f in targets) {
+        try {
+          final d = await tmdb.details(f.tmdbId, f.mediaType);
+          await repo.backfillFilm(Film.fromDetails(d));
+        } catch (_) {
+          // titre introuvable / erreur réseau : on ignore et on continue.
+        }
+      }
+      // Marque cette version comme traitée : le refresh complet ne se relancera
+      // plus (les futurs titres vides restent rattrapés ci-dessus).
+      if (fullRefresh) await prefs.setInt(_backfillKey, _backfillVersion);
+    } catch (_) {
+      // pas connecté / données pas prêtes : on réessaiera au prochain lancement.
+    } finally {
+      _backfilling = false;
+    }
   }
 
   @override
@@ -44,21 +102,31 @@ class _HomeShellState extends ConsumerState<HomeShell>
     // Au retour dans l'app, resynchronise avec la base (récupère les
     // changements faits ailleurs, ex. suppressions non reçues en temps réel).
     if (state == AppLifecycleState.resumed) {
-      ref.read(collectionRepositoryProvider).refresh();
+      ref.read(libraryRepositoryProvider).refresh();
     }
   }
 
   static const _pages = [
     CollectionScreen(),
+    PhysicalCollectionScreen(),
+    FavoritesScreen(),
     SearchScreen(),
     StatsScreen(),
   ];
 
   static const _destinations = [
     NavigationDestination(
+        icon: Icon(Icons.history_outlined),
+        selectedIcon: Icon(Icons.history),
+        label: 'Historique'),
+    NavigationDestination(
         icon: Icon(Icons.video_library_outlined),
         selectedIcon: Icon(Icons.video_library),
         label: 'Collection'),
+    NavigationDestination(
+        icon: Icon(Icons.star_border),
+        selectedIcon: Icon(Icons.star),
+        label: 'Favoris'),
     NavigationDestination(icon: Icon(Icons.search), label: 'Rechercher'),
     NavigationDestination(
         icon: Icon(Icons.bar_chart_outlined),

@@ -46,7 +46,10 @@ class FilmographyItem {
     return int.tryParse(date.substring(0, 4));
   }
 
-  static FilmographyItem? fromJson(Map<String, dynamic> json, String mediaType) {
+  /// [role] force le libellé du rôle (ex. le poste pour un crédit d'équipe) ;
+  /// sinon on prend le personnage (`character`) du crédit d'acteur.
+  static FilmographyItem? fromJson(Map<String, dynamic> json, String mediaType,
+      {String? role}) {
     final id = json['id'] as int?;
     if (id == null) return null;
     final isMovie = mediaType == 'movie';
@@ -57,7 +60,7 @@ class FilmographyItem {
       posterPath: json['poster_path'] as String?,
       releaseYear: _yearOf(
           (isMovie ? json['release_date'] : json['first_air_date']) as String?),
-      character: (json['character'] as String?) ?? '',
+      character: role ?? (json['character'] as String?) ?? '',
       genreIds: (json['genre_ids'] as List<dynamic>? ?? [])
           .whereType<int>()
           .toList(),
@@ -105,15 +108,15 @@ class PersonDetails {
       (d == null || d.isEmpty) ? null : DateTime.tryParse(d);
 
   factory PersonDetails.fromJson(Map<String, dynamic> json) {
-    final movieCast =
-        ((json['movie_credits'] as Map<String, dynamic>?)?['cast']
-                as List<dynamic>? ??
-            []);
-    final tvCast = ((json['tv_credits'] as Map<String, dynamic>?)?['cast']
-            as List<dynamic>? ??
-        []);
+    final movieCredits = json['movie_credits'] as Map<String, dynamic>?;
+    final tvCredits = json['tv_credits'] as Map<String, dynamic>?;
+    final movieCast = (movieCredits?['cast'] as List<dynamic>? ?? []);
+    final tvCast = (tvCredits?['cast'] as List<dynamic>? ?? []);
+    final movieCrew = (movieCredits?['crew'] as List<dynamic>? ?? []);
+    final tvCrew = (tvCredits?['crew'] as List<dynamic>? ?? []);
 
     final items = <String, FilmographyItem>{};
+    // Rôles d'acteur en premier (libellé = personnage).
     for (final e in movieCast) {
       final item = FilmographyItem.fromJson(e as Map<String, dynamic>, 'movie');
       if (item != null) items['movie_${item.tmdbId}'] = item;
@@ -122,6 +125,22 @@ class PersonDetails {
       final item = FilmographyItem.fromJson(e as Map<String, dynamic>, 'tv');
       if (item != null) items['tv_${item.tmdbId}'] = item;
     }
+    // Crédits de réalisation (département « Directing ») : complète la
+    // filmographie des réalisateurs (ex. Claude Sautet). N'écrase pas un rôle
+    // d'acteur déjà ajouté pour le même titre.
+    void addDirecting(List<dynamic> crew, String type) {
+      for (final e in crew) {
+        final m = e as Map<String, dynamic>;
+        if (m['department'] != 'Directing') continue;
+        final item = FilmographyItem.fromJson(m, type,
+            role: (m['job'] as String?) ?? 'Réalisation');
+        if (item != null) items.putIfAbsent('${type}_${item.tmdbId}', () => item);
+      }
+    }
+
+    addDirecting(movieCrew, 'movie');
+    addDirecting(tvCrew, 'tv');
+
     final filmography = items.values.toList()
       ..sort((a, b) => (b.releaseYear ?? 0).compareTo(a.releaseYear ?? 0));
 

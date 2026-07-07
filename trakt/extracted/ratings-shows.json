@@ -1,0 +1,506 @@
+[
+  {
+    "rated_at": "2026-02-18T08:10:29.000Z",
+    "rating": 6,
+    "type": "show",
+    "show": {
+      "title": "Comedy Class by Éric & Ramzy",
+      "year": 2024,
+      "ids": {
+        "trakt": 233068,
+        "slug": "comedy-class-by-eric-ramzy",
+        "tvdb": 442583,
+        "imdb": "tt32241756",
+        "tmdb": 250443,
+        "tvrage": null
+      },
+      "aired_episodes": 19
+    }
+  },
+  {
+    "rated_at": "2025-04-23T20:04:25.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Private Crimes",
+      "year": 1993,
+      "ids": {
+        "trakt": 128678,
+        "slug": "private-crimes",
+        "tvdb": 320224,
+        "imdb": "tt0103398",
+        "tmdb": 15505,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    }
+  },
+  {
+    "rated_at": "2025-02-26T08:06:49.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "The Mist",
+      "year": 2017,
+      "ids": {
+        "trakt": 118191,
+        "slug": "the-mist",
+        "tvdb": 326887,
+        "imdb": "tt5639976",
+        "tmdb": 68315,
+        "tvrage": null
+      },
+      "aired_episodes": 10
+    }
+  },
+  {
+    "rated_at": "2025-02-25T09:54:52.000Z",
+    "rating": 9,
+    "type": "show",
+    "show": {
+      "title": "The Simpsons",
+      "year": 1989,
+      "ids": {
+        "trakt": 455,
+        "slug": "the-simpsons",
+        "tvdb": 71663,
+        "imdb": "tt0096697",
+        "tmdb": 456,
+        "tvrage": null
+      },
+      "aired_episodes": 801
+    }
+  },
+  {
+    "rated_at": "2025-02-20T10:22:36.000Z",
+    "rating": 4,
+    "type": "show",
+    "show": {
+      "title": "Come Fly With Me",
+      "year": 2010,
+      "ids": {
+        "trakt": 34455,
+        "slug": "come-fly-with-me",
+        "tvdb": 212571,
+        "imdb": "tt1749004",
+        "tmdb": 34604,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    }
+  },
+  {
+    "rated_at": "2025-01-29T17:01:00.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Yosuga no Sora",
+      "year": 2010,
+      "ids": {
+        "trakt": 61032,
+        "slug": "yosuga-no-sora",
+        "tvdb": 195231,
+        "imdb": "tt1743681",
+        "tmdb": 68005,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2025-01-20T15:33:52.000Z",
+    "rating": 7,
+    "type": "show",
+    "show": {
+      "title": "The Returned",
+      "year": 2012,
+      "ids": {
+        "trakt": 46344,
+        "slug": "the-returned",
+        "tvdb": 263677,
+        "imdb": "tt2521668",
+        "tmdb": 46616,
+        "tvrage": null
+      },
+      "aired_episodes": 16
+    }
+  },
+  {
+    "rated_at": "2024-12-14T15:22:46.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Killer Lies: Chasing A True Crime Con Man",
+      "year": 2024,
+      "ids": {
+        "trakt": 249674,
+        "slug": "killer-lies-chasing-a-true-crime-con-man",
+        "tvdb": 453110,
+        "imdb": "tt31194754",
+        "tmdb": 259835,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2024-11-17T22:38:51.000Z",
+    "rating": 9,
+    "type": "show",
+    "show": {
+      "title": "BEEF",
+      "year": 2023,
+      "ids": {
+        "trakt": 197667,
+        "slug": "beef",
+        "tvdb": 399838,
+        "imdb": "tt14403178",
+        "tmdb": 154385,
+        "tvrage": null
+      },
+      "aired_episodes": 18
+    }
+  },
+  {
+    "rated_at": "2024-10-22T14:50:33.000Z",
+    "rating": 7,
+    "type": "show",
+    "show": {
+      "title": "Monsters vs. Aliens",
+      "year": 2013,
+      "ids": {
+        "trakt": 60350,
+        "slug": "monsters-vs-aliens",
+        "tvdb": 267978,
+        "imdb": "tt2782214",
+        "tmdb": 60789,
+        "tvrage": null
+      },
+      "aired_episodes": 50
+    }
+  },
+  {
+    "rated_at": "2024-10-22T07:11:35.000Z",
+    "rating": 7,
+    "type": "show",
+    "show": {
+      "title": "The Dark Charisma of Adolf Hitler",
+      "year": 2012,
+      "ids": {
+        "trakt": 68342,
+        "slug": "the-dark-charisma-of-adolf-hitler",
+        "tvdb": 264066,
+        "imdb": "tt2522324",
+        "tmdb": 55585,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2024-10-21T20:12:53.000Z",
+    "rating": 9,
+    "type": "show",
+    "show": {
+      "title": "Apocalypse: The Second World War",
+      "year": 2009,
+      "ids": {
+        "trakt": 33044,
+        "slug": "apocalypse-the-second-world-war",
+        "tvdb": 113371,
+        "imdb": "tt1508238",
+        "tmdb": 33189,
+        "tvrage": null
+      },
+      "aired_episodes": 6
+    }
+  },
+  {
+    "rated_at": "2024-10-21T12:16:16.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Le chevalier de Maison Rouge",
+      "year": 1963,
+      "ids": {
+        "trakt": 162694,
+        "slug": "le-chevalier-de-maison-rouge",
+        "tvdb": 251972,
+        "imdb": "tt0169422",
+        "tmdb": 75529,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    }
+  },
+  {
+    "rated_at": "2024-10-21T09:07:38.000Z",
+    "rating": 5,
+    "type": "show",
+    "show": {
+      "title": "Maya the Bee",
+      "year": 2013,
+      "ids": {
+        "trakt": 70082,
+        "slug": "maya-the-bee-1977",
+        "tvdb": 266275,
+        "imdb": "tt2724814",
+        "tmdb": 61740,
+        "tvrage": null
+      },
+      "aired_episodes": 130
+    }
+  },
+  {
+    "rated_at": "2024-10-18T10:10:27.000Z",
+    "rating": 5,
+    "type": "show",
+    "show": {
+      "title": "TRIO",
+      "year": 2015,
+      "ids": {
+        "trakt": 95235,
+        "slug": "trio",
+        "tvdb": 276954,
+        "imdb": "tt3426404",
+        "tmdb": 75443,
+        "tvrage": null
+      },
+      "aired_episodes": 30
+    }
+  },
+  {
+    "rated_at": "2024-10-07T16:27:40.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Bonus Family",
+      "year": 2017,
+      "ids": {
+        "trakt": 117566,
+        "slug": "bonus-family",
+        "tvdb": 323421,
+        "imdb": "tt5372890",
+        "tmdb": 70748,
+        "tvrage": null
+      },
+      "aired_episodes": 38
+    }
+  },
+  {
+    "rated_at": "2024-09-30T08:24:49.000Z",
+    "rating": 9,
+    "type": "show",
+    "show": {
+      "title": "La Flamme",
+      "year": 2020,
+      "ids": {
+        "trakt": 166114,
+        "slug": "la-flamme",
+        "tvdb": 371079,
+        "imdb": "tt13286778",
+        "tmdb": 94626,
+        "tvrage": null
+      },
+      "aired_episodes": 9
+    }
+  },
+  {
+    "rated_at": "2024-09-30T08:13:19.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Daval, la série",
+      "year": 2020,
+      "ids": {
+        "trakt": 206617,
+        "slug": "daval-la-serie",
+        "tvdb": 392291,
+        "imdb": null,
+        "tmdb": 113288,
+        "tvrage": null
+      },
+      "aired_episodes": 4
+    }
+  },
+  {
+    "rated_at": "2024-09-19T11:34:18.000Z",
+    "rating": 5,
+    "type": "show",
+    "show": {
+      "title": "The Dangerous Brothers",
+      "year": 1986,
+      "ids": {
+        "trakt": 61513,
+        "slug": "the-dangerous-brothers",
+        "tvdb": 86361,
+        "imdb": "tt0135086",
+        "tmdb": null,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2024-09-19T11:17:53.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Le Flambeau, les aventuriers de Chupacabra",
+      "year": 2022,
+      "ids": {
+        "trakt": 195699,
+        "slug": "le-flambeau-les-aventuriers-de-chupacabra",
+        "tvdb": null,
+        "imdb": "tt20723358",
+        "tmdb": 202772,
+        "tvrage": null
+      },
+      "aired_episodes": 9
+    }
+  },
+  {
+    "rated_at": "2024-09-19T11:10:46.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "The Staircase",
+      "year": 2004,
+      "ids": {
+        "trakt": 21323,
+        "slug": "the-staircase",
+        "tvdb": 92011,
+        "imdb": "tt0388644",
+        "tmdb": 21421,
+        "tvrage": null
+      },
+      "aired_episodes": 13
+    }
+  },
+  {
+    "rated_at": "2024-09-19T10:40:16.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "The Most Hated Man on the Internet",
+      "year": 2022,
+      "ids": {
+        "trakt": 196570,
+        "slug": "the-most-hated-man-on-the-internet",
+        "tvdb": 421574,
+        "imdb": "tt21098728",
+        "tmdb": 205106,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2024-09-19T10:24:22.000Z",
+    "rating": 7,
+    "type": "show",
+    "show": {
+      "title": "I Just Killed My Dad",
+      "year": 2022,
+      "ids": {
+        "trakt": 197138,
+        "slug": "i-just-killed-my-dad",
+        "tvdb": 422516,
+        "imdb": "tt21315194",
+        "tmdb": 206492,
+        "tvrage": null
+      },
+      "aired_episodes": 3
+    }
+  },
+  {
+    "rated_at": "2024-09-11T16:29:23.000Z",
+    "rating": 10,
+    "type": "show",
+    "show": {
+      "title": "Baby Reindeer",
+      "year": 2024,
+      "ids": {
+        "trakt": 217121,
+        "slug": "baby-reindeer",
+        "tvdb": 417223,
+        "imdb": "tt13649112",
+        "tmdb": 241259,
+        "tvrage": null
+      },
+      "aired_episodes": 7
+    }
+  },
+  {
+    "rated_at": "2024-09-08T08:04:05.000Z",
+    "rating": 7,
+    "type": "show",
+    "show": {
+      "title": "Represent",
+      "year": 2023,
+      "ids": {
+        "trakt": 200729,
+        "slug": "represent",
+        "tvdb": 426793,
+        "imdb": "tt23546622",
+        "tmdb": 194899,
+        "tvrage": null
+      },
+      "aired_episodes": 12
+    }
+  },
+  {
+    "rated_at": "2024-03-30T08:01:28.000Z",
+    "rating": 9,
+    "type": "show",
+    "show": {
+      "title": "Trailer Park Boys: Out of the Park",
+      "year": 2016,
+      "ids": {
+        "trakt": 111449,
+        "slug": "trailer-park-boys-out-of-the-park",
+        "tvdb": 317325,
+        "imdb": "tt5937754",
+        "tmdb": 68375,
+        "tvrage": null
+      },
+      "aired_episodes": 16
+    }
+  },
+  {
+    "rated_at": "2024-03-05T14:08:09.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Who Killed Little Gregory?",
+      "year": 2019,
+      "ids": {
+        "trakt": 155274,
+        "slug": "who-killed-little-gregory",
+        "tvdb": 372342,
+        "imdb": "tt11269714",
+        "tmdb": 95637,
+        "tvrage": null
+      },
+      "aired_episodes": 5
+    }
+  },
+  {
+    "rated_at": "2024-03-05T13:28:35.000Z",
+    "rating": 8,
+    "type": "show",
+    "show": {
+      "title": "Monique Olivier: Accessory to Evil",
+      "year": 2023,
+      "ids": {
+        "trakt": 202918,
+        "slug": "monique-olivier-accessory-to-evil",
+        "tvdb": 431184,
+        "imdb": "tt26595396",
+        "tmdb": 221048,
+        "tvrage": null
+      },
+      "aired_episodes": 5
+    }
+  }
+]

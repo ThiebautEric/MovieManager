@@ -1,0 +1,24 @@
+[
+  {
+    "type": "movie",
+    "movie": {
+      "ids": {
+        "imdb": "tt0191771",
+        "plex": {
+          "guid": null,
+          "slug": null
+        },
+        "slug": "the-most-dangerous-man-in-the-world-1967",
+        "tmdb": 418279,
+        "trakt": 456516
+      },
+      "year": 1967,
+      "title": "The Most Dangerous Man in the World"
+    },
+    "rank": 1,
+    "id": 505985951,
+    "listed_at": "2020-04-21T08:06:29.000Z",
+    "notes": null,
+    "my_rating": null
+  }
+]
