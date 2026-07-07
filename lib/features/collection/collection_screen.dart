@@ -43,12 +43,12 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     String q(String s) => '"${s.replaceAll('"', '""')}"';
     // Le BOM en tête permet à Excel de détecter l'UTF-8 (accents).
     final bom = String.fromCharCode(0xFEFF);
-    final b = StringBuffer('${bom}Numero,Titre,Saison,Note,Date\n');
+    final b = StringBuffer('${bom}Numero;Titre;Saison;Note;Date\n');
     for (var i = 0; i < events.length; i++) {
       final e = events[i];
       final saison = e.seasonNumber != null ? 'S${e.seasonNumber}' : '';
       final note = e.rating != null ? e.rating!.toStringAsFixed(1) : '';
-      b.writeln('${i + 1},${q(e.film.title)},$saison,$note,${_fmtDate(e.watchedAt)}');
+      b.writeln('${i + 1};${q(e.film.title)};$saison;$note;${_fmtDate(e.watchedAt)}');
     }
     await FileSaver.instance.saveFile(
       name: 'historique',
