@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:file_saver/file_saver.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
@@ -34,21 +35,32 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   /// Vrai une fois le repli par défaut appliqué (toutes années sauf la courante).
   bool _initCollapse = false;
 
-  /// PROVISOIRE : exporte l'historique affiché en CSV (numéro, titre, saison,
-  /// note, date). Sur le web, ouvre/télécharge le fichier via une data-URL.
+  /// Exporte l'historique affiché en CSV (numéro, titre, saison, note, date).
+  /// Web : téléchargement navigateur ; Android/iOS : dossier Téléchargements ;
+  /// desktop : dossier de téléchargement par défaut.
   Future<void> _exportCsv() async {
     final events = ref.read(filteredHistoryProvider);
     String q(String s) => '"${s.replaceAll('"', '""')}"';
-    final b = StringBuffer('Numero,Titre,Saison,Note,Date\n');
+    // Le BOM en tête permet à Excel de détecter l'UTF-8 (accents).
+    final bom = String.fromCharCode(0xFEFF);
+    final b = StringBuffer('${bom}Numero,Titre,Saison,Note,Date\n');
     for (var i = 0; i < events.length; i++) {
       final e = events[i];
       final saison = e.seasonNumber != null ? 'S${e.seasonNumber}' : '';
       final note = e.rating != null ? e.rating!.toStringAsFixed(1) : '';
       b.writeln('${i + 1},${q(e.film.title)},$saison,$note,${_fmtDate(e.watchedAt)}');
     }
-    final uri = Uri.dataFromString(b.toString(),
-        mimeType: 'text/csv', encoding: utf8, parameters: {'charset': 'utf-8'});
-    await launchUrl(uri, webOnlyWindowName: '_blank');
+    await FileSaver.instance.saveFile(
+      name: 'historique',
+      bytes: Uint8List.fromList(utf8.encode(b.toString())),
+      fileExtension: 'csv',
+      mimeType: MimeType.csv,
+    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Historique exporté (historique.csv)')),
+      );
+    }
   }
 
   @override
