@@ -1,11 +1,11 @@
 {
-    "name": "movie_manager",
-    "short_name": "movie_manager",
+    "name": "Movie Manager",
+    "short_name": "Movie Manager",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FFFFFF",
+    "theme_color": "#1565C0",
+    "description": "Gestion de collection et d'historique de films et séries",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
