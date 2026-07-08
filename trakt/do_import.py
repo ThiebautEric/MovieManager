@@ -64,7 +64,7 @@ def fetch(key):
         with urllib.request.urlopen("https://api.themoviedb.org/3/%s/%s?%s" % (typ, tid, q), timeout=30) as r:
             d = json.loads(r.read().decode())
         isM = typ == "movie"; cred = d.get("credits") or {}
-        cast = [c["id"] for c in (cred.get("cast") or [])[:15] if c.get("id")]
+        cast = [c["id"] for c in (cred.get("cast") or []) if c.get("id")]
         directors = [c["id"] for c in (cred.get("crew") or []) if c.get("job") == "Director" and c.get("id")]
         if not directors and not isM:
             directors = [c["id"] for c in (d.get("created_by") or []) if c.get("id")]

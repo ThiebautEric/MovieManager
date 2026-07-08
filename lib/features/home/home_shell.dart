@@ -36,9 +36,10 @@ class _HomeShellState extends ConsumerState<HomeShell>
   bool _backfilling = false;
 
   /// Version des métadonnées capturées. À incrémenter quand on enrichit le
-  /// modèle (v1 : pays/casting ; v2 : + réalisateurs). Un changement de version
-  /// déclenche un rafraîchissement complet **une seule fois**.
-  static const _backfillVersion = 2;
+  /// modèle (v1 : pays/casting ; v2 : + réalisateurs ; v3 : casting complet,
+  /// plus limité à 15). Un changement de version déclenche un rafraîchissement
+  /// complet **une seule fois**.
+  static const _backfillVersion = 3;
   static const _backfillKey = 'metadata_backfill_version';
 
   @override

@@ -27,7 +27,7 @@ def tmdb_movie(tid):
     q = urllib.parse.urlencode({"api_key": TMDB, "language": "fr-FR", "append_to_response": "credits"})
     d = json.loads(urllib.request.urlopen("https://api.themoviedb.org/3/movie/%s?%s" % (tid, q), timeout=30).read().decode())
     cred = d.get("credits") or {}
-    cast = [c["id"] for c in (cred.get("cast") or [])[:15] if c.get("id")]
+    cast = [c["id"] for c in (cred.get("cast") or []) if c.get("id")]
     dirs = [c["id"] for c in (cred.get("crew") or []) if c.get("job") == "Director" and c.get("id")]
     oc = d.get("origin_country") or []; pc = d.get("production_countries") or []
     return {"tmdb_id": tid, "media_type": "movie", "title": d.get("title"), "original_title": d.get("original_title"),

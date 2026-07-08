@@ -215,7 +215,6 @@ class MediaDetails {
           .toList(),
       directors: directors,
       cast: ((credits?['cast'] as List<dynamic>?) ?? [])
-          .take(15)
           .map((e) => CastMember.fromJson(e as Map<String, dynamic>))
           .toList(),
       videos: ((videosBlock?['results'] as List<dynamic>?) ?? [])
