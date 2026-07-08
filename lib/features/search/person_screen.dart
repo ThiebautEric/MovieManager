@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../data/repositories/favorites_repository.dart';
@@ -32,19 +33,21 @@ class PersonScreen extends ConsumerWidget {
         title: const Text('Acteur'),
         leading: DetailLeadingButton(embedded: embedded),
         actions: [
-          IconButton(
-            tooltip: isFav ? 'Retirer des favoris' : 'Ajouter aux favoris',
-            icon: Icon(isFav ? Icons.star : Icons.star_border,
-                color: isFav ? Colors.amber : null),
-            // Activable seulement une fois les infos (nom/photo) chargées.
-            onPressed: details == null
-                ? null
-                : () => ref.read(favoritesProvider.notifier).toggle(
-                      personId: personId,
-                      name: details.name,
-                      profilePath: details.profilePath,
-                    ),
-          ),
+          // Masquée en consultation admin (favoris d'un autre utilisateur).
+          if (!ref.watch(isViewingAsProvider))
+            IconButton(
+              tooltip: isFav ? 'Retirer des favoris' : 'Ajouter aux favoris',
+              icon: Icon(isFav ? Icons.star : Icons.star_border,
+                  color: isFav ? Colors.amber : null),
+              // Activable seulement une fois les infos (nom/photo) chargées.
+              onPressed: details == null
+                  ? null
+                  : () => ref.read(favoritesProvider.notifier).toggle(
+                        personId: personId,
+                        name: details.name,
+                        profilePath: details.profilePath,
+                      ),
+            ),
         ],
       ),
       body: async.when(

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/config/app_config.dart';
+import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/poster_image.dart';
+import '../admin/admin_screen.dart';
 import '../auth/auth_controller.dart';
 import '../collection/collection_screen.dart';
 import '../collection/physical_collection_screen.dart';
@@ -52,7 +54,13 @@ class _HomeShellState extends ConsumerState<HomeShell>
   /// que si quelque chose a changé. Mode cloud uniquement (le local est complet
   /// dès l'ajout). Plus besoin de rouvrir chaque fiche.
   Future<void> _backfillMetadata() async {
-    if (_backfilling || !AppConfig.hasSupabase) return;
+    // Jamais pendant une consultation admin : le repository est en lecture
+    // seule et cible les données d'un autre utilisateur.
+    if (_backfilling ||
+        !AppConfig.hasSupabase ||
+        ref.read(isViewingAsProvider)) {
+      return;
+    }
     _backfilling = true;
     try {
       final prefs = ref.read(sharedPreferencesProvider);
@@ -106,7 +114,9 @@ class _HomeShellState extends ConsumerState<HomeShell>
     }
   }
 
-  static const _pages = [
+  // L'onglet Admin est ajouté en DERNIER quand l'utilisateur porte la claim
+  // admin, pour que les index des 5 onglets de base ne bougent jamais.
+  static const _basePages = <Widget>[
     CollectionScreen(),
     PhysicalCollectionScreen(),
     FavoritesScreen(),
@@ -114,7 +124,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
     StatsScreen(),
   ];
 
-  static const _destinations = [
+  static const _baseDestinations = <NavigationDestination>[
     NavigationDestination(
         icon: Icon(Icons.history_outlined),
         selectedIcon: Icon(Icons.history),
@@ -133,6 +143,11 @@ class _HomeShellState extends ConsumerState<HomeShell>
         selectedIcon: Icon(Icons.bar_chart),
         label: 'Stats'),
   ];
+
+  static const _adminDestination = NavigationDestination(
+      icon: Icon(Icons.admin_panel_settings_outlined),
+      selectedIcon: Icon(Icons.admin_panel_settings),
+      label: 'Admin');
 
   void _selectTab(int i) {
     setState(() => _index = i);
@@ -156,13 +171,73 @@ class _HomeShellState extends ConsumerState<HomeShell>
     };
   }
 
+  /// Bande « lecture seule » affichée au-dessus du contenu pendant une
+  /// consultation admin, dans les deux layouts.
+  Widget _withViewAsBanner(Widget child) {
+    final target = ref.watch(viewAsProvider);
+    if (target == null) return child;
+    final cs = Theme.of(context).colorScheme;
+    return Column(
+      children: [
+        Material(
+          color: cs.tertiaryContainer,
+          child: SafeArea(
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  Icon(Icons.visibility, size: 18, color: cs.onTertiaryContainer),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Consultation : ${target.email} (lecture seule)',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: cs.onTertiaryContainer),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => ref.read(viewAsProvider.notifier).exit(),
+                    child: const Text('Quitter'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Expanded(child: child),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isWide = MediaQuery.of(context).size.width >= kWideBreakpoint;
     final stack = ref.watch(detailStackProvider);
     final top = stack.isEmpty ? null : stack.last;
 
-    final tabs = IndexedStack(index: _index, children: _pages);
+    final isAdmin = AppConfig.hasSupabase && ref.watch(isAdminProvider);
+    final pages = [..._basePages, if (isAdmin) const AdminScreen()];
+    final destinations = [
+      ..._baseDestinations,
+      if (isAdmin) _adminDestination,
+    ];
+    // La claim peut disparaître (reconnexion avec un autre compte).
+    if (_index >= pages.length) _index = 0;
+
+    // Entrée en consultation → onglet Historique (les données de la cible) ;
+    // sortie → retour sur l'onglet Admin.
+    ref.listen(viewAsProvider, (prev, next) {
+      if (prev == null && next != null) {
+        setState(() => _index = 0);
+        closeDetail(ref);
+      } else if (prev != null && next == null) {
+        setState(() => _index = _basePages.length); // onglet Admin
+        closeDetail(ref);
+      }
+    });
+
+    final tabs = IndexedStack(index: _index, children: pages);
 
     if (isWide) {
       final content =
@@ -173,7 +248,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
           children: [
             _SideRail(
               index: _index,
-              destinations: _destinations,
+              destinations: destinations,
               top: top,
               onSelect: _selectTab,
               onSignOut: AppConfig.hasSupabase
@@ -182,18 +257,18 @@ class _HomeShellState extends ConsumerState<HomeShell>
               onCloseDetail: () => closeDetail(ref),
             ),
             const VerticalDivider(width: 1),
-            Expanded(child: content),
+            Expanded(child: _withViewAsBanner(content)),
           ],
         ),
       );
     }
 
     return Scaffold(
-      body: tabs,
+      body: _withViewAsBanner(tabs),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: _selectTab,
-        destinations: _destinations,
+        destinations: destinations,
       ),
       floatingActionButton: (_index == 0 && AppConfig.hasSupabase)
           ? FloatingActionButton(

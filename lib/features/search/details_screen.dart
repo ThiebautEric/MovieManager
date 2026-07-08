@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/supabase/view_as.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/models/film.dart';
 import '../../data/models/film_season.dart';
@@ -286,6 +287,9 @@ class _LibraryControls extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final repo = ref.read(libraryRepositoryProvider);
+    // Consultation admin : les listes affichées sont celles d'un autre
+    // utilisateur, toute modification est masquée.
+    final readOnly = ref.watch(isViewingAsProvider);
     final key = '${details.mediaType}:${details.tmdbId}';
     final collection = (ref.watch(collectionStreamProvider).value ?? [])
         .where((c) => c.film.mediaKey == key)
@@ -303,6 +307,7 @@ class _LibraryControls extends ConsumerWidget {
             entries: collection,
             isSeries: false,
             scopeLabel: _scopeLabel,
+            readOnly: readOnly,
             onAdd: () => _addCollection(context, repo, season: null),
             onRemove: (id) => _confirmRemoveCollection(context, repo, id),
           ),
@@ -311,6 +316,7 @@ class _LibraryControls extends ConsumerWidget {
             entries: history,
             isSeries: false,
             scopeLabel: _scopeLabel,
+            readOnly: readOnly,
             onAdd: () => _addHistory(context, repo, season: null),
             onEdit: (e) => _editHistory(context, repo, e),
             onRemove: (id) => _confirmRemoveHistory(context, repo, id),
@@ -354,6 +360,7 @@ class _LibraryControls extends ConsumerWidget {
             s,
             collBySeason[s.seasonNumber] ?? const [],
             histBySeason[s.seasonNumber] ?? const [],
+            readOnly: readOnly,
           ),
       ],
     );
@@ -364,8 +371,9 @@ class _LibraryControls extends ConsumerWidget {
     LibraryRepository repo,
     SeasonInfo info,
     List<CollectionView> coll,
-    List<HistoryView> hist,
-  ) {
+    List<HistoryView> hist, {
+    required bool readOnly,
+  }) {
     final theme = Theme.of(context);
     final title =
         info.name.isNotEmpty ? info.name : 'Saison ${info.seasonNumber}';
@@ -401,6 +409,7 @@ class _LibraryControls extends ConsumerWidget {
             entries: coll,
             isSeries: true,
             scopeLabel: _scopeLabel,
+            readOnly: readOnly,
             onAdd: () =>
                 _addCollection(context, repo, season: info.seasonNumber),
             onRemove: (id) => _confirmRemoveCollection(context, repo, id),
@@ -410,6 +419,7 @@ class _LibraryControls extends ConsumerWidget {
             entries: hist,
             isSeries: true,
             scopeLabel: _scopeLabel,
+            readOnly: readOnly,
             onAdd: () => _addHistory(context, repo, season: info.seasonNumber),
             onEdit: (e) => _editHistory(context, repo, e),
             onRemove: (id) => _confirmRemoveHistory(context, repo, id),
@@ -551,6 +561,7 @@ class _CollectionSection extends StatelessWidget {
     required this.entries,
     required this.isSeries,
     required this.scopeLabel,
+    required this.readOnly,
     required this.onAdd,
     required this.onRemove,
   });
@@ -558,6 +569,7 @@ class _CollectionSection extends StatelessWidget {
   final List<CollectionView> entries;
   final bool isSeries;
   final String Function(int?) scopeLabel;
+  final bool readOnly;
   final VoidCallback onAdd;
   final void Function(String id) onRemove;
 
@@ -578,11 +590,12 @@ class _CollectionSection extends StatelessWidget {
                 Expanded(
                     child: Text('Ma collection',
                         style: theme.textTheme.titleSmall)),
-                TextButton.icon(
-                  onPressed: onAdd,
-                  icon: const Icon(Icons.add),
-                  label: const Text('Ajouter'),
-                ),
+                if (!readOnly)
+                  TextButton.icon(
+                    onPressed: onAdd,
+                    icon: const Icon(Icons.add),
+                    label: const Text('Ajouter'),
+                  ),
               ],
             ),
             if (entries.isEmpty)
@@ -602,11 +615,14 @@ class _CollectionSection extends StatelessWidget {
                     subtitle: e.addedAt != null
                         ? Text('Acquis le ${_fmtDate(e.addedAt!)}')
                         : null,
-                    trailing: IconButton(
-                      tooltip: 'Retirer de la collection',
-                      icon: const Icon(Icons.close, size: 18),
-                      onPressed: e.id == null ? null : () => onRemove(e.id!),
-                    ),
+                    trailing: readOnly
+                        ? null
+                        : IconButton(
+                            tooltip: 'Retirer de la collection',
+                            icon: const Icon(Icons.close, size: 18),
+                            onPressed:
+                                e.id == null ? null : () => onRemove(e.id!),
+                          ),
                   )),
           ],
         ),
@@ -623,6 +639,7 @@ class _HistorySection extends StatelessWidget {
     required this.entries,
     required this.isSeries,
     required this.scopeLabel,
+    required this.readOnly,
     required this.onAdd,
     required this.onEdit,
     required this.onRemove,
@@ -631,6 +648,7 @@ class _HistorySection extends StatelessWidget {
   final List<HistoryView> entries;
   final bool isSeries;
   final String Function(int?) scopeLabel;
+  final bool readOnly;
   final VoidCallback onAdd;
   final void Function(HistoryView e) onEdit;
   final void Function(String id) onRemove;
@@ -652,11 +670,12 @@ class _HistorySection extends StatelessWidget {
                 Expanded(
                     child: Text('Historique de visionnage (${entries.length})',
                         style: theme.textTheme.titleSmall)),
-                TextButton.icon(
-                  onPressed: onAdd,
-                  icon: const Icon(Icons.add),
-                  label: const Text('Visionnage'),
-                ),
+                if (!readOnly)
+                  TextButton.icon(
+                    onPressed: onAdd,
+                    icon: const Icon(Icons.add),
+                    label: const Text('Visionnage'),
+                  ),
               ],
             ),
             if (entries.isEmpty)
@@ -680,12 +699,15 @@ class _HistorySection extends StatelessWidget {
                             style:
                                 const TextStyle(fontStyle: FontStyle.italic))
                         : null,
-                    onTap: () => onEdit(e),
-                    trailing: IconButton(
-                      tooltip: 'Supprimer ce visionnage',
-                      icon: const Icon(Icons.close, size: 18),
-                      onPressed: e.id == null ? null : () => onRemove(e.id!),
-                    ),
+                    onTap: readOnly ? null : () => onEdit(e),
+                    trailing: readOnly
+                        ? null
+                        : IconButton(
+                            tooltip: 'Supprimer ce visionnage',
+                            icon: const Icon(Icons.close, size: 18),
+                            onPressed:
+                                e.id == null ? null : () => onRemove(e.id!),
+                          ),
                   )),
           ],
         ),

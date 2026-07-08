@@ -22,6 +22,13 @@ class NoCacheHandler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
 
-with socketserver.TCPServer(("", PORT), NoCacheHandler) as httpd:
+# ThreadingTCPServer : une connexion lente/bloquée ne fige pas les autres
+# (TCPServer simple est mono-connexion et se retrouve gelé par un onglet ouvert).
+class _Server(socketserver.ThreadingTCPServer):
+    daemon_threads = True
+    allow_reuse_address = True
+
+
+with _Server(("", PORT), NoCacheHandler) as httpd:
     print(f"Serveur anti-cache sur http://localhost:{PORT} (dossier {WEB_DIR})")
     httpd.serve_forever()

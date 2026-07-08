@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/config/app_config.dart';
 import '../../core/supabase/supabase_providers.dart';
+import '../../core/supabase/view_as.dart';
 import '../models/favorite_person.dart';
 import 'collection_repository.dart' show sharedPreferencesProvider;
 
@@ -23,6 +24,13 @@ class FavoritesController extends Notifier<List<FavoritePerson>> {
     ref.onDispose(() => _sub?.cancel());
     if (AppConfig.hasSupabase) {
       ref.watch(currentUserProvider); // reset/re-souscrit au changement d'auth
+      // Consultation admin : select one-shot des favoris de la cible (pas de
+      // realtime — inutile en lecture seule et fragile avec les claims JWT).
+      final target = ref.watch(viewAsProvider);
+      if (target != null) {
+        _loadOnce(target.userId);
+        return const [];
+      }
       _subscribeCloud();
       return const [];
     }
@@ -52,6 +60,12 @@ class FavoritesController extends Notifier<List<FavoritePerson>> {
     });
   }
 
+  Future<void> _loadOnce(String uid) async {
+    final rows = await _client.from(_table).select().eq('user_id', uid);
+    state = _sortDesc(
+        rows.cast<Map<String, dynamic>>().map(FavoritePerson.fromJson).toList());
+  }
+
   // --- Local --------------------------------------------------------------
   List<FavoritePerson> _loadLocal() {
     final raw = ref.read(sharedPreferencesProvider).getString(_key);
@@ -74,6 +88,7 @@ class FavoritesController extends Notifier<List<FavoritePerson>> {
     required String name,
     String? profilePath,
   }) async {
+    if (ref.read(viewAsProvider) != null) return; // lecture seule (admin)
     final removing = isFavorite(personId);
     // Mise à jour optimiste (l'UI répond tout de suite).
     state = removing

@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/config/app_config.dart';
 import '../../core/supabase/supabase_providers.dart';
+import '../../core/supabase/view_as.dart';
 import '../models/collection_entry.dart';
 import '../models/film.dart';
 import '../models/film_season.dart';
@@ -101,9 +102,22 @@ bool _sameMeta(Film a, Film b) =>
 // mémoire en vues composites (CollectionView / HistoryView).
 // ===========================================================================
 class SupabaseLibraryRepository implements LibraryRepository {
-  SupabaseLibraryRepository(this._client);
+  SupabaseLibraryRepository(this._client, {this._targetUserId});
 
   final SupabaseClient _client;
+
+  /// Mode « consultation admin » : lit les données de cet utilisateur au lieu
+  /// de celles du compte connecté. Les politiques RLS n'accordent que SELECT,
+  /// donc le repository devient lecture seule.
+  final String? _targetUserId;
+
+  bool get readOnly => _targetUserId != null;
+
+  void _assertWritable() {
+    if (readOnly) {
+      throw StateError('Lecture seule : consultation admin.');
+    }
+  }
 
   // Caches sources (chargés par pagination, voir _loadAll).
   Map<String, Film> _filmsById = {};
@@ -121,6 +135,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
   bool _emitted = false; // au moins une émission faite (rejouable aux abonnés)
 
   String get _userId {
+    if (_targetUserId != null) return _targetUserId;
     final id = _client.auth.currentUser?.id;
     if (id == null) throw StateError('Aucun utilisateur connecté.');
     return id;
@@ -276,6 +291,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
     required Medium medium,
     DateTime? addedAt,
   }) async {
+    _assertWritable();
     final saved = await _upsertFilm(film);
     if (season != null) await _upsertSeason(saved, season);
 
@@ -314,6 +330,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
     double? rating,
     String? comment,
   }) async {
+    _assertWritable();
     final saved = await _upsertFilm(film);
     if (season != null) await _upsertSeason(saved, season);
 
@@ -344,6 +361,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
     double? rating,
     String? comment,
   }) async {
+    _assertWritable();
     await _client.from('history').update({
       'watched_at': watchedAt.toUtc().toIso8601String(),
       'rating': rating,
@@ -366,6 +384,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
 
   @override
   Future<void> removeFromCollection(String id) async {
+    _assertWritable();
     final filmId = _filmIdOfCollection(id);
     await _client.from('collection').delete().eq('id', id).eq('user_id', _userId);
     _collection = _collection.where((e) => e.id != id).toList();
@@ -375,6 +394,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
 
   @override
   Future<void> removeFromHistory(String id) async {
+    _assertWritable();
     final filmId = _filmIdOfHistory(id);
     await _client.from('history').delete().eq('id', id).eq('user_id', _userId);
     _history = _history.where((e) => e.id != id).toList();
@@ -415,6 +435,9 @@ class SupabaseLibraryRepository implements LibraryRepository {
 
   @override
   Future<void> backfillFilm(Film fresh) async {
+    // No-op silencieux (pas de throw) : HomeShell le déclenche automatiquement
+    // au démarrage, y compris pendant une consultation admin.
+    if (readOnly) return;
     final existing = _filmsByKey[fresh.mediaKey];
     if (existing == null) return; // pas dans la bibliothèque → on ne crée rien
     final merged = _mergeFilm(existing, fresh);
@@ -734,7 +757,13 @@ final sharedPreferencesProvider = Provider<SharedPreferences>(
 final libraryRepositoryProvider = Provider<LibraryRepository>((ref) {
   if (AppConfig.hasSupabase) {
     ref.watch(currentUserProvider);
-    final repo = SupabaseLibraryRepository(ref.watch(supabaseClientProvider));
+    // Consultation admin : le repository est reconstruit ciblé sur l'autre
+    // utilisateur (lecture seule), et tout le pipeline de vues suit.
+    final target = ref.watch(viewAsProvider);
+    final repo = SupabaseLibraryRepository(
+      ref.watch(supabaseClientProvider),
+      targetUserId: target?.userId,
+    );
     ref.onDispose(repo.dispose);
     return repo;
   }
