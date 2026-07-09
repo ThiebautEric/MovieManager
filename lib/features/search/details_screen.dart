@@ -196,61 +196,7 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
         ],
         if (details.cast.isNotEmpty) ...[
           const SizedBox(height: 24),
-          Text('Casting', style: theme.textTheme.titleMedium),
-          const SizedBox(height: 8),
-          SizedBox(
-            height: 200,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: details.cast.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 12),
-              itemBuilder: (context, i) {
-                final c = details.cast[i];
-                return SizedBox(
-                  width: 96,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(8),
-                    onTap: c.id == 0
-                        ? null
-                        : () => openPerson(
-                              context,
-                              ref,
-                              id: c.id,
-                              name: c.name,
-                              profilePath: c.profilePath,
-                            ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 96,
-                          height: 120,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: PosterImage(
-                                posterPath: c.profilePath, size: 'w185'),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(c.name,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.bodySmall),
-                        if (c.character.isNotEmpty)
-                          Text(c.character,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                  color: theme.colorScheme.outline)),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+          _CastSection(cast: details.cast),
         ],
       ],
     );
@@ -259,6 +205,153 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
 
 String _fmtDate(DateTime d) =>
     '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
+
+/// Casting : bande horizontale bornée à [_maxCollapsed] vignettes, avec une
+/// tuile « +N » qui déplie la distribution complète en grille (Wrap) — le
+/// casting intégral peut dépasser la centaine de personnes depuis la levée de
+/// la limite de 15.
+class _CastSection extends ConsumerStatefulWidget {
+  const _CastSection({required this.cast});
+
+  final List<CastMember> cast;
+
+  @override
+  ConsumerState<_CastSection> createState() => _CastSectionState();
+}
+
+class _CastSectionState extends ConsumerState<_CastSection> {
+  static const _maxCollapsed = 20;
+
+  bool _expanded = false;
+
+  Widget _tile(CastMember c) {
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: 96,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: c.id == 0
+            ? null
+            : () => openPerson(
+                  context,
+                  ref,
+                  id: c.id,
+                  name: c.name,
+                  profilePath: c.profilePath,
+                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 96,
+              height: 120,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: PosterImage(posterPath: c.profilePath, size: 'w185'),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(c.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodySmall),
+            if (c.character.isNotEmpty)
+              Text(c.character,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodySmall
+                      ?.copyWith(color: theme.colorScheme.outline)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Tuile « +N » qui déplie la distribution complète.
+  Widget _moreTile(int hidden) {
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: 96,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: () => setState(() => _expanded = true),
+        child: Column(
+          children: [
+            Container(
+              width: 96,
+              height: 120,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              alignment: Alignment.center,
+              child: Text('+$hidden',
+                  style: theme.textTheme.titleMedium
+                      ?.copyWith(color: theme.colorScheme.primary)),
+            ),
+            const SizedBox(height: 4),
+            Text('Voir tout',
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.primary)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cast = widget.cast;
+    final overflowing = cast.length > _maxCollapsed;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text('Casting (${cast.length})',
+                  style: theme.textTheme.titleMedium),
+            ),
+            if (_expanded)
+              TextButton(
+                onPressed: () => setState(() => _expanded = false),
+                child: const Text('Réduire'),
+              ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        if (_expanded)
+          // Distribution complète : grille qui reste dans la largeur de
+          // l'écran, la page défile verticalement.
+          Wrap(
+            spacing: 12,
+            runSpacing: 16,
+            children: cast.map(_tile).toList(),
+          )
+        else
+          SizedBox(
+            height: 200,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount:
+                  overflowing ? _maxCollapsed + 1 : cast.length,
+              separatorBuilder: (_, _) => const SizedBox(width: 12),
+              itemBuilder: (context, i) {
+                if (overflowing && i == _maxCollapsed) {
+                  return _moreTile(cast.length - _maxCollapsed);
+                }
+                return _tile(cast[i]);
+              },
+            ),
+          ),
+      ],
+    );
+  }
+}
 
 /// Deux sections INDÉPENDANTES : la collection (possessions) et l'historique
 /// (visionnages). Ajout/suppression de chacune sans effet sur l'autre. Pour les
