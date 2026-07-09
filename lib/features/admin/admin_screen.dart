@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/supabase/supabase_providers.dart';
-import '../../core/supabase/view_as.dart';
 import '../../widgets/theme_toggle_button.dart';
+import '../auth/auth_controller.dart';
 import 'admin_controller.dart';
 
 String _fmtDate(DateTime d) =>
@@ -39,7 +39,15 @@ class AdminScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Administration'),
-        actions: const [ThemeToggleButton()],
+        actions: [
+          const ThemeToggleButton(),
+          // Seul écran du compte admin : la déconnexion vit ici.
+          IconButton(
+            tooltip: 'Se déconnecter',
+            icon: const Icon(Icons.logout),
+            onPressed: () => ref.read(authControllerProvider).signOut(),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Créer un utilisateur',
@@ -184,27 +192,14 @@ class _UserTile extends ConsumerWidget {
         ],
       ),
       subtitle: Text('Créé le ${_fmtDate(user.createdAt)} · $lastSeen'),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (!isSelf)
-            IconButton(
-              icon: const Icon(Icons.visibility_outlined),
-              tooltip: 'Voir sa bibliothèque',
-              onPressed: () => ref.read(viewAsProvider.notifier).enter(
-                    ViewAsTarget(userId: user.id, email: user.email),
-                  ),
-            ),
-          IconButton(
-            icon: const Icon(Icons.delete_outline),
-            tooltip: user.isAdmin || isSelf
-                ? 'Suppression impossible (admin)'
-                : 'Supprimer',
-            onPressed: user.isAdmin || isSelf
-                ? null
-                : () => _confirmDelete(context, ref),
-          ),
-        ],
+      trailing: IconButton(
+        icon: const Icon(Icons.delete_outline),
+        tooltip: user.isAdmin || isSelf
+            ? 'Suppression impossible (admin)'
+            : 'Supprimer',
+        onPressed: user.isAdmin || isSelf
+            ? null
+            : () => _confirmDelete(context, ref),
       ),
     );
   }

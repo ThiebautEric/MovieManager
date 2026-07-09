@@ -9,6 +9,7 @@ import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/poster_image.dart';
 import '../admin/admin_screen.dart';
 import '../auth/auth_controller.dart';
+import '../friends/friends_screen.dart';
 import '../collection/collection_screen.dart';
 import '../collection/physical_collection_screen.dart';
 import '../favorites/favorites_screen.dart';
@@ -55,11 +56,12 @@ class _HomeShellState extends ConsumerState<HomeShell>
   /// que si quelque chose a changé. Mode cloud uniquement (le local est complet
   /// dès l'ajout). Plus besoin de rouvrir chaque fiche.
   Future<void> _backfillMetadata() async {
-    // Jamais pendant une consultation admin : le repository est en lecture
-    // seule et cible les données d'un autre utilisateur.
+    // Jamais pendant une consultation (repository lecture seule ciblé sur un
+    // autre utilisateur) ni pour le compte admin (pas de bibliothèque).
     if (_backfilling ||
         !AppConfig.hasSupabase ||
-        ref.read(isViewingAsProvider)) {
+        ref.read(isViewingAsProvider) ||
+        ref.read(isAdminProvider)) {
       return;
     }
     _backfilling = true;
@@ -115,8 +117,8 @@ class _HomeShellState extends ConsumerState<HomeShell>
     }
   }
 
-  // L'onglet Admin est ajouté en DERNIER quand l'utilisateur porte la claim
-  // admin, pour que les index des 5 onglets de base ne bougent jamais.
+  // L'onglet « Mes amis » est ajouté en DERNIER (mode cloud), pour que les
+  // index des 5 onglets de base ne bougent jamais.
   static const _basePages = <Widget>[
     CollectionScreen(),
     PhysicalCollectionScreen(),
@@ -145,10 +147,10 @@ class _HomeShellState extends ConsumerState<HomeShell>
         label: 'Stats'),
   ];
 
-  static const _adminDestination = NavigationDestination(
-      icon: Icon(Icons.admin_panel_settings_outlined),
-      selectedIcon: Icon(Icons.admin_panel_settings),
-      label: 'Admin');
+  static const _friendsDestination = NavigationDestination(
+      icon: Icon(Icons.group_outlined),
+      selectedIcon: Icon(Icons.group),
+      label: 'Mes amis');
 
   void _selectTab(int i) {
     setState(() => _index = i);
@@ -218,22 +220,32 @@ class _HomeShellState extends ConsumerState<HomeShell>
     final top = stack.isEmpty ? null : stack.last;
 
     final isAdmin = AppConfig.hasSupabase && ref.watch(isAdminProvider);
-    final pages = [..._basePages, if (isAdmin) const AdminScreen()];
+
+    // Compte admin : uniquement la gestion des comptes, pas de bibliothèque
+    // ni d'onglets (NavigationBar exige d'ailleurs au moins 2 destinations).
+    if (isAdmin) {
+      return const AdminScreen();
+    }
+
+    final pages = [
+      ..._basePages,
+      if (AppConfig.hasSupabase) const FriendsScreen(),
+    ];
     final destinations = [
       ..._baseDestinations,
-      if (isAdmin) _adminDestination,
+      if (AppConfig.hasSupabase) _friendsDestination,
     ];
-    // La claim peut disparaître (reconnexion avec un autre compte).
+    // Le nombre d'onglets peut changer (reconnexion avec un autre compte).
     if (_index >= pages.length) _index = 0;
 
-    // Entrée en consultation → onglet Historique (les données de la cible) ;
-    // sortie → retour sur l'onglet Admin.
+    // Entrée en consultation → onglet Historique (les données de l'ami) ;
+    // sortie → retour sur le dernier onglet (« Mes amis »).
     ref.listen(viewAsProvider, (prev, next) {
       if (prev == null && next != null) {
         setState(() => _index = 0);
         closeDetail(ref);
       } else if (prev != null && next == null) {
-        setState(() => _index = _basePages.length); // onglet Admin
+        setState(() => _index = pages.length - 1);
         closeDetail(ref);
       }
     });

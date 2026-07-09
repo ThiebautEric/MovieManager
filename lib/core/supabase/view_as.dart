@@ -2,8 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'supabase_providers.dart';
 
-/// Cible du mode « consultation » : l'admin regarde la bibliothèque d'un autre
-/// utilisateur, en lecture seule (les politiques RLS n'accordent que SELECT).
+/// Cible du mode « consultation » : regarder la bibliothèque d'un autre
+/// utilisateur (« Mes amis »), en lecture seule — les politiques RLS
+/// n'accordent que SELECT sur les lignes d'autrui.
 class ViewAsTarget {
   const ViewAsTarget({required this.userId, required this.email});
 
