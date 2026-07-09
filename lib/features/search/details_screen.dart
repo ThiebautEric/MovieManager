@@ -206,10 +206,11 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
 String _fmtDate(DateTime d) =>
     '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
 
-/// Casting : bande horizontale bornée à [_maxCollapsed] vignettes, avec une
-/// tuile « +N » qui déplie la distribution complète en grille (Wrap) — le
-/// casting intégral peut dépasser la centaine de personnes depuis la levée de
-/// la limite de 15.
+/// Casting : grille (Wrap) qui reste dans la largeur de l'écran — jamais de
+/// défilement horizontal, inutilisable à la souris sur le web. Repliée à
+/// [_maxCollapsed] vignettes + tuile « +N » toujours visible qui déplie la
+/// distribution complète (elle peut dépasser la centaine de personnes depuis
+/// la levée de la limite de 15).
 class _CastSection extends ConsumerStatefulWidget {
   const _CastSection({required this.cast});
 
@@ -220,7 +221,7 @@ class _CastSection extends ConsumerStatefulWidget {
 }
 
 class _CastSectionState extends ConsumerState<_CastSection> {
-  static const _maxCollapsed = 20;
+  static const _maxCollapsed = 12;
 
   bool _expanded = false;
 
@@ -324,30 +325,16 @@ class _CastSectionState extends ConsumerState<_CastSection> {
           ],
         ),
         const SizedBox(height: 8),
-        if (_expanded)
-          // Distribution complète : grille qui reste dans la largeur de
-          // l'écran, la page défile verticalement.
-          Wrap(
-            spacing: 12,
-            runSpacing: 16,
-            children: cast.map(_tile).toList(),
-          )
-        else
-          SizedBox(
-            height: 200,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount:
-                  overflowing ? _maxCollapsed + 1 : cast.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 12),
-              itemBuilder: (context, i) {
-                if (overflowing && i == _maxCollapsed) {
-                  return _moreTile(cast.length - _maxCollapsed);
-                }
-                return _tile(cast[i]);
-              },
-            ),
-          ),
+        Wrap(
+          spacing: 12,
+          runSpacing: 16,
+          children: [
+            for (final c in _expanded ? cast : cast.take(_maxCollapsed))
+              _tile(c),
+            if (overflowing && !_expanded)
+              _moreTile(cast.length - _maxCollapsed),
+          ],
+        ),
       ],
     );
   }
