@@ -99,7 +99,22 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(details.title, style: theme.textTheme.titleLarge),
+                  // Titre + durée totale (film, ou cumul des épisodes).
+                  Text.rich(
+                    TextSpan(
+                      text: details.title,
+                      style: theme.textTheme.titleLarge,
+                      children: [
+                        if (details.totalRuntime != null)
+                          TextSpan(
+                            text:
+                                '   ${isMovie ? '' : '≈ '}${_fmtDuration(details.totalRuntime!)}',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                                color: theme.colorScheme.outline),
+                          ),
+                      ],
+                    ),
+                  ),
                   if (showOriginal) ...[
                     const SizedBox(height: 2),
                     Text(
@@ -112,7 +127,10 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
                   Text(
                     '${isMovie ? 'Film' : 'Série'}'
                     '${details.releaseYear != null ? ' · ${details.releaseYear}' : ''}'
-                    '${details.runtime != null ? ' · ${details.runtime} min' : ''}',
+                    // Pour une série : nb d'épisodes et durée unitaire (le
+                    // cumul est à côté du titre ; pour un film aussi).
+                    '${!isMovie && details.numberOfEpisodes != null ? ' · ${details.numberOfEpisodes} épisodes' : ''}'
+                    '${!isMovie && details.runtime != null ? ' · ${details.runtime} min/épisode' : ''}',
                     style: theme.textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 8),
@@ -205,6 +223,14 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
 
 String _fmtDate(DateTime d) =>
     '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
+
+/// « 47 min », « 2 h 08 », « 61 h »…
+String _fmtDuration(int minutes) {
+  final h = minutes ~/ 60;
+  final m = minutes % 60;
+  if (h == 0) return '$m min';
+  return m == 0 ? '$h h' : '$h h ${m.toString().padLeft(2, '0')}';
+}
 
 /// Casting : grille (Wrap) qui reste dans la largeur de l'écran — jamais de
 /// défilement horizontal, inutilisable à la souris sur le web. Repliée à

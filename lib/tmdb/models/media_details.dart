@@ -118,6 +118,7 @@ class MediaDetails {
     required this.videos,
     this.originCountry,
     this.seasons = const [],
+    this.numberOfEpisodes,
   });
 
   final int tmdbId;
@@ -129,7 +130,10 @@ class MediaDetails {
   final String? backdropPath;
   final String? releaseDate;
   final double voteAverage;
-  final int? runtime; // minutes (films)
+  final int? runtime; // minutes (film entier, ou UN épisode pour une série)
+
+  /// Nombre total d'épisodes (séries uniquement).
+  final int? numberOfEpisodes;
   final List<Genre> genres;
   final List<CrewMember> directors; // réalisateur(s) / créateur(s), cliquables
   final List<CastMember> cast;
@@ -151,6 +155,15 @@ class MediaDetails {
 
   List<Video> get trailers =>
       videos.where((v) => v.isYoutube && v.type == 'Trailer').toList();
+
+  /// Durée totale de l'œuvre en minutes : le film, ou le CUMUL de tous les
+  /// épisodes (approximation : nb d'épisodes × durée d'épisode, TMDB ne
+  /// fournissant pas de total).
+  int? get totalRuntime {
+    if (mediaType == 'movie') return runtime;
+    if (runtime == null || numberOfEpisodes == null) return null;
+    return runtime! * numberOfEpisodes!;
+  }
 
   factory MediaDetails.fromJson(Map<String, dynamic> json, String mediaType) {
     final isMovie = mediaType == 'movie';
@@ -209,7 +222,11 @@ class MediaDetails {
           ? json['runtime'] as int?
           : ((json['episode_run_time'] as List<dynamic>?)?.isNotEmpty ?? false
               ? (json['episode_run_time'] as List<dynamic>).first as int?
-              : null),
+              // episode_run_time est souvent vide : on retombe sur la durée
+              // du dernier épisode diffusé.
+              : (json['last_episode_to_air']
+                  as Map<String, dynamic>?)?['runtime'] as int?),
+      numberOfEpisodes: isMovie ? null : json['number_of_episodes'] as int?,
       genres: (json['genres'] as List<dynamic>? ?? [])
           .map((e) => Genre.fromJson(e as Map<String, dynamic>))
           .toList(),
