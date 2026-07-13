@@ -50,10 +50,12 @@ for tbl in ("history", "collection"):
     for r in sup_all("/rest/v1/" + tbl, "film_id,season_number", "&season_number=not.is.null"):
         wanted.add((r["film_id"], r["season_number"]))
 
+# Complètes = présentes ET episode_count renseigné ; les autres sont (re)traitées.
 have = {(r["film_id"], r["season_number"])
-        for r in sup_all("/rest/v1/film_seasons", "film_id,season_number")}
+        for r in sup_all("/rest/v1/film_seasons", "film_id,season_number,episode_count")
+        if r.get("episode_count") is not None}
 missing = sorted(wanted - have)
-print("saisons referencees=%d deja presentes=%d manquantes=%d" % (len(wanted), len(have), len(missing)))
+print("saisons referencees=%d completes=%d a traiter=%d" % (len(wanted), len(have), len(missing)))
 
 # film_id -> tmdb_id (séries uniquement).
 films = {r["id"]: r["tmdb_id"]
@@ -71,10 +73,12 @@ def fetch(key):
                 "https://api.themoviedb.org/3/tv/%s/season/%s?%s" % (tid, sn, q), timeout=30) as r:
             d = json.loads(r.read().decode())
         air = d.get("air_date") or ""
+        eps = len(d.get("episodes") or [])
         return key, {"user_id": uid, "film_id": film_id, "season_number": sn,
                      "name": d.get("name") or None,
                      "poster_path": d.get("poster_path"),
-                     "air_year": int(air[:4]) if len(air) >= 4 else None}, None
+                     "air_year": int(air[:4]) if len(air) >= 4 else None,
+                     "episode_count": eps or None}, None
     except Exception as e:
         return key, None, str(e)[:60]
 

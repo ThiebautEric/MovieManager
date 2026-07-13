@@ -10,6 +10,7 @@ class FilmSeason {
     this.name,
     this.posterPath,
     this.airYear,
+    this.episodeCount,
   });
 
   final String? id;
@@ -18,6 +19,7 @@ class FilmSeason {
   final String? name;
   final String? posterPath;
   final int? airYear;
+  final int? episodeCount; // pour la durée cumulée (× durée d'épisode)
 
   factory FilmSeason.fromJson(Map<String, dynamic> json) => FilmSeason(
         id: json['id'] as String?,
@@ -26,6 +28,7 @@ class FilmSeason {
         name: json['name'] as String?,
         posterPath: json['poster_path'] as String?,
         airYear: (json['air_year'] as num?)?.toInt(),
+        episodeCount: (json['episode_count'] as num?)?.toInt(),
       );
 
   Map<String, dynamic> toUpsertJson() => {
@@ -33,6 +36,7 @@ class FilmSeason {
         'name': name,
         'poster_path': posterPath,
         'air_year': airYear,
+        'episode_count': episodeCount,
       };
 
   Map<String, dynamic> toFullJson() =>
@@ -43,5 +47,6 @@ class FilmSeason {
         name: s.name.isEmpty ? null : s.name,
         posterPath: s.posterPath,
         airYear: s.year,
+        episodeCount: s.episodeCount > 0 ? s.episodeCount : null,
       );
 }

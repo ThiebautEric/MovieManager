@@ -57,8 +57,11 @@ create table if not exists public.film_seasons (
   name          text,
   poster_path   text,
   air_year      integer,
+  episode_count integer,
   unique (film_id, season_number)
 );
+-- Ajout pour une base déjà créée (durée cumulée sur les vignettes).
+alter table public.film_seasons add column if not exists episode_count integer;
 
 -- ----------------------------------------------------------------------------
 -- 3. collection — possessions. season_number null = œuvre entière.

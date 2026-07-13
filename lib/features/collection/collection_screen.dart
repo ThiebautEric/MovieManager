@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/utils/format.dart';
 import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
@@ -439,11 +440,23 @@ class _HistoryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(
-            event.film.title,
+          // Titre + durée (film, ou cumul de la saison, « ≈ » car estimé).
+          Text.rich(
+            TextSpan(
+              text: event.film.title,
+              style: theme.textTheme.bodyMedium,
+              children: [
+                if (event.totalMinutes != null)
+                  TextSpan(
+                    text:
+                        '  ${event.film.isMovie ? '' : '≈ '}${fmtDuration(event.totalMinutes!)}',
+                    style: theme.textTheme.labelSmall
+                        ?.copyWith(color: theme.colorScheme.outline),
+                  ),
+              ],
+            ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.bodyMedium,
           ),
           if (isSeason)
             Text('Saison ${event.seasonNumber}',

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/supabase/view_as.dart';
+import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/models/film.dart';
 import '../../data/models/film_season.dart';
@@ -108,8 +109,8 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
                         if (details.totalRuntime != null)
                           TextSpan(
                             text:
-                                '   ${isMovie ? '' : '≈ '}${_fmtDuration(details.totalRuntime!)}',
-                            style: theme.textTheme.titleMedium?.copyWith(
+                                '   ${isMovie ? '' : '≈ '}${fmtDuration(details.totalRuntime!)}',
+                            style: theme.textTheme.bodySmall?.copyWith(
                                 color: theme.colorScheme.outline),
                           ),
                       ],
@@ -223,14 +224,6 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
 
 String _fmtDate(DateTime d) =>
     '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
-
-/// « 47 min », « 2 h 08 », « 61 h »…
-String _fmtDuration(int minutes) {
-  final h = minutes ~/ 60;
-  final m = minutes % 60;
-  if (h == 0) return '$m min';
-  return m == 0 ? '$h h' : '$h h ${m.toString().padLeft(2, '0')}';
-}
 
 /// Casting : grille (Wrap) qui reste dans la largeur de l'écran — jamais de
 /// défilement horizontal, inutilisable à la souris sur le web. Repliée à

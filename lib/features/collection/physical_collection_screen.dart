@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../widgets/owned_format_badge.dart';
@@ -50,13 +51,18 @@ class PhysicalCollectionScreen extends ConsumerWidget {
             itemCount: entries.length,
             itemBuilder: (context, i) {
               final entry = entries[i];
+              // Durée : film, ou cumul de la saison (« ≈ » car estimé).
+              final duration = entry.totalMinutes != null
+                  ? '${entry.film.isMovie ? '' : '≈ '}${fmtDuration(entry.totalMinutes!)}'
+                  : null;
               return _CollectionCard(
                 poster: entry.posterPath,
                 title: entry.film.title,
-                subtitle: entry.seasonNumber != null
-                    ? 'Saison ${entry.seasonNumber}'
-                    : '${entry.film.isMovie ? 'Film' : 'Série'}'
-                        '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}',
+                subtitle: (entry.seasonNumber != null
+                        ? 'Saison ${entry.seasonNumber}'
+                        : '${entry.film.isMovie ? 'Film' : 'Série'}'
+                            '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}') +
+                    (duration != null ? ' · $duration' : ''),
                 badge: MediumBadge(medium: entry.medium),
                 seasonNumber: entry.seasonNumber,
                 dateLabel:

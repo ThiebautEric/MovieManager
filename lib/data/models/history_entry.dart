@@ -61,4 +61,14 @@ class HistoryView {
   String? get comment => entry.comment;
 
   String? get posterPath => season?.posterPath ?? film.posterPath;
+
+  /// Durée totale en minutes : le film, ou le cumul de la saison
+  /// (épisodes × durée d'épisode). Null si une donnée manque.
+  int? get totalMinutes {
+    if (film.isMovie) return film.runtime;
+    final eps = season?.episodeCount;
+    final rt = film.runtime;
+    if (eps == null || rt == null) return null;
+    return eps * rt;
+  }
 }
