@@ -449,7 +449,7 @@ class _HistoryCard extends StatelessWidget {
                 if (event.totalMinutes != null)
                   TextSpan(
                     text:
-                        '  ${event.film.isMovie ? '' : '≈ '}${fmtDuration(event.totalMinutes!)}',
+                        '  ${event.isExactDuration ? '' : '≈'}${fmtDuration(event.totalMinutes!)}',
                     style: theme.textTheme.labelSmall
                         ?.copyWith(color: theme.colorScheme.outline),
                   ),

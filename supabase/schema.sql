@@ -58,10 +58,12 @@ create table if not exists public.film_seasons (
   poster_path   text,
   air_year      integer,
   episode_count integer,
+  runtime_minutes integer, -- somme exacte des durées d'épisodes (TMDB)
   unique (film_id, season_number)
 );
--- Ajout pour une base déjà créée (durée cumulée sur les vignettes).
+-- Ajouts pour une base déjà créée (durée cumulée sur les vignettes).
 alter table public.film_seasons add column if not exists episode_count integer;
+alter table public.film_seasons add column if not exists runtime_minutes integer;
 
 -- ----------------------------------------------------------------------------
 -- 3. collection — possessions. season_number null = œuvre entière.

@@ -51,9 +51,9 @@ class PhysicalCollectionScreen extends ConsumerWidget {
             itemCount: entries.length,
             itemBuilder: (context, i) {
               final entry = entries[i];
-              // Durée : film, ou cumul de la saison (« ≈ » car estimé).
+              // Durée : film, ou cumul de la saison (« ≈ » si estimé).
               final duration = entry.totalMinutes != null
-                  ? '${entry.film.isMovie ? '' : '≈ '}${fmtDuration(entry.totalMinutes!)}'
+                  ? '${entry.isExactDuration ? '' : '≈'}${fmtDuration(entry.totalMinutes!)}'
                   : null;
               return _CollectionCard(
                 poster: entry.posterPath,

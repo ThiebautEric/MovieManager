@@ -11,6 +11,7 @@ class FilmSeason {
     this.posterPath,
     this.airYear,
     this.episodeCount,
+    this.runtimeMinutes,
   });
 
   final String? id;
@@ -20,6 +21,7 @@ class FilmSeason {
   final String? posterPath;
   final int? airYear;
   final int? episodeCount; // pour la durée cumulée (× durée d'épisode)
+  final int? runtimeMinutes; // somme EXACTE des durées d'épisodes (TMDB)
 
   factory FilmSeason.fromJson(Map<String, dynamic> json) => FilmSeason(
         id: json['id'] as String?,
@@ -29,6 +31,7 @@ class FilmSeason {
         posterPath: json['poster_path'] as String?,
         airYear: (json['air_year'] as num?)?.toInt(),
         episodeCount: (json['episode_count'] as num?)?.toInt(),
+        runtimeMinutes: (json['runtime_minutes'] as num?)?.toInt(),
       );
 
   Map<String, dynamic> toUpsertJson() => {
@@ -37,6 +40,7 @@ class FilmSeason {
         'poster_path': posterPath,
         'air_year': airYear,
         'episode_count': episodeCount,
+        'runtime_minutes': runtimeMinutes,
       };
 
   Map<String, dynamic> toFullJson() =>

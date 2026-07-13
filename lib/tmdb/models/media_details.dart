@@ -218,14 +218,13 @@ class MediaDetails {
       releaseDate:
           (isMovie ? json['release_date'] : json['first_air_date']) as String?,
       voteAverage: ((json['vote_average'] as num?) ?? 0).toDouble(),
+      // PAS de repli sur last_episode_to_air.runtime : les finals de série
+      // sont souvent anormalement longs et faussent tous les cumuls.
       runtime: isMovie
           ? json['runtime'] as int?
           : ((json['episode_run_time'] as List<dynamic>?)?.isNotEmpty ?? false
               ? (json['episode_run_time'] as List<dynamic>).first as int?
-              // episode_run_time est souvent vide : on retombe sur la durée
-              // du dernier épisode diffusé.
-              : (json['last_episode_to_air']
-                  as Map<String, dynamic>?)?['runtime'] as int?),
+              : null),
       numberOfEpisodes: isMovie ? null : json['number_of_episodes'] as int?,
       genres: (json['genres'] as List<dynamic>? ?? [])
           .map((e) => Genre.fromJson(e as Map<String, dynamic>))

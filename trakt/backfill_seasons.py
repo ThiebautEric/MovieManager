@@ -50,10 +50,11 @@ for tbl in ("history", "collection"):
     for r in sup_all("/rest/v1/" + tbl, "film_id,season_number", "&season_number=not.is.null"):
         wanted.add((r["film_id"], r["season_number"]))
 
-# Complètes = présentes ET episode_count renseigné ; les autres sont (re)traitées.
+# Complètes = présentes ET durée exacte renseignée ; les autres sont (re)traitées.
 have = {(r["film_id"], r["season_number"])
-        for r in sup_all("/rest/v1/film_seasons", "film_id,season_number,episode_count")
-        if r.get("episode_count") is not None}
+        for r in sup_all("/rest/v1/film_seasons",
+                         "film_id,season_number,episode_count,runtime_minutes")
+        if r.get("runtime_minutes") is not None}
 missing = sorted(wanted - have)
 print("saisons referencees=%d completes=%d a traiter=%d" % (len(wanted), len(have), len(missing)))
 
@@ -73,12 +74,16 @@ def fetch(key):
                 "https://api.themoviedb.org/3/tv/%s/season/%s?%s" % (tid, sn, q), timeout=30) as r:
             d = json.loads(r.read().decode())
         air = d.get("air_date") or ""
-        eps = len(d.get("episodes") or [])
+        episodes = d.get("episodes") or []
+        # Somme EXACTE des durées d'épisodes (l'estimation nb × durée d'un
+        # épisode se fait berner par les finals extra-longs, cf. Stranger Things).
+        total = sum(e.get("runtime") or 0 for e in episodes)
         return key, {"user_id": uid, "film_id": film_id, "season_number": sn,
                      "name": d.get("name") or None,
                      "poster_path": d.get("poster_path"),
                      "air_year": int(air[:4]) if len(air) >= 4 else None,
-                     "episode_count": eps or None}, None
+                     "episode_count": len(episodes) or None,
+                     "runtime_minutes": total or None}, None
     except Exception as e:
         return key, None, str(e)[:60]
 
