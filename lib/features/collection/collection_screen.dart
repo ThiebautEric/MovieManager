@@ -148,9 +148,11 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           final c = yearStats.putIfAbsent(e.watchedAt.year, () => _Counts());
           if (e.film.mediaType == 'movie') {
             c.films++;
+            c.filmsMin += e.totalMinutes ?? 0;
             if (inColl(e)) c.filmsInColl++;
           } else {
             c.series++;
+            c.seriesMin += e.totalMinutes ?? 0;
             if (inColl(e)) c.seriesInColl++;
           }
         }
@@ -259,9 +261,30 @@ class _MonthGroup {
   final List<HistoryView> items = [];
 }
 
-/// Compteurs films/séries vus (et combien possédés en collection).
+/// Compteurs films/séries vus (et combien possédés en collection),
+/// plus les durées cumulées en minutes.
 class _Counts {
   int films = 0, filmsInColl = 0, series = 0, seriesInColl = 0;
+  int filmsMin = 0, seriesMin = 0;
+}
+
+/// Durée cumulée, exprimée en jours au-delà de 24 h : « 14h30 », « 3j 7h »…
+String _fmtCumul(int minutes) {
+  if (minutes < 24 * 60) return fmtDuration(minutes);
+  final d = minutes ~/ (24 * 60);
+  final h = (minutes % (24 * 60)) ~/ 60;
+  return h == 0 ? '${d}j' : '${d}j ${h}h';
+}
+
+/// Texte « total : X (films : Y · séries : Z) » — vide si aucune durée connue.
+String _durationText(_Counts c) {
+  final total = c.filmsMin + c.seriesMin;
+  if (total == 0) return '';
+  final parts = <String>[
+    if (c.filmsMin > 0) 'films : ${_fmtCumul(c.filmsMin)}',
+    if (c.seriesMin > 0) 'séries : ${_fmtCumul(c.seriesMin)}',
+  ];
+  return 'total : ${_fmtCumul(total)} (${parts.join(' · ')})';
 }
 
 /// Texte « X films vus (dont Y dans la collection) · Z séries vues (dont W…) ».
@@ -298,6 +321,7 @@ class _YearHeader extends StatelessWidget {
     final theme = Theme.of(context);
     final detail = _breakdownText(
         counts.films, counts.filmsInColl, counts.series, counts.seriesInColl);
+    final durations = _durationText(counts);
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -322,6 +346,13 @@ class _YearHeader extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 30, top: 2),
                 child: Text(detail,
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(color: theme.colorScheme.outline)),
+              ),
+            if (durations.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(left: 30, top: 2),
+                child: Text(durations,
                     style: theme.textTheme.bodySmall
                         ?.copyWith(color: theme.colorScheme.outline)),
               ),
