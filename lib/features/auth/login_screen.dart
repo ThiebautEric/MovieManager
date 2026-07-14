@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/l10n.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/theme_toggle_button.dart';
+import '../../widgets/yellow_frame_logo.dart';
 import 'auth_controller.dart';
 
 /// Écran combiné connexion / inscription (e-mail + mot de passe).
@@ -89,13 +90,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Icon(Icons.movie_filter,
-                            size: 72,
-                            color: Theme.of(context).colorScheme.primary),
-                        const SizedBox(height: 12),
-                        Text(l10n.appTitle,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headlineSmall),
+                        const Center(child: YellowFrameLogo(width: 190)),
                         const SizedBox(height: 32),
                         TextFormField(
                           controller: _emailCtrl,
