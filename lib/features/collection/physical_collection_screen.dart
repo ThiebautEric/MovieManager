@@ -10,6 +10,7 @@ import '../../data/repositories/collection_repository.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
+import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
@@ -174,10 +175,7 @@ class _CollectionCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodyMedium),
+          CardTitle(title, style: theme.textTheme.bodyMedium),
           Text(subtitle, style: theme.textTheme.bodySmall),
           if (dateLabel != null)
             Row(

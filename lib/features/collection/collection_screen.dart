@@ -494,22 +494,26 @@ class _HistoryCard extends ConsumerWidget {
           ),
           const SizedBox(height: 6),
           // Titre + durée (film, ou cumul de la saison, « ≈ » car estimé).
-          Text.rich(
-            TextSpan(
-              text: title,
-              style: theme.textTheme.bodyMedium,
-              children: [
-                if (event.totalMinutes != null)
-                  TextSpan(
-                    text:
-                        '  ${event.isExactDuration ? '' : '≈'}${fmtDuration(event.totalMinutes!)}',
-                    style: theme.textTheme.labelSmall
-                        ?.copyWith(color: theme.colorScheme.outline),
-                  ),
-              ],
+          // Tooltip : titre intégral quand il est tronqué.
+          Tooltip(
+            message: title,
+            child: Text.rich(
+              TextSpan(
+                text: title,
+                style: theme.textTheme.bodyMedium,
+                children: [
+                  if (event.totalMinutes != null)
+                    TextSpan(
+                      text:
+                          '  ${event.isExactDuration ? '' : '≈'}${fmtDuration(event.totalMinutes!)}',
+                      style: theme.textTheme.labelSmall
+                          ?.copyWith(color: theme.colorScheme.outline),
+                    ),
+                ],
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
           ),
           if (isSeason)
             Text(context.l10n.collSeasonLabel(event.seasonNumber!),

@@ -12,6 +12,7 @@ import '../../tmdb/models/person_details.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
+import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
 import '../home/detail_app_bar.dart';
 import '../home/selected_media.dart';
@@ -358,9 +359,7 @@ class _FilmographyCard extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(pickTitle(item.title, item.originalTitle, showOriginal),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+          CardTitle(pickTitle(item.title, item.originalTitle, showOriginal),
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: highlight ? scheme.primary : null,
                 fontWeight: highlight ? FontWeight.bold : null,

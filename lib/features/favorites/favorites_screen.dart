@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/l10n.dart';
 import '../../data/repositories/favorites_repository.dart';
 import '../../widgets/language_button.dart';
+import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
@@ -62,10 +63,8 @@ class FavoritesScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 6),
-                      Text(
+                      CardTitle(
                         p.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),

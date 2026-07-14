@@ -13,6 +13,7 @@ import '../../tmdb/models/search_hit.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
+import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
@@ -216,10 +217,8 @@ class _ResultCard extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(
+          CardTitle(
             pickTitle(item.title, item.originalTitle, showOriginal),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           Text(
@@ -295,12 +294,7 @@ class _PersonCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(
-            person.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.bodyMedium,
-          ),
+          CardTitle(person.name, style: theme.textTheme.bodyMedium),
           Text(
             person.knownForDepartment == 'Acting'
                 ? context.l10n.searchActor
