@@ -145,16 +145,9 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         // Totaux par année (pour l'en-tête année).
         final yearStats = <int, _Counts>{};
         for (final e in events) {
-          final c = yearStats.putIfAbsent(e.watchedAt.year, () => _Counts());
-          if (e.film.mediaType == 'movie') {
-            c.films++;
-            c.filmsMin += e.totalMinutes ?? 0;
-            if (inColl(e)) c.filmsInColl++;
-          } else {
-            c.series++;
-            c.seriesMin += e.totalMinutes ?? 0;
-            if (inColl(e)) c.seriesInColl++;
-          }
+          yearStats
+              .putIfAbsent(e.watchedAt.year, () => _Counts())
+              .add(e, owned: inColl(e));
         }
 
         final slivers = <Widget>[];
@@ -176,16 +169,12 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
             lastYear = g.year;
           }
           if (_collapsed.contains(g.year)) continue; // année repliée
-          final films = g.items.where((e) => e.film.mediaType == 'movie');
-          final series = g.items.where((e) => e.film.mediaType == 'tv');
+          final mc = _Counts();
+          for (final e in g.items) {
+            mc.add(e, owned: inColl(e));
+          }
           slivers.add(SliverToBoxAdapter(
-            child: _MonthHeader(
-              month: g.month,
-              films: films.length,
-              filmsInColl: films.where(inColl).length,
-              series: series.length,
-              seriesInColl: series.where(inColl).length,
-            ),
+            child: _MonthHeader(month: g.month, counts: mc),
           ));
           slivers.add(SliverPadding(
             padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
@@ -266,6 +255,18 @@ class _MonthGroup {
 class _Counts {
   int films = 0, filmsInColl = 0, series = 0, seriesInColl = 0;
   int filmsMin = 0, seriesMin = 0;
+
+  void add(HistoryView e, {required bool owned}) {
+    if (e.film.mediaType == 'movie') {
+      films++;
+      filmsMin += e.totalMinutes ?? 0;
+      if (owned) filmsInColl++;
+    } else {
+      series++;
+      seriesMin += e.totalMinutes ?? 0;
+      if (owned) seriesInColl++;
+    }
+  }
 }
 
 /// Durée cumulée, exprimée en jours au-delà de 24 h : « 14h30 », « 3j 7h »…
@@ -365,24 +366,17 @@ class _YearHeader extends StatelessWidget {
 
 /// Séparateur de mois, avec le détail films/séries vus (dont en collection).
 class _MonthHeader extends StatelessWidget {
-  const _MonthHeader({
-    required this.month,
-    required this.films,
-    required this.filmsInColl,
-    required this.series,
-    required this.seriesInColl,
-  });
+  const _MonthHeader({required this.month, required this.counts});
 
   final int month;
-  final int films;
-  final int filmsInColl;
-  final int series;
-  final int seriesInColl;
+  final _Counts counts;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final detail = _breakdownText(films, filmsInColl, series, seriesInColl);
+    final detail = _breakdownText(
+        counts.films, counts.filmsInColl, counts.series, counts.seriesInColl);
+    final durations = _durationText(counts);
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
       child: Column(
@@ -395,6 +389,13 @@ class _MonthHeader extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Text(detail,
+                  style: theme.textTheme.bodySmall
+                      ?.copyWith(color: theme.colorScheme.outline)),
+            ),
+          if (durations.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(durations,
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.outline)),
             ),
