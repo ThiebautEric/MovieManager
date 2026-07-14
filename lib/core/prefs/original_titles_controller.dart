@@ -31,21 +31,31 @@ final titleDisplayModeProvider =
     NotifierProvider<TitleDisplayController, TitleDisplayMode>(
         TitleDisplayController.new);
 
-/// Titre à afficher selon le mode courant. Le titre anglais n'est pas stocké
-/// en base : il est récupéré à la demande via TMDB (en-US) et mis en cache ;
-/// en attendant (ou à défaut), repli sur le titre original puis le titre
-/// traduit.
+/// Titre à afficher selon le mode courant. Les titres traduit et anglais ne
+/// sont pas fiables/présents en base (imports stockés en anglais…) : ils sont
+/// récupérés à la demande via TMDB et mis en cache pour la session ; en
+/// attendant (ou à défaut), repli sur le titre fourni / original.
+///
+/// [titleIsLocalized] : vrai quand [title] vient déjà de l'API TMDB dans la
+/// langue de l'appli (recherche, fiche détail, filmographie) — on évite alors
+/// une requête. Faux pour les titres stockés en base (historique, collection).
 String resolveTitle(
   WidgetRef ref, {
   required int tmdbId,
   required String mediaType,
   required String title,
   String? originalTitle,
+  bool titleIsLocalized = false,
 }) {
   final original =
       (originalTitle != null && originalTitle.isNotEmpty) ? originalTitle : title;
   return switch (ref.watch(titleDisplayModeProvider)) {
-    TitleDisplayMode.localized => title,
+    TitleDisplayMode.localized => titleIsLocalized
+        ? title
+        : ref
+                .watch(localizedTitleProvider((id: tmdbId, type: mediaType)))
+                .value ??
+            title,
     TitleDisplayMode.original => original,
     TitleDisplayMode.english =>
       ref.watch(englishTitleProvider((id: tmdbId, type: mediaType))).value ??

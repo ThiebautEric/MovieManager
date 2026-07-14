@@ -23,6 +23,15 @@ final englishTitleProvider =
   return ref.watch(_tmdbEnClientProvider).title(key.id, key.type);
 });
 
+/// Titre dans la langue de l'appli, récupéré à la demande et mis en cache.
+/// Utile pour les titres stockés en base dans une autre langue (imports…) ;
+/// changer la langue de l'appli invalide le cache (le client est recréé).
+final localizedTitleProvider =
+    FutureProvider.family<String?, ({int id, String type})>((ref, key) {
+  ref.keepAlive();
+  return ref.watch(tmdbClientProvider).title(key.id, key.type);
+});
+
 /// Détails d'un média, mis en cache par (tmdbId, mediaType).
 final mediaDetailsProvider = FutureProvider.family<MediaDetails, ({int id, String type})>(
   (ref, key) {

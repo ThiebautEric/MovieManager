@@ -223,6 +223,7 @@ class _ResultCard extends ConsumerWidget {
               mediaType: item.mediaType,
               title: item.title,
               originalTitle: item.originalTitle,
+              titleIsLocalized: true,
             ),
             style: Theme.of(context).textTheme.bodyMedium,
           ),

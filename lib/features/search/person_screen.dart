@@ -365,6 +365,7 @@ class _FilmographyCard extends ConsumerWidget {
                 mediaType: item.mediaType,
                 title: item.title,
                 originalTitle: item.originalTitle,
+                titleIsLocalized: true,
               ),
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: highlight ? scheme.primary : null,

@@ -90,6 +90,7 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
       mediaType: details.mediaType,
       title: details.title,
       originalTitle: details.originalTitle,
+      titleIsLocalized: true,
     );
     // L'AUTRE titre (original, ou traduit selon le mode), affiché en
     // italique sous le titre principal s'il en diffère.
