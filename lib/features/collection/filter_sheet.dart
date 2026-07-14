@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
+import '../../core/l10n/l10n.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/favorites_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
@@ -25,6 +26,7 @@ class FilterPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final filter = ref.watch(filterProvider);
     final notifier = ref.read(filterProvider.notifier);
     final genresById = ref.watch(genresByIdProvider);
@@ -51,35 +53,35 @@ class FilterPanel extends ConsumerWidget {
         Row(
           children: [
             Expanded(
-                child: Text('Filtres',
+                child: Text(l10n.filterTitle,
                     style: Theme.of(context).textTheme.titleLarge)),
             if (filter.isActive)
               TextButton(
                 onPressed: () => notifier.state = const CollectionFilter(),
-                child: const Text('Réinitialiser'),
+                child: Text(l10n.filterReset),
               ),
           ],
         ),
         const SizedBox(height: 12),
-        const Text('Type'),
+        Text(l10n.filterType),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
           children: [
             ChoiceChip(
-              label: const Text('Tous'),
+              label: Text(l10n.filterAll),
               selected: filter.mediaType == null,
               onSelected: (_) =>
                   notifier.state = filter.copyWith(clearMediaType: true),
             ),
             ChoiceChip(
-              label: const Text('Films'),
+              label: Text(l10n.filterFilms),
               selected: filter.mediaType == 'movie',
               onSelected: (_) =>
                   notifier.state = filter.copyWith(mediaType: 'movie'),
             ),
             ChoiceChip(
-              label: const Text('Séries'),
+              label: Text(l10n.filterSeries),
               selected: filter.mediaType == 'tv',
               onSelected: (_) =>
                   notifier.state = filter.copyWith(mediaType: 'tv'),
@@ -90,12 +92,12 @@ class FilterPanel extends ConsumerWidget {
         DropdownButtonFormField<int?>(
           isExpanded: true,
           initialValue: filter.genreId,
-          decoration: const InputDecoration(labelText: 'Genre'),
+          decoration: InputDecoration(labelText: l10n.filterGenre),
           items: [
-            const DropdownMenuItem(value: null, child: Text('Tous')),
+            DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
             ...presentGenres.map((g) => DropdownMenuItem(
                   value: g,
-                  child: Text(genresById[g] ?? 'Genre $g'),
+                  child: Text(genresById[g] ?? l10n.filterGenreFallback(g)),
                 )),
           ],
           onChanged: (v) => notifier.state = v == null
@@ -106,9 +108,9 @@ class FilterPanel extends ConsumerWidget {
         DropdownButtonFormField<String?>(
           isExpanded: true,
           initialValue: filter.country,
-          decoration: const InputDecoration(labelText: 'Pays d\'origine'),
+          decoration: InputDecoration(labelText: l10n.filterCountry),
           items: [
-            const DropdownMenuItem(value: null, child: Text('Tous')),
+            DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
             ...presentCountries.map((c) => DropdownMenuItem(
                   value: c,
                   child: Text(countryLabel(c)),
@@ -122,9 +124,9 @@ class FilterPanel extends ConsumerWidget {
         DropdownButtonFormField<int?>(
           isExpanded: true,
           initialValue: filter.year,
-          decoration: const InputDecoration(labelText: 'Année'),
+          decoration: InputDecoration(labelText: l10n.filterYear),
           items: [
-            const DropdownMenuItem(value: null, child: Text('Toutes')),
+            DropdownMenuItem(value: null, child: Text(l10n.filterAllFeminine)),
             ...presentYears
                 .map((y) => DropdownMenuItem(value: y, child: Text('$y'))),
           ],
@@ -136,9 +138,9 @@ class FilterPanel extends ConsumerWidget {
         DropdownButtonFormField<int?>(
           isExpanded: true,
           initialValue: filter.favoritePersonId,
-          decoration: const InputDecoration(labelText: 'Acteur favori'),
+          decoration: InputDecoration(labelText: l10n.filterFavoriteActor),
           items: [
-            const DropdownMenuItem(value: null, child: Text('Tous')),
+            DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
             ...favorites.map((p) => DropdownMenuItem(
                   value: p.personId,
                   child: Text(p.name, overflow: TextOverflow.ellipsis),
@@ -152,8 +154,9 @@ class FilterPanel extends ConsumerWidget {
         ),
         if (showRating) ...[
           const SizedBox(height: 8),
-          Text('Note minimale du visionnage : '
-              '${filter.minRating == 0 ? 'aucune' : filter.minRating.toStringAsFixed(1)}'),
+          Text(l10n.filterMinRating(filter.minRating == 0
+              ? l10n.filterRatingNone
+              : filter.minRating.toStringAsFixed(1))),
           Slider(
             value: filter.minRating,
             min: 0,

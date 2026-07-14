@@ -7,6 +7,7 @@ class FilmographyItem {
     required this.tmdbId,
     required this.mediaType,
     required this.title,
+    this.originalTitle,
     required this.posterPath,
     required this.releaseYear,
     required this.character,
@@ -16,6 +17,9 @@ class FilmographyItem {
   final int tmdbId;
   final String mediaType; // 'movie' | 'tv'
   final String title;
+
+  /// Titre original (`original_title`/`original_name` TMDB), si fourni.
+  final String? originalTitle;
   final String? posterPath;
   final int? releaseYear;
   final String character;
@@ -57,6 +61,8 @@ class FilmographyItem {
       tmdbId: id,
       mediaType: mediaType,
       title: (isMovie ? json['title'] : json['name']) as String? ?? 'Sans titre',
+      originalTitle:
+          (isMovie ? json['original_title'] : json['original_name']) as String?,
       posterPath: json['poster_path'] as String?,
       releaseYear: _yearOf(
           (isMovie ? json['release_date'] : json['first_air_date']) as String?),

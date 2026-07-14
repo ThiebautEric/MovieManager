@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/l10n/l10n.dart';
+import '../../core/prefs/original_titles_controller.dart';
 import '../../core/supabase/view_as.dart';
 import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
@@ -11,6 +14,7 @@ import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_details.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../home/detail_app_bar.dart';
@@ -38,12 +42,13 @@ class DetailsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Détails'),
+        title: Text(context.l10n.detailsTitle),
         leading: DetailLeadingButton(embedded: embedded),
+        actions: const [OriginalTitleButton()],
       ),
       body: detailsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Erreur : $e')),
+        error: (e, _) => Center(child: Text(context.l10n.errorMessage('$e'))),
         data: (d) => _DetailsBody(details: d),
       ),
     );
@@ -76,9 +81,15 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
   Widget build(BuildContext context) {
     final details = widget.details;
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final isMovie = details.mediaType == 'movie';
-    final showOriginal = details.originalTitle.isNotEmpty &&
-        details.originalTitle != details.title;
+    final showOriginal = ref.watch(showOriginalTitlesProvider);
+    final displayTitle =
+        pickTitle(details.title, details.originalTitle, showOriginal);
+    // L'AUTRE titre (original ou traduit selon la préférence), affiché en
+    // italique sous le titre principal s'il en diffère.
+    final otherTitle = showOriginal ? details.title : details.originalTitle;
+    final showOther = otherTitle.isNotEmpty && otherTitle != displayTitle;
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -103,7 +114,7 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
                   // Titre + durée totale (film, ou cumul des épisodes).
                   Text.rich(
                     TextSpan(
-                      text: details.title,
+                      text: displayTitle,
                       style: theme.textTheme.titleLarge,
                       children: [
                         if (details.totalRuntime != null)
@@ -116,22 +127,24 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
                       ],
                     ),
                   ),
-                  if (showOriginal) ...[
+                  if (showOther) ...[
                     const SizedBox(height: 2),
                     Text(
-                      'Titre original : ${details.originalTitle}',
+                      showOriginal
+                          ? l10n.detailsTranslatedTitle(otherTitle)
+                          : l10n.detailsOriginalTitle(otherTitle),
                       style: theme.textTheme.bodySmall
                           ?.copyWith(fontStyle: FontStyle.italic),
                     ),
                   ],
                   const SizedBox(height: 8),
                   Text(
-                    '${isMovie ? 'Film' : 'Série'}'
+                    '${isMovie ? l10n.film : l10n.serie}'
                     '${details.releaseYear != null ? ' · ${details.releaseYear}' : ''}'
                     // Pour une série : nb d'épisodes et durée unitaire (le
                     // cumul est à côté du titre ; pour un film aussi).
-                    '${!isMovie && details.numberOfEpisodes != null ? ' · ${details.numberOfEpisodes} épisodes' : ''}'
-                    '${!isMovie && details.runtime != null ? ' · ${details.runtime} min/épisode' : ''}',
+                    '${!isMovie && details.numberOfEpisodes != null ? ' · ${l10n.detailsEpisodeCount(details.numberOfEpisodes!)}' : ''}'
+                    '${!isMovie && details.runtime != null ? ' · ${l10n.detailsMinutesPerEpisode(details.runtime!)}' : ''}',
                     style: theme.textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 8),
@@ -149,7 +162,10 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
                       runSpacing: 2,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Text('${isMovie ? 'Réalisation' : 'Création'} :',
+                        Text(
+                            isMovie
+                                ? l10n.detailsDirectorLabel
+                                : l10n.detailsCreatorLabel,
                             style: theme.textTheme.bodyMedium),
                         for (final d in details.directors)
                           InkWell(
@@ -197,13 +213,13 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
         _LibraryControls(details: details),
         if (details.overview.isNotEmpty) ...[
           const SizedBox(height: 24),
-          Text('Synopsis', style: theme.textTheme.titleMedium),
+          Text(l10n.detailsSynopsis, style: theme.textTheme.titleMedium),
           const SizedBox(height: 8),
           Text(details.overview),
         ],
         if (details.trailers.isNotEmpty) ...[
           const SizedBox(height: 24),
-          Text('Bandes-annonces', style: theme.textTheme.titleMedium),
+          Text(l10n.detailsTrailers, style: theme.textTheme.titleMedium),
           const SizedBox(height: 8),
           ...details.trailers.map((v) => ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -222,8 +238,8 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
   }
 }
 
-String _fmtDate(DateTime d) =>
-    '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
+String _fmtDate(BuildContext context, DateTime d) =>
+    DateFormat.yMd(Localizations.localeOf(context).toString()).format(d);
 
 /// Casting : grille (Wrap) qui reste dans la largeur de l'écran — jamais de
 /// défilement horizontal, inutilisable à la souris sur le web. Repliée à
@@ -312,7 +328,7 @@ class _CastSectionState extends ConsumerState<_CastSection> {
                       ?.copyWith(color: theme.colorScheme.primary)),
             ),
             const SizedBox(height: 4),
-            Text('Voir tout',
+            Text(context.l10n.detailsShowAll,
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.primary)),
           ],
@@ -333,13 +349,13 @@ class _CastSectionState extends ConsumerState<_CastSection> {
         Row(
           children: [
             Expanded(
-              child: Text('Casting (${cast.length})',
+              child: Text(context.l10n.detailsCastTitle(cast.length),
                   style: theme.textTheme.titleMedium),
             ),
             if (_expanded)
               TextButton(
                 onPressed: () => setState(() => _expanded = false),
-                child: const Text('Réduire'),
+                child: Text(context.l10n.detailsCollapse),
               ),
           ],
         ),
@@ -379,8 +395,11 @@ class _LibraryControls extends ConsumerWidget {
     return FilmSeason(seasonNumber: n);
   }
 
-  String _scopeLabel(int? season) =>
-      season == null ? (details.mediaType == 'movie' ? 'Film' : 'Série entière') : 'Saison $season';
+  String _scopeLabel(BuildContext context, int? season) => season == null
+      ? (details.mediaType == 'movie'
+          ? context.l10n.film
+          : context.l10n.detailsWholeSeries)
+      : context.l10n.detailsSeasonNumber(season);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -405,7 +424,7 @@ class _LibraryControls extends ConsumerWidget {
           _CollectionSection(
             entries: collection,
             isSeries: false,
-            scopeLabel: _scopeLabel,
+            scopeLabel: (n) => _scopeLabel(context, n),
             readOnly: readOnly,
             onAdd: () => _addCollection(context, repo, season: null),
             onRemove: (id) => _confirmRemoveCollection(context, repo, id),
@@ -414,7 +433,7 @@ class _LibraryControls extends ConsumerWidget {
           _HistorySection(
             entries: history,
             isSeries: false,
-            scopeLabel: _scopeLabel,
+            scopeLabel: (n) => _scopeLabel(context, n),
             readOnly: readOnly,
             onAdd: () => _addHistory(context, repo, season: null),
             onEdit: (e) => _editHistory(context, repo, e),
@@ -443,11 +462,11 @@ class _LibraryControls extends ConsumerWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
-          child: Text('Saisons', style: theme.textTheme.titleMedium),
+          child: Text(context.l10n.detailsSeasonsTitle,
+              style: theme.textTheme.titleMedium),
         ),
         Text(
-          'Suis cette série saison par saison : possession et visionnages se '
-          'gèrent pour chaque saison.',
+          context.l10n.detailsSeasonsHint,
           style:
               theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
         ),
@@ -474,15 +493,17 @@ class _LibraryControls extends ConsumerWidget {
     required bool readOnly,
   }) {
     final theme = Theme.of(context);
-    final title =
-        info.name.isNotEmpty ? info.name : 'Saison ${info.seasonNumber}';
+    final l10n = context.l10n;
+    final title = info.name.isNotEmpty
+        ? info.name
+        : l10n.detailsSeasonNumber(info.seasonNumber);
     final meta = [
-      if (info.episodeCount > 0) '${info.episodeCount} épisodes',
+      if (info.episodeCount > 0) l10n.detailsEpisodeCount(info.episodeCount),
       if (info.year != null) '${info.year}',
     ].join(' · ');
     final summary = (coll.isEmpty && hist.isEmpty)
-        ? 'Non suivie'
-        : '${coll.length} support(s) · ${hist.length} visionnage(s)';
+        ? l10n.detailsSeasonNotTracked
+        : '${l10n.detailsMediaCount(coll.length)} · ${l10n.detailsViewingCount(hist.length)}';
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -507,7 +528,7 @@ class _LibraryControls extends ConsumerWidget {
           _CollectionSection(
             entries: coll,
             isSeries: true,
-            scopeLabel: _scopeLabel,
+            scopeLabel: (n) => _scopeLabel(context, n),
             readOnly: readOnly,
             onAdd: () =>
                 _addCollection(context, repo, season: info.seasonNumber),
@@ -517,7 +538,7 @@ class _LibraryControls extends ConsumerWidget {
           _HistorySection(
             entries: hist,
             isSeries: true,
-            scopeLabel: _scopeLabel,
+            scopeLabel: (n) => _scopeLabel(context, n),
             readOnly: readOnly,
             onAdd: () => _addHistory(context, repo, season: info.seasonNumber),
             onEdit: (e) => _editHistory(context, repo, e),
@@ -543,7 +564,7 @@ class _LibraryControls extends ConsumerWidget {
         addedAt: res.date,
       );
     } catch (e) {
-      if (context.mounted) _toast(context, 'Erreur : $e');
+      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
     }
   }
 
@@ -563,7 +584,7 @@ class _LibraryControls extends ConsumerWidget {
         comment: res.comment,
       );
     } catch (e) {
-      if (context.mounted) _toast(context, 'Erreur : $e');
+      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
     }
   }
 
@@ -575,7 +596,7 @@ class _LibraryControls extends ConsumerWidget {
         initialDate: e.watchedAt,
         initialRating: e.rating,
         initialComment: e.comment,
-        title: 'Modifier le visionnage',
+        title: context.l10n.detailsEditViewing,
       ),
     );
     if (res == null || e.id == null) return;
@@ -583,7 +604,7 @@ class _LibraryControls extends ConsumerWidget {
       await repo.updateHistory(e.id!,
           watchedAt: res.date, rating: res.rating, comment: res.comment);
     } catch (err) {
-      if (context.mounted) _toast(context, 'Erreur : $err');
+      if (context.mounted) _toast(context, context.l10n.errorMessage('$err'));
     }
   }
 
@@ -591,16 +612,15 @@ class _LibraryControls extends ConsumerWidget {
       BuildContext context, LibraryRepository repo, String id) async {
     final ok = await _confirm(
       context,
-      title: 'Retirer de la collection ?',
-      body:
-          'Cette possession est retirée de ta collection. Ton historique de visionnage n\'est pas affecté.',
-      action: 'Retirer',
+      title: context.l10n.detailsRemoveCollectionTitle,
+      body: context.l10n.detailsRemoveCollectionBody,
+      action: context.l10n.detailsRemoveAction,
     );
     if (!ok) return;
     try {
       await repo.removeFromCollection(id);
     } catch (e) {
-      if (context.mounted) _toast(context, 'Erreur : $e');
+      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
     }
   }
 
@@ -608,16 +628,15 @@ class _LibraryControls extends ConsumerWidget {
       BuildContext context, LibraryRepository repo, String id) async {
     final ok = await _confirm(
       context,
-      title: 'Supprimer ce visionnage ?',
-      body: 'Cette séance est définitivement supprimée de l\'historique. '
-          'Action irréversible.',
-      action: 'Supprimer',
+      title: context.l10n.detailsDeleteViewingTitle,
+      body: context.l10n.detailsDeleteViewingBody,
+      action: context.l10n.delete,
     );
     if (!ok) return;
     try {
       await repo.removeFromHistory(id);
     } catch (e) {
-      if (context.mounted) _toast(context, 'Erreur : $e');
+      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
     }
   }
 }
@@ -642,7 +661,7 @@ Future<bool> _confirm(
       actions: [
         TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Annuler')),
+            child: Text(context.l10n.cancel)),
         FilledButton(
             onPressed: () => Navigator.pop(context, true),
             child: Text(action)),
@@ -687,20 +706,20 @@ class _CollectionSection extends StatelessWidget {
                     size: 18, color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
                 Expanded(
-                    child: Text('Ma collection',
+                    child: Text(context.l10n.detailsMyCollection,
                         style: theme.textTheme.titleSmall)),
                 if (!readOnly)
                   TextButton.icon(
                     onPressed: onAdd,
                     icon: const Icon(Icons.add),
-                    label: const Text('Ajouter'),
+                    label: Text(context.l10n.add),
                   ),
               ],
             ),
             if (entries.isEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
-                child: Text('Pas dans ta collection.',
+                child: Text(context.l10n.detailsNotInCollection,
                     style: theme.textTheme.bodySmall),
               )
             else
@@ -712,12 +731,14 @@ class _CollectionSection extends StatelessWidget {
                       '${scopeLabel(e.seasonNumber)} · ${e.medium.label}',
                     ),
                     subtitle: e.addedAt != null
-                        ? Text('Acquis le ${_fmtDate(e.addedAt!)}')
+                        ? Text(context.l10n
+                            .detailsAcquiredOn(_fmtDate(context, e.addedAt!)))
                         : null,
                     trailing: readOnly
                         ? null
                         : IconButton(
-                            tooltip: 'Retirer de la collection',
+                            tooltip:
+                                context.l10n.detailsRemoveFromCollectionTooltip,
                             icon: const Icon(Icons.close, size: 18),
                             onPressed:
                                 e.id == null ? null : () => onRemove(e.id!),
@@ -767,20 +788,21 @@ class _HistorySection extends StatelessWidget {
                     size: 18, color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
                 Expanded(
-                    child: Text('Historique de visionnage (${entries.length})',
+                    child: Text(
+                        context.l10n.detailsViewingHistoryTitle(entries.length),
                         style: theme.textTheme.titleSmall)),
                 if (!readOnly)
                   TextButton.icon(
                     onPressed: onAdd,
                     icon: const Icon(Icons.add),
-                    label: const Text('Visionnage'),
+                    label: Text(context.l10n.detailsViewingButton),
                   ),
               ],
             ),
             if (entries.isEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
-                child: Text('Aucun visionnage enregistré.',
+                child: Text(context.l10n.detailsNoViewings,
                     style: theme.textTheme.bodySmall),
               )
             else
@@ -789,7 +811,7 @@ class _HistorySection extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.visibility, size: 20),
                     title: Text(
-                      'Vu le ${_fmtDate(e.watchedAt)}'
+                      '${context.l10n.detailsWatchedOn(_fmtDate(context, e.watchedAt))}'
                       '${e.seasonNumber != null ? ' · ${scopeLabel(e.seasonNumber)}' : ''}'
                       '${e.rating != null ? ' · ${e.rating!.toStringAsFixed(1)}/10' : ''}',
                     ),
@@ -802,7 +824,7 @@ class _HistorySection extends StatelessWidget {
                     trailing: readOnly
                         ? null
                         : IconButton(
-                            tooltip: 'Supprimer ce visionnage',
+                            tooltip: context.l10n.detailsDeleteViewingTooltip,
                             icon: const Icon(Icons.close, size: 18),
                             onPressed:
                                 e.id == null ? null : () => onRemove(e.id!),
@@ -844,14 +866,15 @@ class _AddCollectionDialogState extends State<_AddCollectionDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return AlertDialog(
-      title: const Text('Ajouter à la collection'),
+      title: Text(l10n.detailsAddToCollection),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Support'),
+            Text(l10n.detailsMediumLabel),
             const SizedBox(height: 6),
             Wrap(
               spacing: 8,
@@ -866,7 +889,7 @@ class _AddCollectionDialogState extends State<_AddCollectionDialog> {
             ),
             const SizedBox(height: 12),
             _DateRow(
-              label: 'Acquis le',
+              text: l10n.detailsAcquiredOn(_fmtDate(context, _date)),
               date: _date,
               onPick: (d) => setState(() => _date = d),
             ),
@@ -876,10 +899,10 @@ class _AddCollectionDialogState extends State<_AddCollectionDialog> {
       actions: [
         TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Annuler')),
+            child: Text(l10n.cancel)),
         FilledButton(
           onPressed: () => Navigator.pop(context, _CollChoice(_medium, _date)),
-          child: const Text('Ajouter'),
+          child: Text(l10n.add),
         ),
       ],
     );
@@ -891,13 +914,15 @@ class _AddHistoryDialog extends StatefulWidget {
     this.initialDate,
     this.initialRating,
     this.initialComment,
-    this.title = 'Ajouter un visionnage',
+    this.title,
   });
 
   final DateTime? initialDate;
   final double? initialRating;
   final String? initialComment;
-  final String title;
+
+  /// Titre du dialogue ; par défaut « Ajouter un visionnage » (localisé).
+  final String? title;
 
   @override
   State<_AddHistoryDialog> createState() => _AddHistoryDialogState();
@@ -917,29 +942,32 @@ class _AddHistoryDialogState extends State<_AddHistoryDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(widget.title),
+      title: Text(widget.title ?? l10n.detailsAddViewing),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _DateRow(
-              label: 'Vu le',
+              text: l10n.detailsWatchedOn(_fmtDate(context, _date)),
               date: _date,
               onPick: (d) => setState(() => _date = d),
             ),
             const SizedBox(height: 8),
             Row(
               children: [
-                const Text('Note'),
+                Text(l10n.detailsRatingLabel),
                 Expanded(
                   child: Slider(
                     value: _rating,
                     min: 0,
                     max: 10,
                     divisions: 20,
-                    label: _rating == 0 ? 'Aucune' : _rating.toStringAsFixed(1),
+                    label: _rating == 0
+                        ? l10n.detailsRatingNone
+                        : _rating.toStringAsFixed(1),
                     onChanged: (v) => setState(() => _rating = v),
                   ),
                 ),
@@ -955,9 +983,9 @@ class _AddHistoryDialogState extends State<_AddHistoryDialog> {
             TextField(
               controller: _comment,
               maxLines: 2,
-              decoration: const InputDecoration(
-                labelText: 'Commentaire (facultatif)',
-                hintText: 'Ex. vu au cinéma, revu avec les enfants…',
+              decoration: InputDecoration(
+                labelText: l10n.detailsCommentLabel,
+                hintText: l10n.detailsCommentHint,
               ),
             ),
           ],
@@ -966,7 +994,7 @@ class _AddHistoryDialogState extends State<_AddHistoryDialog> {
       actions: [
         TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Annuler')),
+            child: Text(l10n.cancel)),
         FilledButton(
           onPressed: () => Navigator.pop(
             context,
@@ -976,7 +1004,7 @@ class _AddHistoryDialogState extends State<_AddHistoryDialog> {
               _comment.text.trim().isEmpty ? null : _comment.text.trim(),
             ),
           ),
-          child: const Text('Enregistrer'),
+          child: Text(l10n.save),
         ),
       ],
     );
@@ -985,9 +1013,10 @@ class _AddHistoryDialogState extends State<_AddHistoryDialog> {
 
 class _DateRow extends StatelessWidget {
   const _DateRow(
-      {required this.label, required this.date, required this.onPick});
+      {required this.text, required this.date, required this.onPick});
 
-  final String label;
+  /// Texte complet déjà localisé (ex. « Acquis le 12/07/2026 »).
+  final String text;
   final DateTime date;
   final void Function(DateTime) onPick;
 
@@ -995,7 +1024,7 @@ class _DateRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: Text('$label ${_fmtDate(date)}')),
+        Expanded(child: Text(text)),
         TextButton(
           onPressed: () async {
             final now = DateTime.now();
@@ -1007,7 +1036,7 @@ class _DateRow extends StatelessWidget {
             );
             if (picked != null) onPick(picked);
           },
-          child: const Text('Modifier'),
+          child: Text(context.l10n.detailsEditButton),
         ),
       ],
     );

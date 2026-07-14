@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n.dart';
 import '../../data/repositories/favorites_repository.dart';
+import '../../widgets/language_button.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
@@ -16,17 +18,15 @@ class FavoritesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favoris'),
-        actions: const [ThemeToggleButton()],
+        title: Text(context.l10n.favoritesTitle),
+        actions: const [LanguageButton(), ThemeToggleButton()],
       ),
       body: favorites.isEmpty
-          ? const Center(
+          ? Center(
               child: Padding(
-                padding: EdgeInsets.all(32),
+                padding: const EdgeInsets.all(32),
                 child: Text(
-                  'Aucune personne favorite.\n'
-                  'Ouvrez la fiche d\'un acteur (depuis le casting d\'un film) '
-                  'et touchez l\'étoile pour l\'ajouter ici.',
+                  context.l10n.favEmpty,
                   textAlign: TextAlign.center,
                 ),
               ),

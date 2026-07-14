@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n.dart';
+import '../../core/prefs/original_titles_controller.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_summary.dart';
 import '../../tmdb/models/person_summary.dart';
 import '../../tmdb/models/search_hit.dart';
+import '../../widgets/language_button.dart';
+import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
@@ -47,8 +51,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rechercher'),
-        actions: const [ThemeToggleButton()],
+        title: Text(context.l10n.searchTitle),
+        actions: const [
+          OriginalTitleButton(),
+          LanguageButton(),
+          ThemeToggleButton(),
+        ],
       ),
       body: Column(
         children: [
@@ -58,7 +66,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               controller: _controller,
               autofocus: true,
               decoration: InputDecoration(
-                hintText: 'Film, série ou personnalité…',
+                hintText: context.l10n.searchHint,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _controller.text.isNotEmpty
                     ? IconButton(
@@ -85,7 +93,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               error: (e, _) => Center(
                 child: Padding(
                   padding: const EdgeInsets.all(24),
-                  child: Text('Erreur de recherche : $e'),
+                  child: Text(context.l10n.searchError('$e')),
                 ),
               ),
             ),
@@ -98,10 +106,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget _buildResults(
       BuildContext context, List<SearchHit> items, String query) {
     if (query.trim().isEmpty) {
-      return const Center(child: Text('Commencez à taper pour rechercher.'));
+      return Center(child: Text(context.l10n.searchStartTyping));
     }
     if (items.isEmpty) {
-      return const Center(child: Text('Aucun résultat.'));
+      return Center(child: Text(context.l10n.searchNoResults));
     }
     // Badges sur les résultats déjà possédés / déjà vus.
     final collection = ref.watch(collectionStreamProvider).value ?? [];
@@ -153,7 +161,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   }
 }
 
-class _ResultCard extends StatelessWidget {
+class _ResultCard extends ConsumerWidget {
   const _ResultCard({
     required this.item,
     required this.onTap,
@@ -167,7 +175,8 @@ class _ResultCard extends StatelessWidget {
   final bool watched;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showOriginal = ref.watch(showOriginalTitlesProvider);
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: onTap,
@@ -208,13 +217,13 @@ class _ResultCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            item.title,
+            pickTitle(item.title, item.originalTitle, showOriginal),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           Text(
-            '${item.mediaType == 'movie' ? 'Film' : 'Série'}'
+            '${item.mediaType == 'movie' ? context.l10n.film : context.l10n.serie}'
             '${item.releaseYear != null ? ' · ${item.releaseYear}' : ''}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
@@ -272,7 +281,7 @@ class _PersonCard extends StatelessWidget {
                             size: 12,
                             color: theme.colorScheme.onSecondary),
                         const SizedBox(width: 3),
-                        Text('Personne',
+                        Text(context.l10n.searchPersonBadge,
                             style: TextStyle(
                               color: theme.colorScheme.onSecondary,
                               fontSize: 10,
@@ -294,10 +303,10 @@ class _PersonCard extends StatelessWidget {
           ),
           Text(
             person.knownForDepartment == 'Acting'
-                ? 'Acteur / Actrice'
+                ? context.l10n.searchActor
                 : (person.knownForDepartment.isNotEmpty
                     ? person.knownForDepartment
-                    : 'Personnalité'),
+                    : context.l10n.searchPersonality),
             style: theme.textTheme.bodySmall,
           ),
         ],

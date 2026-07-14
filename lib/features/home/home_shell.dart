@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/config/app_config.dart';
+import '../../core/l10n/l10n.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
@@ -127,30 +128,33 @@ class _HomeShellState extends ConsumerState<HomeShell>
     StatsScreen(),
   ];
 
-  static const _baseDestinations = <NavigationDestination>[
-    NavigationDestination(
-        icon: Icon(Icons.history_outlined),
-        selectedIcon: Icon(Icons.history),
-        label: 'Historique'),
-    NavigationDestination(
-        icon: Icon(Icons.video_library_outlined),
-        selectedIcon: Icon(Icons.video_library),
-        label: 'Collection'),
-    NavigationDestination(
-        icon: Icon(Icons.star_border),
-        selectedIcon: Icon(Icons.star),
-        label: 'Favoris'),
-    NavigationDestination(icon: Icon(Icons.search), label: 'Rechercher'),
-    NavigationDestination(
-        icon: Icon(Icons.bar_chart_outlined),
-        selectedIcon: Icon(Icons.bar_chart),
-        label: 'Stats'),
-  ];
+  static List<NavigationDestination> _baseDestinations(AppLocalizations l10n) =>
+      [
+        NavigationDestination(
+            icon: const Icon(Icons.history_outlined),
+            selectedIcon: const Icon(Icons.history),
+            label: l10n.historyTitle),
+        NavigationDestination(
+            icon: const Icon(Icons.video_library_outlined),
+            selectedIcon: const Icon(Icons.video_library),
+            label: l10n.collectionTitle),
+        NavigationDestination(
+            icon: const Icon(Icons.star_border),
+            selectedIcon: const Icon(Icons.star),
+            label: l10n.favoritesTitle),
+        NavigationDestination(
+            icon: const Icon(Icons.search), label: l10n.searchTitle),
+        NavigationDestination(
+            icon: const Icon(Icons.bar_chart_outlined),
+            selectedIcon: const Icon(Icons.bar_chart),
+            label: l10n.navStats),
+      ];
 
-  static const _friendsDestination = NavigationDestination(
-      icon: Icon(Icons.group_outlined),
-      selectedIcon: Icon(Icons.group),
-      label: 'Mes amis');
+  static NavigationDestination _friendsDestination(AppLocalizations l10n) =>
+      NavigationDestination(
+          icon: const Icon(Icons.group_outlined),
+          selectedIcon: const Icon(Icons.group),
+          label: l10n.friendsTitle);
 
   void _selectTab(int i) {
     setState(() => _index = i);
@@ -194,14 +198,14 @@ class _HomeShellState extends ConsumerState<HomeShell>
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Consultation : ${target.email} (lecture seule)',
+                      context.l10n.navViewingAs(target.email),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: cs.onTertiaryContainer),
                     ),
                   ),
                   TextButton(
                     onPressed: () => ref.read(viewAsProvider.notifier).exit(),
-                    child: const Text('Quitter'),
+                    child: Text(context.l10n.navQuit),
                   ),
                 ],
               ),
@@ -232,8 +236,8 @@ class _HomeShellState extends ConsumerState<HomeShell>
       if (AppConfig.hasSupabase) const FriendsScreen(),
     ];
     final destinations = [
-      ..._baseDestinations,
-      if (AppConfig.hasSupabase) _friendsDestination,
+      ..._baseDestinations(context.l10n),
+      if (AppConfig.hasSupabase) _friendsDestination(context.l10n),
     ];
     // Le nombre d'onglets peut changer (reconnexion avec un autre compte).
     if (_index >= pages.length) _index = 0;
@@ -285,7 +289,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
       ),
       floatingActionButton: (_index == 0 && AppConfig.hasSupabase)
           ? FloatingActionButton(
-              tooltip: 'Se déconnecter',
+              tooltip: context.l10n.logout,
               mini: true,
               child: const Icon(Icons.logout),
               onPressed: () => ref.read(authControllerProvider).signOut(),
@@ -334,7 +338,7 @@ class _SideRail extends StatelessWidget {
           : Padding(
               padding: const EdgeInsets.only(top: 8),
               child: IconButton(
-                tooltip: 'Se déconnecter',
+                tooltip: context.l10n.logout,
                 icon: const Icon(Icons.logout),
                 onPressed: onSignOut,
               ),
@@ -371,7 +375,7 @@ class _SideRail extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        tooltip: 'Fermer la fiche',
+                        tooltip: context.l10n.navCloseDetail,
                         visualDensity: VisualDensity.compact,
                         icon: const Icon(Icons.close, size: 18),
                         onPressed: onCloseDetail,

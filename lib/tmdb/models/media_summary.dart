@@ -4,6 +4,7 @@ class MediaSummary {
     required this.tmdbId,
     required this.mediaType,
     required this.title,
+    this.originalTitle,
     required this.overview,
     required this.posterPath,
     required this.releaseDate,
@@ -14,6 +15,7 @@ class MediaSummary {
   final int tmdbId;
   final String mediaType; // 'movie' | 'tv'
   final String title;
+  final String? originalTitle;
   final String overview;
   final String? posterPath;
   final String? releaseDate; // 'YYYY-MM-DD'
@@ -40,7 +42,9 @@ class MediaSummary {
     return MediaSummary(
       tmdbId: json['id'] as int,
       mediaType: type!,
-      title: (isMovie ? json['title'] : json['name']) as String? ?? 'Sans titre',
+      title: (isMovie ? json['title'] : json['name']) as String? ?? '?',
+      originalTitle:
+          (isMovie ? json['original_title'] : json['original_name']) as String?,
       overview: (json['overview'] as String?) ?? '',
       posterPath: json['poster_path'] as String?,
       releaseDate:

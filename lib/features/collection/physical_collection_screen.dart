@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
+import '../../core/l10n/l10n.dart';
+import '../../core/prefs/original_titles_controller.dart';
 import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../widgets/language_button.dart';
+import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
@@ -17,26 +22,24 @@ import 'filter_sheet.dart';
 class PhysicalCollectionScreen extends ConsumerWidget {
   const PhysicalCollectionScreen({super.key});
 
-  static String _fmtDate(DateTime d) =>
-      '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).toString();
+    final dateFmt = DateFormat.yMd(locale);
     final async = ref.watch(collectionStreamProvider);
     final filter = ref.watch(collectionFilterProvider);
     final entries = ref.watch(filteredCollectionProvider);
+    final showOriginal = ref.watch(showOriginalTitlesProvider);
     final films = [for (final c in (async.value ?? const <CollectionView>[])) c.film];
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
 
     final content = async.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('Erreur : $e')),
+      error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
       data: (_) {
         if (entries.isEmpty) {
-          return const _EmptyState(
-            message:
-                'Aucun titre dans ta collection.\nSur une fiche, ajoute un support (DVD, Blu-ray ou Digital), ou ajuste les filtres.',
-          );
+          return _EmptyState(message: l10n.collEmpty);
         }
         return RefreshIndicator(
           onRefresh: () => ref.read(libraryRepositoryProvider).refresh(),
@@ -57,16 +60,18 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                   : null;
               return _CollectionCard(
                 poster: entry.posterPath,
-                title: entry.film.title,
+                title: pickTitle(
+                    entry.film.title, entry.film.originalTitle, showOriginal),
                 subtitle: (entry.seasonNumber != null
-                        ? 'Saison ${entry.seasonNumber}'
-                        : '${entry.film.isMovie ? 'Film' : 'Série'}'
+                        ? l10n.collSeasonLabel(entry.seasonNumber!)
+                        : '${entry.film.isMovie ? l10n.film : l10n.serie}'
                             '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}') +
                     (duration != null ? ' · $duration' : ''),
                 badge: MediumBadge(medium: entry.medium),
                 seasonNumber: entry.seasonNumber,
-                dateLabel:
-                    entry.addedAt != null ? _fmtDate(entry.addedAt!) : null,
+                dateLabel: entry.addedAt != null
+                    ? dateFmt.format(entry.addedAt!)
+                    : null,
                 onTap: () => openMedia(
                   context,
                   ref,
@@ -84,11 +89,11 @@ class PhysicalCollectionScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Collection'),
+        title: Text(l10n.collectionTitle),
         actions: [
           if (!wide)
             IconButton(
-              tooltip: 'Filtrer',
+              tooltip: l10n.filterTooltip,
               icon: Badge(
                 isLabelVisible: filter.isActive,
                 child: const Icon(Icons.filter_list),
@@ -99,6 +104,8 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                 films: films,
               ),
             ),
+          const OriginalTitleButton(),
+          const LanguageButton(),
           const ThemeToggleButton(),
         ],
       ),

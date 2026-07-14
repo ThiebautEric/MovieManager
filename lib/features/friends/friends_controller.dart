@@ -8,11 +8,14 @@ class Friend {
 
   factory Friend.fromJson(Map<String, dynamic> j) => Friend(
         userId: j['user_id'] as String,
-        email: (j['email'] as String?) ?? '(sans e-mail)',
+        email: j['email'] as String?,
       );
 
   final String userId;
-  final String email;
+
+  /// Null si le compte n'expose pas d'e-mail (libellé de repli localisé
+  /// côté écran).
+  final String? email;
 }
 
 /// Liste des autres comptes, via la fonction SQL `public.friends()`

@@ -1,12 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/l10n/locale_controller.dart';
 import 'models/genre.dart';
 import 'models/media_details.dart';
 import 'models/person_details.dart';
 import 'tmdb_client.dart';
 
-/// Client TMDB partagé.
-final tmdbClientProvider = Provider<TmdbClient>((ref) => TmdbClient());
+/// Client TMDB partagé. Suit la langue de l'application : en changer
+/// invalide le client et donc tous les caches (détails, genres…).
+final tmdbClientProvider = Provider<TmdbClient>(
+    (ref) => TmdbClient(language: ref.watch(tmdbLanguageProvider)));
 
 /// Détails d'un média, mis en cache par (tmdbId, mediaType).
 final mediaDetailsProvider = FutureProvider.family<MediaDetails, ({int id, String type})>(

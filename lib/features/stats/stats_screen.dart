@@ -2,9 +2,11 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/language_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 
 /// Tableau de bord : compteurs + graphiques sur la collection et l'historique.
@@ -39,17 +41,17 @@ class StatsScreen extends ConsumerWidget {
     if (total == 0) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Statistiques'),
-          actions: const [ThemeToggleButton()],
+          title: Text(context.l10n.statsTitle),
+          actions: const [LanguageButton(), ThemeToggleButton()],
         ),
-        body: const Center(child: Text('Aucune donnée à afficher.')),
+        body: Center(child: Text(context.l10n.statsEmpty)),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Statistiques'),
-        actions: const [ThemeToggleButton()],
+        title: Text(context.l10n.statsTitle),
+        actions: const [LanguageButton(), ThemeToggleButton()],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -62,13 +64,14 @@ class StatsScreen extends ConsumerWidget {
             avg: avg,
           ),
           const SizedBox(height: 24),
-          Text('Vus / non vus',
+          Text(context.l10n.statsWatchedUnwatched,
               style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 12),
           SizedBox(
               height: 200, child: _WatchedPie(watched: watched, total: total)),
           const SizedBox(height: 24),
-          Text('Top genres', style: Theme.of(context).textTheme.titleMedium),
+          Text(context.l10n.statsTopGenres,
+              style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 12),
           _GenreBars(films: films.values.toList(), genresById: genresById),
         ],
@@ -94,12 +97,17 @@ class _SummaryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final cards = [
-      ('Titres', '$total', Icons.movie),
-      ('Vus', '$watched', Icons.visibility),
-      ('Visionnages', '$views', Icons.history),
-      ('Possédés', '$owned', Icons.inventory_2),
-      ('Note moy.', avg == null ? '—' : avg!.toStringAsFixed(1), Icons.star),
+      (l10n.statsCardTitles, '$total', Icons.movie),
+      (l10n.statsCardWatched, '$watched', Icons.visibility),
+      (l10n.statsCardViews, '$views', Icons.history),
+      (l10n.statsCardOwned, '$owned', Icons.inventory_2),
+      (
+        l10n.statsCardAvgRating,
+        avg == null ? '—' : avg!.toStringAsFixed(1),
+        Icons.star
+      ),
     ];
 
     return Wrap(
@@ -173,11 +181,13 @@ class _WatchedPie extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Legend(color: scheme.primary, label: 'Vus ($watched)'),
+            _Legend(
+                color: scheme.primary,
+                label: context.l10n.statsLegendWatched(watched)),
             const SizedBox(height: 8),
             _Legend(
                 color: scheme.secondaryContainer,
-                label: 'Non vus ($unwatched)'),
+                label: context.l10n.statsLegendUnwatched(unwatched)),
           ],
         ),
       ],
@@ -222,7 +232,7 @@ class _GenreBars extends StatelessWidget {
       ..sort((a, b) => b.value.compareTo(a.value));
     final shown = top.take(6).toList();
     if (shown.isEmpty) {
-      return const Text('Pas de genres renseignés.');
+      return Text(context.l10n.statsNoGenres);
     }
     final maxCount = shown.first.value.toDouble();
     final scheme = Theme.of(context).colorScheme;

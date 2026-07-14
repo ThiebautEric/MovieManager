@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
+import '../../core/l10n/l10n.dart';
+import '../../core/prefs/original_titles_controller.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../data/repositories/favorites_repository.dart';
 import '../../tmdb/models/person_details.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../home/detail_app_bar.dart';
@@ -30,13 +34,16 @@ class PersonScreen extends ConsumerWidget {
     final details = async.value;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Acteur'),
+        title: Text(context.l10n.personTitle),
         leading: DetailLeadingButton(embedded: embedded),
         actions: [
+          const OriginalTitleButton(),
           // Masquée en consultation admin (favoris d'un autre utilisateur).
           if (!ref.watch(isViewingAsProvider))
             IconButton(
-              tooltip: isFav ? 'Retirer des favoris' : 'Ajouter aux favoris',
+              tooltip: isFav
+                  ? context.l10n.personRemoveFavoriteTooltip
+                  : context.l10n.personAddFavoriteTooltip,
               icon: Icon(isFav ? Icons.star : Icons.star_border,
                   color: isFav ? Colors.amber : null),
               // Activable seulement une fois les infos (nom/photo) chargées.
@@ -52,7 +59,7 @@ class PersonScreen extends ConsumerWidget {
       ),
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Erreur : $e')),
+        error: (e, _) => Center(child: Text(context.l10n.errorMessage('$e'))),
         data: (p) => _PersonBody(person: p),
       ),
     );
@@ -64,16 +71,18 @@ class _PersonBody extends ConsumerWidget {
 
   final PersonDetails person;
 
-  String _formatDate(String? d) {
-    if (d == null || d.length < 10) return d ?? '';
-    final p = d.split('-');
-    if (p.length != 3) return d;
-    return '${p[2]}/${p[1]}/${p[0]}';
+  String _formatDate(BuildContext context, String? d) {
+    if (d == null || d.isEmpty) return '';
+    final parsed = DateTime.tryParse(d);
+    if (parsed == null) return d;
+    return DateFormat.yMd(Localizations.localeOf(context).toString())
+        .format(parsed);
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final collection = ref.watch(collectionStreamProvider).value ?? [];
     final history = ref.watch(historyStreamProvider).value ?? [];
     // Statut par œuvre (clé TMDB) : possédé (support) / vu / note.
@@ -101,11 +110,11 @@ class _PersonBody extends ConsumerWidget {
       FilmoCategory.reportage,
       FilmoCategory.autre,
     ];
-    const labels = {
-      FilmoCategory.film: 'Films',
-      FilmoCategory.serie: 'Séries',
-      FilmoCategory.reportage: 'Reportages',
-      FilmoCategory.autre: 'Autres',
+    final labels = {
+      FilmoCategory.film: l10n.personFilmsSection,
+      FilmoCategory.serie: l10n.personSeriesSection,
+      FilmoCategory.reportage: l10n.personDocumentariesSection,
+      FilmoCategory.autre: l10n.personOthersSection,
     };
     final sectionSlivers = <Widget>[];
 
@@ -143,7 +152,7 @@ class _PersonBody extends ConsumerWidget {
     final inCollection = person.filmography
         .where((f) => byKey.containsKey('${f.mediaType}:${f.tmdbId}'))
         .toList();
-    addSection('Dans ta bibliothèque', inCollection);
+    addSection(l10n.personInYourLibrary, inCollection);
 
     // Puis les sections par type.
     for (final cat in order) {
@@ -185,14 +194,16 @@ class _PersonBody extends ConsumerWidget {
                           if (person.birthday != null) ...[
                             const SizedBox(height: 8),
                             Text(
-                              'Naissance : ${_formatDate(person.birthday)}'
-                              '${age != null ? ' (${person.deathday == null ? '$age ans' : '$age ans à son décès'})' : ''}',
+                              '${l10n.personBirth(_formatDate(context, person.birthday))}'
+                              '${age != null ? ' (${person.deathday == null ? l10n.personAge(age) : l10n.personAgeAtDeath(age)})' : ''}',
                               style: theme.textTheme.bodyMedium,
                             ),
                           ],
                           if (person.deathday != null) ...[
                             const SizedBox(height: 4),
-                            Text('Décès : ${_formatDate(person.deathday)}',
+                            Text(
+                                l10n.personDeath(
+                                    _formatDate(context, person.deathday)),
                                 style: theme.textTheme.bodyMedium),
                           ],
                           if (person.placeOfBirth != null &&
@@ -208,12 +219,14 @@ class _PersonBody extends ConsumerWidget {
                 ),
                 if (person.biography.isNotEmpty) ...[
                   const SizedBox(height: 20),
-                  Text('Biographie', style: theme.textTheme.titleMedium),
+                  Text(l10n.personBiography,
+                      style: theme.textTheme.titleMedium),
                   const SizedBox(height: 8),
                   _Biography(text: person.biography),
                 ],
                 const SizedBox(height: 16),
-                Text('Filmographie', style: theme.textTheme.titleMedium),
+                Text(l10n.personFilmography,
+                    style: theme.textTheme.titleMedium),
               ],
             ),
           ),
@@ -249,7 +262,9 @@ class _BiographyState extends State<_Biography> {
         if (long)
           TextButton(
             onPressed: () => setState(() => _expanded = !_expanded),
-            child: Text(_expanded ? 'Voir moins' : 'Voir plus'),
+            child: Text(_expanded
+                ? context.l10n.personShowLess
+                : context.l10n.personShowMore),
           ),
       ],
     );
@@ -277,6 +292,7 @@ class _FilmographyCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
+    final showOriginal = ref.watch(showOriginalTitlesProvider);
     final c = status;
     // Met en valeur les films possédés ou vus.
     final highlight = c != null && (c.owned || c.watched);
@@ -328,7 +344,8 @@ class _FilmographyCard extends ConsumerWidget {
                   Positioned(
                     top: 6,
                     right: 6,
-                    child: _badge(Icons.visibility, 'Vu'),
+                    child:
+                        _badge(Icons.visibility, context.l10n.personWatchedBadge),
                   ),
                 if (c?.rating != null)
                   Positioned(
@@ -341,7 +358,7 @@ class _FilmographyCard extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(item.title,
+          Text(pickTitle(item.title, item.originalTitle, showOriginal),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium?.copyWith(
@@ -349,7 +366,7 @@ class _FilmographyCard extends ConsumerWidget {
                 fontWeight: highlight ? FontWeight.bold : null,
               )),
           Text(
-            '${item.mediaType == 'movie' ? 'Film' : 'Série'}'
+            '${item.mediaType == 'movie' ? context.l10n.film : context.l10n.serie}'
             '${item.releaseYear != null ? ' · ${item.releaseYear}' : ''}',
             style: theme.textTheme.bodySmall,
           ),

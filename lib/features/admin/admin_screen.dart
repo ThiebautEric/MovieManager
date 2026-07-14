@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../core/l10n/l10n.dart';
 import '../../core/supabase/supabase_providers.dart';
+import '../../widgets/language_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../auth/auth_controller.dart';
 import 'admin_controller.dart';
@@ -12,16 +14,16 @@ String _fmtDate(DateTime d) =>
 
 /// Message lisible extrait d'une erreur (FunctionException porte le JSON
 /// renvoyé par l'edge function dans `details`).
-String _errorMessage(Object e) {
+String _errorMessage(AppLocalizations l10n, Object e) {
   if (e is FunctionException) {
     final details = e.details;
     if (details is Map && details['message'] != null) {
       return details['message'].toString();
     }
     if (details is Map && details['error'] == 'email_exists') {
-      return 'Cet e-mail existe déjà.';
+      return l10n.adminEmailExists;
     }
-    return 'Erreur ${e.status}';
+    return l10n.adminHttpError(e.status);
   }
   return e.toString();
 }
@@ -35,22 +37,24 @@ class AdminScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final async = ref.watch(adminUsersProvider);
     final me = ref.watch(currentUserProvider);
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Administration'),
+        title: Text(l10n.adminTitle),
         actions: [
+          const LanguageButton(),
           const ThemeToggleButton(),
           // Seul écran du compte admin : la déconnexion vit ici.
           IconButton(
-            tooltip: 'Se déconnecter',
+            tooltip: l10n.logout,
             icon: const Icon(Icons.logout),
             onPressed: () => ref.read(authControllerProvider).signOut(),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Créer un utilisateur',
+        tooltip: l10n.adminCreateUser,
         onPressed: () => _showCreateDialog(context, ref),
         child: const Icon(Icons.person_add),
       ),
@@ -71,12 +75,12 @@ class AdminScreen extends ConsumerWidget {
               children: [
                 const Icon(Icons.error_outline, size: 48),
                 const SizedBox(height: 12),
-                Text('Chargement impossible : ${_errorMessage(error)}',
+                Text(l10n.adminLoadFailed(_errorMessage(l10n, error)),
                     textAlign: TextAlign.center),
                 const SizedBox(height: 12),
                 FilledButton(
                   onPressed: () => ref.invalidate(adminUsersProvider),
-                  child: const Text('Réessayer'),
+                  child: Text(l10n.adminRetry),
                 ),
               ],
             ),
@@ -94,7 +98,7 @@ class AdminScreen extends ConsumerWidget {
     final created = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Créer un utilisateur'),
+        title: Text(context.l10n.adminCreateUser),
         content: Form(
           key: formKey,
           child: Column(
@@ -102,18 +106,21 @@ class AdminScreen extends ConsumerWidget {
             children: [
               TextFormField(
                 controller: emailCtrl,
-                decoration: const InputDecoration(labelText: 'E-mail'),
+                decoration:
+                    InputDecoration(labelText: context.l10n.authEmailLabel),
                 keyboardType: TextInputType.emailAddress,
                 autofocus: true,
-                validator: (v) =>
-                    (v == null || !v.contains('@')) ? 'E-mail invalide' : null,
+                validator: (v) => (v == null || !v.contains('@'))
+                    ? context.l10n.authEmailInvalid
+                    : null,
               ),
               TextFormField(
                 controller: passwordCtrl,
-                decoration: const InputDecoration(labelText: 'Mot de passe'),
+                decoration:
+                    InputDecoration(labelText: context.l10n.authPasswordLabel),
                 obscureText: true,
                 validator: (v) => (v == null || v.length < 6)
-                    ? '6 caractères minimum'
+                    ? context.l10n.authPasswordTooShort
                     : null,
               ),
             ],
@@ -122,7 +129,7 @@ class AdminScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(context.l10n.cancel),
           ),
           FilledButton(
             onPressed: () {
@@ -130,7 +137,7 @@ class AdminScreen extends ConsumerWidget {
                 Navigator.of(context).pop(true);
               }
             },
-            child: const Text('Créer'),
+            child: Text(context.l10n.adminCreate),
           ),
         ],
       ),
@@ -143,13 +150,17 @@ class AdminScreen extends ConsumerWidget {
           .createUser(emailCtrl.text.trim(), passwordCtrl.text);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Utilisateur ${emailCtrl.text.trim()} créé.')),
+          SnackBar(
+              content: Text(
+                  context.l10n.adminUserCreated(emailCtrl.text.trim()))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec : ${_errorMessage(e)}')),
+          SnackBar(
+              content: Text(context.l10n
+                  .adminActionFailed(_errorMessage(context.l10n, e)))),
         );
       }
     }
@@ -164,9 +175,10 @@ class _UserTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final lastSeen = user.lastSignInAt != null
-        ? 'dernière connexion ${_fmtDate(user.lastSignInAt!)}'
-        : 'jamais connecté';
+        ? l10n.adminLastSignIn(_fmtDate(user.lastSignInAt!))
+        : l10n.adminNeverSignedIn;
 
     return ListTile(
       leading: CircleAvatar(
@@ -179,24 +191,24 @@ class _UserTile extends ConsumerWidget {
           ),
           if (user.isAdmin) ...[
             const SizedBox(width: 8),
-            const Chip(
-              label: Text('admin'),
+            Chip(
+              label: Text(l10n.adminBadge),
               visualDensity: VisualDensity.compact,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
           ],
           if (isSelf) ...[
             const SizedBox(width: 8),
-            Text('(vous)', style: Theme.of(context).textTheme.bodySmall),
+            Text(l10n.adminYou, style: Theme.of(context).textTheme.bodySmall),
           ],
         ],
       ),
-      subtitle: Text('Créé le ${_fmtDate(user.createdAt)} · $lastSeen'),
+      subtitle:
+          Text('${l10n.adminCreatedOn(_fmtDate(user.createdAt))} · $lastSeen'),
       trailing: IconButton(
         icon: const Icon(Icons.delete_outline),
-        tooltip: user.isAdmin || isSelf
-            ? 'Suppression impossible (admin)'
-            : 'Supprimer',
+        tooltip:
+            user.isAdmin || isSelf ? l10n.adminCannotDelete : l10n.delete,
         onPressed: user.isAdmin || isSelf
             ? null
             : () => _confirmDelete(context, ref),
@@ -208,21 +220,19 @@ class _UserTile extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Supprimer ${user.email} ?'),
-        content: const Text(
-            'Toutes ses données (collection, historique, favoris) seront '
-            'définitivement effacées.'),
+        title: Text(context.l10n.adminDeleteUserTitle(user.email)),
+        content: Text(context.l10n.adminDeleteUserWarning),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(context.l10n.cancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Supprimer'),
+            child: Text(context.l10n.delete),
           ),
         ],
       ),
@@ -233,7 +243,9 @@ class _UserTile extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec : ${_errorMessage(e)}')),
+          SnackBar(
+              content: Text(context.l10n
+                  .adminActionFailed(_errorMessage(context.l10n, e)))),
         );
       }
     }

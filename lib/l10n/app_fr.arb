@@ -1,0 +1,445 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Movie Manager",
+  "themeTooltip": "Thème",
+  "themeSystem": "Système",
+  "themeLight": "Clair",
+  "themeDark": "Sombre",
+  "languageTooltip": "Langue",
+  "languageSystem": "Système",
+  "originalTitlesOnTooltip": "Afficher les titres originaux",
+  "originalTitlesOffTooltip": "Afficher les titres traduits",
+  "cancel": "Annuler",
+  "save": "Enregistrer",
+  "delete": "Supprimer",
+  "close": "Fermer",
+  "add": "Ajouter",
+  "film": "Film",
+  "serie": "Série",
+  "searchTitle": "Rechercher",
+  "historyTitle": "Historique",
+  "collectionTitle": "Collection",
+  "statsTitle": "Statistiques",
+  "favoritesTitle": "Favoris",
+  "adminTitle": "Administration",
+  "friendsTitle": "Mes amis",
+  "detailsTitle": "Détails",
+  "logout": "Se déconnecter",
+  "errorMessage": "Erreur : {message}",
+  "@errorMessage": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "searchHint": "Film, série ou personnalité…",
+  "searchError": "Erreur de recherche : {message}",
+  "@searchError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "searchStartTyping": "Commencez à taper pour rechercher.",
+  "searchNoResults": "Aucun résultat.",
+  "searchPersonBadge": "Personne",
+  "searchActor": "Acteur / Actrice",
+  "searchPersonality": "Personnalité",
+  "detailsOriginalTitle": "Titre original : {title}",
+  "@detailsOriginalTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "detailsTranslatedTitle": "Titre traduit : {title}",
+  "@detailsTranslatedTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "detailsEpisodeCount": "{count, plural, one{{count} épisode} other{{count} épisodes}}",
+  "@detailsEpisodeCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detailsMinutesPerEpisode": "{count} min/épisode",
+  "@detailsMinutesPerEpisode": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detailsDirectorLabel": "Réalisation :",
+  "detailsCreatorLabel": "Création :",
+  "detailsSynopsis": "Synopsis",
+  "detailsTrailers": "Bandes-annonces",
+  "detailsCastTitle": "Casting ({count})",
+  "@detailsCastTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detailsCollapse": "Réduire",
+  "detailsShowAll": "Voir tout",
+  "detailsWholeSeries": "Série entière",
+  "detailsSeasonNumber": "Saison {number}",
+  "@detailsSeasonNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "detailsSeasonsTitle": "Saisons",
+  "detailsSeasonsHint": "Suis cette série saison par saison : possession et visionnages se gèrent pour chaque saison.",
+  "detailsSeasonNotTracked": "Non suivie",
+  "detailsMediaCount": "{count, plural, one{{count} support} other{{count} supports}}",
+  "@detailsMediaCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detailsViewingCount": "{count, plural, one{{count} visionnage} other{{count} visionnages}}",
+  "@detailsViewingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detailsAddViewing": "Ajouter un visionnage",
+  "detailsEditViewing": "Modifier le visionnage",
+  "detailsRemoveCollectionTitle": "Retirer de la collection ?",
+  "detailsRemoveCollectionBody": "Cette possession est retirée de ta collection. Ton historique de visionnage n'est pas affecté.",
+  "detailsRemoveAction": "Retirer",
+  "detailsDeleteViewingTitle": "Supprimer ce visionnage ?",
+  "detailsDeleteViewingBody": "Cette séance est définitivement supprimée de l'historique. Action irréversible.",
+  "detailsDeleteViewingTooltip": "Supprimer ce visionnage",
+  "detailsMyCollection": "Ma collection",
+  "detailsNotInCollection": "Pas dans ta collection.",
+  "detailsAcquiredOn": "Acquis le {date}",
+  "@detailsAcquiredOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "detailsRemoveFromCollectionTooltip": "Retirer de la collection",
+  "detailsViewingHistoryTitle": "Historique de visionnage ({count})",
+  "@detailsViewingHistoryTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detailsViewingButton": "Visionnage",
+  "detailsNoViewings": "Aucun visionnage enregistré.",
+  "detailsWatchedOn": "Vu le {date}",
+  "@detailsWatchedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "detailsAddToCollection": "Ajouter à la collection",
+  "detailsMediumLabel": "Support",
+  "detailsRatingLabel": "Note",
+  "detailsRatingNone": "Aucune",
+  "detailsCommentLabel": "Commentaire (facultatif)",
+  "detailsCommentHint": "Ex. vu au cinéma, revu avec les enfants…",
+  "detailsEditButton": "Modifier",
+  "personTitle": "Acteur",
+  "personAddFavoriteTooltip": "Ajouter aux favoris",
+  "personRemoveFavoriteTooltip": "Retirer des favoris",
+  "personFilmsSection": "Films",
+  "personSeriesSection": "Séries",
+  "personDocumentariesSection": "Reportages",
+  "personOthersSection": "Autres",
+  "personInYourLibrary": "Dans ta bibliothèque",
+  "personBirth": "Naissance : {date}",
+  "@personBirth": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "personDeath": "Décès : {date}",
+  "@personDeath": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "personAge": "{age, plural, one{{age} an} other{{age} ans}}",
+  "@personAge": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "personAgeAtDeath": "{age, plural, one{{age} an à son décès} other{{age} ans à son décès}}",
+  "@personAgeAtDeath": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "personBiography": "Biographie",
+  "personFilmography": "Filmographie",
+  "personShowMore": "Voir plus",
+  "personShowLess": "Voir moins",
+  "personWatchedBadge": "Vu",
+  "historyExportTooltip": "Exporter en CSV (provisoire)",
+  "historyExportedSnack": "Historique exporté (historique.csv)",
+  "historyCsvHeader": "Numero;Titre;Saison;Note;Date",
+  "@historyCsvHeader": {
+    "description": "En-tête des colonnes du CSV exporté (séparateur ;)"
+  },
+  "historyEmpty": "Aucun visionnage à afficher.\nAjoute un film ou une saison à ton historique (ou ajuste les filtres).",
+  "historyDayAbbrev": "j",
+  "@historyDayAbbrev": {
+    "description": "Abréviation de « jour » dans les durées cumulées, ex. « 3j 7h »"
+  },
+  "historyDurationLine": "total : {total} ({details})",
+  "@historyDurationLine": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "historyDurationFilms": "films : {duration}",
+  "@historyDurationFilms": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "historyDurationSeries": "séries : {duration}",
+  "@historyDurationSeries": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "historyTotalCount": "{n} au total",
+  "@historyTotalCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "historyFilmsWatched": "{n, plural, one{{n} film vu (dont {inCollection} dans la collection)} other{{n} films vus (dont {inCollection} dans la collection)}}",
+  "@historyFilmsWatched": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "inCollection": {
+        "type": "int"
+      }
+    }
+  },
+  "historySeriesWatched": "{n, plural, one{{n} série vue (dont {inCollection} dans la collection)} other{{n} séries vues (dont {inCollection} dans la collection)}}",
+  "@historySeriesWatched": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "inCollection": {
+        "type": "int"
+      }
+    }
+  },
+  "collEmpty": "Aucun titre dans ta collection.\nSur une fiche, ajoute un support (DVD, Blu-ray ou Digital), ou ajuste les filtres.",
+  "collSeasonLabel": "Saison {n}",
+  "@collSeasonLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "filterTooltip": "Filtrer",
+  "filterTitle": "Filtres",
+  "filterReset": "Réinitialiser",
+  "filterType": "Type",
+  "filterAll": "Tous",
+  "filterAllFeminine": "Toutes",
+  "@filterAllFeminine": {
+    "description": "Variante féminine de « Tous » (ex. toutes les années)"
+  },
+  "filterFilms": "Films",
+  "filterSeries": "Séries",
+  "filterGenre": "Genre",
+  "filterGenreFallback": "Genre {id}",
+  "@filterGenreFallback": {
+    "description": "Libellé de repli quand le nom du genre TMDB est inconnu",
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "filterCountry": "Pays d'origine",
+  "filterYear": "Année",
+  "filterFavoriteActor": "Acteur favori",
+  "filterMinRating": "Note minimale du visionnage : {rating}",
+  "@filterMinRating": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "filterRatingNone": "aucune",
+  "authEmailLabel": "E-mail",
+  "authPasswordLabel": "Mot de passe",
+  "authEmailInvalid": "E-mail invalide",
+  "authPasswordTooShort": "6 caractères minimum",
+  "authSignIn": "Se connecter",
+  "authSignUp": "Créer un compte",
+  "authAlreadyHaveAccount": "J'ai déjà un compte",
+  "authAccountCreated": "Compte créé. Vérifiez votre e-mail pour confirmer, puis connectez-vous.",
+  "adminCreateUser": "Créer un utilisateur",
+  "adminCreate": "Créer",
+  "adminEmailExists": "Cet e-mail existe déjà.",
+  "adminHttpError": "Erreur {status}",
+  "@adminHttpError": {
+    "placeholders": {
+      "status": {
+        "type": "int"
+      }
+    }
+  },
+  "adminLoadFailed": "Chargement impossible : {message}",
+  "@adminLoadFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRetry": "Réessayer",
+  "adminUserCreated": "Utilisateur {email} créé.",
+  "@adminUserCreated": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "adminActionFailed": "Échec : {message}",
+  "@adminActionFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "adminLastSignIn": "dernière connexion {date}",
+  "@adminLastSignIn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adminNeverSignedIn": "jamais connecté",
+  "adminBadge": "admin",
+  "adminYou": "(vous)",
+  "adminCreatedOn": "Créé le {date}",
+  "@adminCreatedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adminCannotDelete": "Suppression impossible (admin)",
+  "adminDeleteUserTitle": "Supprimer {email} ?",
+  "@adminDeleteUserTitle": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "adminDeleteUserWarning": "Toutes ses données (collection, historique, favoris) seront définitivement effacées.",
+  "navStats": "Stats",
+  "navViewingAs": "Consultation : {email} (lecture seule)",
+  "@navViewingAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "navQuit": "Quitter",
+  "navCloseDetail": "Fermer la fiche",
+  "statsEmpty": "Aucune donnée à afficher.",
+  "statsWatchedUnwatched": "Vus / non vus",
+  "statsTopGenres": "Top genres",
+  "statsCardTitles": "Titres",
+  "statsCardWatched": "Vus",
+  "statsCardViews": "Visionnages",
+  "statsCardOwned": "Possédés",
+  "statsCardAvgRating": "Note moy.",
+  "statsLegendWatched": "Vus ({count})",
+  "@statsLegendWatched": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsLegendUnwatched": "Non vus ({count})",
+  "@statsLegendUnwatched": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsNoGenres": "Pas de genres renseignés.",
+  "favEmpty": "Aucune personne favorite.\nOuvrez la fiche d'un acteur (depuis le casting d'un film) et touchez l'étoile pour l'ajouter ici.",
+  "friendsEmpty": "Aucun autre utilisateur pour le moment.",
+  "friendsViewLibrary": "Voir sa bibliothèque (lecture seule)",
+  "friendsLoadError": "Chargement impossible : {error}",
+  "@friendsLoadError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "friendsRetry": "Réessayer",
+  "friendsNoEmail": "(sans e-mail)"
+}

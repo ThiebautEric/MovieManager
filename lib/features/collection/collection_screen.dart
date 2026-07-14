@@ -4,11 +4,16 @@ import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
+import '../../core/l10n/l10n.dart';
+import '../../core/prefs/original_titles_controller.dart';
 import '../../core/utils/format.dart';
 import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../widgets/language_button.dart';
+import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
@@ -19,7 +24,10 @@ import 'filter_sheet.dart';
 /// Écran « Historique » : la grille des visionnages, du plus récent au plus
 /// ancien. Un titre vu plusieurs fois (ou plusieurs saisons) = une vignette par
 /// visionnage. Donnée totalement indépendante de la collection.
-String _fmtDate(DateTime d) =>
+///
+/// Format de date fixe réservé au CSV (dd/MM/yyyy) ; l'affichage à l'écran
+/// utilise DateFormat.yMd selon la locale.
+String _fmtDateCsv(DateTime d) =>
     '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
 
 class CollectionScreen extends ConsumerStatefulWidget {
@@ -40,16 +48,18 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   /// Web : téléchargement navigateur ; Android/iOS : dossier Téléchargements ;
   /// desktop : dossier de téléchargement par défaut.
   Future<void> _exportCsv() async {
+    final l10n = context.l10n;
     final events = ref.read(filteredHistoryProvider);
     String q(String s) => '"${s.replaceAll('"', '""')}"';
     // Le BOM en tête permet à Excel de détecter l'UTF-8 (accents).
     final bom = String.fromCharCode(0xFEFF);
-    final b = StringBuffer('${bom}Numero;Titre;Saison;Note;Date\n');
+    final b = StringBuffer('$bom${l10n.historyCsvHeader}\n');
     for (var i = 0; i < events.length; i++) {
       final e = events[i];
       final saison = e.seasonNumber != null ? 'S${e.seasonNumber}' : '';
       final note = e.rating != null ? e.rating!.toStringAsFixed(1) : '';
-      b.writeln('${i + 1};${q(e.film.title)};$saison;$note;${_fmtDate(e.watchedAt)}');
+      b.writeln(
+          '${i + 1};${q(e.film.title)};$saison;$note;${_fmtDateCsv(e.watchedAt)}');
     }
     await FileSaver.instance.saveFile(
       name: 'historique',
@@ -59,13 +69,16 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     );
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Historique exporté (historique.csv)')),
+        SnackBar(content: Text(l10n.historyExportedSnack)),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).toString();
+    final dateFmt = DateFormat.yMd(locale);
     final async = ref.watch(historyStreamProvider);
     final filter = ref.watch(historyFilterProvider);
     final events = ref.watch(filteredHistoryProvider);
@@ -104,7 +117,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
 
     Widget card(HistoryView e) => _HistoryCard(
           event: e,
-          dateLabel: _fmtDate(e.watchedAt),
+          dateLabel: dateFmt.format(e.watchedAt),
           mediums: mediumsFor(e),
           onTap: () => openMedia(
             context,
@@ -118,13 +131,10 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
 
     final content = async.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('Erreur : $e')),
+      error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
       data: (_) {
         if (events.isEmpty) {
-          return const _EmptyState(
-            message:
-                'Aucun visionnage à afficher.\nAjoute un film ou une saison à ton historique (ou ajuste les filtres).',
-          );
+          return _EmptyState(message: l10n.historyEmpty);
         }
         // Regroupe les visionnages (déjà triés du + récent au + ancien) par
         // mois, avec un en-tête d'année quand l'année change.
@@ -197,16 +207,16 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Historique'),
+        title: Text(l10n.historyTitle),
         actions: [
           IconButton(
-            tooltip: 'Exporter en CSV (provisoire)',
+            tooltip: l10n.historyExportTooltip,
             icon: const Icon(Icons.file_download_outlined),
             onPressed: _exportCsv,
           ),
           if (!wide)
             IconButton(
-              tooltip: 'Filtrer',
+              tooltip: l10n.filterTooltip,
               icon: Badge(
                 isLabelVisible: filter.isActive,
                 child: const Icon(Icons.filter_list),
@@ -218,6 +228,8 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
                 showRating: true,
               ),
             ),
+          const OriginalTitleButton(),
+          const LanguageButton(),
           const ThemeToggleButton(),
         ],
       ),
@@ -237,10 +249,13 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   }
 }
 
-const _moisFr = [
-  '', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
-];
+/// Nom du mois selon la locale, première lettre en majuscule.
+String _monthName(BuildContext context, int month) {
+  final locale = Localizations.localeOf(context).toString();
+  final name = DateFormat.MMMM(locale).format(DateTime(2000, month));
+  if (name.isEmpty) return name;
+  return name[0].toUpperCase() + name.substring(1);
+}
 
 /// Un mois de visionnages (regroupement de l'historique).
 class _MonthGroup {
@@ -270,35 +285,36 @@ class _Counts {
 }
 
 /// Durée cumulée, exprimée en jours au-delà de 24 h : « 14h30 », « 3j 7h »…
-String _fmtCumul(int minutes) {
+String _fmtCumul(int minutes, AppLocalizations l10n) {
   if (minutes < 24 * 60) return fmtDuration(minutes);
   final d = minutes ~/ (24 * 60);
   final h = (minutes % (24 * 60)) ~/ 60;
-  return h == 0 ? '${d}j' : '${d}j ${h}h';
+  final day = l10n.historyDayAbbrev;
+  return h == 0 ? '$d$day' : '$d$day ${h}h';
 }
 
 /// Texte « total : X (films : Y · séries : Z) » — vide si aucune durée connue.
-String _durationText(_Counts c) {
+String _durationText(_Counts c, AppLocalizations l10n) {
   final total = c.filmsMin + c.seriesMin;
   if (total == 0) return '';
   final parts = <String>[
-    if (c.filmsMin > 0) 'films : ${_fmtCumul(c.filmsMin)}',
-    if (c.seriesMin > 0) 'séries : ${_fmtCumul(c.seriesMin)}',
+    if (c.filmsMin > 0) l10n.historyDurationFilms(_fmtCumul(c.filmsMin, l10n)),
+    if (c.seriesMin > 0)
+      l10n.historyDurationSeries(_fmtCumul(c.seriesMin, l10n)),
   ];
-  return 'total : ${_fmtCumul(total)} (${parts.join(' · ')})';
+  return l10n.historyDurationLine(_fmtCumul(total, l10n), parts.join(' · '));
 }
 
 /// Texte « X films vus (dont Y dans la collection) · Z séries vues (dont W…) ».
-String _breakdownText(int films, int filmsColl, int series, int seriesColl) {
+String _breakdownText(
+    int films, int filmsColl, int series, int seriesColl, AppLocalizations l10n) {
   final total = films + series;
-  final parts = <String>['$total au total'];
+  final parts = <String>[l10n.historyTotalCount(total)];
   if (films > 0) {
-    parts.add('$films film${films > 1 ? 's' : ''} vu${films > 1 ? 's' : ''} '
-        '(dont $filmsColl dans la collection)');
+    parts.add(l10n.historyFilmsWatched(films, filmsColl));
   }
   if (series > 0) {
-    parts.add('$series série${series > 1 ? 's' : ''} vue${series > 1 ? 's' : ''} '
-        '(dont $seriesColl dans la collection)');
+    parts.add(l10n.historySeriesWatched(series, seriesColl));
   }
   return parts.join(' · ');
 }
@@ -320,9 +336,10 @@ class _YearHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final detail = _breakdownText(
-        counts.films, counts.filmsInColl, counts.series, counts.seriesInColl);
-    final durations = _durationText(counts);
+    final l10n = context.l10n;
+    final detail = _breakdownText(counts.films, counts.filmsInColl,
+        counts.series, counts.seriesInColl, l10n);
+    final durations = _durationText(counts, l10n);
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -374,15 +391,16 @@ class _MonthHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final detail = _breakdownText(
-        counts.films, counts.filmsInColl, counts.series, counts.seriesInColl);
-    final durations = _durationText(counts);
+    final l10n = context.l10n;
+    final detail = _breakdownText(counts.films, counts.filmsInColl,
+        counts.series, counts.seriesInColl, l10n);
+    final durations = _durationText(counts, l10n);
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(_moisFr[month],
+          Text(_monthName(context, month),
               style: theme.textTheme.titleMedium
                   ?.copyWith(color: theme.colorScheme.primary)),
           if (detail.isNotEmpty)
@@ -405,7 +423,7 @@ class _MonthHeader extends StatelessWidget {
   }
 }
 
-class _HistoryCard extends StatelessWidget {
+class _HistoryCard extends ConsumerWidget {
   const _HistoryCard({
     required this.event,
     required this.dateLabel,
@@ -421,10 +439,13 @@ class _HistoryCard extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final isSeason = event.seasonNumber != null;
     final rating = event.rating;
+    final showOriginal = ref.watch(showOriginalTitlesProvider);
+    final title =
+        pickTitle(event.film.title, event.film.originalTitle, showOriginal);
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
@@ -475,7 +496,7 @@ class _HistoryCard extends StatelessWidget {
           // Titre + durée (film, ou cumul de la saison, « ≈ » car estimé).
           Text.rich(
             TextSpan(
-              text: event.film.title,
+              text: title,
               style: theme.textTheme.bodyMedium,
               children: [
                 if (event.totalMinutes != null)
@@ -491,7 +512,7 @@ class _HistoryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           if (isSeason)
-            Text('Saison ${event.seasonNumber}',
+            Text(context.l10n.collSeasonLabel(event.seasonNumber!),
                 style: theme.textTheme.bodySmall),
           Row(
             children: [
