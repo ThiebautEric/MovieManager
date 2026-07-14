@@ -30,10 +30,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageSystem => 'System';
 
   @override
-  String get originalTitlesOnTooltip => 'Show original titles';
+  String get titleModeLocalizedTooltip =>
+      'Translated titles (app language) — tap for original titles';
 
   @override
-  String get originalTitlesOffTooltip => 'Show translated titles';
+  String get titleModeOriginalTooltip =>
+      'Original titles — tap for English titles';
+
+  @override
+  String get titleModeEnglishTooltip =>
+      'English titles — tap for translated titles';
+
+  @override
+  String get titleModeOriginalShort => 'OV';
 
   @override
   String get cancel => 'Cancel';

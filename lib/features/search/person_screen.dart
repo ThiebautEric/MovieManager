@@ -293,7 +293,6 @@ class _FilmographyCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final showOriginal = ref.watch(showOriginalTitlesProvider);
     final c = status;
     // Met en valeur les films possédés ou vus.
     final highlight = c != null && (c.owned || c.watched);
@@ -359,7 +358,14 @@ class _FilmographyCard extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 6),
-          CardTitle(pickTitle(item.title, item.originalTitle, showOriginal),
+          CardTitle(
+              resolveTitle(
+                ref,
+                tmdbId: item.tmdbId,
+                mediaType: item.mediaType,
+                title: item.title,
+                originalTitle: item.originalTitle,
+              ),
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: highlight ? scheme.primary : null,
                 fontWeight: highlight ? FontWeight.bold : null,

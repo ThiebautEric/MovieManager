@@ -177,7 +177,6 @@ class _ResultCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final showOriginal = ref.watch(showOriginalTitlesProvider);
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: onTap,
@@ -218,7 +217,13 @@ class _ResultCard extends ConsumerWidget {
           ),
           const SizedBox(height: 6),
           CardTitle(
-            pickTitle(item.title, item.originalTitle, showOriginal),
+            resolveTitle(
+              ref,
+              tmdbId: item.tmdbId,
+              mediaType: item.mediaType,
+              title: item.title,
+              originalTitle: item.originalTitle,
+            ),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           Text(

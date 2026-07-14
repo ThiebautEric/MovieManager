@@ -7,8 +7,13 @@
   "themeDark": "Sombre",
   "languageTooltip": "Langue",
   "languageSystem": "Système",
-  "originalTitlesOnTooltip": "Afficher les titres originaux",
-  "originalTitlesOffTooltip": "Afficher les titres traduits",
+  "titleModeLocalizedTooltip": "Titres traduits (langue de l'appli) — toucher pour les titres originaux",
+  "titleModeOriginalTooltip": "Titres originaux — toucher pour les titres anglais",
+  "titleModeEnglishTooltip": "Titres anglais — toucher pour les titres traduits",
+  "titleModeOriginalShort": "VO",
+  "@titleModeOriginalShort": {
+    "description": "Abréviation « version originale » affichée sur le bouton de mode des titres"
+  },
   "cancel": "Annuler",
   "save": "Enregistrer",
   "delete": "Supprimer",

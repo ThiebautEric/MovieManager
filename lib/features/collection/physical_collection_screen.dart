@@ -31,7 +31,6 @@ class PhysicalCollectionScreen extends ConsumerWidget {
     final async = ref.watch(collectionStreamProvider);
     final filter = ref.watch(collectionFilterProvider);
     final entries = ref.watch(filteredCollectionProvider);
-    final showOriginal = ref.watch(showOriginalTitlesProvider);
     final films = [for (final c in (async.value ?? const <CollectionView>[])) c.film];
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
 
@@ -61,8 +60,13 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                   : null;
               return _CollectionCard(
                 poster: entry.posterPath,
-                title: pickTitle(
-                    entry.film.title, entry.film.originalTitle, showOriginal),
+                title: resolveTitle(
+                  ref,
+                  tmdbId: entry.film.tmdbId,
+                  mediaType: entry.film.mediaType,
+                  title: entry.film.title,
+                  originalTitle: entry.film.originalTitle,
+                ),
                 subtitle: (entry.seasonNumber != null
                         ? l10n.collSeasonLabel(entry.seasonNumber!)
                         : '${entry.film.isMovie ? l10n.film : l10n.serie}'

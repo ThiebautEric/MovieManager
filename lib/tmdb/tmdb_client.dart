@@ -71,6 +71,16 @@ class TmdbClient {
     return hits;
   }
 
+  /// Titre seul d'un média (requête légère, utilisée pour le mode
+  /// « titres anglais » avec un client en-US).
+  Future<String?> title(int tmdbId, String mediaType) async {
+    final res = await _dio.get('/$mediaType/$tmdbId', queryParameters: {
+      'language': language,
+    });
+    final data = res.data as Map<String, dynamic>;
+    return (mediaType == 'movie' ? data['title'] : data['name']) as String?;
+  }
+
   /// Fiche détaillée d'un média, avec casting et vidéos (append_to_response).
   Future<MediaDetails> details(int tmdbId, String mediaType) async {
     final res = await _dio.get('/$mediaType/$tmdbId', queryParameters: {

@@ -142,17 +142,29 @@ abstract class AppLocalizations {
   /// **'Système'**
   String get languageSystem;
 
-  /// No description provided for @originalTitlesOnTooltip.
+  /// No description provided for @titleModeLocalizedTooltip.
   ///
   /// In fr, this message translates to:
-  /// **'Afficher les titres originaux'**
-  String get originalTitlesOnTooltip;
+  /// **'Titres traduits (langue de l\'appli) — toucher pour les titres originaux'**
+  String get titleModeLocalizedTooltip;
 
-  /// No description provided for @originalTitlesOffTooltip.
+  /// No description provided for @titleModeOriginalTooltip.
   ///
   /// In fr, this message translates to:
-  /// **'Afficher les titres traduits'**
-  String get originalTitlesOffTooltip;
+  /// **'Titres originaux — toucher pour les titres anglais'**
+  String get titleModeOriginalTooltip;
+
+  /// No description provided for @titleModeEnglishTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titres anglais — toucher pour les titres traduits'**
+  String get titleModeEnglishTooltip;
+
+  /// Abréviation « version originale » affichée sur le bouton de mode des titres
+  ///
+  /// In fr, this message translates to:
+  /// **'VO'**
+  String get titleModeOriginalShort;
 
   /// No description provided for @cancel.
   ///

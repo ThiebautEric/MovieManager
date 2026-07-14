@@ -443,9 +443,13 @@ class _HistoryCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final isSeason = event.seasonNumber != null;
     final rating = event.rating;
-    final showOriginal = ref.watch(showOriginalTitlesProvider);
-    final title =
-        pickTitle(event.film.title, event.film.originalTitle, showOriginal);
+    final title = resolveTitle(
+      ref,
+      tmdbId: event.film.tmdbId,
+      mediaType: event.film.mediaType,
+      title: event.film.title,
+      originalTitle: event.film.originalTitle,
+    );
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),

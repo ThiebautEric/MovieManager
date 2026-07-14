@@ -11,6 +11,18 @@ import 'tmdb_client.dart';
 final tmdbClientProvider = Provider<TmdbClient>(
     (ref) => TmdbClient(language: ref.watch(tmdbLanguageProvider)));
 
+/// Client TMDB dédié aux titres anglais (mode « EN » du bouton titres).
+final _tmdbEnClientProvider =
+    Provider<TmdbClient>((ref) => TmdbClient(language: 'en-US'));
+
+/// Titre anglais d'un média, récupéré à la demande (mode « titres anglais »)
+/// et conservé en cache pour la session.
+final englishTitleProvider =
+    FutureProvider.family<String?, ({int id, String type})>((ref, key) {
+  ref.keepAlive();
+  return ref.watch(_tmdbEnClientProvider).title(key.id, key.type);
+});
+
 /// Détails d'un média, mis en cache par (tmdbId, mediaType).
 final mediaDetailsProvider = FutureProvider.family<MediaDetails, ({int id, String type})>(
   (ref, key) {

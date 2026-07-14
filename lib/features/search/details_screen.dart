@@ -83,12 +83,19 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
     final theme = Theme.of(context);
     final l10n = context.l10n;
     final isMovie = details.mediaType == 'movie';
-    final showOriginal = ref.watch(showOriginalTitlesProvider);
-    final displayTitle =
-        pickTitle(details.title, details.originalTitle, showOriginal);
-    // L'AUTRE titre (original ou traduit selon la préférence), affiché en
+    final titleMode = ref.watch(titleDisplayModeProvider);
+    final displayTitle = resolveTitle(
+      ref,
+      tmdbId: details.tmdbId,
+      mediaType: details.mediaType,
+      title: details.title,
+      originalTitle: details.originalTitle,
+    );
+    // L'AUTRE titre (original, ou traduit selon le mode), affiché en
     // italique sous le titre principal s'il en diffère.
-    final otherTitle = showOriginal ? details.title : details.originalTitle;
+    final otherTitle = titleMode == TitleDisplayMode.localized
+        ? details.originalTitle
+        : details.title;
     final showOther = otherTitle.isNotEmpty && otherTitle != displayTitle;
 
     return ListView(
@@ -130,7 +137,7 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
                   if (showOther) ...[
                     const SizedBox(height: 2),
                     Text(
-                      showOriginal
+                      titleMode != TitleDisplayMode.localized
                           ? l10n.detailsTranslatedTitle(otherTitle)
                           : l10n.detailsOriginalTitle(otherTitle),
                       style: theme.textTheme.bodySmall
