@@ -6,6 +6,7 @@ import '../../core/l10n/l10n.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/favorites_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/yellow_frame_logo.dart';
 import 'collection_filter.dart';
 
 /// Panneau de filtres réutilisable (colonne latérale ou feuille modale) pour les
@@ -199,10 +200,18 @@ class FilterSidePanel extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: FilterPanel(
-          filterProvider: filterProvider,
-          films: films,
-          showRating: showRating,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Logo au-dessus des filtres (visible en mode large / web).
+            const Center(child: YellowFrameLogo(width: 150)),
+            const SizedBox(height: 24),
+            FilterPanel(
+              filterProvider: filterProvider,
+              films: films,
+              showRating: showRating,
+            ),
+          ],
         ),
       ),
     );
