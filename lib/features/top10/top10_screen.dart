@@ -69,11 +69,14 @@ class Top10Screen extends ConsumerWidget {
     );
   }
 
-  /// Agrège l'historique par titre et renvoie les 10 meilleurs scores.
+  /// Agrège l'historique par (titre, saison) — une saison de série est une
+  /// entrée à part entière, comme dans l'historique — et renvoie les 10
+  /// meilleurs scores.
   static List<_TopEntry> _rank(List<HistoryView> events) {
     final byKey = <String, _TopEntry>{};
     for (final e in events) {
-      final t = byKey.putIfAbsent(e.film.mediaKey, () => _TopEntry(e.film));
+      final t = byKey.putIfAbsent('${e.film.mediaKey}|${e.seasonNumber}',
+          () => _TopEntry(e.film, e.seasonNumber, e.posterPath));
       t.views++;
       final r = e.rating;
       if (r != null) {
@@ -87,17 +90,24 @@ class Top10Screen extends ConsumerWidget {
         if (s != 0) return s;
         final v = b.views.compareTo(a.views);
         if (v != 0) return v;
-        return a.film.title.compareTo(b.film.title);
+        final t = a.film.title.compareTo(b.film.title);
+        if (t != 0) return t;
+        return (a.seasonNumber ?? 0).compareTo(b.seasonNumber ?? 0);
       });
     return ranked.take(10).toList();
   }
 }
 
-/// Un titre agrégé : nombre de visionnages et somme des notes.
+/// Une entrée agrégée (film, ou saison de série) : nombre de visionnages et
+/// somme des notes.
 class _TopEntry {
-  _TopEntry(this.film);
+  _TopEntry(this.film, this.seasonNumber, this.posterPath);
 
   final Film film;
+  final int? seasonNumber;
+
+  /// Affiche de la saison si connue, sinon celle du titre.
+  final String? posterPath;
   int views = 0;
   double ratingSum = 0;
   int ratedViews = 0;
@@ -166,7 +176,8 @@ class _Top10Tile extends ConsumerWidget {
                 child: SizedBox(
                   width: 48,
                   height: 72,
-                  child: PosterImage(posterPath: film.posterPath, size: 'w185'),
+                  child:
+                      PosterImage(posterPath: entry.posterPath, size: 'w185'),
                 ),
               ),
               const SizedBox(width: 12),
@@ -184,6 +195,7 @@ class _Top10Tile extends ConsumerWidget {
                     const SizedBox(height: 2),
                     Text(
                       '${film.isMovie ? l10n.film : l10n.serie}'
+                      '${entry.seasonNumber != null ? ' · ${l10n.collSeasonLabel(entry.seasonNumber!)}' : ''}'
                       '${film.releaseYear != null ? ' · ${film.releaseYear}' : ''}',
                       style: theme.textTheme.bodySmall
                           ?.copyWith(color: theme.colorScheme.outline),
