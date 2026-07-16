@@ -577,6 +577,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navCloseDetail => 'Close details';
 
   @override
+  String get top10Title => 'Top 10';
+
+  @override
+  String get top10Hint =>
+      'Ranked by your average rating, boosted by the number of viewings.';
+
+  @override
+  String get top10Empty =>
+      'No rated titles yet.\nRate your viewings to build your top 10.';
+
+  @override
   String get statsEmpty => 'No data to display.';
 
   @override

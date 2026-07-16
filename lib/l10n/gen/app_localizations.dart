@@ -994,6 +994,24 @@ abstract class AppLocalizations {
   /// **'Fermer la fiche'**
   String get navCloseDetail;
 
+  /// No description provided for @top10Title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Top 10'**
+  String get top10Title;
+
+  /// No description provided for @top10Hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Classement selon ta note moyenne, bonifiée par le nombre de visionnages.'**
+  String get top10Hint;
+
+  /// No description provided for @top10Empty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun titre noté pour l\'instant.\nNote tes visionnages pour construire ton top 10.'**
+  String get top10Empty;
+
   /// No description provided for @statsEmpty.
   ///
   /// In fr, this message translates to:

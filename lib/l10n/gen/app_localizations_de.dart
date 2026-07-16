@@ -577,6 +577,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get navCloseDetail => 'Detailansicht schließen';
 
   @override
+  String get top10Title => 'Top 10';
+
+  @override
+  String get top10Hint =>
+      'Rangfolge nach deiner Durchschnittsnote, verstärkt durch die Anzahl der Sichtungen.';
+
+  @override
+  String get top10Empty =>
+      'Noch keine bewerteten Titel.\nBewerte deine Sichtungen, um dein Top 10 aufzubauen.';
+
+  @override
   String get statsEmpty => 'Keine Daten zum Anzeigen.';
 
   @override

@@ -576,6 +576,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navCloseDetail => 'Fermer la fiche';
 
   @override
+  String get top10Title => 'Top 10';
+
+  @override
+  String get top10Hint =>
+      'Classement selon ta note moyenne, bonifiée par le nombre de visionnages.';
+
+  @override
+  String get top10Empty =>
+      'Aucun titre noté pour l\'instant.\nNote tes visionnages pour construire ton top 10.';
+
+  @override
   String get statsEmpty => 'Aucune donnée à afficher.';
 
   @override

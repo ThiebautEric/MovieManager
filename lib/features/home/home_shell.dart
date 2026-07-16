@@ -18,6 +18,7 @@ import '../search/details_screen.dart';
 import '../search/person_screen.dart';
 import '../search/search_screen.dart';
 import '../stats/stats_screen.dart';
+import '../top10/top10_screen.dart';
 import 'selected_media.dart';
 
 /// Coquille principale avec navigation (Collection / Recherche / Statistiques).
@@ -119,10 +120,11 @@ class _HomeShellState extends ConsumerState<HomeShell>
   }
 
   // L'onglet « Mes amis » est ajouté en DERNIER (mode cloud), pour que les
-  // index des 5 onglets de base ne bougent jamais.
+  // index des 6 onglets de base ne bougent jamais.
   static const _basePages = <Widget>[
     CollectionScreen(),
     PhysicalCollectionScreen(),
+    Top10Screen(),
     FavoritesScreen(),
     SearchScreen(),
     StatsScreen(),
@@ -138,6 +140,10 @@ class _HomeShellState extends ConsumerState<HomeShell>
             icon: const Icon(Icons.video_library_outlined),
             selectedIcon: const Icon(Icons.video_library),
             label: l10n.collectionTitle),
+        NavigationDestination(
+            icon: const Icon(Icons.emoji_events_outlined),
+            selectedIcon: const Icon(Icons.emoji_events),
+            label: l10n.top10Title),
         NavigationDestination(
             icon: const Icon(Icons.star_border),
             selectedIcon: const Icon(Icons.star),
