@@ -108,6 +108,7 @@ class MediaDetails {
     required this.originalTitle,
     required this.overview,
     required this.posterPath,
+    this.originalPosterPath,
     required this.backdropPath,
     required this.releaseDate,
     required this.voteAverage,
@@ -127,6 +128,12 @@ class MediaDetails {
   final String originalTitle;
   final String overview;
   final String? posterPath;
+
+  /// Affiche dans la langue ORIGINALE de l'œuvre (repli : affiche sans
+  /// texte), extraite de `images.posters`. C'est elle qui est stockée en
+  /// bibliothèque — les affiches localisées dépendent de la langue active au
+  /// moment de l'ajout et donnaient un patchwork.
+  final String? originalPosterPath;
   final String? backdropPath;
   final String? releaseDate;
   final double voteAverage;
@@ -155,6 +162,28 @@ class MediaDetails {
 
   List<Video> get trailers =>
       videos.where((v) => v.isYoutube && v.type == 'Trailer').toList();
+
+  /// Meilleure affiche pour la bibliothèque : langue originale si trouvée,
+  /// sinon l'affiche localisée renvoyée par TMDB.
+  String? get libraryPosterPath => originalPosterPath ?? posterPath;
+
+  /// Affiche en langue originale depuis `images.posters` (triées par votes
+  /// TMDB) : première dans la langue originale, sinon première sans texte.
+  static String? _originalPoster(Map<String, dynamic> json) {
+    final orig = json['original_language'] as String?;
+    final posters = ((json['images'] as Map<String, dynamic>?)?['posters']
+            as List<dynamic>?) ??
+        const [];
+    String? textless;
+    for (final p in posters.whereType<Map<String, dynamic>>()) {
+      final lang = p['iso_639_1'] as String?;
+      final path = p['file_path'] as String?;
+      if (path == null) continue;
+      if (orig != null && lang == orig) return path;
+      if (lang == null) textless ??= path;
+    }
+    return textless;
+  }
 
   /// Durée totale de l'œuvre en minutes : le film, ou le CUMUL de tous les
   /// épisodes (approximation : nb d'épisodes × durée d'épisode, TMDB ne
@@ -214,6 +243,7 @@ class MediaDetails {
               '',
       overview: (json['overview'] as String?) ?? '',
       posterPath: json['poster_path'] as String?,
+      originalPosterPath: _originalPoster(json),
       backdropPath: json['backdrop_path'] as String?,
       releaseDate:
           (isMovie ? json['release_date'] : json['first_air_date']) as String?,

@@ -121,7 +121,9 @@ class Film {
         mediaType: d.mediaType,
         title: d.title,
         originalTitle: d.originalTitle.isEmpty ? null : d.originalTitle,
-        posterPath: d.posterPath,
+        // Affiche en langue originale (stable quelle que soit la langue de
+        // l'appli au moment de l'ajout).
+        posterPath: d.libraryPosterPath,
         releaseYear: d.releaseYear,
         runtime: d.runtime,
         overview: d.overview,

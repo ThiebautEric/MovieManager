@@ -153,8 +153,8 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
               height: 180,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child:
-                    PosterImage(posterPath: details.posterPath, size: 'w342'),
+                child: PosterImage(
+                    posterPath: details.libraryPosterPath, size: 'w342'),
               ),
             ),
             const SizedBox(width: 16),

@@ -86,7 +86,9 @@ class TmdbClient {
   Future<MediaDetails> details(int tmdbId, String mediaType) async {
     final res = await _dio.get('/$mediaType/$tmdbId', queryParameters: {
       'language': language,
-      'append_to_response': 'credits,videos',
+      // `images` : toutes les affiches, pour retrouver celle dans la langue
+      // ORIGINALE de l'œuvre (celle qu'on stocke en bibliothèque).
+      'append_to_response': 'credits,videos,images',
     });
     return MediaDetails.fromJson(res.data as Map<String, dynamic>, mediaType);
   }

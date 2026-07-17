@@ -107,10 +107,26 @@ for (t, sn), eps in seasons.items():
                           {"episode_number": n, "episode_name": name or ti, "episode_runtime": rt}))
 
 
+def original_poster(d):
+    # Affiche dans la langue ORIGINALE de l'oeuvre (repli : sans texte, puis
+    # l'affiche localisee) — comme dans l'application.
+    orig = d.get("original_language")
+    textless = None
+    for p in ((d.get("images") or {}).get("posters") or []):
+        lang = p.get("iso_639_1"); path = p.get("file_path")
+        if not path:
+            continue
+        if orig and lang == orig:
+            return path
+        if lang is None and textless is None:
+            textless = path
+    return textless or d.get("poster_path")
+
+
 def fetch(key):
     typ, tid = key
     try:
-        q = urllib.parse.urlencode({"api_key": TMDB, "language": "fr-FR", "append_to_response": "credits"})
+        q = urllib.parse.urlencode({"api_key": TMDB, "language": "fr-FR", "append_to_response": "credits,images"})
         with urllib.request.urlopen("https://api.themoviedb.org/3/%s/%s?%s" % (typ, tid, q), timeout=30) as r:
             d = json.loads(r.read().decode())
         isM = typ == "movie"; cred = d.get("credits") or {}
@@ -119,7 +135,7 @@ def fetch(key):
         if not directors and not isM:
             directors = [c["id"] for c in (d.get("created_by") or []) if c.get("id")]
         oc = d.get("origin_country") or []; pc = d.get("production_countries") or []
-        return key, {"poster_path": d.get("poster_path"),
+        return key, {"poster_path": original_poster(d),
                      "origin_country": oc[0] if oc else (pc[0]["iso_3166_1"] if pc else None),
                      "genres": [g["id"] for g in d.get("genres", [])],
                      "cast_ids": list(dict.fromkeys(cast + directors)),
