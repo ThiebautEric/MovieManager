@@ -264,7 +264,7 @@ class _Top10Tile extends ConsumerWidget {
                     Text(
                       '${film.isMovie ? l10n.film : l10n.serie}'
                       '${entry.seasonNumber != null ? ' · ${l10n.collSeasonLabel(entry.seasonNumber!)}' : ''}'
-                      '${entry.episodeNumber != null ? ' · ${(entry.episodeName?.isNotEmpty ?? false) ? entry.episodeName! : 'E${entry.episodeNumber}'}' : ''}'
+                      '${entry.episodeNumber != null ? ' · ${resolveEpisodeName(ref, tmdbId: film.tmdbId, seasonNumber: entry.seasonNumber ?? 0, episodeNumber: entry.episodeNumber!, stored: entry.episodeName)}' : ''}'
                       '${film.releaseYear != null ? ' · ${film.releaseYear}' : ''}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,

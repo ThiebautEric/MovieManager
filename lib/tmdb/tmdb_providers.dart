@@ -47,11 +47,22 @@ final personDetailsProvider =
 });
 
 /// Épisodes d'une saison, mis en cache par (série, saison) — notation par
-/// épisode sur la fiche détail.
+/// épisode sur la fiche détail et noms d'épisodes localisés.
 final seasonEpisodesProvider =
     FutureProvider.family<List<EpisodeInfo>, ({int id, int season})>(
-  (ref, key) =>
-      ref.watch(tmdbClientProvider).seasonEpisodes(key.id, key.season),
+  (ref, key) {
+    ref.keepAlive();
+    return ref.watch(tmdbClientProvider).seasonEpisodes(key.id, key.season);
+  },
+);
+
+/// Épisodes d'une saison en anglais — noms d'épisodes des modes VO/EN.
+final englishSeasonEpisodesProvider =
+    FutureProvider.family<List<EpisodeInfo>, ({int id, int season})>(
+  (ref, key) {
+    ref.keepAlive();
+    return ref.watch(_tmdbEnClientProvider).seasonEpisodes(key.id, key.season);
+  },
 );
 
 /// Liste des genres TMDB (chargée une fois), indexée par id pour l'affichage.

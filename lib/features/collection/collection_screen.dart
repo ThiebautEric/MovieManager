@@ -529,7 +529,7 @@ class _HistoryCard extends ConsumerWidget {
           if (isSeason)
             Builder(builder: (context) {
               final label = '${context.l10n.collSeasonLabel(event.seasonNumber!)}'
-                  '${event.episodeNumber != null ? ' · ${(event.episodeName?.isNotEmpty ?? false) ? event.episodeName! : 'E${event.episodeNumber}'}' : ''}';
+                  '${event.episodeNumber != null ? ' · ${resolveEpisodeName(ref, tmdbId: event.film.tmdbId, seasonNumber: event.seasonNumber!, episodeNumber: event.episodeNumber!, stored: event.episodeName)}' : ''}';
               // Tooltip : libellé intégral quand il est tronqué.
               return Tooltip(
                 message: label,

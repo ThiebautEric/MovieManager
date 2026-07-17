@@ -865,7 +865,7 @@ class _CollectionSection extends StatelessWidget {
 // ---------------------------------------------------------------------------
 // Section Historique
 // ---------------------------------------------------------------------------
-class _HistorySection extends StatelessWidget {
+class _HistorySection extends ConsumerWidget {
   const _HistorySection({
     required this.entries,
     required this.isSeries,
@@ -885,7 +885,7 @@ class _HistorySection extends StatelessWidget {
   final void Function(String id) onRemove;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     return Card(
       child: Padding(
@@ -924,7 +924,7 @@ class _HistorySection extends StatelessWidget {
                     title: Text(
                       '${context.l10n.detailsWatchedOn(_fmtDate(context, e.watchedAt))}'
                       '${e.seasonNumber != null ? ' · ${scopeLabel(e.seasonNumber)}' : ''}'
-                      '${e.episodeNumber != null ? ' · E${e.episodeNumber}${(e.episodeName ?? '').isNotEmpty ? ' ${e.episodeName}' : ''}' : ''}'
+                      '${e.episodeNumber != null ? ' · E${e.episodeNumber} ${resolveEpisodeName(ref, tmdbId: e.film.tmdbId, seasonNumber: e.seasonNumber ?? 0, episodeNumber: e.episodeNumber!, stored: e.episodeName)}' : ''}'
                       '${e.rating != null ? ' · ${e.rating!.toStringAsFixed(1)}/10' : ''}',
                     ),
                     subtitle: (e.comment ?? '').isNotEmpty

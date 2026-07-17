@@ -62,3 +62,27 @@ String resolveTitle(
           original,
   };
 }
+
+/// Nom d'épisode à afficher selon le mode courant. Le nom stocké en base est
+/// figé dans la langue du moment de l'ajout : on le re-résout via TMDB
+/// (cache par saison) — langue de l'appli en mode traduit, anglais en modes
+/// VO/EN. Repli : nom stocké, puis « E{n} ».
+String resolveEpisodeName(
+  WidgetRef ref, {
+  required int tmdbId,
+  required int seasonNumber,
+  required int episodeNumber,
+  String? stored,
+}) {
+  final mode = ref.watch(titleDisplayModeProvider);
+  final provider = mode == TitleDisplayMode.localized
+      ? seasonEpisodesProvider((id: tmdbId, season: seasonNumber))
+      : englishSeasonEpisodesProvider((id: tmdbId, season: seasonNumber));
+  final eps = ref.watch(provider).value;
+  if (eps != null) {
+    for (final e in eps) {
+      if (e.episodeNumber == episodeNumber && e.name.isNotEmpty) return e.name;
+    }
+  }
+  return (stored != null && stored.isNotEmpty) ? stored : 'E$episodeNumber';
+}
