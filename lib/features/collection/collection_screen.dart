@@ -527,12 +527,18 @@ class _HistoryCard extends ConsumerWidget {
             ),
           ),
           if (isSeason)
-            Text(
-                '${context.l10n.collSeasonLabel(event.seasonNumber!)}'
-                '${event.episodeNumber != null ? ' · ${(event.episodeName?.isNotEmpty ?? false) ? event.episodeName! : 'E${event.episodeNumber}'}' : ''}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodySmall),
+            Builder(builder: (context) {
+              final label = '${context.l10n.collSeasonLabel(event.seasonNumber!)}'
+                  '${event.episodeNumber != null ? ' · ${(event.episodeName?.isNotEmpty ?? false) ? event.episodeName! : 'E${event.episodeNumber}'}' : ''}';
+              // Tooltip : libellé intégral quand il est tronqué.
+              return Tooltip(
+                message: label,
+                child: Text(label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodySmall),
+              );
+            }),
           Row(
             children: [
               Icon(Icons.visibility, size: 14, color: theme.colorScheme.primary),
