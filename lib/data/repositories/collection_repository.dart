@@ -12,6 +12,7 @@ import '../models/collection_entry.dart';
 import '../models/film.dart';
 import '../models/film_season.dart';
 import '../models/history_entry.dart';
+import '../models/wishlist_entry.dart';
 
 /// Contrat commun aux deux backends (cloud Supabase / local appareil).
 ///
@@ -23,6 +24,7 @@ import '../models/history_entry.dart';
 abstract class LibraryRepository {
   Stream<List<CollectionView>> watchCollection();
   Stream<List<HistoryView>> watchHistory();
+  Stream<List<WishlistView>> watchWishlist();
 
   Future<void> addToCollection(
     Film film, {
@@ -34,6 +36,9 @@ abstract class LibraryRepository {
   Future<void> addToHistory(
     Film film, {
     FilmSeason? season,
+    int? episodeNumber,
+    String? episodeName,
+    int? episodeRuntime,
     required DateTime watchedAt,
     double? rating,
     String? comment,
@@ -45,6 +50,18 @@ abstract class LibraryRepository {
     double? rating,
     String? comment,
   });
+
+  /// Répare les métadonnées d'épisode d'un visionnage (nom générique stocké
+  /// avant le repli en-US, durée absente…). Silencieux en lecture seule.
+  Future<void> updateHistoryEpisodeMeta(
+    String id, {
+    String? episodeName,
+    int? episodeRuntime,
+  });
+
+  /// Pense-bête : titres/saisons à voir ou à acheter plus tard.
+  Future<void> addToWishlist(Film film, {FilmSeason? season});
+  Future<void> removeFromWishlist(String id);
 
   /// Suppression par l'utilisateur uniquement (l'UI confirme).
   Future<void> removeFromCollection(String id);
@@ -125,12 +142,15 @@ class SupabaseLibraryRepository implements LibraryRepository {
   List<FilmSeason> _seasons = const [];
   List<CollectionEntry> _collection = const [];
   List<HistoryEntry> _history = const [];
+  List<WishlistEntry> _wishlist = const [];
 
   StreamController<List<CollectionView>>? _collectionCtrl;
   StreamController<List<HistoryView>>? _historyCtrl;
+  StreamController<List<WishlistView>>? _wishlistCtrl;
   // Dernières vues émises, rejouées aux nouveaux abonnés (flux broadcast).
   List<CollectionView> _lastColl = const [];
   List<HistoryView> _lastHist = const [];
+  List<WishlistView> _lastWish = const [];
   bool _loaded = false;
   bool _emitted = false; // au moins une émission faite (rejouable aux abonnés)
 
@@ -144,6 +164,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
   void _ensureLoaded() {
     _collectionCtrl ??= StreamController<List<CollectionView>>.broadcast();
     _historyCtrl ??= StreamController<List<HistoryView>>.broadcast();
+    _wishlistCtrl ??= StreamController<List<WishlistView>>.broadcast();
     if (!_loaded) {
       _loaded = true;
       _loadAll();
@@ -176,12 +197,21 @@ class SupabaseLibraryRepository implements LibraryRepository {
     final seasons = await _selectAll('film_seasons');
     final coll = await _selectAll('collection');
     final hist = await _selectAll('history');
+    // Tolère l'absence de la table (migration SQL pas encore exécutée) : le
+    // pense-bête est alors vide mais le reste de la bibliothèque fonctionne.
+    List<Map<String, dynamic>> wish;
+    try {
+      wish = await _selectAll('wishlist');
+    } catch (_) {
+      wish = const [];
+    }
     final fl = films.map(Film.fromJson).toList();
     _filmsById = {for (final f in fl) f.id!: f};
     _filmsByKey = {for (final f in fl) f.mediaKey: f};
     _seasons = seasons.map(FilmSeason.fromJson).toList();
     _collection = coll.map(CollectionEntry.fromJson).toList();
     _history = hist.map(HistoryEntry.fromJson).toList();
+    _wishlist = wish.map(WishlistEntry.fromJson).toList();
     _rebuild();
   }
 
@@ -229,11 +259,30 @@ class SupabaseLibraryRepository implements LibraryRepository {
     }
     hist.sort((a, b) => b.watchedAt.compareTo(a.watchedAt));
 
+    final seenWish = <String>{};
+    final wish = <WishlistView>[];
+    for (final e in _wishlist) {
+      if (e.id != null && !seenWish.add(e.id!)) continue;
+      final film = _filmsById[e.filmId];
+      if (film == null) continue;
+      wish.add(WishlistView(
+        entry: e,
+        film: film,
+        season: e.seasonNumber == null
+            ? null
+            : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
+      ));
+    }
+    // Du plus récemment ajouté au plus ancien.
+    wish.sort((a, b) => (b.addedAt ?? DateTime(0)).compareTo(a.addedAt ?? DateTime(0)));
+
     _lastColl = List.unmodifiable(coll);
     _lastHist = List.unmodifiable(hist);
+    _lastWish = List.unmodifiable(wish);
     _emitted = true;
     _collectionCtrl?.add(_lastColl);
     _historyCtrl?.add(_lastHist);
+    _wishlistCtrl?.add(_lastWish);
   }
 
   @override
@@ -248,6 +297,13 @@ class SupabaseLibraryRepository implements LibraryRepository {
     _ensureLoaded();
     if (_emitted) yield _lastHist;
     yield* _historyCtrl!.stream;
+  }
+
+  @override
+  Stream<List<WishlistView>> watchWishlist() async* {
+    _ensureLoaded();
+    if (_emitted) yield _lastWish;
+    yield* _wishlistCtrl!.stream;
   }
 
   /// Upsert le film (catalogue) et renvoie la version persistée (avec id).
@@ -326,6 +382,9 @@ class SupabaseLibraryRepository implements LibraryRepository {
   Future<void> addToHistory(
     Film film, {
     FilmSeason? season,
+    int? episodeNumber,
+    String? episodeName,
+    int? episodeRuntime,
     required DateTime watchedAt,
     double? rating,
     String? comment,
@@ -337,6 +396,9 @@ class SupabaseLibraryRepository implements LibraryRepository {
     final entry = HistoryEntry(
       filmId: saved.id!,
       seasonNumber: season?.seasonNumber,
+      episodeNumber: episodeNumber,
+      episodeName: episodeName,
+      episodeRuntime: episodeRuntime,
       watchedAt: watchedAt,
       rating: rating,
       comment: comment,
@@ -352,6 +414,51 @@ class SupabaseLibraryRepository implements LibraryRepository {
       saved2,
     ];
     _rebuild();
+  }
+
+  @override
+  Future<void> addToWishlist(Film film, {FilmSeason? season}) async {
+    _assertWritable();
+    final saved = await _upsertFilm(film);
+    if (season != null) await _upsertSeason(saved, season);
+
+    final already = _wishlist.any((e) =>
+        e.filmId == saved.id && e.seasonNumber == season?.seasonNumber);
+    if (already) return;
+
+    final entry = WishlistEntry(
+      filmId: saved.id!,
+      seasonNumber: season?.seasonNumber,
+      addedAt: DateTime.now(),
+    );
+    final row = await _client
+        .from('wishlist')
+        .insert({...entry.toUpsertJson(), 'user_id': _userId})
+        .select()
+        .single();
+    final saved2 = WishlistEntry.fromJson(row);
+    _wishlist = [
+      ..._wishlist.where((e) => e.id != saved2.id),
+      saved2,
+    ];
+    _rebuild();
+  }
+
+  @override
+  Future<void> removeFromWishlist(String id) async {
+    _assertWritable();
+    final filmId = _filmIdOfWishlist(id);
+    await _client.from('wishlist').delete().eq('id', id).eq('user_id', _userId);
+    _wishlist = _wishlist.where((e) => e.id != id).toList();
+    if (filmId != null) _gcFilmLocally(filmId);
+    _rebuild();
+  }
+
+  String? _filmIdOfWishlist(String id) {
+    for (final e in _wishlist) {
+      if (e.id == id) return e.filmId;
+    }
+    return null;
   }
 
   @override
@@ -373,9 +480,42 @@ class SupabaseLibraryRepository implements LibraryRepository {
                 id: e.id,
                 filmId: e.filmId,
                 seasonNumber: e.seasonNumber,
+                episodeNumber: e.episodeNumber,
+                episodeName: e.episodeName,
+                episodeRuntime: e.episodeRuntime,
                 watchedAt: watchedAt,
                 rating: rating,
                 comment: comment,
+              )
+            : e)
+        .toList();
+    _rebuild();
+  }
+
+  @override
+  Future<void> updateHistoryEpisodeMeta(
+    String id, {
+    String? episodeName,
+    int? episodeRuntime,
+  }) async {
+    if (readOnly) return; // réparation silencieuse, jamais en consultation
+    if (episodeName == null && episodeRuntime == null) return;
+    await _client.from('history').update({
+      'episode_name': ?episodeName,
+      'episode_runtime': ?episodeRuntime,
+    }).eq('id', id).eq('user_id', _userId);
+    _history = _history
+        .map((e) => e.id == id
+            ? HistoryEntry(
+                id: e.id,
+                filmId: e.filmId,
+                seasonNumber: e.seasonNumber,
+                episodeNumber: e.episodeNumber,
+                episodeName: episodeName ?? e.episodeName,
+                episodeRuntime: episodeRuntime ?? e.episodeRuntime,
+                watchedAt: e.watchedAt,
+                rating: e.rating,
+                comment: e.comment,
               )
             : e)
         .toList();
@@ -420,7 +560,8 @@ class SupabaseLibraryRepository implements LibraryRepository {
   /// n'est plus référencé, pour une UI immédiatement cohérente.
   void _gcFilmLocally(String filmId) {
     final stillRef = _collection.any((e) => e.filmId == filmId) ||
-        _history.any((e) => e.filmId == filmId);
+        _history.any((e) => e.filmId == filmId) ||
+        _wishlist.any((e) => e.filmId == filmId);
     if (stillRef) return;
     final film = _filmsById.remove(filmId);
     if (film != null) _filmsByKey.remove(film.mediaKey);
@@ -460,6 +601,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
   void dispose() {
     _collectionCtrl?.close();
     _historyCtrl?.close();
+    _wishlistCtrl?.close();
   }
 }
 
@@ -477,15 +619,18 @@ class LocalLibraryRepository implements LibraryRepository {
   static const _seasonsKey = 'lib_seasons_v1';
   static const _collectionKey = 'lib_collection_v1';
   static const _historyKey = 'lib_history_v1';
+  static const _wishlistKey = 'lib_wishlist_v1';
 
   final _collectionCtrl = StreamController<List<CollectionView>>.broadcast();
   final _historyCtrl = StreamController<List<HistoryView>>.broadcast();
+  final _wishlistCtrl = StreamController<List<WishlistView>>.broadcast();
 
   Map<String, Film> _filmsById = {};
   Map<String, Film> _filmsByKey = {};
   List<FilmSeason> _seasons = [];
   List<CollectionEntry> _collection = [];
   List<HistoryEntry> _history = [];
+  List<WishlistEntry> _wishlist = [];
   int _seq = 0;
 
   List<T> _decode<T>(String key, T Function(Map<String, dynamic>) f) {
@@ -503,6 +648,7 @@ class LocalLibraryRepository implements LibraryRepository {
     _seasons = _decode(_seasonsKey, FilmSeason.fromJson);
     _collection = _decode(_collectionKey, CollectionEntry.fromJson);
     _history = _decode(_historyKey, HistoryEntry.fromJson);
+    _wishlist = _decode(_wishlistKey, WishlistEntry.fromJson);
   }
 
   Future<void> _persist() async {
@@ -514,6 +660,8 @@ class LocalLibraryRepository implements LibraryRepository {
         jsonEncode(_collection.map((e) => e.toFullJson()).toList()));
     await _prefs.setString(
         _historyKey, jsonEncode(_history.map((e) => e.toFullJson()).toList()));
+    await _prefs.setString(
+        _wishlistKey, jsonEncode(_wishlist.map((e) => e.toFullJson()).toList()));
     _emit();
   }
 
@@ -548,8 +696,21 @@ class LocalLibraryRepository implements LibraryRepository {
                 : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
           )
     ]..sort((a, b) => b.watchedAt.compareTo(a.watchedAt));
+    final wish = [
+      for (final e in _wishlist)
+        if (_filmsById[e.filmId] != null)
+          WishlistView(
+            entry: e,
+            film: _filmsById[e.filmId]!,
+            season: e.seasonNumber == null
+                ? null
+                : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
+          )
+    ]..sort((a, b) =>
+        (b.addedAt ?? DateTime(0)).compareTo(a.addedAt ?? DateTime(0)));
     _collectionCtrl.add(List.unmodifiable(coll));
     _historyCtrl.add(List.unmodifiable(hist));
+    _wishlistCtrl.add(List.unmodifiable(wish));
   }
 
   @override
@@ -562,6 +723,12 @@ class LocalLibraryRepository implements LibraryRepository {
   Stream<List<HistoryView>> watchHistory() async* {
     _emit();
     yield* _historyCtrl.stream;
+  }
+
+  @override
+  Stream<List<WishlistView>> watchWishlist() async* {
+    _emit();
+    yield* _wishlistCtrl.stream;
   }
 
   String _nextId() =>
@@ -636,6 +803,9 @@ class LocalLibraryRepository implements LibraryRepository {
   Future<void> addToHistory(
     Film film, {
     FilmSeason? season,
+    int? episodeNumber,
+    String? episodeName,
+    int? episodeRuntime,
     required DateTime watchedAt,
     double? rating,
     String? comment,
@@ -648,11 +818,45 @@ class LocalLibraryRepository implements LibraryRepository {
         id: _nextId(),
         filmId: saved.id!,
         seasonNumber: season?.seasonNumber,
+        episodeNumber: episodeNumber,
+        episodeName: episodeName,
+        episodeRuntime: episodeRuntime,
         watchedAt: watchedAt,
         rating: rating,
         comment: comment,
       ),
     ];
+    await _persist();
+  }
+
+  @override
+  Future<void> addToWishlist(Film film, {FilmSeason? season}) async {
+    final saved = _ensureFilm(film);
+    if (season != null) _ensureSeason(saved, season);
+    final already = _wishlist.any((e) =>
+        e.filmId == saved.id && e.seasonNumber == season?.seasonNumber);
+    if (already) return;
+    _wishlist = [
+      ..._wishlist,
+      WishlistEntry(
+        id: _nextId(),
+        filmId: saved.id!,
+        seasonNumber: season?.seasonNumber,
+        addedAt: DateTime.now(),
+      ),
+    ];
+    await _persist();
+  }
+
+  @override
+  Future<void> removeFromWishlist(String id) async {
+    final filmId = _wishlist
+        .where((e) => e.id == id)
+        .map((e) => e.filmId)
+        .cast<String?>()
+        .firstWhere((_) => true, orElse: () => null);
+    _wishlist = _wishlist.where((e) => e.id != id).toList();
+    if (filmId != null) _gcFilm(filmId);
     await _persist();
   }
 
@@ -669,9 +873,37 @@ class LocalLibraryRepository implements LibraryRepository {
                 id: e.id,
                 filmId: e.filmId,
                 seasonNumber: e.seasonNumber,
+                episodeNumber: e.episodeNumber,
+                episodeName: e.episodeName,
+                episodeRuntime: e.episodeRuntime,
                 watchedAt: watchedAt,
                 rating: rating,
                 comment: comment,
+              )
+            : e)
+        .toList();
+    await _persist();
+  }
+
+  @override
+  Future<void> updateHistoryEpisodeMeta(
+    String id, {
+    String? episodeName,
+    int? episodeRuntime,
+  }) async {
+    if (episodeName == null && episodeRuntime == null) return;
+    _history = _history
+        .map((e) => e.id == id
+            ? HistoryEntry(
+                id: e.id,
+                filmId: e.filmId,
+                seasonNumber: e.seasonNumber,
+                episodeNumber: e.episodeNumber,
+                episodeName: episodeName ?? e.episodeName,
+                episodeRuntime: episodeRuntime ?? e.episodeRuntime,
+                watchedAt: e.watchedAt,
+                rating: e.rating,
+                comment: e.comment,
               )
             : e)
         .toList();
@@ -705,7 +937,8 @@ class LocalLibraryRepository implements LibraryRepository {
   /// GC applicatif : film/saison orphelin → retiré du catalogue.
   void _gcFilm(String filmId) {
     final filmRef = _collection.any((e) => e.filmId == filmId) ||
-        _history.any((e) => e.filmId == filmId);
+        _history.any((e) => e.filmId == filmId) ||
+        _wishlist.any((e) => e.filmId == filmId);
     if (!filmRef) {
       final film = _filmsById.remove(filmId);
       if (film != null) _filmsByKey.remove(film.mediaKey);
@@ -718,6 +951,8 @@ class LocalLibraryRepository implements LibraryRepository {
       final used = _collection.any(
               (e) => e.filmId == filmId && e.seasonNumber == s.seasonNumber) ||
           _history.any(
+              (e) => e.filmId == filmId && e.seasonNumber == s.seasonNumber) ||
+          _wishlist.any(
               (e) => e.filmId == filmId && e.seasonNumber == s.seasonNumber);
       return used;
     }).toList();
@@ -744,6 +979,7 @@ class LocalLibraryRepository implements LibraryRepository {
   void dispose() {
     _collectionCtrl.close();
     _historyCtrl.close();
+    _wishlistCtrl.close();
   }
 }
 
@@ -779,3 +1015,14 @@ final collectionStreamProvider = StreamProvider<List<CollectionView>>(
 /// Flux de l'historique (visionnages enrichis), du plus récent au plus ancien.
 final historyStreamProvider = StreamProvider<List<HistoryView>>(
     (ref) => ref.watch(libraryRepositoryProvider).watchHistory());
+
+/// Flux du pense-bête (titres à voir/acheter), du plus récent au plus ancien.
+final wishlistStreamProvider = StreamProvider<List<WishlistView>>(
+    (ref) => ref.watch(libraryRepositoryProvider).watchWishlist());
+
+/// Index du pense-bête par clé `mediaKey|saison` — pour afficher l'état du
+/// marque-page (recherche, fiche détail) et retrouver l'id à retirer.
+final wishlistByKeyProvider = Provider<Map<String, WishlistView>>((ref) {
+  final list = ref.watch(wishlistStreamProvider).value ?? const [];
+  return {for (final w in list) '${w.film.mediaKey}|${w.seasonNumber}': w};
+});

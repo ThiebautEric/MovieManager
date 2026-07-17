@@ -213,6 +213,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get detailsAddViewing => 'Ajouter un visionnage';
 
   @override
+  String get detailsRateEpisode => 'Noter un épisode';
+
+  @override
   String get detailsEditViewing => 'Modifier le visionnage';
 
   @override
@@ -574,6 +577,30 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get navCloseDetail => 'Fermer la fiche';
+
+  @override
+  String get wishlistTitle => 'Pense-bête';
+
+  @override
+  String get wishlistEmpty =>
+      'Rien dans le pense-bête.\nDepuis une fiche ou un résultat de recherche, touche le marque-page pour garder un titre à voir ou à acheter.';
+
+  @override
+  String get wishlistAddTooltip => 'Ajouter au pense-bête';
+
+  @override
+  String get wishlistRemoveTooltip => 'Retirer du pense-bête';
+
+  @override
+  String get wishlistToHistory => 'Vu';
+
+  @override
+  String get wishlistToCollection => 'Acquis';
+
+  @override
+  String wishlistAddedOn(String date) {
+    return 'Ajouté le $date';
+  }
 
   @override
   String get top10Title => 'Top 10';

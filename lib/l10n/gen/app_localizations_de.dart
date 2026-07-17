@@ -213,6 +213,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get detailsAddViewing => 'Sichtung hinzufügen';
 
   @override
+  String get detailsRateEpisode => 'Eine Folge bewerten';
+
+  @override
   String get detailsEditViewing => 'Sichtung bearbeiten';
 
   @override
@@ -575,6 +578,30 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get navCloseDetail => 'Detailansicht schließen';
+
+  @override
+  String get wishlistTitle => 'Merkliste';
+
+  @override
+  String get wishlistEmpty =>
+      'Nichts auf der Merkliste.\nTippe auf einer Detailseite oder in den Suchergebnissen auf das Lesezeichen, um dir einen Titel zu merken.';
+
+  @override
+  String get wishlistAddTooltip => 'Zur Merkliste hinzufügen';
+
+  @override
+  String get wishlistRemoveTooltip => 'Von der Merkliste entfernen';
+
+  @override
+  String get wishlistToHistory => 'Gesehen';
+
+  @override
+  String get wishlistToCollection => 'Gekauft';
+
+  @override
+  String wishlistAddedOn(String date) {
+    return 'Hinzugefügt am $date';
+  }
 
   @override
   String get top10Title => 'Top 10';

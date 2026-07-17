@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/prefs/original_titles_controller.dart';
+import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_summary.dart';
@@ -212,6 +213,11 @@ class _ResultCard extends ConsumerWidget {
                           size: 13, color: Colors.white),
                     ),
                   ),
+                Positioned(
+                  bottom: 6,
+                  right: 6,
+                  child: _WishlistBadgeButton(item: item),
+                ),
               ],
             ),
           ),
@@ -233,6 +239,59 @@ class _ResultCard extends ConsumerWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Marque-page 1 clic sur la vignette : ajoute/retire l'œuvre entière du
+/// pense-bête. Masqué en consultation (lecture seule).
+class _WishlistBadgeButton extends ConsumerWidget {
+  const _WishlistBadgeButton({required this.item});
+
+  final MediaSummary item;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(isViewingAsProvider)) return const SizedBox.shrink();
+    final l10n = context.l10n;
+    final existing =
+        ref.watch(wishlistByKeyProvider)['${item.mediaType}:${item.tmdbId}|null'];
+    final on = existing != null;
+    return Material(
+      color: Colors.black.withValues(alpha: 0.55),
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () async {
+          final repo = ref.read(libraryRepositoryProvider);
+          try {
+            if (on) {
+              if (existing.id != null) {
+                await repo.removeFromWishlist(existing.id!);
+              }
+            } else {
+              await repo.addToWishlist(Film.fromSummary(item));
+            }
+          } catch (e) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(l10n.errorMessage('$e'))));
+            }
+          }
+        },
+        child: Tooltip(
+          message: on ? l10n.wishlistRemoveTooltip : l10n.wishlistAddTooltip,
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Icon(
+              on ? Icons.bookmark : Icons.bookmark_border,
+              size: 18,
+              // Jaune « cadre » quand actif : lisible sur l'affiche sombre.
+              color: on ? const Color(0xFFF2C40F) : Colors.white,
+            ),
+          ),
+        ),
       ),
     );
   }

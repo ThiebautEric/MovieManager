@@ -30,31 +30,81 @@ def sup(method, path, body=None, headers=None, params=""):
 
 st, b = sup("POST", "/auth/v1/token", {"email": "demo@movie.app", "password": "demo123456"}, params="?grant_type=password")
 auth = json.loads(b); uid = auth["user"]["id"]; AH = {"Authorization": "Bearer " + auth["access_token"]}
-for tbl in ["history", "collection", "film_seasons", "films", "favorites"]:
+for tbl in ["history", "collection", "wishlist", "film_seasons", "films", "favorites"]:
     sup("DELETE", "/rest/v1/" + tbl, headers=AH, params="?user_id=eq." + uid)
 print("base videe")
 
 hist = load("watched-history-*.json")
 rm = {x["movie"]["ids"].get("tmdb"): x["rating"] for x in load("ratings-movies-*.json")}
 epr = {x["episode"]["ids"].get("tmdb"): x["rating"] for x in load("ratings-episodes-*.json")}
-films = {}; hrows = []; no_tmdb = []; groups = defaultdict(list)
+films = {}; hrows = []; no_tmdb = []; seasons = defaultdict(list)
 for h in hist:
     if h.get("type") == "movie":
         m = h["movie"]; t = m["ids"].get("tmdb")
         if not t:
             no_tmdb.append(("movie", m.get("title"), m.get("year"), h["watched_at"][:10])); continue
         films[("movie", t)] = {"title": m.get("title") or "Sans titre", "year": m.get("year")}
-        hrows.append((("movie", t), None, h["watched_at"], rm.get(t)))
+        hrows.append((("movie", t), None, h["watched_at"], rm.get(t), None))
     elif h.get("type") == "episode":
-        sh = h["show"]; t = sh["ids"].get("tmdb"); sn = h["episode"]["season"]
+        sh = h["show"]; t = sh["ids"].get("tmdb"); ep = h["episode"]; sn = ep["season"]
         if not t:
             no_tmdb.append(("show", sh.get("title"), sh.get("year"), h["watched_at"][:10])); continue
         films[("tv", t)] = {"title": sh.get("title") or "Sans titre", "year": sh.get("year")}
-        groups[(t, sn, h["watched_at"][:10])].append((h["watched_at"], h["episode"]["ids"].get("tmdb")))
-for (t, sn, _d), eps in groups.items():
-    watched = max(w for w, _ in eps)
-    rates = [epr[e] for _, e in eps if e in epr]
-    hrows.append((("tv", t), sn, watched, round(sum(rates) / len(rates), 1) if rates else None))
+        seasons[(t, sn)].append((h["watched_at"], ep["ids"].get("tmdb"), ep.get("number"), ep.get("title")))
+
+# Noms/durees localises des episodes (TMDB), par saison, avec cache.
+season_meta_cache = {}
+
+
+def _grab_season(t, sn, lang):
+    q = urllib.parse.urlencode({"api_key": TMDB, "language": lang})
+    with urllib.request.urlopen("https://api.themoviedb.org/3/tv/%s/season/%s?%s" % (t, sn, q), timeout=30) as r:
+        d = json.loads(r.read().decode())
+    return {e.get("episode_number"): (e.get("name"), e.get("runtime")) for e in d.get("episodes", [])}
+
+
+def season_meta(t, sn):
+    # fr-FR, avec repli en-US quand le titre est generique (« Episode N ») :
+    # TMDB renvoie ce placeholder pour les episodes non traduits.
+    if (t, sn) not in season_meta_cache:
+        try:
+            fr = _grab_season(t, sn, "fr-FR")
+            try:
+                en = _grab_season(t, sn, "en-US")
+            except Exception:
+                en = {}
+            merged = {}
+            for n, (name, rt) in fr.items():
+                generic = not name or (name or "").strip().lower() in ("épisode %s" % n, "episode %s" % n)
+                if generic and en.get(n, (None, None))[0]:
+                    name = en[n][0]
+                merged[n] = (name, rt)
+            season_meta_cache[(t, sn)] = merged
+        except Exception:
+            season_meta_cache[(t, sn)] = {}
+    return season_meta_cache[(t, sn)]
+
+
+# Regle : au plus UN episode note dans la saison -> convention historique
+# (une entree saison par jour de visionnage, note = moyenne du jour) ;
+# PLUSIEURS episodes notes -> notation par episode (une entree par episode,
+# numero/nom/duree TMDB, note et date propres).
+for (t, sn), eps in seasons.items():
+    rated = {e for _, e, _, _ in eps if e in epr}
+    if len(rated) <= 1:
+        by_day = defaultdict(list)
+        for w, e, _n, _ti in eps:
+            by_day[w[:10]].append((w, e))
+        for lst in by_day.values():
+            watched = max(w for w, _ in lst)
+            rates = [epr[e] for _, e in lst if e in epr]
+            hrows.append((("tv", t), sn, watched, round(sum(rates) / len(rates), 1) if rates else None, None))
+    else:
+        meta = season_meta(t, sn)
+        for w, e, n, ti in eps:
+            name, rt = meta.get(n, (ti, None))
+            hrows.append((("tv", t), sn, w, epr.get(e),
+                          {"episode_number": n, "episode_name": name or ti, "episode_runtime": rt}))
 
 
 def fetch(key):
@@ -110,7 +160,14 @@ for c in chunks(film_rows, 400):
     else: film_err.append((st, b[:150]))
 print("films inseres=%d erreurs lots=%d" % (ins_film, len(film_err)))
 
-hist_rows = [{"user_id": uid, "film_id": idmap[k], "season_number": sn, "watched_at": wat, "rating": rt} for (k, sn, wat, rt) in hrows if k in idmap]
+hist_rows = []
+for (k, sn, wat, rt, ep) in hrows:
+    if k not in idmap:
+        continue
+    row = {"user_id": uid, "film_id": idmap[k], "season_number": sn, "watched_at": wat, "rating": rt}
+    if ep:
+        row.update(ep)
+    hist_rows.append(row)
 ins_hist = 0; hist_err = []
 for c in chunks(hist_rows, 400):
     st, b = sup("POST", "/rest/v1/history", c, headers={**AH, "Prefer": "return=representation"})

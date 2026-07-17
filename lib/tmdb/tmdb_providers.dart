@@ -4,6 +4,7 @@ import '../core/l10n/locale_controller.dart';
 import 'models/genre.dart';
 import 'models/media_details.dart';
 import 'models/person_details.dart';
+import 'models/season_episodes.dart';
 import 'tmdb_client.dart';
 
 /// Client TMDB partagé. Suit la langue de l'application : en changer
@@ -44,6 +45,14 @@ final personDetailsProvider =
     FutureProvider.family<PersonDetails, int>((ref, personId) {
   return ref.watch(tmdbClientProvider).person(personId);
 });
+
+/// Épisodes d'une saison, mis en cache par (série, saison) — notation par
+/// épisode sur la fiche détail.
+final seasonEpisodesProvider =
+    FutureProvider.family<List<EpisodeInfo>, ({int id, int season})>(
+  (ref, key) =>
+      ref.watch(tmdbClientProvider).seasonEpisodes(key.id, key.season),
+);
 
 /// Liste des genres TMDB (chargée une fois), indexée par id pour l'affichage.
 final genresProvider = FutureProvider<List<Genre>>((ref) {

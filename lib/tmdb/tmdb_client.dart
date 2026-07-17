@@ -7,6 +7,7 @@ import 'models/media_summary.dart';
 import 'models/person_details.dart';
 import 'models/person_summary.dart';
 import 'models/search_hit.dart';
+import 'models/season_episodes.dart';
 
 /// Client de l'API TMDB (endpoints v3).
 ///
@@ -88,6 +89,47 @@ class TmdbClient {
       'append_to_response': 'credits,videos',
     });
     return MediaDetails.fromJson(res.data as Map<String, dynamic>, mediaType);
+  }
+
+  /// Épisodes d'une saison d'une série (pour la notation par épisode).
+  ///
+  /// TMDB renvoie « Épisode N » générique quand le titre n'est pas traduit
+  /// dans [language] : on récupère alors aussi la version en-US et on retombe
+  /// sur le vrai titre original.
+  Future<List<EpisodeInfo>> seasonEpisodes(int tvId, int seasonNumber) async {
+    Future<List<EpisodeInfo>> grab(String lang) async {
+      final res = await _dio.get('/tv/$tvId/season/$seasonNumber',
+          queryParameters: {'language': lang});
+      return EpisodeInfo.listFromSeasonJson(res.data as Map<String, dynamic>);
+    }
+
+    if (language.startsWith('en')) return grab(language);
+    final results = await Future.wait([grab(language), grab('en-US')]);
+    final localized = results[0];
+    final en = {for (final e in results[1]) e.episodeNumber: e};
+    return [
+      for (final e in localized)
+        isGenericEpisodeName(e.name, e.episodeNumber) &&
+                (en[e.episodeNumber]?.name.isNotEmpty ?? false)
+            ? EpisodeInfo(
+                episodeNumber: e.episodeNumber,
+                name: en[e.episodeNumber]!.name,
+                runtime: e.runtime,
+                airDate: e.airDate,
+                stillPath: e.stillPath,
+              )
+            : e,
+    ];
+  }
+
+  /// Vrai pour un nom d'épisode générique TMDB (« Épisode 3 », « Episode 3 »,
+  /// « Folge 3 ») ou vide — signe d'une traduction absente.
+  static bool isGenericEpisodeName(String name, int n) {
+    final s = name.trim().toLowerCase();
+    return s.isEmpty ||
+        s == 'épisode $n' ||
+        s == 'episode $n' ||
+        s == 'folge $n';
   }
 
   /// Fiche détaillée d'une personne, avec sa filmographie (movie + tv credits).

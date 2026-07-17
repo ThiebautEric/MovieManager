@@ -127,6 +127,7 @@
     }
   },
   "detailsAddViewing": "Ajouter un visionnage",
+  "detailsRateEpisode": "Noter un épisode",
   "detailsEditViewing": "Modifier le visionnage",
   "detailsRemoveCollectionTitle": "Retirer de la collection ?",
   "detailsRemoveCollectionBody": "Cette possession est retirée de ta collection. Ton historique de visionnage n'est pas affecté.",
@@ -409,6 +410,20 @@
   },
   "navQuit": "Quitter",
   "navCloseDetail": "Fermer la fiche",
+  "wishlistTitle": "Pense-bête",
+  "wishlistEmpty": "Rien dans le pense-bête.\nDepuis une fiche ou un résultat de recherche, touche le marque-page pour garder un titre à voir ou à acheter.",
+  "wishlistAddTooltip": "Ajouter au pense-bête",
+  "wishlistRemoveTooltip": "Retirer du pense-bête",
+  "wishlistToHistory": "Vu",
+  "wishlistToCollection": "Acquis",
+  "wishlistAddedOn": "Ajouté le {date}",
+  "@wishlistAddedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "top10Title": "Top 10",
   "top10Hint": "Classement selon ta note moyenne, bonifiée par le nombre de visionnages.",
   "top10Empty": "Aucun titre noté pour l'instant.\nNote tes visionnages pour construire ton top 10.",

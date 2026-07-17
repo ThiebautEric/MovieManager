@@ -213,6 +213,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get detailsAddViewing => 'Add a viewing';
 
   @override
+  String get detailsRateEpisode => 'Rate an episode';
+
+  @override
   String get detailsEditViewing => 'Edit viewing';
 
   @override
@@ -575,6 +578,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navCloseDetail => 'Close details';
+
+  @override
+  String get wishlistTitle => 'Watchlist';
+
+  @override
+  String get wishlistEmpty =>
+      'Nothing on your watchlist.\nFrom a details page or a search result, tap the bookmark to keep a title to watch or buy.';
+
+  @override
+  String get wishlistAddTooltip => 'Add to watchlist';
+
+  @override
+  String get wishlistRemoveTooltip => 'Remove from watchlist';
+
+  @override
+  String get wishlistToHistory => 'Watched';
+
+  @override
+  String get wishlistToCollection => 'Acquired';
+
+  @override
+  String wishlistAddedOn(String date) {
+    return 'Added on $date';
+  }
 
   @override
   String get top10Title => 'Top 10';

@@ -56,10 +56,14 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     final b = StringBuffer('$bom${l10n.historyCsvHeader}\n');
     for (var i = 0; i < events.length; i++) {
       final e = events[i];
-      final saison = e.seasonNumber != null ? 'S${e.seasonNumber}' : '';
+      final saison = e.seasonNumber != null
+          ? 'S${e.seasonNumber}${e.episodeNumber != null ? 'E${e.episodeNumber}' : ''}'
+          : '';
+      final titre = e.film.title +
+          ((e.episodeName?.isNotEmpty ?? false) ? ' (${e.episodeName})' : '');
       final note = e.rating != null ? e.rating!.toStringAsFixed(1) : '';
       b.writeln(
-          '${i + 1};${q(e.film.title)};$saison;$note;${_fmtDateCsv(e.watchedAt)}');
+          '${i + 1};${q(titre)};$saison;$note;${_fmtDateCsv(e.watchedAt)}');
     }
     await FileSaver.instance.saveFile(
       name: 'historique',
@@ -485,7 +489,10 @@ class _HistoryCard extends ConsumerWidget {
                   Positioned(
                     top: 6,
                     right: 6,
-                    child: _badge(Icons.live_tv, 'S${event.seasonNumber}'),
+                    child: _badge(
+                        Icons.live_tv,
+                        'S${event.seasonNumber}'
+                        '${event.episodeNumber != null ? 'E${event.episodeNumber}' : ''}'),
                   ),
                 if (rating != null)
                   Positioned(
@@ -520,7 +527,11 @@ class _HistoryCard extends ConsumerWidget {
             ),
           ),
           if (isSeason)
-            Text(context.l10n.collSeasonLabel(event.seasonNumber!),
+            Text(
+                '${context.l10n.collSeasonLabel(event.seasonNumber!)}'
+                '${event.episodeNumber != null ? ' · ${(event.episodeName?.isNotEmpty ?? false) ? event.episodeName! : 'E${event.episodeNumber}'}' : ''}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodySmall),
           Row(
             children: [

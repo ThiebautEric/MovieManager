@@ -92,6 +92,23 @@ create table if not exists public.history (
   comment       text,
   created_at    timestamptz not null default now()
 );
+-- Visionnage au niveau épisode (facultatif ; null = saison entière).
+alter table public.history add column if not exists episode_number  integer;
+alter table public.history add column if not exists episode_name    text;
+alter table public.history add column if not exists episode_runtime integer;
+
+-- ----------------------------------------------------------------------------
+-- 4b. wishlist — pense-bête : titres/saisons à voir ou à acheter plus tard.
+--     Convertible côté app en possession (collection) ou visionnage (history).
+-- ----------------------------------------------------------------------------
+create table if not exists public.wishlist (
+  id            uuid primary key default gen_random_uuid(),
+  user_id       uuid not null references auth.users (id) on delete cascade,
+  film_id       uuid not null references public.films (id) on delete cascade,
+  season_number integer,
+  added_at      timestamptz not null default now(),
+  unique (user_id, film_id, season_number)
+);
 
 -- ----------------------------------------------------------------------------
 -- 5. favorites — personnes favorites (acteurs/réalisateurs) de l'utilisateur.
@@ -117,6 +134,8 @@ create index if not exists collection_user_idx      on public.collection (user_i
 create index if not exists collection_film_idx      on public.collection (film_id);
 create index if not exists history_user_date_idx    on public.history (user_id, watched_at desc);
 create index if not exists history_film_idx         on public.history (film_id);
+create index if not exists wishlist_user_idx        on public.wishlist (user_id);
+create index if not exists wishlist_film_idx        on public.wishlist (film_id);
 
 -- ----------------------------------------------------------------------------
 -- Ramasse-miettes (SEULE suppression automatique) : après suppression d'une
@@ -134,7 +153,8 @@ as $$
 begin
   -- Film plus référencé nulle part → suppression du catalogue.
   if not exists (select 1 from public.collection where film_id = old.film_id)
-     and not exists (select 1 from public.history where film_id = old.film_id) then
+     and not exists (select 1 from public.history where film_id = old.film_id)
+     and not exists (select 1 from public.wishlist where film_id = old.film_id) then
     delete from public.films where id = old.film_id;
     return old;
   end if;
@@ -147,6 +167,10 @@ begin
      )
      and not exists (
        select 1 from public.history
+       where film_id = old.film_id and season_number = old.season_number
+     )
+     and not exists (
+       select 1 from public.wishlist
        where film_id = old.film_id and season_number = old.season_number
      ) then
     delete from public.film_seasons
@@ -167,6 +191,11 @@ create trigger gc_after_history_delete
   after delete on public.history
   for each row execute function public.gc_orphan_films();
 
+drop trigger if exists gc_after_wishlist_delete on public.wishlist;
+create trigger gc_after_wishlist_delete
+  after delete on public.wishlist
+  for each row execute function public.gc_orphan_films();
+
 -- ----------------------------------------------------------------------------
 -- Row Level Security : chaque utilisateur ne voit/modifie que ses lignes.
 -- ----------------------------------------------------------------------------
@@ -174,7 +203,7 @@ do $$
 declare
   t text;
 begin
-  foreach t in array array['films', 'film_seasons', 'collection', 'history', 'favorites']
+  foreach t in array array['films', 'film_seasons', 'collection', 'history', 'wishlist', 'favorites']
   loop
     execute format('alter table public.%I enable row level security;', t);
     execute format('drop policy if exists "select own %1$s" on public.%1$I;', t);
@@ -199,7 +228,7 @@ do $$
 declare
   t text;
 begin
-  foreach t in array array['films', 'film_seasons', 'collection', 'history', 'favorites']
+  foreach t in array array['films', 'film_seasons', 'collection', 'history', 'wishlist', 'favorites']
   loop
     if not exists (
           select 1 from pg_publication_tables

@@ -13,7 +13,10 @@ import '../../data/models/film_season.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_details.dart';
+import '../../tmdb/models/season_episodes.dart';
+import '../../tmdb/tmdb_client.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/add_entry_dialogs.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
@@ -74,7 +77,47 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
       ref
           .read(libraryRepositoryProvider)
           .backfillFilm(Film.fromDetails(widget.details));
+      _repairEpisodeNames();
     });
+  }
+
+  /// Répare les visionnages d'épisodes au nom générique (« Épisode N »,
+  /// stockés avant le repli en-US) ou sans durée : vrai titre + durée TMDB.
+  Future<void> _repairEpisodeNames() async {
+    final d = widget.details;
+    if (d.mediaType != 'tv') return;
+    if (ref.read(isViewingAsProvider)) return;
+    try {
+      final hist = await ref.read(historyStreamProvider.future);
+      final key = '${d.mediaType}:${d.tmdbId}';
+      final broken = [
+        for (final h in hist)
+          if (h.film.mediaKey == key &&
+              h.episodeNumber != null &&
+              h.id != null &&
+              TmdbClient.isGenericEpisodeName(
+                  h.episodeName ?? '', h.episodeNumber!))
+            h,
+      ];
+      if (broken.isEmpty) return;
+      final client = ref.read(tmdbClientProvider);
+      final repo = ref.read(libraryRepositoryProvider);
+      final seasons = {for (final h in broken) h.seasonNumber}.whereType<int>();
+      for (final sn in seasons) {
+        final byN = {
+          for (final e in await client.seasonEpisodes(d.tmdbId, sn))
+            e.episodeNumber: e,
+        };
+        for (final h in broken.where((x) => x.seasonNumber == sn)) {
+          final e = byN[h.episodeNumber];
+          if (e == null || e.name.isEmpty) continue;
+          await repo.updateHistoryEpisodeMeta(h.id!,
+              episodeName: e.name, episodeRuntime: e.runtime);
+        }
+      }
+    } catch (_) {
+      // Hors ligne / erreur passagère : on réessaiera à la prochaine ouverture.
+    }
   }
 
   @override
@@ -429,6 +472,10 @@ class _LibraryControls extends ConsumerWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          if (!readOnly) ...[
+            _WishlistButton(film: _film, season: null),
+            const SizedBox(height: 8),
+          ],
           _CollectionSection(
             entries: collection,
             isSeries: false,
@@ -533,6 +580,10 @@ class _LibraryControls extends ConsumerWidget {
           style: theme.textTheme.bodySmall,
         ),
         children: [
+          if (!readOnly) ...[
+            _WishlistButton(film: _film, season: _season(info.seasonNumber)),
+            const SizedBox(height: 4),
+          ],
           _CollectionSection(
             entries: coll,
             isSeries: true,
@@ -552,16 +603,68 @@ class _LibraryControls extends ConsumerWidget {
             onEdit: (e) => _editHistory(context, repo, e),
             onRemove: (id) => _confirmRemoveHistory(context, repo, id),
           ),
+          // Notation par épisode : un visionnage propre à un épisode précis
+          // (utile pour les saisons « Specials » composées de téléfilms).
+          if (!readOnly)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () => _rateEpisode(context, repo, info, hist),
+                icon: const Icon(Icons.live_tv, size: 18),
+                label: Text(l10n.detailsRateEpisode),
+              ),
+            ),
         ],
       ),
     );
   }
 
+  /// Choisit un épisode de la saison (liste TMDB) puis ouvre le dialogue de
+  /// visionnage habituel ; l'entrée créée porte le numéro, le nom et la durée
+  /// de l'épisode.
+  Future<void> _rateEpisode(BuildContext context, LibraryRepository repo,
+      SeasonInfo info, List<HistoryView> hist) async {
+    final ep = await showDialog<EpisodeInfo>(
+      context: context,
+      builder: (_) => _EpisodePickerDialog(
+        tmdbId: details.tmdbId,
+        seasonNumber: info.seasonNumber,
+        watched: {
+          for (final h in hist)
+            if (h.episodeNumber != null) h.episodeNumber!,
+        },
+      ),
+    );
+    if (ep == null || !context.mounted) return;
+    final res = await showDialog<HistChoice>(
+      context: context,
+      builder: (_) => AddHistoryDialog(
+        title: ep.name.isEmpty ? 'E${ep.episodeNumber}' : ep.name,
+        header: _EpisodeHeader(episode: ep),
+      ),
+    );
+    if (res == null) return;
+    try {
+      await repo.addToHistory(
+        _film,
+        season: _season(info.seasonNumber),
+        episodeNumber: ep.episodeNumber,
+        episodeName: ep.name.isEmpty ? null : ep.name,
+        episodeRuntime: ep.runtime,
+        watchedAt: res.date,
+        rating: res.rating,
+        comment: res.comment,
+      );
+    } catch (e) {
+      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+    }
+  }
+
   Future<void> _addCollection(BuildContext context, LibraryRepository repo,
       {required int? season}) async {
-    final res = await showDialog<_CollChoice>(
+    final res = await showDialog<CollChoice>(
       context: context,
-      builder: (_) => const _AddCollectionDialog(),
+      builder: (_) => const AddCollectionDialog(),
     );
     if (res == null) return;
     try {
@@ -578,9 +681,9 @@ class _LibraryControls extends ConsumerWidget {
 
   Future<void> _addHistory(BuildContext context, LibraryRepository repo,
       {required int? season}) async {
-    final res = await showDialog<_HistChoice>(
+    final res = await showDialog<HistChoice>(
       context: context,
-      builder: (_) => const _AddHistoryDialog(),
+      builder: (_) => const AddHistoryDialog(),
     );
     if (res == null) return;
     try {
@@ -598,9 +701,9 @@ class _LibraryControls extends ConsumerWidget {
 
   Future<void> _editHistory(
       BuildContext context, LibraryRepository repo, HistoryView e) async {
-    final res = await showDialog<_HistChoice>(
+    final res = await showDialog<HistChoice>(
       context: context,
-      builder: (_) => _AddHistoryDialog(
+      builder: (_) => AddHistoryDialog(
         initialDate: e.watchedAt,
         initialRating: e.rating,
         initialComment: e.comment,
@@ -821,6 +924,7 @@ class _HistorySection extends StatelessWidget {
                     title: Text(
                       '${context.l10n.detailsWatchedOn(_fmtDate(context, e.watchedAt))}'
                       '${e.seasonNumber != null ? ' · ${scopeLabel(e.seasonNumber)}' : ''}'
+                      '${e.episodeNumber != null ? ' · E${e.episodeNumber}${(e.episodeName ?? '').isNotEmpty ? ' ${e.episodeName}' : ''}' : ''}'
                       '${e.rating != null ? ' · ${e.rating!.toStringAsFixed(1)}/10' : ''}',
                     ),
                     subtitle: (e.comment ?? '').isNotEmpty
@@ -845,206 +949,168 @@ class _HistorySection extends StatelessWidget {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Dialogues d'ajout
-// ---------------------------------------------------------------------------
-class _CollChoice {
-  _CollChoice(this.medium, this.date);
-  final Medium medium;
-  final DateTime date;
-}
 
-class _HistChoice {
-  _HistChoice(this.date, this.rating, this.comment);
-  final DateTime date;
-  final double? rating;
-  final String? comment;
-}
+/// Bouton marque-page : ajoute/retire cette portée (film entier ou saison)
+/// du pense-bête. L'état est lu en direct depuis le flux wishlist.
+class _WishlistButton extends ConsumerWidget {
+  const _WishlistButton({required this.film, required this.season});
 
-class _AddCollectionDialog extends StatefulWidget {
-  const _AddCollectionDialog();
+  final Film film;
+  final FilmSeason? season;
 
   @override
-  State<_AddCollectionDialog> createState() => _AddCollectionDialogState();
-}
-
-class _AddCollectionDialogState extends State<_AddCollectionDialog> {
-  Medium _medium = Medium.dvd;
-  DateTime _date = DateTime.now();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    return AlertDialog(
-      title: Text(l10n.detailsAddToCollection),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.detailsMediumLabel),
-            const SizedBox(height: 6),
-            Wrap(
-              spacing: 8,
-              children: Medium.values
-                  .map((m) => ChoiceChip(
-                        label: Text(m.label),
-                        avatar: Icon(m.icon, size: 18),
-                        selected: _medium == m,
-                        onSelected: (_) => setState(() => _medium = m),
-                      ))
-                  .toList(),
-            ),
-            const SizedBox(height: 12),
-            _DateRow(
-              text: l10n.detailsAcquiredOn(_fmtDate(context, _date)),
-              date: _date,
-              onPick: (d) => setState(() => _date = d),
-            ),
-          ],
-        ),
+    final key = '${film.mediaKey}|${season?.seasonNumber}';
+    final existing = ref.watch(wishlistByKeyProvider)[key];
+    final on = existing != null;
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: OutlinedButton.icon(
+        icon: Icon(on ? Icons.bookmark : Icons.bookmark_border, size: 18),
+        label: Text(on ? l10n.wishlistRemoveTooltip : l10n.wishlistAddTooltip),
+        style: OutlinedButton.styleFrom(visualDensity: VisualDensity.compact),
+        onPressed: () async {
+          final repo = ref.read(libraryRepositoryProvider);
+          try {
+            if (on) {
+              if (existing.id != null) {
+                await repo.removeFromWishlist(existing.id!);
+              }
+            } else {
+              await repo.addToWishlist(film, season: season);
+            }
+          } catch (e) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(l10n.errorMessage('$e'))));
+            }
+          }
+        },
       ),
-      actions: [
-        TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l10n.cancel)),
-        FilledButton(
-          onPressed: () => Navigator.pop(context, _CollChoice(_medium, _date)),
-          child: Text(l10n.add),
-        ),
-      ],
     );
   }
 }
 
-class _AddHistoryDialog extends StatefulWidget {
-  const _AddHistoryDialog({
-    this.initialDate,
-    this.initialRating,
-    this.initialComment,
-    this.title,
+/// Dialogue de choix d'un épisode (liste TMDB de la saison), avec un œil sur
+/// les épisodes déjà présents dans l'historique.
+class _EpisodePickerDialog extends ConsumerWidget {
+  const _EpisodePickerDialog({
+    required this.tmdbId,
+    required this.seasonNumber,
+    required this.watched,
   });
 
-  final DateTime? initialDate;
-  final double? initialRating;
-  final String? initialComment;
-
-  /// Titre du dialogue ; par défaut « Ajouter un visionnage » (localisé).
-  final String? title;
+  final int tmdbId;
+  final int seasonNumber;
+  final Set<int> watched;
 
   @override
-  State<_AddHistoryDialog> createState() => _AddHistoryDialogState();
-}
-
-class _AddHistoryDialogState extends State<_AddHistoryDialog> {
-  late DateTime _date = widget.initialDate ?? DateTime.now();
-  late double _rating = widget.initialRating ?? 0;
-  late final TextEditingController _comment =
-      TextEditingController(text: widget.initialComment ?? '');
-
-  @override
-  void dispose() {
-    _comment.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final async =
+        ref.watch(seasonEpisodesProvider((id: tmdbId, season: seasonNumber)));
     return AlertDialog(
-      title: Text(widget.title ?? l10n.detailsAddViewing),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _DateRow(
-              text: l10n.detailsWatchedOn(_fmtDate(context, _date)),
-              date: _date,
-              onPick: (d) => setState(() => _date = d),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Text(l10n.detailsRatingLabel),
-                Expanded(
-                  child: Slider(
-                    value: _rating,
-                    min: 0,
-                    max: 10,
-                    divisions: 20,
-                    label: _rating == 0
-                        ? l10n.detailsRatingNone
-                        : _rating.toStringAsFixed(1),
-                    onChanged: (v) => setState(() => _rating = v),
+      title: Text(l10n.detailsRateEpisode),
+      content: SizedBox(
+        width: 440,
+        height: 440,
+        child: async.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
+          data: (eps) {
+            if (eps.isEmpty) {
+              return Center(child: Text(l10n.searchNoResults));
+            }
+            return ListView.builder(
+              itemCount: eps.length,
+              itemBuilder: (context, i) {
+                final ep = eps[i];
+                final meta = [
+                  if (ep.runtime != null) fmtDuration(ep.runtime!),
+                  if (ep.airYear != null) '${ep.airYear}',
+                ].join(' · ');
+                return ListTile(
+                  dense: true,
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: SizedBox(
+                      width: 76,
+                      height: 43,
+                      child: PosterImage(
+                          posterPath: ep.stillPath, size: 'w185'),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 40,
-                  child: Text(
-                    _rating == 0 ? '—' : _rating.toStringAsFixed(1),
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-              ],
-            ),
-            TextField(
-              controller: _comment,
-              maxLines: 2,
-              decoration: InputDecoration(
-                labelText: l10n.detailsCommentLabel,
-                hintText: l10n.detailsCommentHint,
-              ),
-            ),
-          ],
+                  title: Text(
+                      'E${ep.episodeNumber}'
+                      '${ep.name.isEmpty ? '' : ' · ${ep.name}'}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis),
+                  subtitle: meta.isEmpty ? null : Text(meta),
+                  trailing: watched.contains(ep.episodeNumber)
+                      ? Icon(Icons.visibility,
+                          size: 18, color: theme.colorScheme.primary)
+                      : null,
+                  onTap: () => Navigator.pop(context, ep),
+                );
+              },
+            );
+          },
         ),
       ),
       actions: [
         TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(l10n.cancel)),
-        FilledButton(
-          onPressed: () => Navigator.pop(
-            context,
-            _HistChoice(
-              _date,
-              _rating > 0 ? _rating : null,
-              _comment.text.trim().isEmpty ? null : _comment.text.trim(),
-            ),
-          ),
-          child: Text(l10n.save),
-        ),
       ],
     );
   }
 }
 
-class _DateRow extends StatelessWidget {
-  const _DateRow(
-      {required this.text, required this.date, required this.onPick});
+/// En-tête du dialogue de notation d'un épisode : vignette (still TMDB),
+/// numéro, durée et année.
+class _EpisodeHeader extends StatelessWidget {
+  const _EpisodeHeader({required this.episode});
 
-  /// Texte complet déjà localisé (ex. « Acquis le 12/07/2026 »).
-  final String text;
-  final DateTime date;
-  final void Function(DateTime) onPick;
+  final EpisodeInfo episode;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final meta = [
+      'E${episode.episodeNumber}',
+      if (episode.runtime != null) fmtDuration(episode.runtime!),
+      if (episode.airYear != null) '${episode.airYear}',
+    ].join(' · ');
     return Row(
       children: [
-        Expanded(child: Text(text)),
-        TextButton(
-          onPressed: () async {
-            final now = DateTime.now();
-            final picked = await showDatePicker(
-              context: context,
-              initialDate: date,
-              firstDate: DateTime(1900),
-              lastDate: now,
-            );
-            if (picked != null) onPick(picked);
-          },
-          child: Text(context.l10n.detailsEditButton),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: SizedBox(
+            width: 120,
+            height: 68,
+            child: PosterImage(posterPath: episode.stillPath, size: 'w300'),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (episode.name.isNotEmpty)
+                Text(episode.name,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleSmall),
+              const SizedBox(height: 2),
+              Text(meta,
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: theme.colorScheme.outline)),
+            ],
+          ),
         ),
       ],
     );

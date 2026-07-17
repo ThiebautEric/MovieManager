@@ -38,8 +38,9 @@ class Top10Screen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
         data: (events) {
-          final top = _rank(events);
-          if (top.isEmpty) {
+          final films = _rank(events, movies: true);
+          final series = _rank(events, movies: false);
+          if (films.isEmpty && series.isEmpty) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
@@ -47,22 +48,80 @@ class Top10Screen extends ConsumerWidget {
               ),
             );
           }
-          return ListView(
-            padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(4, 4, 4, 12),
-                child: Text(
-                  l10n.top10Hint,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: Theme.of(context).colorScheme.outline),
-                ),
-              ),
-              for (var i = 0; i < top.length; i++)
-                _Top10Tile(rank: i + 1, entry: top[i]),
-            ],
+          final theme = Theme.of(context);
+          Widget header(String text) => Padding(
+                padding: const EdgeInsets.fromLTRB(4, 8, 4, 6),
+                child: Text(text,
+                    style: theme.textTheme.titleMedium
+                        ?.copyWith(color: theme.colorScheme.primary)),
+              );
+          Widget list(List<_TopEntry> top) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (var i = 0; i < top.length; i++)
+                    _Top10Tile(rank: i + 1, entry: top[i]),
+                ],
+              );
+          final hint = Padding(
+            padding: const EdgeInsets.fromLTRB(4, 4, 4, 8),
+            child: Text(
+              l10n.top10Hint,
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(color: theme.colorScheme.outline),
+            ),
+          );
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              // Deux colonnes côte à côte (films / séries) dès que la place le
+              // permet ; sinon deux sections empilées.
+              final twoColumns = constraints.maxWidth >= 700;
+              return SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
+                child: twoColumns
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          hint,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    header(l10n.filterFilms),
+                                    list(films),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    header(l10n.filterSeries),
+                                    list(series),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          hint,
+                          header(l10n.filterFilms),
+                          list(films),
+                          header(l10n.filterSeries),
+                          list(series),
+                        ],
+                      ),
+              );
+            },
           );
         },
       ),
@@ -71,12 +130,16 @@ class Top10Screen extends ConsumerWidget {
 
   /// Agrège l'historique par (titre, saison) — une saison de série est une
   /// entrée à part entière, comme dans l'historique — et renvoie les 10
-  /// meilleurs scores.
-  static List<_TopEntry> _rank(List<HistoryView> events) {
+  /// meilleurs scores des films ([movies] vrai) ou des séries.
+  static List<_TopEntry> _rank(List<HistoryView> events,
+      {required bool movies}) {
     final byKey = <String, _TopEntry>{};
     for (final e in events) {
-      final t = byKey.putIfAbsent('${e.film.mediaKey}|${e.seasonNumber}',
-          () => _TopEntry(e.film, e.seasonNumber, e.posterPath));
+      if (e.film.isMovie != movies) continue;
+      final t = byKey.putIfAbsent(
+          '${e.film.mediaKey}|${e.seasonNumber}|${e.episodeNumber}',
+          () => _TopEntry(e.film, e.seasonNumber, e.episodeNumber,
+              e.episodeName, e.posterPath));
       t.views++;
       final r = e.rating;
       if (r != null) {
@@ -92,19 +155,24 @@ class Top10Screen extends ConsumerWidget {
         if (v != 0) return v;
         final t = a.film.title.compareTo(b.film.title);
         if (t != 0) return t;
-        return (a.seasonNumber ?? 0).compareTo(b.seasonNumber ?? 0);
+        final se = (a.seasonNumber ?? 0).compareTo(b.seasonNumber ?? 0);
+        if (se != 0) return se;
+        return (a.episodeNumber ?? 0).compareTo(b.episodeNumber ?? 0);
       });
     return ranked.take(10).toList();
   }
 }
 
-/// Une entrée agrégée (film, ou saison de série) : nombre de visionnages et
-/// somme des notes.
+/// Une entrée agrégée (film, saison de série, ou épisode noté
+/// individuellement) : nombre de visionnages et somme des notes.
 class _TopEntry {
-  _TopEntry(this.film, this.seasonNumber, this.posterPath);
+  _TopEntry(this.film, this.seasonNumber, this.episodeNumber,
+      this.episodeName, this.posterPath);
 
   final Film film;
   final int? seasonNumber;
+  final int? episodeNumber;
+  final String? episodeName;
 
   /// Affiche de la saison si connue, sinon celle du titre.
   final String? posterPath;
@@ -196,7 +264,10 @@ class _Top10Tile extends ConsumerWidget {
                     Text(
                       '${film.isMovie ? l10n.film : l10n.serie}'
                       '${entry.seasonNumber != null ? ' · ${l10n.collSeasonLabel(entry.seasonNumber!)}' : ''}'
+                      '${entry.episodeNumber != null ? ' · ${(entry.episodeName?.isNotEmpty ?? false) ? entry.episodeName! : 'E${entry.episodeNumber}'}' : ''}'
                       '${film.releaseYear != null ? ' · ${film.releaseYear}' : ''}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall
                           ?.copyWith(color: theme.colorScheme.outline),
                     ),

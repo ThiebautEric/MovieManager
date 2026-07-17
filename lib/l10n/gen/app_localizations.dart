@@ -424,6 +424,12 @@ abstract class AppLocalizations {
   /// **'Ajouter un visionnage'**
   String get detailsAddViewing;
 
+  /// No description provided for @detailsRateEpisode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noter un épisode'**
+  String get detailsRateEpisode;
+
   /// No description provided for @detailsEditViewing.
   ///
   /// In fr, this message translates to:
@@ -993,6 +999,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Fermer la fiche'**
   String get navCloseDetail;
+
+  /// No description provided for @wishlistTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pense-bête'**
+  String get wishlistTitle;
+
+  /// No description provided for @wishlistEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien dans le pense-bête.\nDepuis une fiche ou un résultat de recherche, touche le marque-page pour garder un titre à voir ou à acheter.'**
+  String get wishlistEmpty;
+
+  /// No description provided for @wishlistAddTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter au pense-bête'**
+  String get wishlistAddTooltip;
+
+  /// No description provided for @wishlistRemoveTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer du pense-bête'**
+  String get wishlistRemoveTooltip;
+
+  /// No description provided for @wishlistToHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vu'**
+  String get wishlistToHistory;
+
+  /// No description provided for @wishlistToCollection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Acquis'**
+  String get wishlistToCollection;
+
+  /// No description provided for @wishlistAddedOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouté le {date}'**
+  String wishlistAddedOn(String date);
 
   /// No description provided for @top10Title.
   ///

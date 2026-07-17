@@ -11,7 +11,7 @@
 do $$
 declare t text;
 begin
-  foreach t in array array['films','film_seasons','collection','history','favorites']
+  foreach t in array array['films','film_seasons','collection','history','wishlist','favorites']
   loop
     execute format('drop policy if exists "admin select all %1$s" on public.%1$I;', t);
     execute format('drop policy if exists "friends select all %1$s" on public.%1$I;', t);
