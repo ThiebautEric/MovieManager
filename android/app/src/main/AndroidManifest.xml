@@ -2,7 +2,7 @@
     <!-- Accès réseau requis pour l'API TMDB et Supabase. -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="movie_manager"
+        android:label="The Yellow Frame"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

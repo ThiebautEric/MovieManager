@@ -51,7 +51,7 @@ class MovieManagerApp extends ConsumerWidget {
     // null = suivre la langue du système (résolue parmi supportedLocales).
     final locale = ref.watch(appLocaleProvider);
     return MaterialApp.router(
-      title: 'Movie Manager',
+      title: 'The Yellow Frame',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
@@ -71,7 +71,7 @@ class _MisconfiguredApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Movie Manager',
+      title: 'The Yellow Frame',
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       locale: const Locale('fr'),
