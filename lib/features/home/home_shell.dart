@@ -41,9 +41,10 @@ class _HomeShellState extends ConsumerState<HomeShell>
 
   /// Version des métadonnées capturées. À incrémenter quand on enrichit le
   /// modèle (v1 : pays/casting ; v2 : + réalisateurs ; v3 : casting complet,
-  /// plus limité à 15 ; v4 : affiches en langue originale). Un changement de
-  /// version déclenche un rafraîchissement complet **une seule fois**.
-  static const _backfillVersion = 4;
+  /// plus limité à 15 ; v4-v5 : affiches en langue originale — v5 corrige le
+  /// filtre de langue TMDB qui masquait les affiches originales). Un
+  /// changement de version déclenche un rafraîchissement complet **une fois**.
+  static const _backfillVersion = 5;
   static const _backfillKey = 'metadata_backfill_version';
 
   @override

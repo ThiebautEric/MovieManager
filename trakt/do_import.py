@@ -126,9 +126,17 @@ def original_poster(d):
 def fetch(key):
     typ, tid = key
     try:
-        q = urllib.parse.urlencode({"api_key": TMDB, "language": "fr-FR", "append_to_response": "credits,images"})
+        q = urllib.parse.urlencode({"api_key": TMDB, "language": "fr-FR", "append_to_response": "credits"})
         with urllib.request.urlopen("https://api.themoviedb.org/3/%s/%s?%s" % (typ, tid, q), timeout=30) as r:
             d = json.loads(r.read().decode())
+        # Images SANS parametre de langue (sinon TMDB filtre a la langue
+        # demandee et l'affiche originale n'apparait jamais).
+        try:
+            qi = urllib.parse.urlencode({"api_key": TMDB})
+            with urllib.request.urlopen("https://api.themoviedb.org/3/%s/%s/images?%s" % (typ, tid, qi), timeout=30) as r:
+                d["images"] = json.loads(r.read().decode())
+        except Exception:
+            d["images"] = {}
         isM = typ == "movie"; cred = d.get("credits") or {}
         cast = [c["id"] for c in (cred.get("cast") or []) if c.get("id")]
         directors = [c["id"] for c in (cred.get("crew") or []) if c.get("job") == "Director" and c.get("id")]

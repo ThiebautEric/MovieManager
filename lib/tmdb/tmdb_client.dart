@@ -84,13 +84,19 @@ class TmdbClient {
 
   /// Fiche détaillée d'un média, avec casting et vidéos (append_to_response).
   Future<MediaDetails> details(int tmdbId, String mediaType) async {
-    final res = await _dio.get('/$mediaType/$tmdbId', queryParameters: {
-      'language': language,
-      // `images` : toutes les affiches, pour retrouver celle dans la langue
-      // ORIGINALE de l'œuvre (celle qu'on stocke en bibliothèque).
-      'append_to_response': 'credits,videos,images',
-    });
-    return MediaDetails.fromJson(res.data as Map<String, dynamic>, mediaType);
+    // Les images sont demandées SÉPARÉMENT et sans paramètre de langue :
+    // en append avec `language`, TMDB filtre les affiches à cette langue et
+    // l'affiche en langue originale n'apparaît jamais.
+    final results = await Future.wait([
+      _dio.get('/$mediaType/$tmdbId', queryParameters: {
+        'language': language,
+        'append_to_response': 'credits,videos',
+      }),
+      _dio.get('/$mediaType/$tmdbId/images'),
+    ]);
+    final json = results[0].data as Map<String, dynamic>;
+    json['images'] = results[1].data;
+    return MediaDetails.fromJson(json, mediaType);
   }
 
   /// Épisodes d'une saison d'une série (pour la notation par épisode).
