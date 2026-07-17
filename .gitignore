@@ -1,6 +1,9 @@
 # Secrets (clés TMDB / Supabase injectées au build) — ne jamais versionner.
 # Le modèle dart_define.example.json, lui, reste versionné.
 dart_define.json
+
+# Cache local Wrangler (déploiement Cloudflare Pages)
+.wrangler/
 *.env
 .env
 .env.*
