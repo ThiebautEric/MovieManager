@@ -1,12 +1,8 @@
 {
-  // Déploiement Cloudflare Workers (static assets) : le build Flutter web est
-  // servi tel quel. Build command : sh cloudflare_build.sh ;
-  // deploy command : npx wrangler deploy.
-  // Le "name" doit correspondre au nom du Worker dans le dashboard.
+  // Projet Cloudflare Pages « theyellowframe » (theyellowframe.pages.dev).
+  // Déploiement en direct upload depuis la machine locale :
+  //   npx wrangler pages deploy
+  // (le build web local est publié tel quel ; Cloudflare ne rebuilde rien).
   "name": "theyellowframe",
-  "compatibility_date": "2026-07-17",
-  "assets": {
-    "directory": "./build/web",
-    "not_found_handling": "single-page-application"
-  }
+  "pages_build_output_dir": "build/web"
 }
