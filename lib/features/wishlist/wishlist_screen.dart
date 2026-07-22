@@ -9,6 +9,7 @@ import '../../data/models/wishlist_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../widgets/add_entry_dialogs.dart';
 import '../../widgets/app_bar_title.dart';
+import '../../widgets/keyboard_scroll.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/poster_image.dart';
@@ -49,13 +50,16 @@ class WishlistScreen extends ConsumerWidget {
               ),
             );
           }
-          return RefreshIndicator(
-            onRefresh: () => ref.read(libraryRepositoryProvider).refresh(),
-            child: ListView.builder(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
-              itemCount: items.length,
-              itemBuilder: (context, i) =>
-                  _WishlistTile(item: items[i], readOnly: readOnly),
+          return KeyboardScroll(
+            builder: (ctrl) => RefreshIndicator(
+              onRefresh: () => ref.read(libraryRepositoryProvider).refresh(),
+              child: ListView.builder(
+                controller: ctrl,
+                padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
+                itemCount: items.length,
+                itemBuilder: (context, i) =>
+                    _WishlistTile(item: items[i], readOnly: readOnly),
+              ),
             ),
           );
         },

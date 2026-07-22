@@ -13,6 +13,7 @@ import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../widgets/app_bar_title.dart';
+import '../../widgets/keyboard_scroll.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
@@ -206,9 +207,11 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           ));
         }
         slivers.add(const SliverToBoxAdapter(child: SizedBox(height: 16)));
-        return RefreshIndicator(
-          onRefresh: () => ref.read(libraryRepositoryProvider).refresh(),
-          child: CustomScrollView(slivers: slivers),
+        return KeyboardScroll(
+          builder: (ctrl) => RefreshIndicator(
+            onRefresh: () => ref.read(libraryRepositoryProvider).refresh(),
+            child: CustomScrollView(controller: ctrl, slivers: slivers),
+          ),
         );
       },
     );

@@ -8,6 +8,7 @@ import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../widgets/app_bar_title.dart';
+import '../../widgets/keyboard_scroll.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
@@ -42,52 +43,54 @@ class PhysicalCollectionScreen extends ConsumerWidget {
         if (entries.isEmpty) {
           return _EmptyState(message: l10n.collEmpty);
         }
-        return RefreshIndicator(
-          onRefresh: () => ref.read(libraryRepositoryProvider).refresh(),
-          child: GridView.builder(
-            padding: const EdgeInsets.all(12),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 160,
-              childAspectRatio: 0.52,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+        return KeyboardScroll(
+          builder: (ctrl) => RefreshIndicator(
+            onRefresh: () => ref.read(libraryRepositoryProvider).refresh(),
+            child: GridView.builder(
+              controller: ctrl,
+              padding: const EdgeInsets.all(12),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 160,
+                childAspectRatio: 0.52,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+              ),
+              itemCount: entries.length,
+              itemBuilder: (context, i) {
+                final entry = entries[i];
+                final duration = entry.totalMinutes != null
+                    ? '${entry.isExactDuration ? '' : '≈'}${fmtDuration(entry.totalMinutes!)}'
+                    : null;
+                return _CollectionCard(
+                  poster: entry.posterPath,
+                  title: resolveTitle(
+                    ref,
+                    tmdbId: entry.film.tmdbId,
+                    mediaType: entry.film.mediaType,
+                    title: entry.film.title,
+                    originalTitle: entry.film.originalTitle,
+                  ),
+                  subtitle: (entry.seasonNumber != null
+                          ? l10n.collSeasonLabel(entry.seasonNumber!)
+                          : '${entry.film.isMovie ? l10n.film : l10n.serie}'
+                              '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}') +
+                      (duration != null ? ' · $duration' : ''),
+                  badge: MediumBadge(medium: entry.medium),
+                  seasonNumber: entry.seasonNumber,
+                  dateLabel: entry.addedAt != null
+                      ? dateFmt.format(entry.addedAt!)
+                      : null,
+                  onTap: () => openMedia(
+                    context,
+                    ref,
+                    type: entry.film.mediaType,
+                    id: entry.film.tmdbId,
+                    title: entry.film.title,
+                    posterPath: entry.film.posterPath,
+                  ),
+                );
+              },
             ),
-            itemCount: entries.length,
-            itemBuilder: (context, i) {
-              final entry = entries[i];
-              // Durée : film, ou cumul de la saison (« ≈ » si estimé).
-              final duration = entry.totalMinutes != null
-                  ? '${entry.isExactDuration ? '' : '≈'}${fmtDuration(entry.totalMinutes!)}'
-                  : null;
-              return _CollectionCard(
-                poster: entry.posterPath,
-                title: resolveTitle(
-                  ref,
-                  tmdbId: entry.film.tmdbId,
-                  mediaType: entry.film.mediaType,
-                  title: entry.film.title,
-                  originalTitle: entry.film.originalTitle,
-                ),
-                subtitle: (entry.seasonNumber != null
-                        ? l10n.collSeasonLabel(entry.seasonNumber!)
-                        : '${entry.film.isMovie ? l10n.film : l10n.serie}'
-                            '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}') +
-                    (duration != null ? ' · $duration' : ''),
-                badge: MediumBadge(medium: entry.medium),
-                seasonNumber: entry.seasonNumber,
-                dateLabel: entry.addedAt != null
-                    ? dateFmt.format(entry.addedAt!)
-                    : null,
-                onTap: () => openMedia(
-                  context,
-                  ref,
-                  type: entry.film.mediaType,
-                  id: entry.film.tmdbId,
-                  title: entry.film.title,
-                  posterPath: entry.film.posterPath,
-                ),
-              );
-            },
           ),
         );
       },
