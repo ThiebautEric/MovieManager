@@ -298,6 +298,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: _selectTab,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: destinations,
       ),
       floatingActionButton: (_index == 0 && AppConfig.hasSupabase)
