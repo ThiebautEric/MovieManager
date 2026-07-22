@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/supabase/supabase_providers.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../auth/auth_controller.dart';
@@ -41,7 +42,7 @@ class AdminScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.adminTitle),
+        title: AppBarTitle(l10n.adminTitle),
         actions: [
           const LanguageButton(),
           const ThemeToggleButton(),

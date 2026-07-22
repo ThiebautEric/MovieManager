@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../data/repositories/favorites_repository.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
@@ -19,7 +20,7 @@ class FavoritesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.favoritesTitle),
+        title: AppBarTitle(context.l10n.favoritesTitle),
         actions: const [LanguageButton(), ThemeToggleButton()],
       ),
       body: favorites.isEmpty

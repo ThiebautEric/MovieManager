@@ -12,6 +12,7 @@ import '../../core/utils/format.dart';
 import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
@@ -164,25 +165,28 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
               .add(e, owned: inColl(e));
         }
 
+        bool isCollapsed(int year) =>
+            !filter.isActive && _collapsed.contains(year);
+
         final slivers = <Widget>[];
         int? lastYear;
         for (final g in groups) {
           if (g.year != lastYear) {
-            final collapsed = _collapsed.contains(g.year);
+            final collapsed = isCollapsed(g.year);
             final s = yearStats[g.year]!;
             slivers.add(SliverToBoxAdapter(
               child: _YearHeader(
                 year: g.year,
                 counts: s,
                 collapsed: collapsed,
-                onTap: () => setState(() => collapsed
+                onTap: () => setState(() => _collapsed.contains(g.year)
                     ? _collapsed.remove(g.year)
                     : _collapsed.add(g.year)),
               ),
             ));
             lastYear = g.year;
           }
-          if (_collapsed.contains(g.year)) continue; // année repliée
+          if (isCollapsed(g.year)) continue; // année repliée
           final mc = _Counts();
           for (final e in g.items) {
             mc.add(e, owned: inColl(e));
@@ -211,7 +215,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.historyTitle),
+        title: AppBarTitle(l10n.historyTitle),
         actions: [
           IconButton(
             tooltip: l10n.historyExportTooltip,

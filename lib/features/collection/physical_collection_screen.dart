@@ -7,6 +7,7 @@ import '../../core/prefs/original_titles_controller.dart';
 import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
@@ -94,7 +95,7 @@ class PhysicalCollectionScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.collectionTitle),
+        title: AppBarTitle(l10n.collectionTitle),
         actions: [
           if (!wide)
             IconButton(

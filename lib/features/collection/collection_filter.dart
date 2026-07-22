@@ -15,10 +15,89 @@ String countryFlag(String iso) {
   return String.fromCharCodes([0x1F1E6 + (a - 65), 0x1F1E6 + (b - 65)]);
 }
 
-/// Libellé pays : drapeau + code (ex. « 🇫🇷 FR »).
+const _countryNames = <String, String>{
+  'AD': 'Andorre', 'AE': 'Émirats arabes unis', 'AF': 'Afghanistan',
+  'AG': 'Antigua-et-Barbuda', 'AL': 'Albanie', 'AM': 'Arménie',
+  'AO': 'Angola', 'AR': 'Argentine', 'AT': 'Autriche',
+  'AU': 'Australie', 'AZ': 'Azerbaïdjan',
+  'BA': 'Bosnie-Herzégovine', 'BB': 'Barbade', 'BD': 'Bangladesh',
+  'BE': 'Belgique', 'BF': 'Burkina Faso', 'BG': 'Bulgarie',
+  'BH': 'Bahreïn', 'BI': 'Burundi', 'BJ': 'Bénin',
+  'BN': 'Brunei', 'BO': 'Bolivie', 'BR': 'Brésil',
+  'BS': 'Bahamas', 'BT': 'Bhoutan', 'BW': 'Botswana',
+  'BY': 'Biélorussie', 'BZ': 'Belize',
+  'CA': 'Canada', 'CD': 'RD Congo', 'CF': 'Centrafrique',
+  'CG': 'Congo', 'CH': 'Suisse', 'CI': "Côte d'Ivoire",
+  'CL': 'Chili', 'CM': 'Cameroun', 'CN': 'Chine',
+  'CO': 'Colombie', 'CR': 'Costa Rica', 'CU': 'Cuba',
+  'CV': 'Cap-Vert', 'CY': 'Chypre', 'CZ': 'République tchèque',
+  'DE': 'Allemagne', 'DJ': 'Djibouti', 'DK': 'Danemark',
+  'DM': 'Dominique', 'DO': 'République dominicaine', 'DZ': 'Algérie',
+  'EC': 'Équateur', 'EE': 'Estonie', 'EG': 'Égypte',
+  'ER': 'Érythrée', 'ES': 'Espagne', 'ET': 'Éthiopie',
+  'FI': 'Finlande', 'FJ': 'Fidji', 'FM': 'Micronésie', 'FR': 'France',
+  'GA': 'Gabon', 'GB': 'Royaume-Uni', 'GD': 'Grenade',
+  'GE': 'Géorgie', 'GH': 'Ghana', 'GM': 'Gambie',
+  'GN': 'Guinée', 'GQ': 'Guinée équatoriale', 'GR': 'Grèce',
+  'GT': 'Guatemala', 'GW': 'Guinée-Bissau', 'GY': 'Guyana',
+  'HK': 'Hong Kong', 'HN': 'Honduras', 'HR': 'Croatie',
+  'HT': 'Haïti', 'HU': 'Hongrie',
+  'ID': 'Indonésie', 'IE': 'Irlande', 'IL': 'Israël',
+  'IN': 'Inde', 'IQ': 'Irak', 'IR': 'Iran',
+  'IS': 'Islande', 'IT': 'Italie',
+  'JM': 'Jamaïque', 'JO': 'Jordanie', 'JP': 'Japon',
+  'KE': 'Kenya', 'KG': 'Kirghizistan', 'KH': 'Cambodge',
+  'KI': 'Kiribati', 'KM': 'Comores', 'KP': 'Corée du Nord',
+  'KR': 'Corée du Sud', 'KW': 'Koweït', 'KZ': 'Kazakhstan',
+  'LA': 'Laos', 'LB': 'Liban', 'LC': 'Sainte-Lucie',
+  'LI': 'Liechtenstein', 'LK': 'Sri Lanka', 'LR': 'Liberia',
+  'LS': 'Lesotho', 'LT': 'Lituanie', 'LU': 'Luxembourg',
+  'LV': 'Lettonie', 'LY': 'Libye',
+  'MA': 'Maroc', 'MC': 'Monaco', 'MD': 'Moldavie',
+  'ME': 'Monténégro', 'MG': 'Madagascar', 'MH': 'Îles Marshall',
+  'MK': 'Macédoine du Nord', 'ML': 'Mali', 'MM': 'Myanmar',
+  'MN': 'Mongolie', 'MR': 'Mauritanie', 'MT': 'Malte',
+  'MU': 'Maurice', 'MV': 'Maldives', 'MW': 'Malawi',
+  'MX': 'Mexique', 'MY': 'Malaisie', 'MZ': 'Mozambique',
+  'NA': 'Namibie', 'NE': 'Niger', 'NG': 'Nigéria',
+  'NI': 'Nicaragua', 'NL': 'Pays-Bas', 'NO': 'Norvège',
+  'NP': 'Népal', 'NR': 'Nauru', 'NZ': 'Nouvelle-Zélande',
+  'OM': 'Oman',
+  'PA': 'Panama', 'PE': 'Pérou', 'PG': 'Papouasie-Nouvelle-Guinée',
+  'PH': 'Philippines', 'PK': 'Pakistan', 'PL': 'Pologne',
+  'PS': 'Palestine', 'PT': 'Portugal', 'PW': 'Palaos',
+  'PY': 'Paraguay',
+  'QA': 'Qatar',
+  'RO': 'Roumanie', 'RS': 'Serbie', 'RU': 'Russie', 'RW': 'Rwanda',
+  'SA': 'Arabie saoudite', 'SB': 'Îles Salomon', 'SC': 'Seychelles',
+  'SD': 'Soudan', 'SE': 'Suède', 'SG': 'Singapour',
+  'SI': 'Slovénie', 'SK': 'Slovaquie', 'SL': 'Sierra Leone',
+  'SM': 'Saint-Marin', 'SN': 'Sénégal', 'SO': 'Somalie',
+  'SR': 'Suriname', 'SS': 'Soudan du Sud', 'ST': 'São Tomé-et-Príncipe',
+  'SV': 'Salvador', 'SY': 'Syrie', 'SZ': 'Eswatini',
+  'TD': 'Tchad', 'TG': 'Togo', 'TH': 'Thaïlande',
+  'TJ': 'Tadjikistan', 'TL': 'Timor oriental', 'TM': 'Turkménistan',
+  'TN': 'Tunisie', 'TO': 'Tonga', 'TR': 'Turquie',
+  'TT': 'Trinité-et-Tobago', 'TV': 'Tuvalu', 'TW': 'Taïwan',
+  'TZ': 'Tanzanie',
+  'UA': 'Ukraine', 'UG': 'Ouganda', 'US': 'États-Unis',
+  'UY': 'Uruguay', 'UZ': 'Ouzbékistan',
+  'VA': 'Vatican', 'VC': 'Saint-Vincent-et-les-Grenadines',
+  'VE': 'Venezuela', 'VN': 'Viêt Nam', 'VU': 'Vanuatu',
+  'WS': 'Samoa',
+  'XK': 'Kosovo',
+  'YE': 'Yémen',
+  'ZA': 'Afrique du Sud', 'ZM': 'Zambie', 'ZW': 'Zimbabwe',
+};
+
+/// Nom complet du pays en français ; retourne le code ISO si inconnu.
+String countryName(String iso) => _countryNames[iso.toUpperCase()] ?? iso;
+
+/// Libellé pays : drapeau + nom complet (ex. « 🇫🇷 France »).
 String countryLabel(String iso) {
   final flag = countryFlag(iso);
-  return flag.isEmpty ? iso : '$flag $iso';
+  final name = countryName(iso);
+  return flag.isEmpty ? name : '$flag $name';
 }
 
 /// Filtres communs aux deux vues (collection / historique). Les champs non

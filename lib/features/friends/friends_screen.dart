@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/supabase/view_as.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/theme_toggle_button.dart';
@@ -19,7 +20,7 @@ class FriendsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.friendsTitle),
+        title: AppBarTitle(context.l10n.friendsTitle),
         actions: const [
           OriginalTitleButton(),
           LanguageButton(),

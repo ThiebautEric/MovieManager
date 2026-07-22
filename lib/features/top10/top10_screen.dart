@@ -8,6 +8,7 @@ import '../../core/prefs/original_titles_controller.dart';
 import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/poster_image.dart';
@@ -27,7 +28,7 @@ class Top10Screen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.top10Title),
+        title: AppBarTitle(l10n.top10Title),
         actions: const [
           OriginalTitleButton(),
           LanguageButton(),

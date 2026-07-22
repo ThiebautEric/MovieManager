@@ -6,6 +6,7 @@ import '../../core/l10n/l10n.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 
@@ -41,7 +42,7 @@ class StatsScreen extends ConsumerWidget {
     if (total == 0) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(context.l10n.statsTitle),
+          title: AppBarTitle(context.l10n.statsTitle),
           actions: const [LanguageButton(), ThemeToggleButton()],
         ),
         body: Center(child: Text(context.l10n.statsEmpty)),

@@ -11,6 +11,7 @@ import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_summary.dart';
 import '../../tmdb/models/person_summary.dart';
 import '../../tmdb/models/search_hit.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
@@ -53,7 +54,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.searchTitle),
+        title: AppBarTitle(context.l10n.searchTitle),
         actions: const [
           OriginalTitleButton(),
           LanguageButton(),

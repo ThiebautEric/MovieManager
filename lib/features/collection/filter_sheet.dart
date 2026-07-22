@@ -33,19 +33,26 @@ class FilterPanel extends ConsumerWidget {
     final genresById = ref.watch(genresByIdProvider);
     final favorites = ref.watch(favoritesProvider);
 
-    final presentGenres = <int>{for (final f in films) ...f.genres}.toList()
-      ..sort((a, b) => (genresById[a] ?? '').compareTo(genresById[b] ?? ''));
-    final presentCountries = <String>{
-      for (final f in films)
-        if (f.originCountry != null && f.originCountry!.isNotEmpty)
-          f.originCountry!
-    }.toList()
-      ..sort();
-    final presentYears = <int>{
-      for (final f in films)
-        if (f.releaseYear != null) f.releaseYear!
-    }.toList()
-      ..sort((a, b) => b.compareTo(a));
+    // Pour chaque facette, on compte les films distincts (par mediaKey).
+    final genreKeys = <int, Set<String>>{};
+    final countryKeys = <String, Set<String>>{};
+    final yearKeys = <int, Set<String>>{};
+    for (final f in films) {
+      final k = f.mediaKey;
+      for (final g in f.genres) {
+        (genreKeys[g] ??= {}).add(k);
+      }
+      final c = f.originCountry;
+      if (c != null && c.isNotEmpty) (countryKeys[c] ??= {}).add(k);
+      if (f.releaseYear != null) (yearKeys[f.releaseYear!] ??= {}).add(k);
+    }
+    final presentGenres = genreKeys.entries.toList()
+      ..sort((a, b) =>
+          (genresById[a.key] ?? '').compareTo(genresById[b.key] ?? ''));
+    final presentCountries = countryKeys.entries.toList()
+      ..sort((a, b) => b.value.length.compareTo(a.value.length));
+    final presentYears = yearKeys.entries.toList()
+      ..sort((a, b) => b.key.compareTo(a.key));
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -96,9 +103,10 @@ class FilterPanel extends ConsumerWidget {
           decoration: InputDecoration(labelText: l10n.filterGenre),
           items: [
             DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
-            ...presentGenres.map((g) => DropdownMenuItem(
-                  value: g,
-                  child: Text(genresById[g] ?? l10n.filterGenreFallback(g)),
+            ...presentGenres.map((e) => DropdownMenuItem(
+                  value: e.key,
+                  child: Text(
+                      '${genresById[e.key] ?? l10n.filterGenreFallback(e.key)} (${e.value.length})'),
                 )),
           ],
           onChanged: (v) => notifier.state = v == null
@@ -112,9 +120,9 @@ class FilterPanel extends ConsumerWidget {
           decoration: InputDecoration(labelText: l10n.filterCountry),
           items: [
             DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
-            ...presentCountries.map((c) => DropdownMenuItem(
-                  value: c,
-                  child: Text(countryLabel(c)),
+            ...presentCountries.map((e) => DropdownMenuItem(
+                  value: e.key,
+                  child: Text('${countryLabel(e.key)} (${e.value.length})'),
                 )),
           ],
           onChanged: (v) => notifier.state = v == null
@@ -128,8 +136,10 @@ class FilterPanel extends ConsumerWidget {
           decoration: InputDecoration(labelText: l10n.filterYear),
           items: [
             DropdownMenuItem(value: null, child: Text(l10n.filterAllFeminine)),
-            ...presentYears
-                .map((y) => DropdownMenuItem(value: y, child: Text('$y'))),
+            ...presentYears.map((e) => DropdownMenuItem(
+                  value: e.key,
+                  child: Text('${e.key} (${e.value.length})'),
+                )),
           ],
           onChanged: (v) => notifier.state = v == null
               ? filter.copyWith(clearYear: true)

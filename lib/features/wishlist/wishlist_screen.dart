@@ -8,6 +8,7 @@ import '../../core/supabase/view_as.dart';
 import '../../data/models/wishlist_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../widgets/add_entry_dialogs.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/poster_image.dart';
@@ -29,7 +30,7 @@ class WishlistScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.wishlistTitle),
+        title: AppBarTitle(l10n.wishlistTitle),
         actions: const [
           OriginalTitleButton(),
           LanguageButton(),

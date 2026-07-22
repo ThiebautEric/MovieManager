@@ -10,6 +10,7 @@ import '../../data/repositories/collection_repository.dart';
 import '../../data/repositories/favorites_repository.dart';
 import '../../tmdb/models/person_details.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/card_title.dart';
@@ -35,7 +36,7 @@ class PersonScreen extends ConsumerWidget {
     final details = async.value;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.personTitle),
+        title: AppBarTitle(context.l10n.personTitle),
         leading: DetailLeadingButton(embedded: embedded),
         actions: [
           const OriginalTitleButton(),

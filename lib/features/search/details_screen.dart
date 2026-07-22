@@ -17,6 +17,7 @@ import '../../tmdb/models/season_episodes.dart';
 import '../../tmdb/tmdb_client.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/add_entry_dialogs.dart';
+import '../../widgets/app_bar_title.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
@@ -45,7 +46,7 @@ class DetailsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.detailsTitle),
+        title: AppBarTitle(context.l10n.detailsTitle),
         leading: DetailLeadingButton(embedded: embedded),
         actions: const [OriginalTitleButton()],
       ),
