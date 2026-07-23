@@ -469,8 +469,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get filterFavoriteActor => 'Acteur favori';
 
   @override
+  String get filterRating => 'Note du visionnage';
+
+  @override
   String filterMinRating(String rating) {
     return 'Note minimale du visionnage : $rating';
+  }
+
+  @override
+  String filterMaxRating(String rating) {
+    return 'Note maximale du visionnage : $rating';
   }
 
   @override

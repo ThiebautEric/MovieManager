@@ -109,7 +109,7 @@ class CollectionFilter {
     this.genreId,
     this.country,
     this.year,
-    this.minRating = 0,
+    this.rating,
     this.favoritePersonId,
   });
 
@@ -117,7 +117,7 @@ class CollectionFilter {
   final int? genreId;
   final String? country; // code ISO pays d'origine
   final int? year;
-  final double minRating; // note minimale du visionnage (historique)
+  final double? rating; // note exacte du visionnage (null = toutes)
   final int? favoritePersonId; // id TMDB d'une personne favorite (casting)
 
   CollectionFilter copyWith({
@@ -129,7 +129,8 @@ class CollectionFilter {
     bool clearCountry = false,
     int? year,
     bool clearYear = false,
-    double? minRating,
+    double? rating,
+    bool clearRating = false,
     int? favoritePersonId,
     bool clearFavorite = false,
   }) {
@@ -138,7 +139,7 @@ class CollectionFilter {
       genreId: clearGenre ? null : (genreId ?? this.genreId),
       country: clearCountry ? null : (country ?? this.country),
       year: clearYear ? null : (year ?? this.year),
-      minRating: minRating ?? this.minRating,
+      rating: clearRating ? null : (rating ?? this.rating),
       favoritePersonId:
           clearFavorite ? null : (favoritePersonId ?? this.favoritePersonId),
     );
@@ -156,10 +157,13 @@ class CollectionFilter {
     return true;
   }
 
-  /// Visionnage : critères film + note minimale de la séance.
+  /// Visionnage : critères film + note exacte de la séance.
+  /// rating == -1 → filtre les visionnages sans note.
   bool matchesHistory(HistoryView v) {
     if (!matchesFilm(v.film)) return false;
-    if (minRating > 0 && (v.rating ?? 0) < minRating) return false;
+    if (rating != null) {
+      if (rating == -1 ? v.rating != null : v.rating != rating) return false;
+    }
     return true;
   }
 
@@ -168,7 +172,7 @@ class CollectionFilter {
       genreId != null ||
       country != null ||
       year != null ||
-      minRating > 0 ||
+      rating != null ||
       favoritePersonId != null;
 }
 

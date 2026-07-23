@@ -120,7 +120,16 @@
   "filterCountry": "Herkunftsland",
   "filterYear": "Jahr",
   "filterFavoriteActor": "Lieblingsschauspieler",
+  "filterRating": "Bewertung der Sichtung",
   "filterMinRating": "Mindestbewertung der Sichtung: {rating}",
+  "filterMaxRating": "Höchstbewertung der Sichtung: {rating}",
+  "@filterMaxRating": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
   "filterRatingNone": "keine",
   "authEmailLabel": "E-Mail",
   "authPasswordLabel": "Passwort",

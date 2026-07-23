@@ -317,8 +317,17 @@
   "filterCountry": "Pays d'origine",
   "filterYear": "Année",
   "filterFavoriteActor": "Acteur favori",
+  "filterRating": "Note du visionnage",
   "filterMinRating": "Note minimale du visionnage : {rating}",
   "@filterMinRating": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "filterMaxRating": "Note maximale du visionnage : {rating}",
+  "@filterMaxRating": {
     "placeholders": {
       "rating": {
         "type": "String"

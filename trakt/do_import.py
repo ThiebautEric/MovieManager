@@ -35,8 +35,13 @@ for tbl in ["history", "collection", "wishlist", "film_seasons", "films", "favor
 print("base videe")
 
 hist = load("watched-history-*.json")
-rm = {x["movie"]["ids"].get("tmdb"): x["rating"] for x in load("ratings-movies-*.json")}
+rm  = {x["movie"]["ids"].get("tmdb"): x["rating"] for x in load("ratings-movies-*.json")}
 epr = {x["episode"]["ids"].get("tmdb"): x["rating"] for x in load("ratings-episodes-*.json")}
+# Notes de saison et de série (repli quand pas de note par épisode)
+sr  = {(x["show"]["ids"].get("tmdb"), x["season"]["number"]): x["rating"]
+       for x in load("ratings-seasons.json")}
+showr = {x["show"]["ids"].get("tmdb"): x["rating"]
+         for x in load("ratings-shows.json")}
 films = {}; hrows = []; no_tmdb = []; seasons = defaultdict(list)
 for h in hist:
     if h.get("type") == "movie":
@@ -92,13 +97,18 @@ def season_meta(t, sn):
 for (t, sn), eps in seasons.items():
     rated = {e for _, e, _, _ in eps if e in epr}
     if len(rated) <= 1:
+        # Si exactement 1 épisode est noté dans toute la saison, sa note
+        # s'applique à tous les jours (même ceux sans cet épisode).
+        single_ep_rating = epr[next(iter(rated))] if rated else None
         by_day = defaultdict(list)
         for w, e, _n, _ti in eps:
             by_day[w[:10]].append((w, e))
         for lst in by_day.values():
             watched = max(w for w, _ in lst)
             rates = [epr[e] for _, e in lst if e in epr]
-            hrows.append((("tv", t), sn, watched, round(sum(rates) / len(rates), 1) if rates else None, None))
+            rating = (round(sum(rates) / len(rates), 1) if rates
+                      else single_ep_rating or sr.get((t, sn)) or showr.get(t))
+            hrows.append((("tv", t), sn, watched, rating, None))
     else:
         meta = season_meta(t, sn)
         for w, e, n, ti in eps:

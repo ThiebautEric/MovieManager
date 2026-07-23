@@ -820,11 +820,23 @@ abstract class AppLocalizations {
   /// **'Acteur favori'**
   String get filterFavoriteActor;
 
+  /// No description provided for @filterRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note du visionnage'**
+  String get filterRating;
+
   /// No description provided for @filterMinRating.
   ///
   /// In fr, this message translates to:
   /// **'Note minimale du visionnage : {rating}'**
   String filterMinRating(String rating);
+
+  /// No description provided for @filterMaxRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note maximale du visionnage : {rating}'**
+  String filterMaxRating(String rating);
 
   /// No description provided for @filterRatingNone.
   ///

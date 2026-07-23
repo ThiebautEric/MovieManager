@@ -470,8 +470,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filterFavoriteActor => 'Favorite actor';
 
   @override
+  String get filterRating => 'Viewing rating';
+
+  @override
   String filterMinRating(String rating) {
     return 'Minimum viewing rating: $rating';
+  }
+
+  @override
+  String filterMaxRating(String rating) {
+    return 'Maximum viewing rating: $rating';
   }
 
   @override
