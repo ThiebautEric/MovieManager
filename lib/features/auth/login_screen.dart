@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../core/l10n/l10n.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/theme_toggle_button.dart';
+import '../../widgets/tmdb_badge.dart';
 import '../../widgets/yellow_frame_logo.dart';
 import 'auth_controller.dart';
 
@@ -90,6 +90,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        const Center(child: TmdbBadge(height: 28)),
+                        const SizedBox(height: 24),
                         const Center(child: YellowFrameLogo(width: 190)),
                         const SizedBox(height: 32),
                         TextFormField(

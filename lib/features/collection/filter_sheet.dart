@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-
 import '../../core/l10n/l10n.dart';
 import '../../data/models/film.dart';
+import '../../data/repositories/collection_repository.dart';
 import '../../data/repositories/favorites_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/tmdb_badge.dart';
 import '../../widgets/yellow_frame_logo.dart';
 import 'collection_filter.dart';
 
@@ -24,6 +25,53 @@ class FilterPanel extends ConsumerWidget {
   final StateProvider<CollectionFilter> filterProvider;
   final List<Film> films;
   final bool showRating;
+
+  static String _ratingLabel(double r) {
+    final i = r.round();
+    return r == i.toDouble() ? '$i ★' : '${r.toStringAsFixed(1)} ★';
+  }
+
+  Widget _buildRatingDropdown(
+    BuildContext context,
+    WidgetRef ref,
+    CollectionFilter filter,
+    StateController<CollectionFilter> notifier,
+    AppLocalizations l10n,
+  ) {
+    final history = ref.watch(historyStreamProvider).value ?? [];
+    final ratingKeys = <double, Set<String>>{};
+    final unratedKeys = <String>{};
+    for (final v in history) {
+      if (v.rating != null) {
+        (ratingKeys[v.rating!] ??= {}).add(v.film.mediaKey);
+      } else {
+        unratedKeys.add(v.film.mediaKey);
+      }
+    }
+    final presentRatings = ratingKeys.entries.toList()
+      ..sort((a, b) => b.key.compareTo(a.key));
+
+    return DropdownButtonFormField<double?>(
+      isExpanded: true,
+      initialValue: filter.rating,
+      decoration: InputDecoration(labelText: l10n.filterRating),
+      items: [
+        DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
+        ...presentRatings.map((e) => DropdownMenuItem(
+              value: e.key,
+              child: Text('${_ratingLabel(e.key)}  (${e.value.length})'),
+            )),
+        if (unratedKeys.isNotEmpty)
+          DropdownMenuItem(
+            value: -1,
+            child: Text('${l10n.filterRatingNone}  (${unratedKeys.length})'),
+          ),
+      ],
+      onChanged: (v) => notifier.state = v == null
+          ? filter.copyWith(clearRating: true)
+          : filter.copyWith(rating: v),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -164,18 +212,8 @@ class FilterPanel extends ConsumerWidget {
                   : filter.copyWith(favoritePersonId: v),
         ),
         if (showRating) ...[
-          const SizedBox(height: 8),
-          Text(l10n.filterMinRating(filter.minRating == 0
-              ? l10n.filterRatingNone
-              : filter.minRating.toStringAsFixed(1))),
-          Slider(
-            value: filter.minRating,
-            min: 0,
-            max: 10,
-            divisions: 20,
-            label: filter.minRating.toStringAsFixed(1),
-            onChanged: (v) => notifier.state = filter.copyWith(minRating: v),
-          ),
+          const SizedBox(height: 16),
+          _buildRatingDropdown(context, ref, filter, notifier, l10n),
         ],
       ],
     );
@@ -214,6 +252,8 @@ class FilterSidePanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Logo au-dessus des filtres (visible en mode large / web).
+            const Center(child: TmdbBadge(height: 22)),
+            const SizedBox(height: 16),
             const Center(child: YellowFrameLogo(width: 150)),
             const SizedBox(height: 24),
             FilterPanel(

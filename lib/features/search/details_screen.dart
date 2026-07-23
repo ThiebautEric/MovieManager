@@ -561,6 +561,12 @@ class _LibraryControls extends ConsumerWidget {
         ? l10n.detailsSeasonNotTracked
         : '${l10n.detailsMediaCount(coll.length)} · ${l10n.detailsViewingCount(hist.length)}';
 
+    String? seasonRating;
+    if (hist.isNotEmpty && hist.every((h) => h.rating != null)) {
+      final avg = hist.map((h) => h.rating!).reduce((a, b) => a + b) / hist.length;
+      seasonRating = avg.toStringAsFixed(1);
+    }
+
     return Card(
       clipBehavior: Clip.antiAlias,
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -577,7 +583,11 @@ class _LibraryControls extends ConsumerWidget {
         ),
         title: Text(title, style: theme.textTheme.titleSmall),
         subtitle: Text(
-          [if (meta.isNotEmpty) meta, summary].join('\n'),
+          [
+            if (meta.isNotEmpty) meta,
+            summary,
+            if (seasonRating != null) '★ $seasonRating/10',
+          ].join('\n'),
           style: theme.textTheme.bodySmall,
         ),
         children: [
