@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
@@ -32,16 +19,102 @@
 
   <title>The Yellow Frame</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0B0A08; }
+
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: #0B0A08;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      z-index: 9999;
+      transition: opacity .3s ease;
+    }
+    #splash.hidden { opacity: 0; pointer-events: none; }
+
+    #splash img {
+      width: 160px;
+      height: auto;
+    }
+
+    #splash .wordmark {
+      margin-top: 12px;
+      text-align: center;
+      font-family: sans-serif;
+      line-height: 1.1;
+    }
+    #splash .the {
+      color: #FBF6EA;
+      font-size: 13px;
+      letter-spacing: 7px;
+    }
+    #splash .yellow {
+      color: #F2C40F;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+    #splash .frame {
+      color: #FBF6EA;
+      font-size: 21px;
+      letter-spacing: 10px;
+    }
+    #splash .divider {
+      width: 60px;
+      height: 2px;
+      background: #F2C40F;
+      margin: 8px auto;
+    }
+    #splash .db {
+      color: #F2C40F;
+      font-size: 9px;
+      letter-spacing: 5px;
+    }
+
+    #splash .tmdb {
+      margin-top: 28px;
+      background: linear-gradient(to right, #90cea1, #3cbec9, #00b3e5);
+      color: white;
+      font-family: sans-serif;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 3px;
+      padding: 7px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+  <div id="splash">
+    <img src="icons/Icon-512.png" alt="The Yellow Frame">
+    <div class="wordmark">
+      <div class="the">THE</div>
+      <div class="yellow">YELLOW</div>
+      <div class="frame">FRAME</div>
+      <div class="divider"></div>
+      <div class="db">FILM DATABASE</div>
+    </div>
+    <a class="tmdb" href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>
+  </div>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var s = document.getElementById('splash');
+      if (s) {
+        s.classList.add('hidden');
+        setTimeout(function () { s.remove(); }, 350);
+      }
+    });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
