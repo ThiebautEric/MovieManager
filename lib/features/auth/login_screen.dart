@@ -63,6 +63,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final screenH = MediaQuery.of(context).size.height;
+    final logoWidth = screenH < 650 ? 110.0 : (screenH < 800 ? 145.0 : 190.0);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -90,10 +92,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Center(child: TmdbBadge(height: 28)),
-                        const SizedBox(height: 24),
-                        const Center(child: YellowFrameLogo(width: 190)),
-                        const SizedBox(height: 32),
+                        const Center(child: TmdbBadge(height: 26)),
+                        const SizedBox(height: 20),
+                        Center(child: YellowFrameLogo(width: logoWidth)),
+                        const SizedBox(height: 28),
                         TextFormField(
                           controller: _emailCtrl,
                           keyboardType: TextInputType.emailAddress,

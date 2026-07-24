@@ -254,7 +254,7 @@ class FilterSidePanel extends StatelessWidget {
             // Logo au-dessus des filtres (visible en mode large / web).
             const Center(child: TmdbBadge(height: 22)),
             const SizedBox(height: 16),
-            const Center(child: YellowFrameLogo(width: 150)),
+            const Center(child: YellowFrameLogo(width: 120)),
             const SizedBox(height: 24),
             FilterPanel(
               filterProvider: filterProvider,
