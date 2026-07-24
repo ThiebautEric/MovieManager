@@ -11,8 +11,6 @@ import 'core/theme/app_theme.dart';
 import 'core/theme/theme_mode_controller.dart';
 import 'data/repositories/collection_repository.dart';
 import 'l10n/gen/app_localizations.dart';
-import 'widgets/tmdb_badge.dart';
-import 'widgets/yellow_frame_logo.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +20,6 @@ Future<void> main() async {
     runApp(const _MisconfiguredApp());
     return;
   }
-
-  // Splash Flutter pendant l'initialisation (remplace le splash natif incomplet).
-  runApp(const _SplashApp());
 
   // Mode cloud (Supabase présent) : connexion + synchro.
   if (AppConfig.hasSupabase) {
@@ -65,34 +60,6 @@ class MovieManagerApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       routerConfig: router,
-    );
-  }
-}
-
-/// Splash affiché pendant l'initialisation (Supabase + SharedPreferences).
-/// Remplace le splash natif (icône seule) par le logo complet + badge TMDB.
-class _SplashApp extends StatelessWidget {
-  const _SplashApp();
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
-      home: const Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TmdbBadge(height: 26),
-              SizedBox(height: 20),
-              YellowFrameLogo(width: 190),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
