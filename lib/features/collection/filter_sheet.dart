@@ -283,10 +283,18 @@ class FilterSheet {
       builder: (_) => Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
         child: SingleChildScrollView(
-          child: FilterPanel(
-            filterProvider: filterProvider,
-            films: films,
-            showRating: showRating,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Center(child: TmdbBadge(height: 24)),
+              const SizedBox(height: 16),
+              FilterPanel(
+                filterProvider: filterProvider,
+                films: films,
+                showRating: showRating,
+              ),
+            ],
           ),
         ),
       ),
