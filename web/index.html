@@ -2,116 +2,58 @@
 <html>
 <head>
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="Gestion de collection et d'historique de films et séries">
-
-  <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="The Yellow Frame">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
-
   <title>The Yellow Frame</title>
   <link rel="manifest" href="manifest.json">
-
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0B0A08; }
-
-    #splash {
-      position: fixed;
-      inset: 0;
-      background: #0B0A08;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      z-index: 9999;
-      transition: opacity .3s ease;
-    }
-    #splash.hidden { opacity: 0; pointer-events: none; }
-
-    #splash img {
-      width: 160px;
-      height: auto;
-    }
-
-    #splash .wordmark {
-      margin-top: 12px;
-      text-align: center;
-      font-family: sans-serif;
-      line-height: 1.1;
-    }
-    #splash .the {
-      color: #FBF6EA;
-      font-size: 13px;
-      letter-spacing: 7px;
-    }
-    #splash .yellow {
-      color: #F2C40F;
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: 4px;
-    }
-    #splash .frame {
-      color: #FBF6EA;
-      font-size: 21px;
-      letter-spacing: 10px;
-    }
-    #splash .divider {
-      width: 60px;
-      height: 2px;
-      background: #F2C40F;
-      margin: 8px auto;
-    }
-    #splash .db {
-      color: #F2C40F;
-      font-size: 9px;
-      letter-spacing: 5px;
-    }
-
-    #splash .tmdb {
-      margin-top: 28px;
-      background: linear-gradient(to right, #90cea1, #3cbec9, #00b3e5);
-      color: white;
-      font-family: sans-serif;
-      font-weight: 900;
-      font-size: 15px;
-      letter-spacing: 3px;
-      padding: 7px 22px;
-      border-radius: 999px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-  </style>
 </head>
-<body>
-  <div id="splash">
-    <img src="icons/Icon-512.png" alt="The Yellow Frame">
-    <div class="wordmark">
-      <div class="the">THE</div>
-      <div class="yellow">YELLOW</div>
-      <div class="frame">FRAME</div>
-      <div class="divider"></div>
-      <div class="db">FILM DATABASE</div>
-    </div>
-    <a class="tmdb" href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>
+<body style="margin:0;padding:0;background:#0B0A08;">
+
+  <div id="sp" style="
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:#0B0A08;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    font-family:Arial,Helvetica,sans-serif;
+  ">
+    <img src="icons/Icon-512.png"
+         style="width:140px;height:140px;object-fit:contain;display:block;"
+         alt="">
+
+    <p style="margin:14px 0 2px;color:#FBF6EA;font-size:12px;letter-spacing:5px;">THE</p>
+    <p style="margin:0 0 2px;color:#F2C40F;font-size:26px;font-weight:900;letter-spacing:3px;">YELLOW</p>
+    <p style="margin:0 0 8px;color:#FBF6EA;font-size:18px;letter-spacing:6px;">FRAME</p>
+    <div style="width:50px;height:2px;background:#F2C40F;margin-bottom:8px;"></div>
+    <p style="margin:0 0 24px;color:#F2C40F;font-size:9px;letter-spacing:3px;">FILM DATABASE</p>
+
+    <div style="
+      background:linear-gradient(to right,#90cea1,#3cbec9,#00b3e5);
+      color:white;
+      font-weight:900;
+      font-size:13px;
+      letter-spacing:2px;
+      padding:7px 22px;
+      border-radius:999px;
+    ">TMDB</div>
   </div>
 
   <script>
     window.addEventListener('flutter-first-frame', function () {
-      var s = document.getElementById('splash');
-      if (s) {
-        s.classList.add('hidden');
-        setTimeout(function () { s.remove(); }, 350);
-      }
+      var s = document.getElementById('sp');
+      if (!s) return;
+      s.style.transition = 'opacity 0.35s';
+      s.style.opacity = '0';
+      setTimeout(function () { s.remove(); }, 400);
     });
   </script>
 
