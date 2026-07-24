@@ -49,14 +49,17 @@ class TmdbClient {
 
   /// Recherche multi (films + séries + personnalités), dans l'ordre de
   /// pertinence renvoyé par TMDB.
-  Future<List<SearchHit>> searchMulti(String query, {int page = 1}) async {
+  Future<List<SearchHit>> searchMulti(String query,
+      {int page = 1, CancelToken? cancelToken}) async {
     if (query.trim().isEmpty) return [];
-    final res = await _dio.get('/search/multi', queryParameters: {
-      'query': query,
-      'language': language,
-      'page': page,
-      'include_adult': false,
-    });
+    final res = await _dio.get('/search/multi',
+        queryParameters: {
+          'query': query,
+          'language': language,
+          'page': page,
+          'include_adult': false,
+        },
+        cancelToken: cancelToken);
     final results = (res.data['results'] as List<dynamic>? ?? []);
     final hits = <SearchHit>[];
     for (final e in results.whereType<Map<String, dynamic>>()) {

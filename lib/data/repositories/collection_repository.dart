@@ -193,26 +193,35 @@ class SupabaseLibraryRepository implements LibraryRepository {
   }
 
   Future<void> _loadAll() async {
-    final films = await _selectAll('films');
-    final seasons = await _selectAll('film_seasons');
-    final coll = await _selectAll('collection');
-    final hist = await _selectAll('history');
-    // Tolère l'absence de la table (migration SQL pas encore exécutée) : le
-    // pense-bête est alors vide mais le reste de la bibliothèque fonctionne.
-    List<Map<String, dynamic>> wish;
     try {
-      wish = await _selectAll('wishlist');
-    } catch (_) {
-      wish = const [];
+      final films = await _selectAll('films');
+      final seasons = await _selectAll('film_seasons');
+      final coll = await _selectAll('collection');
+      final hist = await _selectAll('history');
+      // Tolère l'absence de la table (migration SQL pas encore exécutée) : le
+      // pense-bête est alors vide mais le reste de la bibliothèque fonctionne.
+      List<Map<String, dynamic>> wish;
+      try {
+        wish = await _selectAll('wishlist');
+      } catch (_) {
+        wish = const [];
+      }
+      final fl = films.map(Film.fromJson).toList();
+      _filmsById = {for (final f in fl) f.id!: f};
+      _filmsByKey = {for (final f in fl) f.mediaKey: f};
+      _seasons = seasons.map(FilmSeason.fromJson).toList();
+      _collection = coll.map(CollectionEntry.fromJson).toList();
+      _history = hist.map(HistoryEntry.fromJson).toList();
+      _wishlist = wish.map(WishlistEntry.fromJson).toList();
+      _rebuild();
+    } catch (e, st) {
+      // Erreur réseau ou parse : on réinitialise pour autoriser un retry
+      // et on propage l'erreur aux écouteurs des flux.
+      _loaded = false;
+      _collectionCtrl?.addError(e, st);
+      _historyCtrl?.addError(e, st);
+      _wishlistCtrl?.addError(e, st);
     }
-    final fl = films.map(Film.fromJson).toList();
-    _filmsById = {for (final f in fl) f.id!: f};
-    _filmsByKey = {for (final f in fl) f.mediaKey: f};
-    _seasons = seasons.map(FilmSeason.fromJson).toList();
-    _collection = coll.map(CollectionEntry.fromJson).toList();
-    _history = hist.map(HistoryEntry.fromJson).toList();
-    _wishlist = wish.map(WishlistEntry.fromJson).toList();
-    _rebuild();
   }
 
   void _rebuild() {
@@ -651,19 +660,26 @@ class LocalLibraryRepository implements LibraryRepository {
     _wishlist = _decode(_wishlistKey, WishlistEntry.fromJson);
   }
 
-  Future<void> _persist() async {
-    await _prefs.setString(_filmsKey,
-        jsonEncode(_filmsById.values.map((e) => e.toFullJson()).toList()));
-    await _prefs.setString(
-        _seasonsKey, jsonEncode(_seasons.map((e) => e.toFullJson()).toList()));
-    await _prefs.setString(_collectionKey,
-        jsonEncode(_collection.map((e) => e.toFullJson()).toList()));
-    await _prefs.setString(
-        _historyKey, jsonEncode(_history.map((e) => e.toFullJson()).toList()));
-    await _prefs.setString(
-        _wishlistKey, jsonEncode(_wishlist.map((e) => e.toFullJson()).toList()));
-    _emit();
-  }
+  Future<void> _persistFilms() =>
+      _prefs.setString(_filmsKey,
+          jsonEncode(_filmsById.values.map((e) => e.toFullJson()).toList()));
+
+  Future<void> _persistSeasons() =>
+      _prefs.setString(_seasonsKey,
+          jsonEncode(_seasons.map((e) => e.toFullJson()).toList()));
+
+  Future<void> _persistCollection() =>
+      _prefs.setString(_collectionKey,
+          jsonEncode(_collection.map((e) => e.toFullJson()).toList()));
+
+  Future<void> _persistHistory() =>
+      _prefs.setString(_historyKey,
+          jsonEncode(_history.map((e) => e.toFullJson()).toList()));
+
+  Future<void> _persistWishlist() =>
+      _prefs.setString(_wishlistKey,
+          jsonEncode(_wishlist.map((e) => e.toFullJson()).toList()));
+
 
   void _emit() {
     final seasonByKey = <String, FilmSeason>{
@@ -796,7 +812,8 @@ class LocalLibraryRepository implements LibraryRepository {
         addedAt: addedAt ?? DateTime.now(),
       ),
     ];
-    await _persist();
+    await Future.wait([_persistFilms(), _persistSeasons(), _persistCollection()]);
+    _emit();
   }
 
   @override
@@ -826,7 +843,8 @@ class LocalLibraryRepository implements LibraryRepository {
         comment: comment,
       ),
     ];
-    await _persist();
+    await Future.wait([_persistFilms(), _persistSeasons(), _persistHistory()]);
+    _emit();
   }
 
   @override
@@ -845,19 +863,17 @@ class LocalLibraryRepository implements LibraryRepository {
         addedAt: DateTime.now(),
       ),
     ];
-    await _persist();
+    await Future.wait([_persistFilms(), _persistSeasons(), _persistWishlist()]);
+    _emit();
   }
 
   @override
   Future<void> removeFromWishlist(String id) async {
-    final filmId = _wishlist
-        .where((e) => e.id == id)
-        .map((e) => e.filmId)
-        .cast<String?>()
-        .firstWhere((_) => true, orElse: () => null);
+    final filmId = _wishlist.where((e) => e.id == id).firstOrNull?.filmId;
     _wishlist = _wishlist.where((e) => e.id != id).toList();
     if (filmId != null) _gcFilm(filmId);
-    await _persist();
+    await Future.wait([_persistFilms(), _persistSeasons(), _persistWishlist()]);
+    _emit();
   }
 
   @override
@@ -882,7 +898,8 @@ class LocalLibraryRepository implements LibraryRepository {
               )
             : e)
         .toList();
-    await _persist();
+    await _persistHistory();
+    _emit();
   }
 
   @override
@@ -907,31 +924,26 @@ class LocalLibraryRepository implements LibraryRepository {
               )
             : e)
         .toList();
-    await _persist();
+    await _persistHistory();
+    _emit();
   }
 
   @override
   Future<void> removeFromCollection(String id) async {
-    final filmId = _collection
-        .where((e) => e.id == id)
-        .map((e) => e.filmId)
-        .cast<String?>()
-        .firstWhere((_) => true, orElse: () => null);
+    final filmId = _collection.where((e) => e.id == id).firstOrNull?.filmId;
     _collection = _collection.where((e) => e.id != id).toList();
     if (filmId != null) _gcFilm(filmId);
-    await _persist();
+    await Future.wait([_persistFilms(), _persistSeasons(), _persistCollection()]);
+    _emit();
   }
 
   @override
   Future<void> removeFromHistory(String id) async {
-    final filmId = _history
-        .where((e) => e.id == id)
-        .map((e) => e.filmId)
-        .cast<String?>()
-        .firstWhere((_) => true, orElse: () => null);
+    final filmId = _history.where((e) => e.id == id).firstOrNull?.filmId;
     _history = _history.where((e) => e.id != id).toList();
     if (filmId != null) _gcFilm(filmId);
-    await _persist();
+    await Future.wait([_persistFilms(), _persistSeasons(), _persistHistory()]);
+    _emit();
   }
 
   /// GC applicatif : film/saison orphelin → retiré du catalogue.
@@ -972,7 +984,8 @@ class LocalLibraryRepository implements LibraryRepository {
     if (_sameMeta(existing, merged)) return;
     _filmsById[existing.id!] = merged;
     _filmsByKey[merged.mediaKey] = merged;
-    await _persist();
+    await _persistFilms();
+    _emit();
   }
 
   @override

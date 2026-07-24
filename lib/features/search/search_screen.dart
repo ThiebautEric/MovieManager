@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/prefs/original_titles_controller.dart';
+import '../../core/utils/format.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
@@ -20,6 +21,23 @@ import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
 import 'search_controller.dart';
+
+// Calculs dérivés mis en cache dans des providers : les maps ne sont
+// reconstruites que lorsque la collection/l'historique changent, pas à chaque
+// frappe de clavier.
+final _ownedByKeyProvider = Provider.autoDispose<Map<String, Medium>>((ref) {
+  final coll = ref.watch(collectionStreamProvider).value ?? [];
+  final map = <String, Medium>{};
+  for (final c in coll) {
+    map.putIfAbsent(c.film.mediaKey, () => c.medium);
+  }
+  return map;
+});
+
+final _watchedKeysProvider = Provider.autoDispose<Set<String>>((ref) {
+  final hist = ref.watch(historyStreamProvider).value ?? [];
+  return {for (final v in hist) v.film.mediaKey};
+});
 
 /// Écran de recherche TMDB (films + séries + personnalités) en grille.
 class SearchScreen extends ConsumerStatefulWidget {
@@ -115,13 +133,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       return Center(child: Text(context.l10n.searchNoResults));
     }
     // Badges sur les résultats déjà possédés / déjà vus.
-    final collection = ref.watch(collectionStreamProvider).value ?? [];
-    final history = ref.watch(historyStreamProvider).value ?? [];
-    final mediumByKey = <String, Medium>{};
-    for (final c in collection) {
-      mediumByKey.putIfAbsent(c.film.mediaKey, () => c.medium);
-    }
-    final watchedKeys = {for (final v in history) v.film.mediaKey};
+    final mediumByKey = ref.watch(_ownedByKeyProvider);
+    final watchedKeys = ref.watch(_watchedKeysProvider);
     return GridView.builder(
       padding: const EdgeInsets.all(12),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -277,7 +290,7 @@ class _WishlistBadgeButton extends ConsumerWidget {
           } catch (e) {
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(l10n.errorMessage('$e'))));
+                  SnackBar(content: Text(l10n.errorMessage(friendlyError(e)))));
             }
           }
         },

@@ -52,7 +52,7 @@ class DetailsScreen extends ConsumerWidget {
       ),
       body: detailsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(context.l10n.errorMessage('$e'))),
+        error: (e, _) => Center(child: Text(context.l10n.errorMessage(friendlyError(e)))),
         data: (d) => _DetailsBody(details: d),
       ),
     );
@@ -277,7 +277,7 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.play_circle_fill),
                 title: Text(v.name),
-                onTap: () => launchUrl(Uri.parse(v.youtubeUrl),
+                onTap: () async => launchUrl(Uri.parse(v.youtubeUrl),
                     mode: LaunchMode.externalApplication),
               )),
         ],
@@ -667,7 +667,7 @@ class _LibraryControls extends ConsumerWidget {
         comment: res.comment,
       );
     } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
     }
   }
 
@@ -686,7 +686,7 @@ class _LibraryControls extends ConsumerWidget {
         addedAt: res.date,
       );
     } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
     }
   }
 
@@ -706,7 +706,7 @@ class _LibraryControls extends ConsumerWidget {
         comment: res.comment,
       );
     } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
     }
   }
 
@@ -742,7 +742,7 @@ class _LibraryControls extends ConsumerWidget {
     try {
       await repo.removeFromCollection(id);
     } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
     }
   }
 
@@ -758,7 +758,7 @@ class _LibraryControls extends ConsumerWidget {
     try {
       await repo.removeFromHistory(id);
     } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
     }
   }
 }
@@ -994,7 +994,7 @@ class _WishlistButton extends ConsumerWidget {
           } catch (e) {
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(l10n.errorMessage('$e'))));
+                  SnackBar(content: Text(l10n.errorMessage(friendlyError(e)))));
             }
           }
         },
@@ -1029,7 +1029,7 @@ class _EpisodePickerDialog extends ConsumerWidget {
         height: 440,
         child: async.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
+          error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
           data: (eps) {
             if (eps.isEmpty) {
               return Center(child: Text(l10n.searchNoResults));

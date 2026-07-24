@@ -16,8 +16,21 @@ class StatsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final collection = ref.watch(collectionStreamProvider).value ?? [];
-    final history = ref.watch(historyStreamProvider).value ?? [];
+    final collAsync = ref.watch(collectionStreamProvider);
+    final histAsync = ref.watch(historyStreamProvider);
+
+    if (collAsync.isLoading || histAsync.isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: AppBarTitle(context.l10n.statsTitle),
+          actions: const [LanguageButton(), ThemeToggleButton()],
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final collection = collAsync.value ?? [];
+    final history = histAsync.value ?? [];
     final genresById = ref.watch(genresByIdProvider);
 
     // Films distincts connus (union collection + historique), par clé TMDB.

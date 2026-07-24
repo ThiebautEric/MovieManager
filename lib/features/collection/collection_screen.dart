@@ -13,6 +13,7 @@ import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../widgets/app_bar_title.dart';
+import '../../widgets/empty_state.dart';
 import '../../widgets/keyboard_scroll.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
@@ -137,10 +138,10 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
 
     final content = async.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
+      error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
       data: (_) {
         if (events.isEmpty) {
-          return _EmptyState(message: l10n.historyEmpty);
+          return EmptyState(message: l10n.historyEmpty);
         }
         // Regroupe les visionnages (déjà triés du + récent au + ancien) par
         // mois, avec un en-tête d'année quand l'année change.
@@ -223,7 +224,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           IconButton(
             tooltip: l10n.historyExportTooltip,
             icon: const Icon(Icons.file_download_outlined),
-            onPressed: _exportCsv,
+            onPressed: async.hasValue ? _exportCsv : null,
           ),
           if (!wide)
             IconButton(
@@ -592,18 +593,3 @@ class _HistoryCard extends ConsumerWidget {
   }
 }
 
-class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.message});
-
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Text(message, textAlign: TextAlign.center),
-      ),
-    );
-  }
-}

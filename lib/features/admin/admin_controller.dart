@@ -53,7 +53,7 @@ class AdminUsersController extends AsyncNotifier<List<AdminUser>> {
 
   Future<void> reload() async {
     state = const AsyncLoading();
-    state = AsyncData(await _fetch());
+    state = await AsyncValue.guard(_fetch);
   }
 
   Future<void> createUser(String email, String password) async {

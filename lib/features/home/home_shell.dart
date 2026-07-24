@@ -89,6 +89,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
       final repo = ref.read(libraryRepositoryProvider);
       final tmdb = ref.read(tmdbClientProvider);
       for (final f in targets) {
+        if (!mounted) break;
         try {
           final d = await tmdb.details(f.tmdbId, f.mediaType);
           await repo.backfillFilm(Film.fromDetails(d));

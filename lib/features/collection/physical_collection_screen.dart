@@ -8,6 +8,7 @@ import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../widgets/app_bar_title.dart';
+import '../../widgets/empty_state.dart';
 import '../../widgets/keyboard_scroll.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
@@ -38,10 +39,10 @@ class PhysicalCollectionScreen extends ConsumerWidget {
 
     final content = async.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
+      error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
       data: (_) {
         if (entries.isEmpty) {
-          return _EmptyState(message: l10n.collEmpty);
+          return EmptyState(message: l10n.collEmpty);
         }
         return KeyboardScroll(
           builder: (ctrl) => RefreshIndicator(
@@ -225,18 +226,3 @@ class _CollectionCard extends StatelessWidget {
   }
 }
 
-class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.message});
-
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Text(message, textAlign: TextAlign.center),
-      ),
-    );
-  }
-}
