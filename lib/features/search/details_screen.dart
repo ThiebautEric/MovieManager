@@ -726,7 +726,7 @@ class _LibraryControls extends ConsumerWidget {
       await repo.updateHistory(e.id!,
           watchedAt: res.date, rating: res.rating, comment: res.comment);
     } catch (err) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$err'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(err)));
     }
   }
 

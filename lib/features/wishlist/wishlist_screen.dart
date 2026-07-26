@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/prefs/original_titles_controller.dart';
+import '../../core/utils/format.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/wishlist_entry.dart';
 import '../../data/repositories/collection_repository.dart';
@@ -40,7 +41,7 @@ class WishlistScreen extends ConsumerWidget {
       ),
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
+        error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
         data: (items) {
           if (items.isEmpty) {
             return Center(
@@ -97,7 +98,7 @@ class _WishlistTile extends ConsumerWidget {
       );
       if (item.id != null) await repo.removeFromWishlist(item.id!);
     } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
     }
   }
 
@@ -118,7 +119,7 @@ class _WishlistTile extends ConsumerWidget {
       );
       if (item.id != null) await repo.removeFromWishlist(item.id!);
     } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
     }
   }
 
@@ -127,7 +128,7 @@ class _WishlistTile extends ConsumerWidget {
     try {
       await ref.read(libraryRepositoryProvider).removeFromWishlist(item.id!);
     } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage('$e'));
+      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
     }
   }
 

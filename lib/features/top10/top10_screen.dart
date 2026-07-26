@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/prefs/original_titles_controller.dart';
+import '../../core/utils/format.dart';
 import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
@@ -37,7 +38,7 @@ class Top10Screen extends ConsumerWidget {
       ),
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(l10n.errorMessage('$e'))),
+        error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
         data: (events) {
           final films = _rank(events, movies: true);
           final series = _rank(events, movies: false);

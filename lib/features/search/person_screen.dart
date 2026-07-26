@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/prefs/original_titles_controller.dart';
+import '../../core/utils/format.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
@@ -61,7 +62,7 @@ class PersonScreen extends ConsumerWidget {
       ),
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(context.l10n.errorMessage('$e'))),
+        error: (e, _) => Center(child: Text(context.l10n.errorMessage(friendlyError(e)))),
         data: (p) => _PersonBody(person: p),
       ),
     );

@@ -61,7 +61,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   void _onChanged(String value) {
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 400), () {
-      ref.read(searchQueryProvider.notifier).state = value;
+      if (mounted) ref.read(searchQueryProvider.notifier).state = value;
     });
   }
 

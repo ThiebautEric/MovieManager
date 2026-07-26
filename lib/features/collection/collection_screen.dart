@@ -68,16 +68,24 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
       b.writeln(
           '${i + 1};${q(titre)};$saison;$note;${_fmtDateCsv(e.watchedAt)}');
     }
-    await FileSaver.instance.saveFile(
-      name: 'historique',
-      bytes: Uint8List.fromList(utf8.encode(b.toString())),
-      fileExtension: 'csv',
-      mimeType: MimeType.csv,
-    );
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.historyExportedSnack)),
+    try {
+      await FileSaver.instance.saveFile(
+        name: 'historique',
+        bytes: Uint8List.fromList(utf8.encode(b.toString())),
+        fileExtension: 'csv',
+        mimeType: MimeType.csv,
       );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.historyExportedSnack)),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.errorMessage(friendlyError(e)))),
+        );
+      }
     }
   }
 

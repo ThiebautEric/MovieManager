@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/supabase/view_as.dart';
+import '../../core/utils/format.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
@@ -64,7 +65,7 @@ class FriendsScreen extends ConsumerWidget {
               children: [
                 const Icon(Icons.error_outline, size: 48),
                 const SizedBox(height: 12),
-                Text(context.l10n.friendsLoadError('$error'),
+                Text(context.l10n.friendsLoadError(friendlyError(error)),
                     textAlign: TextAlign.center),
                 const SizedBox(height: 12),
                 FilledButton(
