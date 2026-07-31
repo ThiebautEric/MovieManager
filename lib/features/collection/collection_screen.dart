@@ -783,19 +783,18 @@ class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
 
   Future<void> _loadSeasons() async {
     try {
-      final details = await ref.read(
-        mediaDetailsProvider((
-          id: widget.group.film.tmdbId,
-          type: widget.group.film.mediaType,
-        )).future,
-      );
+      // Appel direct au client TMDB, sans passer par le FutureProvider, pour
+      // éviter tout problème de timing Riverpod dans un SliverGrid paresseux.
+      final details = await ref
+          .read(tmdbClientProvider)
+          .details(widget.group.film.tmdbId, widget.group.film.mediaType);
       if (!mounted) return;
-      setState(() {
-        _tmdbSeasons = details.seasons
-            .where((s) => s.seasonNumber > 0)
-            .map((s) => s.seasonNumber)
-            .toSet();
-      });
+      final seasons = details.seasons
+          .where((s) => s.seasonNumber > 0)
+          .map((s) => s.seasonNumber)
+          .toSet();
+      if (seasons.isEmpty) return;
+      setState(() => _tmdbSeasons = seasons);
     } catch (_) {
       // Repli silencieux sur les saisons locales si TMDB est inaccessible.
     }
