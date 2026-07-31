@@ -19,6 +19,7 @@ import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
+import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/season_band.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
@@ -760,6 +761,20 @@ class _SeriesGroupCard extends ConsumerWidget {
       originalTitle: group.film.originalTitle,
     );
 
+    // Saisons TMDB : liste complète pour afficher en gris les saisons non vues.
+    // On exclut la saison 0 (spéciaux) pour ne pas polluer le bandeau.
+    final detailsAsync = ref.watch(
+      mediaDetailsProvider((id: group.film.tmdbId, type: group.film.mediaType)),
+    );
+    final tmdbSeasons = detailsAsync.value?.seasons
+            .where((s) => s.seasonNumber > 0)
+            .map((s) => s.seasonNumber)
+            .toSet() ??
+        const <int>{};
+    // Si TMDB répond, on utilise sa liste complète ; sinon repli sur les saisons
+    // connues localement (collection + history).
+    final allKnown = tmdbSeasons.isNotEmpty ? tmdbSeasons : group.allSeasons;
+
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: onTap,
@@ -782,7 +797,7 @@ class _SeriesGroupCard extends ConsumerWidget {
                   bottom: 0,
                   child: SeasonBand(
                     watched: group.watchedSeasons,
-                    known: group.allSeasons,
+                    known: allKnown,
                   ),
                 ),
                 // Note moyenne en bas à droite
