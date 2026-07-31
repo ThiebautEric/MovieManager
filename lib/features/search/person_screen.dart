@@ -16,6 +16,7 @@ import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
+import '../../widgets/season_band.dart';
 import '../home/detail_app_bar.dart';
 import '../home/selected_media.dart';
 
@@ -95,10 +96,10 @@ class _PersonBody extends ConsumerWidget {
       s.medium ??= c.medium;
     }
     for (final v in history) {
-      // L'historique est trié du plus récent au plus ancien → 1re note = la dernière.
-      final s = byKey[v.film.mediaKey] ??= _MediaStatus();
-      s.watched = true;
-      s.rating ??= v.rating;
+      (byKey[v.film.mediaKey] ??= _MediaStatus()).addWatching(
+        seasonNumber: v.seasonNumber,
+        rating: v.rating,
+      );
     }
     final age = person.ageAt(DateTime.now());
 
@@ -276,11 +277,23 @@ class _BiographyState extends State<_Biography> {
 
 /// Statut d'une œuvre vis-à-vis de la bibliothèque de l'utilisateur.
 class _MediaStatus {
-  Medium? medium; // support possédé (null si non possédé)
+  Medium? medium;
   bool watched = false;
-  double? rating; // note du dernier visionnage
+  final Set<int> watchedSeasons = {};
+  final List<double> _ratings = [];
 
   bool get owned => medium != null;
+
+  /// Moyenne des notes de tous les visionnages (null si aucun noté).
+  double? get rating => _ratings.isEmpty
+      ? null
+      : _ratings.reduce((a, b) => a + b) / _ratings.length;
+
+  void addWatching({int? seasonNumber, double? rating}) {
+    watched = true;
+    if (seasonNumber != null) watchedSeasons.add(seasonNumber);
+    if (rating != null) _ratings.add(rating);
+  }
 }
 
 /// Carte d'un film de la filmographie (format grille d'affiches), avec repères
@@ -336,24 +349,37 @@ class _FilmographyCard extends ConsumerWidget {
                     child: PosterImage(posterPath: item.posterPath),
                   ),
                 ),
+                // Bandeau de saisons à gauche pour les séries vues
+                if (c != null && c.watchedSeasons.isNotEmpty)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    child: SeasonBand(watched: c.watchedSeasons),
+                  ),
+                // Badge support : à droite quand le bandeau occupe la gauche
                 if (c != null && c.medium != null)
                   Positioned(
                     top: 6,
-                    left: 6,
+                    left: c.watchedSeasons.isNotEmpty ? null : 6,
+                    right: c.watchedSeasons.isNotEmpty ? 6 : null,
                     child: MediumBadge(medium: c.medium!),
                   ),
-                if (c != null && c.watched)
+                // Badge « vu » uniquement si pas de bandeau de saisons
+                if (c != null && c.watched && c.watchedSeasons.isEmpty)
                   Positioned(
                     top: 6,
                     right: 6,
                     child:
                         _badge(Icons.visibility, context.l10n.personWatchedBadge),
                   ),
-                if (c?.rating != null)
+                // Note moyenne : à droite quand le bandeau occupe la gauche
+                if (c != null && c.rating != null)
                   Positioned(
                     bottom: 6,
-                    left: 6,
-                    child: _badge(Icons.star, c!.rating!.toStringAsFixed(1)),
+                    left: c.watchedSeasons.isNotEmpty ? null : 6,
+                    right: c.watchedSeasons.isNotEmpty ? 6 : null,
+                    child: _badge(Icons.star, c.rating!.toStringAsFixed(1)),
                   ),
               ],
               ),
