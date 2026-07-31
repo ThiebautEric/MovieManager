@@ -753,7 +753,10 @@ class _HistoryCard extends ConsumerWidget {
 
 /// Vignette d'une série avec bandeau de saisons : une seule vignette par série,
 /// regroupant tous les visionnages de saisons.
-class _SeriesGroupCard extends ConsumerWidget {
+///
+/// Utilise un StatefulWidget pour charger les saisons TMDB via initState +
+/// ref.read(.future) : plus fiable que ref.watch dans un SliverGrid paresseux.
+class _SeriesGroupCard extends ConsumerStatefulWidget {
   const _SeriesGroupCard({
     required this.group,
     required this.dateLabel,
@@ -765,8 +768,43 @@ class _SeriesGroupCard extends ConsumerWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_SeriesGroupCard> createState() => _SeriesGroupCardState();
+}
+
+class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
+  /// Saisons connues selon TMDB ; null = pas encore chargé.
+  Set<int>? _tmdbSeasons;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSeasons();
+  }
+
+  Future<void> _loadSeasons() async {
+    try {
+      final details = await ref.read(
+        mediaDetailsProvider((
+          id: widget.group.film.tmdbId,
+          type: widget.group.film.mediaType,
+        )).future,
+      );
+      if (!mounted) return;
+      setState(() {
+        _tmdbSeasons = details.seasons
+            .where((s) => s.seasonNumber > 0)
+            .map((s) => s.seasonNumber)
+            .toSet();
+      });
+    } catch (_) {
+      // Repli silencieux sur les saisons locales si TMDB est inaccessible.
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final group = widget.group;
     final avgRating = group.avgRating;
     final title = resolveTitle(
       ref,
@@ -776,24 +814,15 @@ class _SeriesGroupCard extends ConsumerWidget {
       originalTitle: group.film.originalTitle,
     );
 
-    // Saisons TMDB : liste complète pour afficher en gris les saisons non vues.
-    // keepAlive() sur le provider garantit qu'il n'est pas disposé entre les
-    // rebuilds ; le screen déclenche le fetch tôt via le bloc de pré-chargement.
-    final detailsAsync = ref.watch(
-      mediaDetailsProvider((id: group.film.tmdbId, type: group.film.mediaType)),
-    );
-    final tmdbSeasons = detailsAsync.value?.seasons
-            .where((s) => s.seasonNumber > 0)
-            .map((s) => s.seasonNumber)
-            .toSet() ??
-        const <int>{};
     // Si TMDB a répondu, on utilise sa liste complète ; sinon repli sur les
     // saisons connues localement (history + collection).
-    final allKnown = tmdbSeasons.isNotEmpty ? tmdbSeasons : group.allSeasons;
+    final allKnown = (_tmdbSeasons != null && _tmdbSeasons!.isNotEmpty)
+        ? _tmdbSeasons!
+        : group.allSeasons;
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -843,7 +872,7 @@ class _SeriesGroupCard extends ConsumerWidget {
               const SizedBox(width: 4),
               Expanded(
                 child: Text(
-                  dateLabel,
+                  widget.dateLabel,
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.primary),
                   maxLines: 1,
