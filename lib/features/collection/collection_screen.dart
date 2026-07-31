@@ -772,32 +772,40 @@ class _SeriesGroupCard extends ConsumerStatefulWidget {
 }
 
 class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
-  /// Saisons connues selon TMDB ; null = pas encore chargé.
+  // Cache statique : survit aux dispose/recreate des éléments SliverGrid.
+  // Clé = mediaKey ('tv:1405'), valeur = numéros de saisons TMDB.
+  static final Map<String, Set<int>> _cache = {};
+
   Set<int>? _tmdbSeasons;
 
   @override
   void initState() {
     super.initState();
-    _loadSeasons();
+    final key = widget.group.film.mediaKey;
+    final hit = _cache[key];
+    if (hit != null) {
+      _tmdbSeasons = hit; // Résultat immédiat — pas de setState nécessaire.
+    } else {
+      _loadSeasons(key);
+    }
   }
 
-  Future<void> _loadSeasons() async {
+  Future<void> _loadSeasons(String key) async {
     try {
-      // Appel direct au client TMDB, sans passer par le FutureProvider, pour
-      // éviter tout problème de timing Riverpod dans un SliverGrid paresseux.
       final details = await ref
           .read(tmdbClientProvider)
           .details(widget.group.film.tmdbId, widget.group.film.mediaType);
-      if (!mounted) return;
       final seasons = details.seasons
           .where((s) => s.seasonNumber > 0)
           .map((s) => s.seasonNumber)
           .toSet();
       if (seasons.isEmpty) return;
+      // Stocke AVANT le check mounted : si l'élément est déjà disposé, le
+      // prochain élément pour cette série trouvera les données en cache.
+      _cache[key] = seasons;
+      if (!mounted) return;
       setState(() => _tmdbSeasons = seasons);
-    } catch (_) {
-      // Repli silencieux sur les saisons locales si TMDB est inaccessible.
-    }
+    } catch (_) {}
   }
 
   @override

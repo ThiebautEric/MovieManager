@@ -298,19 +298,65 @@ class _MediaStatus {
 
 /// Carte d'un film de la filmographie (format grille d'affiches), avec repères
 /// possédé / vu / note s'il est dans la bibliothèque.
-class _FilmographyCard extends ConsumerWidget {
+class _FilmographyCard extends ConsumerStatefulWidget {
   const _FilmographyCard({required this.item, required this.status});
 
   final FilmographyItem item;
   final _MediaStatus? status;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_FilmographyCard> createState() => _FilmographyCardState();
+}
+
+class _FilmographyCardState extends ConsumerState<_FilmographyCard> {
+  // Cache statique partagé entre toutes les instances (survit aux rebuilds).
+  static final Map<String, Set<int>> _cache = {};
+
+  Set<int>? _tmdbSeasons;
+
+  @override
+  void initState() {
+    super.initState();
+    final c = widget.status;
+    if (widget.item.mediaType == 'tv' && c != null && c.watchedSeasons.isNotEmpty) {
+      final key = '${widget.item.mediaType}:${widget.item.tmdbId}';
+      final hit = _cache[key];
+      if (hit != null) {
+        _tmdbSeasons = hit;
+      } else {
+        _loadSeasons(key);
+      }
+    }
+  }
+
+  Future<void> _loadSeasons(String key) async {
+    try {
+      final details = await ref
+          .read(tmdbClientProvider)
+          .details(widget.item.tmdbId, widget.item.mediaType);
+      final seasons = details.seasons
+          .where((s) => s.seasonNumber > 0)
+          .map((s) => s.seasonNumber)
+          .toSet();
+      if (seasons.isEmpty) return;
+      _cache[key] = seasons;
+      if (!mounted) return;
+      setState(() => _tmdbSeasons = seasons);
+    } catch (_) {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final c = status;
+    final item = widget.item;
+    final c = widget.status;
     // Met en valeur les films possédés ou vus.
     final highlight = c != null && (c.owned || c.watched);
+    // Saisons complètes (TMDB) pour les points gris des saisons non vues.
+    final allKnown = (_tmdbSeasons != null && _tmdbSeasons!.isNotEmpty)
+        ? _tmdbSeasons!
+        : (c?.watchedSeasons ?? const <int>{});
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () => openMedia(
@@ -355,7 +401,7 @@ class _FilmographyCard extends ConsumerWidget {
                     top: 0,
                     left: 0,
                     bottom: 0,
-                    child: SeasonBand(watched: c.watchedSeasons),
+                    child: SeasonBand(watched: c.watchedSeasons, known: allKnown),
                   ),
                 // Badge support : à droite quand le bandeau occupe la gauche
                 if (c != null && c.medium != null)
@@ -370,8 +416,7 @@ class _FilmographyCard extends ConsumerWidget {
                   Positioned(
                     top: 6,
                     right: 6,
-                    child:
-                        _badge(Icons.visibility, context.l10n.personWatchedBadge),
+                    child: _badge(Icons.visibility, context.l10n.personWatchedBadge),
                   ),
                 // Note moyenne : à droite quand le bandeau occupe la gauche
                 if (c != null && c.rating != null)
