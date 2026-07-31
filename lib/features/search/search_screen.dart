@@ -10,6 +10,8 @@ import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_summary.dart';
+import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/season_band.dart';
 import '../../tmdb/models/person_summary.dart';
 import '../../tmdb/models/search_hit.dart';
 import '../../widgets/app_bar_title.dart';
@@ -37,6 +39,19 @@ final _ownedByKeyProvider = Provider.autoDispose<Map<String, Medium>>((ref) {
 final _watchedKeysProvider = Provider.autoDispose<Set<String>>((ref) {
   final hist = ref.watch(historyStreamProvider).value ?? [];
   return {for (final v in hist) v.film.mediaKey};
+});
+
+/// Saisons vues par œuvre (clé mediaKey) — pour le bandeau sur les séries.
+final _watchedSeasonsByKeyProvider =
+    Provider.autoDispose<Map<String, Set<int>>>((ref) {
+  final hist = ref.watch(historyStreamProvider).value ?? [];
+  final map = <String, Set<int>>{};
+  for (final v in hist) {
+    if (v.seasonNumber != null) {
+      (map[v.film.mediaKey] ??= {}).add(v.seasonNumber!);
+    }
+  }
+  return map;
 });
 
 /// Écran de recherche TMDB (films + séries + personnalités) en grille.
@@ -135,6 +150,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     // Badges sur les résultats déjà possédés / déjà vus.
     final mediumByKey = ref.watch(_ownedByKeyProvider);
     final watchedKeys = ref.watch(_watchedKeysProvider);
+    final watchedSeasonsByKey = ref.watch(_watchedSeasonsByKeyProvider);
     return GridView.builder(
       padding: const EdgeInsets.all(12),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -152,6 +168,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               medium: mediumByKey['${h.media.mediaType}:${h.media.tmdbId}'],
               watched:
                   watchedKeys.contains('${h.media.mediaType}:${h.media.tmdbId}'),
+              watchedSeasons: watchedSeasonsByKey[
+                      '${h.media.mediaType}:${h.media.tmdbId}'] ??
+                  const {},
               onTap: () => openMedia(
                 context,
                 ref,
@@ -177,24 +196,68 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   }
 }
 
-class _ResultCard extends ConsumerWidget {
+class _ResultCard extends ConsumerStatefulWidget {
   const _ResultCard({
     required this.item,
     required this.onTap,
     this.medium,
     this.watched = false,
+    this.watchedSeasons = const {},
   });
 
   final MediaSummary item;
   final VoidCallback onTap;
   final Medium? medium;
   final bool watched;
+  final Set<int> watchedSeasons;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_ResultCard> createState() => _ResultCardState();
+}
+
+class _ResultCardState extends ConsumerState<_ResultCard> {
+  static final Map<String, Set<int>> _cache = {};
+  Set<int>? _tmdbSeasons;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.item.mediaType == 'tv' && widget.watchedSeasons.isNotEmpty) {
+      final key = '${widget.item.mediaType}:${widget.item.tmdbId}';
+      final hit = _cache[key];
+      if (hit != null) {
+        _tmdbSeasons = hit;
+      } else {
+        _loadSeasons(key);
+      }
+    }
+  }
+
+  Future<void> _loadSeasons(String key) async {
+    try {
+      final details = await ref
+          .read(tmdbClientProvider)
+          .details(widget.item.tmdbId, widget.item.mediaType);
+      final seasons = details.seasons
+          .where((s) => s.seasonNumber > 0)
+          .map((s) => s.seasonNumber)
+          .toSet();
+      if (seasons.isEmpty) return;
+      _cache[key] = seasons;
+      if (!mounted) return;
+      setState(() => _tmdbSeasons = seasons);
+    } catch (_) {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final hasBand = widget.watchedSeasons.isNotEmpty;
+    final allKnown = (_tmdbSeasons != null && _tmdbSeasons!.isNotEmpty)
+        ? _tmdbSeasons!
+        : widget.watchedSeasons;
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -204,16 +267,25 @@ class _ResultCard extends ConsumerWidget {
                 Positioned.fill(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: PosterImage(posterPath: item.posterPath),
+                    child: PosterImage(posterPath: widget.item.posterPath),
                   ),
                 ),
-                if (medium != null)
+                if (hasBand)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    child: SeasonBand(
+                        watched: widget.watchedSeasons, known: allKnown),
+                  ),
+                if (widget.medium != null)
                   Positioned(
                     top: 6,
-                    left: 6,
-                    child: MediumBadge(medium: medium!),
+                    left: hasBand ? null : 6,
+                    right: hasBand ? 6 : null,
+                    child: MediumBadge(medium: widget.medium!),
                   ),
-                if (watched)
+                if (widget.watched && !hasBand)
                   Positioned(
                     top: 6,
                     right: 6,
@@ -230,7 +302,7 @@ class _ResultCard extends ConsumerWidget {
                 Positioned(
                   bottom: 6,
                   right: 6,
-                  child: _WishlistBadgeButton(item: item),
+                  child: _WishlistBadgeButton(item: widget.item),
                 ),
               ],
             ),
@@ -239,17 +311,17 @@ class _ResultCard extends ConsumerWidget {
           CardTitle(
             resolveTitle(
               ref,
-              tmdbId: item.tmdbId,
-              mediaType: item.mediaType,
-              title: item.title,
-              originalTitle: item.originalTitle,
+              tmdbId: widget.item.tmdbId,
+              mediaType: widget.item.mediaType,
+              title: widget.item.title,
+              originalTitle: widget.item.originalTitle,
               titleIsLocalized: true,
             ),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           Text(
-            '${item.mediaType == 'movie' ? context.l10n.film : context.l10n.serie}'
-            '${item.releaseYear != null ? ' · ${item.releaseYear}' : ''}',
+            '${widget.item.mediaType == 'movie' ? context.l10n.film : context.l10n.serie}'
+            '${widget.item.releaseYear != null ? ' · ${widget.item.releaseYear}' : ''}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
