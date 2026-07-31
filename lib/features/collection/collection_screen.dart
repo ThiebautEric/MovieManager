@@ -161,19 +161,26 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           ),
         );
 
-    // Pré-charge les détails TMDB de toutes les séries de l'historique au
-    // niveau du screen (pas dans la carte). Cela démarre les fetches avant la
-    // construction des vignettes et maintient les providers vivants tant que
-    // l'écran est affiché — la saison non vue apparaît ainsi en gris dès le
-    // premier rendu (ou après un bref chargement réseau).
+    // Pré-charge les détails TMDB de toutes les séries et capture les saisons
+    // connues. Les saisons sont passées directement aux cartes pour que le
+    // rebuild du screen (déclenché par l'arrivée des données TMDB) propage
+    // immédiatement les saisons non vues (gris) aux vignettes.
+    final tmdbSeasonsByKey = <String, Set<int>>{};
     {
       final seenIds = <int>{};
       for (final e in async.value ?? const <HistoryView>[]) {
         if (!e.film.isMovie &&
             e.seasonNumber != null &&
             seenIds.add(e.film.tmdbId)) {
-          ref.watch(
+          final d = ref.watch(
               mediaDetailsProvider((id: e.film.tmdbId, type: e.film.mediaType)));
+          final seasons = d.value?.seasons
+              .where((s) => s.seasonNumber > 0)
+              .map((s) => s.seasonNumber)
+              .toSet();
+          if (seasons != null && seasons.isNotEmpty) {
+            tmdbSeasonsByKey[e.film.mediaKey] = seasons;
+          }
         }
       }
     }
@@ -294,6 +301,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
                     final gr = item.group;
                     return _SeriesGroupCard(
                       group: gr,
+                      tmdbSeasons: tmdbSeasonsByKey[gr.film.mediaKey],
                       dateLabel: dateFmt.format(gr.watchedAt),
                       onTap: () => openMedia(
                         context,
@@ -758,11 +766,17 @@ class _HistoryCard extends ConsumerWidget {
 class _SeriesGroupCard extends ConsumerWidget {
   const _SeriesGroupCard({
     required this.group,
+    this.tmdbSeasons,
     required this.dateLabel,
     required this.onTap,
   });
 
   final _SeriesGroup group;
+
+  /// Saisons complètes de la série selon TMDB (passées depuis le screen pour
+  /// éviter les problèmes de timing avec les providers autoDispose).
+  /// Null ou vide = repli sur les saisons connues localement.
+  final Set<int>? tmdbSeasons;
   final String dateLabel;
   final VoidCallback onTap;
 
@@ -778,19 +792,11 @@ class _SeriesGroupCard extends ConsumerWidget {
       originalTitle: group.film.originalTitle,
     );
 
-    // Saisons TMDB : liste complète pour afficher en gris les saisons non vues.
-    // On exclut la saison 0 (spéciaux) pour ne pas polluer le bandeau.
-    final detailsAsync = ref.watch(
-      mediaDetailsProvider((id: group.film.tmdbId, type: group.film.mediaType)),
-    );
-    final tmdbSeasons = detailsAsync.value?.seasons
-            .where((s) => s.seasonNumber > 0)
-            .map((s) => s.seasonNumber)
-            .toSet() ??
-        const <int>{};
-    // Si TMDB répond, on utilise sa liste complète ; sinon repli sur les saisons
-    // connues localement (collection + history).
-    final allKnown = tmdbSeasons.isNotEmpty ? tmdbSeasons : group.allSeasons;
+    // Si TMDB a répondu (passé depuis le screen), on utilise sa liste complète ;
+    // sinon repli sur les saisons connues localement (collection + history).
+    final allKnown = (tmdbSeasons != null && tmdbSeasons!.isNotEmpty)
+        ? tmdbSeasons!
+        : group.allSeasons;
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
