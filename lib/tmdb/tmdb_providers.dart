@@ -34,8 +34,11 @@ final localizedTitleProvider =
 });
 
 /// Détails d'un média, mis en cache par (tmdbId, mediaType).
+/// keepAlive : évite l'autoDispose entre les rebuilds du screen (comme les
+/// autres providers TMDB) ; invalidé automatiquement si la langue change.
 final mediaDetailsProvider = FutureProvider.family<MediaDetails, ({int id, String type})>(
   (ref, key) {
+    ref.keepAlive();
     return ref.watch(tmdbClientProvider).details(key.id, key.type);
   },
 );
