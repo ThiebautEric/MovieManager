@@ -161,6 +161,23 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           ),
         );
 
+    // Pré-charge les détails TMDB de toutes les séries de l'historique au
+    // niveau du screen (pas dans la carte). Cela démarre les fetches avant la
+    // construction des vignettes et maintient les providers vivants tant que
+    // l'écran est affiché — la saison non vue apparaît ainsi en gris dès le
+    // premier rendu (ou après un bref chargement réseau).
+    {
+      final seenIds = <int>{};
+      for (final e in async.value ?? const <HistoryView>[]) {
+        if (!e.film.isMovie &&
+            e.seasonNumber != null &&
+            seenIds.add(e.film.tmdbId)) {
+          ref.watch(
+              mediaDetailsProvider((id: e.film.tmdbId, type: e.film.mediaType)));
+        }
+      }
+    }
+
     final content = async.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
