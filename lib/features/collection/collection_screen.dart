@@ -567,6 +567,7 @@ class _HistoryCard extends ConsumerWidget {
                     child: SeasonBand(
                       watched: watchedSeasons,
                       known: tmdbSeasons,
+                      current: event.seasonNumber,
                     ),
                   ),
                 if (mediums.isNotEmpty)

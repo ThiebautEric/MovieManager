@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 /// [watched] = numéros de saisons vues (jaune/ambre).
 /// [known] = numéros de saisons connues mais non vues (gris).
 class SeasonBand extends StatelessWidget {
-  const SeasonBand({super.key, required this.watched, this.known = const {}});
+  const SeasonBand({super.key, required this.watched, this.known = const {}, this.current});
 
   final Set<int> watched;
   final Set<int> known;
+
+  /// Saison mise en valeur (anneau blanc).
+  final int? current;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,9 @@ class SeasonBand extends StatelessWidget {
                       ? Colors.amber
                       : Colors.grey.shade500,
                   shape: BoxShape.circle,
+                  border: all[i] == current
+                      ? Border.all(color: Colors.white, width: 1.5)
+                      : null,
                 ),
                 child: Center(
                   child: Text(
