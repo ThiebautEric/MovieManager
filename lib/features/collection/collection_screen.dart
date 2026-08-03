@@ -46,7 +46,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   /// Vrai une fois le repli par défaut appliqué (toutes années sauf la courante).
   bool _initCollapse = false;
 
-  /// Exporte l'historique affiché en CSV (numéro, titre, saison, note, date).
+  /// Exporte l'historique affiché en CSV (enrichi pour ré-import).
   /// Web : téléchargement navigateur ; Android/iOS : dossier Téléchargements ;
   /// desktop : dossier de téléchargement par défaut.
   Future<void> _exportCsv() async {
@@ -58,14 +58,22 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     final b = StringBuffer('$bom${l10n.historyCsvHeader}\n');
     for (var i = 0; i < events.length; i++) {
       final e = events[i];
-      final saison = e.seasonNumber != null
-          ? 'S${e.seasonNumber}${e.episodeNumber != null ? 'E${e.episodeNumber}' : ''}'
-          : '';
-      final titre = e.film.title +
-          ((e.episodeName?.isNotEmpty ?? false) ? ' (${e.episodeName})' : '');
       final note = e.rating != null ? e.rating!.toStringAsFixed(1) : '';
+      final numSaison = e.seasonNumber?.toString() ?? '';
+      final numEpisode = e.episodeNumber?.toString() ?? '';
       b.writeln(
-          '${i + 1};${q(titre)};$saison;$note;${fmtDateCsv(e.watchedAt)}');
+        '${i + 1}'
+        ';${e.film.tmdbId}'
+        ';${e.film.mediaType}'
+        ';${q(e.film.title)}'
+        ';${q(e.film.originalTitle ?? '')}'
+        ';$numSaison'
+        ';$numEpisode'
+        ';${q(e.episodeName ?? '')}'
+        ';$note'
+        ';${fmtDateCsv(e.watchedAt)}'
+        ';${q(e.comment ?? '')}',
+      );
     }
     try {
       await FileSaver.instance.saveFile(

@@ -216,9 +216,9 @@
   "personShowMore": "Voir plus",
   "personShowLess": "Voir moins",
   "personWatchedBadge": "Vu",
-  "historyExportTooltip": "Exporter en CSV (provisoire)",
+  "historyExportTooltip": "Exporter en CSV",
   "historyExportedSnack": "Historique exporté (historique.csv)",
-  "historyCsvHeader": "Numero;Titre;Saison;Note;Date",
+  "historyCsvHeader": "Numero;TmdbId;TypeMedia;Titre;TitreOriginal;NumSaison;NumEpisode;NomEpisode;Note;Date;Commentaire",
   "@historyCsvHeader": {
     "description": "En-tête des colonnes du CSV exporté (séparateur ;)"
   },

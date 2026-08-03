@@ -361,13 +361,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get personWatchedBadge => 'Vu';
 
   @override
-  String get historyExportTooltip => 'Exporter en CSV (provisoire)';
+  String get historyExportTooltip => 'Exporter en CSV';
 
   @override
   String get historyExportedSnack => 'Historique exporté (historique.csv)';
 
   @override
-  String get historyCsvHeader => 'Numero;Titre;Saison;Note;Date';
+  String get historyCsvHeader =>
+      'Numero;TmdbId;TypeMedia;Titre;TitreOriginal;NumSaison;NumEpisode;NomEpisode;Note;Date;Commentaire';
 
   @override
   String get historyEmpty =>
