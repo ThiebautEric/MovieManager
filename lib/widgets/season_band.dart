@@ -19,10 +19,11 @@ class SeasonBand extends StatelessWidget {
     final count = all.length;
 
     // Toujours 10 slots par colonne, du haut vers le bas.
+    // Taille de pastille fixe (identique à 1 colonne / peu de saisons).
     const int perCol = 10;
     final int cols = count <= 10 ? 1 : count <= 20 ? 2 : 3;
-    final double dotSize = cols == 1 ? 18 : cols == 2 ? 13 : 11;
-    final double fontSize = cols == 1 ? 9 : cols == 2 ? 7 : 6.5;
+    const double dotSize = 18;
+    const double fontSize = 9;
     final bandWidth = 6.0 + cols * dotSize + (cols - 1) * 3.0;
 
     Widget dot(int season) => Container(
