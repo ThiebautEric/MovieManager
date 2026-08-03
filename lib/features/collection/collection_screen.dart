@@ -21,6 +21,7 @@ import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/dark_badge.dart';
+import '../../widgets/season_band.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
 import 'collection_filter.dart';
@@ -500,6 +501,11 @@ class _HistoryCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final isSeason = event.seasonNumber != null;
+    final isSeasonOnly = isSeason && event.episodeNumber == null;
+    final tmdbSeasons = isSeasonOnly
+        ? ref.watch(seasonsTmdbProvider(
+            (id: event.film.tmdbId, type: event.film.mediaType)))
+        : const <int>{};
     final rating = event.rating;
     final title = resolveTitle(
       ref,
@@ -524,6 +530,16 @@ class _HistoryCard extends ConsumerWidget {
                     child: PosterImage(posterPath: event.posterPath),
                   ),
                 ),
+                if (isSeasonOnly)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    child: SeasonBand(
+                      watched: {event.seasonNumber!},
+                      known: tmdbSeasons,
+                    ),
+                  ),
                 if (mediums.isNotEmpty)
                   Positioned(
                     top: 6,
