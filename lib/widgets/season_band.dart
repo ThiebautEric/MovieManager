@@ -43,15 +43,12 @@ class SeasonBand extends StatelessWidget {
                       ? Colors.amber
                       : Colors.grey.shade500,
                   shape: BoxShape.circle,
-                  border: all[i] == current
-                      ? Border.all(color: Colors.white, width: 1.5)
-                      : null,
                 ),
                 child: Center(
                   child: Text(
                     '${all[i]}',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: all[i] == current ? Colors.red : Colors.white,
                       fontSize: fontSize,
                       fontWeight: FontWeight.bold,
                     ),
