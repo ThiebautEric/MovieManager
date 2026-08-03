@@ -667,7 +667,7 @@ abstract class AppLocalizations {
   /// No description provided for @historyExportTooltip.
   ///
   /// In fr, this message translates to:
-  /// **'Exporter en CSV (provisoire)'**
+  /// **'Exporter en CSV'**
   String get historyExportTooltip;
 
   /// No description provided for @historyExportedSnack.
@@ -679,7 +679,7 @@ abstract class AppLocalizations {
   /// En-tête des colonnes du CSV exporté (séparateur ;)
   ///
   /// In fr, this message translates to:
-  /// **'Numero;Titre;Saison;Note;Date'**
+  /// **'Numero;TmdbId;TypeMedia;Titre;TitreOriginal;NumSaison;NumEpisode;NomEpisode;Note;Date;Commentaire'**
   String get historyCsvHeader;
 
   /// No description provided for @historyEmpty.

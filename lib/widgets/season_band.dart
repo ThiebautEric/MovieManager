@@ -69,21 +69,16 @@ class SeasonBand extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 3),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (int c = 0; c < cols; c++) ...[
               if (c > 0) const SizedBox(width: 3),
               Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  for (int r = 0; r < perCol; r++) ...[
-                    if (r > 0) const SizedBox(height: 2),
-                    if (c * perCol + r < count)
-                      dot(all[c * perCol + r])
-                    else
-                      SizedBox(width: dotSize, height: dotSize),
-                  ],
+                  for (int r = 0; r < perCol; r++)
+                    if (c * perCol + r < count) dot(all[c * perCol + r]),
                 ],
               ),
             ],
