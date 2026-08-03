@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 /// Bandeau vertical affiché sur la bordure gauche d'une affiche de série.
 /// [watched] = numéros de saisons vues (jaune/ambre).
-/// [known] = numéros de saisons connues mais non vues (gris).
+/// [known]   = numéros de saisons connues mais non vues (gris).
+/// [current] = saison mise en valeur (fond rouge).
 class SeasonBand extends StatelessWidget {
   const SeasonBand({super.key, required this.watched, this.known = const {}, this.current});
 
   final Set<int> watched;
   final Set<int> known;
-
-  /// Saison mise en valeur (anneau blanc).
   final int? current;
 
   @override
@@ -18,8 +17,46 @@ class SeasonBand extends StatelessWidget {
     if (all.isEmpty) return const SizedBox.shrink();
 
     final count = all.length;
-    final dotSize = count <= 8 ? 18.0 : count <= 12 ? 15.0 : 12.0;
-    final fontSize = count <= 8 ? 9.0 : count <= 12 ? 8.0 : 7.0;
+
+    final int cols;
+    final double dotSize;
+    final double fontSize;
+    if (count <= 8) {
+      cols = 1; dotSize = 18; fontSize = 9;
+    } else if (count <= 12) {
+      cols = 1; dotSize = 15; fontSize = 8;
+    } else if (count <= 20) {
+      cols = 2; dotSize = 13; fontSize = 7;
+    } else {
+      cols = 3; dotSize = 11; fontSize = 6.5;
+    }
+
+    final perCol = (count / cols).ceil();
+    // largeur = padding horizontal (3×2) + colonnes + gaps entre colonnes
+    final bandWidth = 6.0 + cols * dotSize + (cols - 1) * 3.0;
+
+    Widget dot(int season) => Container(
+          width: dotSize,
+          height: dotSize,
+          decoration: BoxDecoration(
+            color: season == current
+                ? Colors.red.shade600
+                : watched.contains(season)
+                    ? Colors.amber
+                    : Colors.grey.shade500,
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Text(
+              '$season',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
 
     return ClipRRect(
       borderRadius: const BorderRadius.only(
@@ -27,41 +64,30 @@ class SeasonBand extends StatelessWidget {
         bottomLeft: Radius.circular(8),
       ),
       child: Container(
-        width: dotSize + 6,
+        width: bandWidth,
         color: Colors.black.withValues(alpha: 0.55),
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 3),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-            for (int i = 0; i < all.length; i++) ...[
-              if (i > 0) const SizedBox(height: 2),
-              Container(
-                width: dotSize,
-                height: dotSize,
-                decoration: BoxDecoration(
-                  color: all[i] == current
-                      ? Colors.red.shade600
-                      : watched.contains(all[i])
-                          ? Colors.amber
-                          : Colors.grey.shade500,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Text(
-                    '${all[i]}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: fontSize,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            for (int c = 0; c < cols; c++) ...[
+              if (c > 0) const SizedBox(width: 3),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (int r = 0; r < perCol; r++) ...[
+                    if (r > 0) const SizedBox(height: 2),
+                    if (c * perCol + r < count)
+                      dot(all[c * perCol + r])
+                    else
+                      SizedBox(width: dotSize, height: dotSize),
+                  ],
+                ],
               ),
             ],
           ],
-          ),
         ),
       ),
     );
