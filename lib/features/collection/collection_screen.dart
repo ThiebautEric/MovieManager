@@ -792,9 +792,19 @@ class _SeriesGroupCard extends ConsumerWidget {
           const SizedBox(height: 6),
           Tooltip(
             message: title,
-            child: Text(
-              title,
-              style: theme.textTheme.bodyMedium,
+            child: Text.rich(
+              TextSpan(
+                text: title,
+                style: theme.textTheme.bodyMedium,
+                children: [
+                  if (group.film.releaseYear != null)
+                    TextSpan(
+                      text: '  (${group.film.releaseYear})',
+                      style: theme.textTheme.labelSmall
+                          ?.copyWith(color: theme.colorScheme.outline),
+                    ),
+                ],
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
