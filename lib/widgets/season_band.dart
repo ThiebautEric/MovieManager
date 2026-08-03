@@ -39,16 +39,18 @@ class SeasonBand extends StatelessWidget {
                 width: dotSize,
                 height: dotSize,
                 decoration: BoxDecoration(
-                  color: watched.contains(all[i])
-                      ? Colors.amber
-                      : Colors.grey.shade500,
+                  color: all[i] == current
+                      ? Colors.red.shade600
+                      : watched.contains(all[i])
+                          ? Colors.amber
+                          : Colors.grey.shade500,
                   shape: BoxShape.circle,
                 ),
                 child: Center(
                   child: Text(
                     '${all[i]}',
                     style: TextStyle(
-                      color: all[i] == current ? Colors.red : Colors.white,
+                      color: Colors.white,
                       fontSize: fontSize,
                       fontWeight: FontWeight.bold,
                     ),
