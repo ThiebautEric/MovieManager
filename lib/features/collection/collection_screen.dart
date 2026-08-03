@@ -20,6 +20,7 @@ import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/dark_badge.dart';
 import '../../widgets/season_band.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
@@ -144,7 +145,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     // donc il ne sera pas disposé entre les rebuilds.
     {
       final seenIds = <int>{};
-      for (final e in async.value ?? const <HistoryView>[]) {
+      for (final e in (async.value ?? const <HistoryView>[]).take(20)) {
         if (!e.film.isMovie &&
             e.seasonNumber != null &&
             seenIds.add(e.film.tmdbId)) {
@@ -633,16 +634,16 @@ class _HistoryCard extends ConsumerWidget {
                   Positioned(
                     top: 6,
                     right: 6,
-                    child: _badge(
-                        Icons.live_tv,
-                        'S${event.seasonNumber}'
-                        '${event.episodeNumber != null ? 'E${event.episodeNumber}' : ''}'),
+                    child: DarkBadge(
+                        icon: Icons.live_tv,
+                        label: 'S${event.seasonNumber}'
+                            '${event.episodeNumber != null ? 'E${event.episodeNumber}' : ''}'),
                   ),
                 if (rating != null)
                   Positioned(
                     bottom: 6,
                     left: 6,
-                    child: _badge(Icons.star, rating.toStringAsFixed(1)),
+                    child: DarkBadge(icon: Icons.star, label: rating.toStringAsFixed(1)),
                   ),
               ],
             ),
@@ -709,32 +710,11 @@ class _HistoryCard extends ConsumerWidget {
     );
   }
 
-  Widget _badge(IconData icon, String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.65),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: Colors.white),
-          const SizedBox(width: 2),
-          Text(label,
-              style: const TextStyle(color: Colors.white, fontSize: 11)),
-        ],
-      ),
-    );
-  }
 }
 
 /// Vignette d'une série avec bandeau de saisons : une seule vignette par série,
 /// regroupant tous les visionnages de saisons.
-///
-/// Utilise un StatefulWidget pour charger les saisons TMDB via initState +
-/// ref.read(.future) : plus fiable que ref.watch dans un SliverGrid paresseux.
-class _SeriesGroupCard extends ConsumerStatefulWidget {
+class _SeriesGroupCard extends ConsumerWidget {
   const _SeriesGroupCard({
     required this.group,
     required this.dateLabel,
@@ -746,50 +726,8 @@ class _SeriesGroupCard extends ConsumerStatefulWidget {
   final VoidCallback onTap;
 
   @override
-  ConsumerState<_SeriesGroupCard> createState() => _SeriesGroupCardState();
-}
-
-class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
-  // Cache statique : survit aux dispose/recreate des éléments SliverGrid.
-  // Clé = mediaKey ('tv:1405'), valeur = numéros de saisons TMDB.
-  static final Map<String, Set<int>> _cache = {};
-
-  Set<int>? _tmdbSeasons;
-
-  @override
-  void initState() {
-    super.initState();
-    final key = widget.group.film.mediaKey;
-    final hit = _cache[key];
-    if (hit != null) {
-      _tmdbSeasons = hit; // Résultat immédiat — pas de setState nécessaire.
-    } else {
-      _loadSeasons(key);
-    }
-  }
-
-  Future<void> _loadSeasons(String key) async {
-    try {
-      final details = await ref
-          .read(tmdbClientProvider)
-          .details(widget.group.film.tmdbId, widget.group.film.mediaType);
-      final seasons = details.seasons
-          .where((s) => s.seasonNumber > 0)
-          .map((s) => s.seasonNumber)
-          .toSet();
-      if (seasons.isEmpty) return;
-      // Stocke AVANT le check mounted : si l'élément est déjà disposé, le
-      // prochain élément pour cette série trouvera les données en cache.
-      _cache[key] = seasons;
-      if (!mounted) return;
-      setState(() => _tmdbSeasons = seasons);
-    } catch (_) {}
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final group = widget.group;
     final avgRating = group.avgRating;
     final title = resolveTitle(
       ref,
@@ -798,16 +736,13 @@ class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
       title: group.film.title,
       originalTitle: group.film.originalTitle,
     );
-
-    // Si TMDB a répondu, on utilise sa liste complète ; sinon repli sur les
-    // saisons connues localement (history + collection).
-    final allKnown = (_tmdbSeasons != null && _tmdbSeasons!.isNotEmpty)
-        ? _tmdbSeasons!
-        : group.allSeasons;
+    final tmdbSeasons = ref.watch(
+        seasonsTmdbProvider((id: group.film.tmdbId, type: group.film.mediaType)));
+    final allKnown = tmdbSeasons.isNotEmpty ? tmdbSeasons : group.allSeasons;
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: widget.onTap,
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -820,7 +755,6 @@ class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
                     child: PosterImage(posterPath: group.posterPath),
                   ),
                 ),
-                // Bandeau vertical de saisons à gauche
                 Positioned(
                   top: 0,
                   left: 0,
@@ -830,12 +764,13 @@ class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
                     known: allKnown,
                   ),
                 ),
-                // Note moyenne en bas à droite
                 if (avgRating != null)
                   Positioned(
                     bottom: 6,
                     right: 6,
-                    child: _badge(Icons.star, avgRating.toStringAsFixed(1)),
+                    child: DarkBadge(
+                        icon: Icons.star,
+                        label: avgRating.toStringAsFixed(1)),
                   ),
               ],
             ),
@@ -852,12 +787,11 @@ class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
           ),
           Row(
             children: [
-              Icon(Icons.live_tv,
-                  size: 14, color: theme.colorScheme.primary),
+              Icon(Icons.live_tv, size: 14, color: theme.colorScheme.primary),
               const SizedBox(width: 4),
               Expanded(
                 child: Text(
-                  widget.dateLabel,
+                  dateLabel,
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.primary),
                   maxLines: 1,
@@ -866,25 +800,6 @@ class _SeriesGroupCardState extends ConsumerState<_SeriesGroupCard> {
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _badge(IconData icon, String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.65),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: Colors.white),
-          const SizedBox(width: 2),
-          Text(label,
-              style: const TextStyle(color: Colors.white, fontSize: 11)),
         ],
       ),
     );

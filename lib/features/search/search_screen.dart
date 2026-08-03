@@ -167,7 +167,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   }
 }
 
-class _ResultCard extends ConsumerStatefulWidget {
+class _ResultCard extends ConsumerWidget {
   const _ResultCard({
     required this.item,
     required this.onTap,
@@ -183,52 +183,14 @@ class _ResultCard extends ConsumerStatefulWidget {
   final Set<int> watchedSeasons;
 
   @override
-  ConsumerState<_ResultCard> createState() => _ResultCardState();
-}
-
-class _ResultCardState extends ConsumerState<_ResultCard> {
-  static final Map<String, Set<int>> _cache = {};
-  Set<int>? _tmdbSeasons;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.item.mediaType == 'tv' && widget.watchedSeasons.isNotEmpty) {
-      final key = '${widget.item.mediaType}:${widget.item.tmdbId}';
-      final hit = _cache[key];
-      if (hit != null) {
-        _tmdbSeasons = hit;
-      } else {
-        _loadSeasons(key);
-      }
-    }
-  }
-
-  Future<void> _loadSeasons(String key) async {
-    try {
-      final details = await ref
-          .read(tmdbClientProvider)
-          .details(widget.item.tmdbId, widget.item.mediaType);
-      final seasons = details.seasons
-          .where((s) => s.seasonNumber > 0)
-          .map((s) => s.seasonNumber)
-          .toSet();
-      if (seasons.isEmpty) return;
-      _cache[key] = seasons;
-      if (!mounted) return;
-      setState(() => _tmdbSeasons = seasons);
-    } catch (_) {}
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final hasBand = widget.watchedSeasons.isNotEmpty;
-    final allKnown = (_tmdbSeasons != null && _tmdbSeasons!.isNotEmpty)
-        ? _tmdbSeasons!
-        : widget.watchedSeasons;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final hasBand = watchedSeasons.isNotEmpty;
+    final tmdbSeasons = ref.watch(
+        seasonsTmdbProvider((id: item.tmdbId, type: item.mediaType)));
+    final allKnown = tmdbSeasons.isNotEmpty ? tmdbSeasons : watchedSeasons;
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: widget.onTap,
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -238,7 +200,7 @@ class _ResultCardState extends ConsumerState<_ResultCard> {
                 Positioned.fill(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: PosterImage(posterPath: widget.item.posterPath),
+                    child: PosterImage(posterPath: item.posterPath),
                   ),
                 ),
                 if (hasBand)
@@ -246,17 +208,16 @@ class _ResultCardState extends ConsumerState<_ResultCard> {
                     top: 0,
                     left: 0,
                     bottom: 0,
-                    child: SeasonBand(
-                        watched: widget.watchedSeasons, known: allKnown),
+                    child: SeasonBand(watched: watchedSeasons, known: allKnown),
                   ),
-                if (widget.medium != null)
+                if (medium != null)
                   Positioned(
                     top: 6,
                     left: hasBand ? null : 6,
                     right: hasBand ? 6 : null,
-                    child: MediumBadge(medium: widget.medium!),
+                    child: MediumBadge(medium: medium!),
                   ),
-                if (widget.watched && !hasBand)
+                if (watched && !hasBand)
                   Positioned(
                     top: 6,
                     right: 6,
@@ -273,7 +234,7 @@ class _ResultCardState extends ConsumerState<_ResultCard> {
                 Positioned(
                   bottom: 6,
                   right: 6,
-                  child: _WishlistBadgeButton(item: widget.item),
+                  child: _WishlistBadgeButton(item: item),
                 ),
               ],
             ),
@@ -282,17 +243,17 @@ class _ResultCardState extends ConsumerState<_ResultCard> {
           CardTitle(
             resolveTitle(
               ref,
-              tmdbId: widget.item.tmdbId,
-              mediaType: widget.item.mediaType,
-              title: widget.item.title,
-              originalTitle: widget.item.originalTitle,
+              tmdbId: item.tmdbId,
+              mediaType: item.mediaType,
+              title: item.title,
+              originalTitle: item.originalTitle,
               titleIsLocalized: true,
             ),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           Text(
-            '${widget.item.mediaType == 'movie' ? context.l10n.film : context.l10n.serie}'
-            '${widget.item.releaseYear != null ? ' · ${widget.item.releaseYear}' : ''}',
+            '${item.mediaType == 'movie' ? context.l10n.film : context.l10n.serie}'
+            '${item.releaseYear != null ? ' · ${item.releaseYear}' : ''}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],

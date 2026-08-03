@@ -16,6 +16,7 @@ import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
+import '../../widgets/dark_badge.dart';
 import '../../widgets/season_band.dart';
 import '../home/detail_app_bar.dart';
 import '../home/selected_media.dart';
@@ -298,65 +299,22 @@ class _MediaStatus {
 
 /// Carte d'un film de la filmographie (format grille d'affiches), avec repères
 /// possédé / vu / note s'il est dans la bibliothèque.
-class _FilmographyCard extends ConsumerStatefulWidget {
+class _FilmographyCard extends ConsumerWidget {
   const _FilmographyCard({required this.item, required this.status});
 
   final FilmographyItem item;
   final _MediaStatus? status;
 
   @override
-  ConsumerState<_FilmographyCard> createState() => _FilmographyCardState();
-}
-
-class _FilmographyCardState extends ConsumerState<_FilmographyCard> {
-  // Cache statique partagé entre toutes les instances (survit aux rebuilds).
-  static final Map<String, Set<int>> _cache = {};
-
-  Set<int>? _tmdbSeasons;
-
-  @override
-  void initState() {
-    super.initState();
-    final c = widget.status;
-    if (widget.item.mediaType == 'tv' && c != null && c.watchedSeasons.isNotEmpty) {
-      final key = '${widget.item.mediaType}:${widget.item.tmdbId}';
-      final hit = _cache[key];
-      if (hit != null) {
-        _tmdbSeasons = hit;
-      } else {
-        _loadSeasons(key);
-      }
-    }
-  }
-
-  Future<void> _loadSeasons(String key) async {
-    try {
-      final details = await ref
-          .read(tmdbClientProvider)
-          .details(widget.item.tmdbId, widget.item.mediaType);
-      final seasons = details.seasons
-          .where((s) => s.seasonNumber > 0)
-          .map((s) => s.seasonNumber)
-          .toSet();
-      if (seasons.isEmpty) return;
-      _cache[key] = seasons;
-      if (!mounted) return;
-      setState(() => _tmdbSeasons = seasons);
-    } catch (_) {}
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final item = widget.item;
-    final c = widget.status;
-    // Met en valeur les films possédés ou vus.
+    final c = status;
     final highlight = c != null && (c.owned || c.watched);
-    // Saisons complètes (TMDB) pour les points gris des saisons non vues.
-    final allKnown = (_tmdbSeasons != null && _tmdbSeasons!.isNotEmpty)
-        ? _tmdbSeasons!
-        : (c?.watchedSeasons ?? const <int>{});
+    final tmdbSeasons = ref.watch(
+        seasonsTmdbProvider((id: item.tmdbId, type: item.mediaType)));
+    final allKnown =
+        tmdbSeasons.isNotEmpty ? tmdbSeasons : (c?.watchedSeasons ?? const <int>{});
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () => openMedia(
@@ -416,15 +374,18 @@ class _FilmographyCardState extends ConsumerState<_FilmographyCard> {
                   Positioned(
                     top: 6,
                     right: 6,
-                    child: _badge(Icons.visibility, context.l10n.personWatchedBadge),
+                    child: DarkBadge(
+                        icon: Icons.visibility,
+                        label: context.l10n.personWatchedBadge),
                   ),
-                // Note moyenne : à droite quand le bandeau occupe la gauche
                 if (c != null && c.rating != null)
                   Positioned(
                     bottom: 6,
                     left: c.watchedSeasons.isNotEmpty ? null : 6,
                     right: c.watchedSeasons.isNotEmpty ? 6 : null,
-                    child: _badge(Icons.star, c.rating!.toStringAsFixed(1)),
+                    child: DarkBadge(
+                        icon: Icons.star,
+                        label: c.rating!.toStringAsFixed(1)),
                   ),
               ],
               ),
@@ -460,24 +421,4 @@ class _FilmographyCardState extends ConsumerState<_FilmographyCard> {
     );
   }
 
-  Widget _badge(IconData icon, String? label) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: label == null ? 4 : 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.65),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: Colors.white),
-          if (label != null) ...[
-            const SizedBox(width: 2),
-            Text(label,
-                style: const TextStyle(color: Colors.white, fontSize: 11)),
-          ],
-        ],
-      ),
-    );
-  }
 }

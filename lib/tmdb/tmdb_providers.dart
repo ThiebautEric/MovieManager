@@ -43,6 +43,19 @@ final mediaDetailsProvider = FutureProvider.family<MediaDetails, ({int id, Strin
   },
 );
 
+/// Numéros de saisons (hors saison 0) d'une série, déduits de [mediaDetailsProvider].
+/// Retourne `{}` tant que les détails ne sont pas chargés — sans requête supplémentaire.
+final seasonsTmdbProvider =
+    Provider.family<Set<int>, ({int id, String type})>((ref, key) {
+  ref.keepAlive();
+  final details = ref.watch(mediaDetailsProvider(key)).value;
+  if (details == null) return const {};
+  return {
+    for (final s in details.seasons)
+      if (s.seasonNumber > 0) s.seasonNumber,
+  };
+});
+
 /// Fiche détaillée d'une personne (acteur), mise en cache par id.
 final personDetailsProvider =
     FutureProvider.family<PersonDetails, int>((ref, personId) {

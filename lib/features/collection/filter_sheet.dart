@@ -35,9 +35,9 @@ class FilterPanel extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     CollectionFilter filter,
-    StateController<CollectionFilter> notifier,
     AppLocalizations l10n,
   ) {
+    final notifier = ref.read(filterProvider.notifier);
     final history = ref.watch(historyStreamProvider).value ?? [];
     final ratingKeys = <double, Set<String>>{};
     final unratedKeys = <String>{};
@@ -213,7 +213,7 @@ class FilterPanel extends ConsumerWidget {
         ),
         if (showRating) ...[
           const SizedBox(height: 16),
-          _buildRatingDropdown(context, ref, filter, notifier, l10n),
+          _buildRatingDropdown(context, ref, filter, l10n),
         ],
       ],
     );
