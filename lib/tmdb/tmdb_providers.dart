@@ -46,6 +46,7 @@ final mediaDetailsProvider = FutureProvider.family<MediaDetails, ({int id, Strin
 /// Fiche détaillée d'une personne (acteur), mise en cache par id.
 final personDetailsProvider =
     FutureProvider.family<PersonDetails, int>((ref, personId) {
+  ref.keepAlive();
   return ref.watch(tmdbClientProvider).person(personId);
 });
 
@@ -70,6 +71,7 @@ final englishSeasonEpisodesProvider =
 
 /// Liste des genres TMDB (chargée une fois), indexée par id pour l'affichage.
 final genresProvider = FutureProvider<List<Genre>>((ref) {
+  ref.keepAlive();
   return ref.watch(tmdbClientProvider).genres();
 });
 

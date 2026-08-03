@@ -96,6 +96,9 @@ class _HomeShellState extends ConsumerState<HomeShell>
         } catch (_) {
           // titre introuvable / erreur réseau : on ignore et on continue.
         }
+        // Petite pause entre chaque requête pour ne pas saturer l'API TMDB
+        // ni déclencher trop de rebuilds Supabase en rafale.
+        await Future.delayed(const Duration(milliseconds: 80));
       }
       // Marque cette version comme traitée : le refresh complet ne se relancera
       // plus (les futurs titres vides restent rattrapés ci-dessus).

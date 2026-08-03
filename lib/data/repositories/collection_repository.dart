@@ -1039,3 +1039,68 @@ final wishlistByKeyProvider = Provider<Map<String, WishlistView>>((ref) {
   final list = ref.watch(wishlistStreamProvider).value ?? const [];
   return {for (final w in list) '${w.film.mediaKey}|${w.seasonNumber}': w};
 });
+
+// ---------------------------------------------------------------------------
+// Providers dérivés partagés (évitent de recalculer ces maps dans chaque écran)
+// ---------------------------------------------------------------------------
+
+/// Map mediaKey → premier Medium possédé (badges sur les vignettes de recherche).
+final ownedMediumByKeyProvider = Provider.autoDispose<Map<String, Medium>>((ref) {
+  final coll = ref.watch(collectionStreamProvider).value ?? [];
+  final map = <String, Medium>{};
+  for (final c in coll) {
+    map.putIfAbsent(c.film.mediaKey, () => c.medium);
+  }
+  return map;
+});
+
+/// Ensemble des mediaKey vus au moins une fois.
+final watchedKeysProvider = Provider.autoDispose<Set<String>>((ref) {
+  final hist = ref.watch(historyStreamProvider).value ?? [];
+  return {for (final v in hist) v.film.mediaKey};
+});
+
+/// Saisons vues par œuvre (mediaKey → numéros de saisons), pour les bandeaux.
+final watchedSeasonsByKeyProvider =
+    Provider.autoDispose<Map<String, Set<int>>>((ref) {
+  final hist = ref.watch(historyStreamProvider).value ?? [];
+  final map = <String, Set<int>>{};
+  for (final v in hist) {
+    if (v.seasonNumber != null) {
+      (map[v.film.mediaKey] ??= {}).add(v.seasonNumber!);
+    }
+  }
+  return map;
+});
+
+/// Map (mediaKey|saison) → ensemble de Medium possédés.
+/// Clé : `"movie:123|null"` ou `"tv:456|2"` selon la saison.
+final ownedMediumsByKeySeasonProvider =
+    Provider.autoDispose<Map<String, Set<Medium>>>((ref) {
+  final coll = ref.watch(collectionStreamProvider).value ?? [];
+  final map = <String, Set<Medium>>{};
+  for (final c in coll) {
+    (map['${c.film.mediaKey}|${c.seasonNumber}'] ??= {}).add(c.medium);
+  }
+  return map;
+});
+
+/// Toutes les saisons connues par œuvre (history + collection),
+/// pour les pastilles grises des saisons non encore vues.
+final knownSeasonsByKeyProvider =
+    Provider.autoDispose<Map<String, Set<int>>>((ref) {
+  final hist = ref.watch(historyStreamProvider).value ?? [];
+  final coll = ref.watch(collectionStreamProvider).value ?? [];
+  final map = <String, Set<int>>{};
+  for (final e in hist) {
+    if (e.seasonNumber != null) {
+      (map[e.film.mediaKey] ??= {}).add(e.seasonNumber!);
+    }
+  }
+  for (final c in coll) {
+    if (c.seasonNumber != null) {
+      (map[c.film.mediaKey] ??= {}).add(c.seasonNumber!);
+    }
+  }
+  return map;
+});

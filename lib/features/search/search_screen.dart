@@ -24,35 +24,6 @@ import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
 import 'search_controller.dart';
 
-// Calculs dérivés mis en cache dans des providers : les maps ne sont
-// reconstruites que lorsque la collection/l'historique changent, pas à chaque
-// frappe de clavier.
-final _ownedByKeyProvider = Provider.autoDispose<Map<String, Medium>>((ref) {
-  final coll = ref.watch(collectionStreamProvider).value ?? [];
-  final map = <String, Medium>{};
-  for (final c in coll) {
-    map.putIfAbsent(c.film.mediaKey, () => c.medium);
-  }
-  return map;
-});
-
-final _watchedKeysProvider = Provider.autoDispose<Set<String>>((ref) {
-  final hist = ref.watch(historyStreamProvider).value ?? [];
-  return {for (final v in hist) v.film.mediaKey};
-});
-
-/// Saisons vues par œuvre (clé mediaKey) — pour le bandeau sur les séries.
-final _watchedSeasonsByKeyProvider =
-    Provider.autoDispose<Map<String, Set<int>>>((ref) {
-  final hist = ref.watch(historyStreamProvider).value ?? [];
-  final map = <String, Set<int>>{};
-  for (final v in hist) {
-    if (v.seasonNumber != null) {
-      (map[v.film.mediaKey] ??= {}).add(v.seasonNumber!);
-    }
-  }
-  return map;
-});
 
 /// Écran de recherche TMDB (films + séries + personnalités) en grille.
 class SearchScreen extends ConsumerStatefulWidget {
@@ -148,9 +119,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       return Center(child: Text(context.l10n.searchNoResults));
     }
     // Badges sur les résultats déjà possédés / déjà vus.
-    final mediumByKey = ref.watch(_ownedByKeyProvider);
-    final watchedKeys = ref.watch(_watchedKeysProvider);
-    final watchedSeasonsByKey = ref.watch(_watchedSeasonsByKeyProvider);
+    final mediumByKey = ref.watch(ownedMediumByKeyProvider);
+    final watchedKeys = ref.watch(watchedKeysProvider);
+    final watchedSeasonsByKey = ref.watch(watchedSeasonsByKeyProvider);
     return GridView.builder(
       padding: const EdgeInsets.all(12),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

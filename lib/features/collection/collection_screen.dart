@@ -30,10 +30,6 @@ import 'filter_sheet.dart';
 /// ancien. Un titre vu plusieurs fois (ou plusieurs saisons) = une vignette par
 /// visionnage. Donnée totalement indépendante de la collection.
 ///
-/// Format de date fixe réservé au CSV (dd/MM/yyyy) ; l'affichage à l'écran
-/// utilise DateFormat.yMd selon la locale.
-String _fmtDateCsv(DateTime d) =>
-    '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
 
 class CollectionScreen extends ConsumerStatefulWidget {
   const CollectionScreen({super.key});
@@ -68,7 +64,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           ((e.episodeName?.isNotEmpty ?? false) ? ' (${e.episodeName})' : '');
       final note = e.rating != null ? e.rating!.toStringAsFixed(1) : '';
       b.writeln(
-          '${i + 1};${q(titre)};$saison;$note;${_fmtDateCsv(e.watchedAt)}');
+          '${i + 1};${q(titre)};$saison;$note;${fmtDateCsv(e.watchedAt)}');
     }
     try {
       await FileSaver.instance.saveFile(
@@ -117,28 +113,10 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     }
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
 
-    // Supports possédés par (titre, saison) — pour afficher les pastilles de
-    // possession sur les vignettes d'historique (collection et historique
-    // restent indépendants ; c'est un simple recoupement d'affichage).
-    final collectionValue = ref.watch(collectionStreamProvider).value ?? [];
-    final owned = <String, Set<Medium>>{};
-    for (final c in collectionValue) {
-      (owned['${c.film.mediaKey}|${c.seasonNumber}'] ??= {}).add(c.medium);
-    }
-
-    // Toutes les saisons connues par œuvre (history complète + collection) pour
-    // afficher en gris les saisons non encore vues dans le bandeau de saisons.
-    final knownSeasonsByKey = <String, Set<int>>{};
-    for (final e in (async.value ?? const <HistoryView>[])) {
-      if (e.seasonNumber != null) {
-        (knownSeasonsByKey[e.film.mediaKey] ??= {}).add(e.seasonNumber!);
-      }
-    }
-    for (final c in collectionValue) {
-      if (c.seasonNumber != null) {
-        (knownSeasonsByKey[c.film.mediaKey] ??= {}).add(c.seasonNumber!);
-      }
-    }
+    // Supports possédés et saisons connues — calculés une fois via providers
+    // partagés (pas de recalcul à chaque rebuild de cet écran).
+    final owned = ref.watch(ownedMediumsByKeySeasonProvider);
+    final knownSeasonsByKey = ref.watch(knownSeasonsByKeyProvider);
     List<Medium> mediumsFor(HistoryView e) {
       final set = owned['${e.film.mediaKey}|${e.seasonNumber}'];
       if (set == null) return const [];

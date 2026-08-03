@@ -1,4 +1,14 @@
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+/// Formatage de date fixe pour l'export CSV (dd/MM/yyyy).
+String fmtDateCsv(DateTime d) =>
+    '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
+
+/// Formatage de date localisé selon la locale du contexte (ex. « 03/08/2026 »).
+String fmtDateLocalized(BuildContext context, DateTime d) =>
+    DateFormat.yMd(Localizations.localeOf(context).toString()).format(d);
 
 /// Formatage compact des durées : « 47min », « 2h08 », « 61h »…
 String fmtDuration(int minutes) {

@@ -4,14 +4,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/supabase/supabase_providers.dart';
+import '../../core/utils/format.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../auth/auth_controller.dart';
 import 'admin_controller.dart';
-
-String _fmtDate(DateTime d) =>
-    '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
 
 /// Message lisible extrait d'une erreur (FunctionException porte le JSON
 /// renvoyé par l'edge function dans `details`).
@@ -178,7 +176,7 @@ class _UserTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final lastSeen = user.lastSignInAt != null
-        ? l10n.adminLastSignIn(_fmtDate(user.lastSignInAt!))
+        ? l10n.adminLastSignIn(fmtDateCsv(user.lastSignInAt!))
         : l10n.adminNeverSignedIn;
 
     return ListTile(
@@ -205,7 +203,7 @@ class _UserTile extends ConsumerWidget {
         ],
       ),
       subtitle:
-          Text('${l10n.adminCreatedOn(_fmtDate(user.createdAt))} · $lastSeen'),
+          Text('${l10n.adminCreatedOn(fmtDateCsv(user.createdAt))} · $lastSeen'),
       trailing: IconButton(
         icon: const Icon(Icons.delete_outline),
         tooltip:
