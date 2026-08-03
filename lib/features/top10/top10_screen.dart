@@ -257,17 +257,27 @@ class _Top10Tile extends ConsumerWidget {
                   children: [
                     Tooltip(
                       message: title,
-                      child: Text(title,
+                      child: Text.rich(
+                          TextSpan(
+                            text: title,
+                            style: theme.textTheme.titleSmall,
+                            children: [
+                              if (film.releaseYear != null)
+                                TextSpan(
+                                  text: '  (${film.releaseYear})',
+                                  style: theme.textTheme.labelSmall?.copyWith(
+                                      color: theme.colorScheme.outline),
+                                ),
+                            ],
+                          ),
                           maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.titleSmall),
+                          overflow: TextOverflow.ellipsis),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       '${film.isMovie ? l10n.film : l10n.serie}'
                       '${entry.seasonNumber != null ? ' · ${l10n.collSeasonLabel(entry.seasonNumber!)}' : ''}'
-                      '${entry.episodeNumber != null ? ' · ${resolveEpisodeName(ref, tmdbId: film.tmdbId, seasonNumber: entry.seasonNumber ?? 0, episodeNumber: entry.episodeNumber!, stored: entry.episodeName)}' : ''}'
-                      '${film.releaseYear != null ? ' · ${film.releaseYear}' : ''}',
+                      '${entry.episodeNumber != null ? ' · ${resolveEpisodeName(ref, tmdbId: film.tmdbId, seasonNumber: entry.seasonNumber ?? 0, episodeNumber: entry.episodeNumber!, stored: entry.episodeName)}' : ''}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall
