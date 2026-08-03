@@ -21,7 +21,6 @@ import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/dark_badge.dart';
-import '../../widgets/season_band.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
 import 'collection_filter.dart';
@@ -125,7 +124,6 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     // Supports possédés et saisons connues — calculés une fois via providers
     // partagés (pas de recalcul à chaque rebuild de cet écran).
     final owned = ref.watch(ownedMediumsByKeySeasonProvider);
-    final knownSeasonsByKey = ref.watch(knownSeasonsByKeyProvider);
     List<Medium> mediumsFor(HistoryView e) {
       final set = owned['${e.film.mediaKey}|${e.seasonNumber}'];
       if (set == null) return const [];
@@ -171,36 +169,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           return EmptyState(message: l10n.historyEmpty);
         }
 
-        // Collecte tous les visionnages de saison par série (events déjà triés
-        // du plus récent au plus ancien).
-        final seriesGroupsMap = <String, _SeriesGroup>{};
-        for (final e in events) {
-          if (!e.film.isMovie &&
-              e.seasonNumber != null &&
-              e.episodeNumber == null) {
-            (seriesGroupsMap[e.film.mediaKey] ??= _SeriesGroup(
-              film: e.film,
-              allSeasons: knownSeasonsByKey[e.film.mediaKey] ?? const {},
-            )).views.add(e);
-          }
-        }
-
-        // Liste ordonnée de vignettes : les saisons d'une même série sont
-        // regroupées en un seul _GroupItem positionné à la date du plus récent.
-        final placedSeries = <String>{};
-        final allItems = <_HistoryItem>[];
-        for (final e in events) {
-          if (!e.film.isMovie &&
-              e.seasonNumber != null &&
-              e.episodeNumber == null) {
-            final key = e.film.mediaKey;
-            if (placedSeries.add(key)) {
-              allItems.add(_GroupItem(seriesGroupsMap[key]!));
-            }
-          } else {
-            allItems.add(_SingleItem(e));
-          }
-        }
+        final allItems = events.map(_SingleItem.new).toList();
 
         // Regroupe les items par mois.
         final groups = <_MonthGroup>[];
@@ -224,13 +193,8 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         // Totaux par année (pour l'en-tête année).
         final yearStats = <int, _Counts>{};
         for (final item in allItems) {
-          final counts = yearStats.putIfAbsent(item.date.year, () => _Counts());
-          if (item is _SingleItem) {
-            counts.add(item.view, owned: inColl(item.view));
-          } else if (item is _GroupItem) {
-            counts.addGroup(item.group,
-                owned: item.group.views.any(inColl));
-          }
+          yearStats.putIfAbsent(item.date.year, () => _Counts())
+              .add(item.view, owned: inColl(item.view));
         }
 
         bool isCollapsed(int year) =>
@@ -257,12 +221,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           if (isCollapsed(g.year)) continue; // année repliée
           final mc = _Counts();
           for (final item in g.items) {
-            if (item is _SingleItem) {
-              mc.add(item.view, owned: inColl(item.view));
-            } else if (item is _GroupItem) {
-              mc.addGroup(item.group,
-                  owned: item.group.views.any(inColl));
-            }
+            if (item is _SingleItem) mc.add(item.view, owned: inColl(item.view));
           }
           slivers.add(SliverToBoxAdapter(
             child: _MonthHeader(month: g.month, counts: mc),
@@ -275,21 +234,6 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
                 (context, i) {
                   final item = g.items[i];
                   if (item is _SingleItem) return card(item.view);
-                  if (item is _GroupItem) {
-                    final gr = item.group;
-                    return _SeriesGroupCard(
-                      group: gr,
-                      dateLabel: dateFmt.format(gr.watchedAt),
-                      onTap: () => openMedia(
-                        context,
-                        ref,
-                        type: gr.film.mediaType,
-                        id: gr.film.tmdbId,
-                        title: gr.film.title,
-                        posterPath: gr.film.posterPath,
-                      ),
-                    );
-                  }
                   return const SizedBox.shrink();
                 },
                 childCount: g.items.length,
@@ -359,35 +303,6 @@ String _monthName(BuildContext context, int month) {
   return name[0].toUpperCase() + name.substring(1);
 }
 
-/// Groupe de visionnages d'une même série (plusieurs saisons).
-/// Affiché comme une seule vignette avec un bandeau de saisons.
-class _SeriesGroup {
-  _SeriesGroup({required this.film, required this.allSeasons});
-
-  final Film film;
-
-  /// Toutes les saisons connues (history + collection) — pour les pastilles
-  /// grises des saisons non encore vues.
-  final Set<int> allSeasons;
-
-  /// Visionnages par saison, du plus récent au plus ancien.
-  final List<HistoryView> views = [];
-
-  DateTime get watchedAt => views.first.watchedAt;
-
-  Set<int> get watchedSeasons => {
-        for (final v in views)
-          if (v.seasonNumber != null) v.seasonNumber!,
-      };
-
-  double? get avgRating {
-    final rs = [for (final v in views) if (v.rating != null) v.rating!];
-    return rs.isEmpty ? null : rs.reduce((a, b) => a + b) / rs.length;
-  }
-
-  String? get posterPath => views.first.posterPath ?? film.posterPath;
-}
-
 sealed class _HistoryItem {
   DateTime get date;
 }
@@ -397,13 +312,6 @@ final class _SingleItem extends _HistoryItem {
   final HistoryView view;
   @override
   DateTime get date => view.watchedAt;
-}
-
-final class _GroupItem extends _HistoryItem {
-  _GroupItem(this.group);
-  final _SeriesGroup group;
-  @override
-  DateTime get date => group.watchedAt;
 }
 
 /// Un mois de visionnages (regroupement de l'historique).
@@ -432,13 +340,6 @@ class _Counts {
     }
   }
 
-  void addGroup(_SeriesGroup g, {required bool owned}) {
-    series++;
-    for (final v in g.views) {
-      seriesMin += v.totalMinutes ?? 0;
-    }
-    if (owned) seriesInColl++;
-  }
 }
 
 /// Durée cumulée, exprimée en jours au-delà de 24 h : « 14h30 », « 3j 7h »…
@@ -726,107 +627,4 @@ class _HistoryCard extends ConsumerWidget {
 
 }
 
-/// Vignette d'une série avec bandeau de saisons : une seule vignette par série,
-/// regroupant tous les visionnages de saisons.
-class _SeriesGroupCard extends ConsumerWidget {
-  const _SeriesGroupCard({
-    required this.group,
-    required this.dateLabel,
-    required this.onTap,
-  });
-
-  final _SeriesGroup group;
-  final String dateLabel;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final avgRating = group.avgRating;
-    final title = resolveTitle(
-      ref,
-      tmdbId: group.film.tmdbId,
-      mediaType: group.film.mediaType,
-      title: group.film.title,
-      originalTitle: group.film.originalTitle,
-    );
-    final tmdbSeasons = ref.watch(
-        seasonsTmdbProvider((id: group.film.tmdbId, type: group.film.mediaType)));
-    final allKnown = tmdbSeasons.isNotEmpty ? tmdbSeasons : group.allSeasons;
-
-    return InkWell(
-      borderRadius: BorderRadius.circular(8),
-      onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: PosterImage(posterPath: group.posterPath),
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  bottom: 0,
-                  child: SeasonBand(
-                    watched: group.watchedSeasons,
-                    known: allKnown,
-                  ),
-                ),
-                if (avgRating != null)
-                  Positioned(
-                    bottom: 6,
-                    right: 6,
-                    child: DarkBadge(
-                        icon: Icons.star,
-                        label: avgRating.toStringAsFixed(1)),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 6),
-          Tooltip(
-            message: title,
-            child: Text.rich(
-              TextSpan(
-                text: title,
-                style: theme.textTheme.bodyMedium,
-                children: [
-                  if (group.film.releaseYear != null)
-                    TextSpan(
-                      text: '  (${group.film.releaseYear})',
-                      style: theme.textTheme.labelSmall
-                          ?.copyWith(color: theme.colorScheme.outline),
-                    ),
-                ],
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Row(
-            children: [
-              Icon(Icons.live_tv, size: 14, color: theme.colorScheme.primary),
-              const SizedBox(width: 4),
-              Expanded(
-                child: Text(
-                  dateLabel,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.primary),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
 
