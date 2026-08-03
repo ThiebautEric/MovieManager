@@ -666,6 +666,12 @@ class _HistoryCard extends ConsumerWidget {
                 text: title,
                 style: theme.textTheme.bodyMedium,
                 children: [
+                  if (event.film.releaseYear != null)
+                    TextSpan(
+                      text: '  (${event.film.releaseYear})',
+                      style: theme.textTheme.labelSmall
+                          ?.copyWith(color: theme.colorScheme.outline),
+                    ),
                   if (event.totalMinutes != null)
                     TextSpan(
                       text:

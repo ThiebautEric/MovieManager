@@ -44,8 +44,8 @@ class EpisodePickerDialog extends ConsumerWidget {
               itemBuilder: (context, i) {
                 final ep = eps[i];
                 final meta = [
+                  if (ep.airYear != null) '(${ep.airYear})',
                   if (ep.runtime != null) fmtDuration(ep.runtime!),
-                  if (ep.airYear != null) '${ep.airYear}',
                 ].join(' · ');
                 return ListTile(
                   dense: true,
@@ -96,8 +96,8 @@ class EpisodeHeader extends StatelessWidget {
     final theme = Theme.of(context);
     final meta = [
       'E${episode.episodeNumber}',
+      if (episode.airYear != null) '(${episode.airYear})',
       if (episode.runtime != null) fmtDuration(episode.runtime!),
-      if (episode.airYear != null) '${episode.airYear}',
     ].join(' · ');
     return Row(
       children: [

@@ -156,6 +156,12 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
                       text: displayTitle,
                       style: theme.textTheme.titleLarge,
                       children: [
+                        if (details.releaseYear != null)
+                          TextSpan(
+                            text: '  (${details.releaseYear})',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.outline),
+                          ),
                         if (details.totalRuntime != null)
                           TextSpan(
                             text:

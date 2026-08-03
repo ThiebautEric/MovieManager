@@ -72,7 +72,8 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                     originalTitle: entry.film.originalTitle,
                   ),
                   subtitle: (entry.seasonNumber != null
-                          ? l10n.collSeasonLabel(entry.seasonNumber!)
+                          ? '${l10n.collSeasonLabel(entry.seasonNumber!)}'
+                              '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}'
                           : '${entry.film.isMovie ? l10n.film : l10n.serie}'
                               '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}') +
                       (duration != null ? ' · $duration' : ''),
