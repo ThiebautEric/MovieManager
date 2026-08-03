@@ -502,10 +502,25 @@ class _HistoryCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final isSeason = event.seasonNumber != null;
     final isSeasonOnly = isSeason && event.episodeNumber == null;
-    final tmdbSeasons = isSeasonOnly
-        ? ref.watch(seasonsTmdbProvider(
-            (id: event.film.tmdbId, type: event.film.mediaType)))
+    final tmdbDetails = isSeasonOnly
+        ? ref
+            .watch(mediaDetailsProvider(
+                (id: event.film.tmdbId, type: event.film.mediaType)))
+            .value
+        : null;
+    final tmdbSeasons = tmdbDetails != null
+        ? <int>{
+            for (final s in tmdbDetails.seasons)
+              if (s.seasonNumber > 0) s.seasonNumber
+          }
         : const <int>{};
+    final seasonYear = isSeasonOnly
+        ? (tmdbDetails?.seasons
+                .where((s) => s.seasonNumber == event.seasonNumber)
+                .firstOrNull
+                ?.year ??
+            event.film.releaseYear)
+        : event.film.releaseYear;
     final rating = event.rating;
     final title = resolveTitle(
       ref,
@@ -583,9 +598,9 @@ class _HistoryCard extends ConsumerWidget {
                 text: title,
                 style: theme.textTheme.bodyMedium,
                 children: [
-                  if (event.film.releaseYear != null)
+                  if (seasonYear != null)
                     TextSpan(
-                      text: '  (${event.film.releaseYear})',
+                      text: '  ($seasonYear)',
                       style: theme.textTheme.labelSmall
                           ?.copyWith(color: theme.colorScheme.outline),
                     ),
