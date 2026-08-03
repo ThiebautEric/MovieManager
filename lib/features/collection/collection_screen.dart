@@ -125,6 +125,15 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     // Supports possédés et saisons connues — calculés une fois via providers
     // partagés (pas de recalcul à chaque rebuild de cet écran).
     final owned = ref.watch(ownedMediumsByKeySeasonProvider);
+
+    // Toutes les saisons vues par série (historique complet, sans filtre).
+    final watchedSeasonsByKey = <String, Set<int>>{};
+    for (final e in async.value ?? const <HistoryView>[]) {
+      if (e.seasonNumber != null) {
+        (watchedSeasonsByKey[e.film.mediaKey] ??= {}).add(e.seasonNumber!);
+      }
+    }
+
     List<Medium> mediumsFor(HistoryView e) {
       final set = owned['${e.film.mediaKey}|${e.seasonNumber}'];
       if (set == null) return const [];
@@ -137,6 +146,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           event: e,
           dateLabel: dateFmt.format(e.watchedAt),
           mediums: mediumsFor(e),
+          watchedSeasons: watchedSeasonsByKey[e.film.mediaKey] ?? const {},
           onTap: () => openMedia(
             context,
             ref,
@@ -487,6 +497,7 @@ class _HistoryCard extends ConsumerWidget {
     required this.event,
     required this.dateLabel,
     required this.mediums,
+    required this.watchedSeasons,
     required this.onTap,
   });
 
@@ -495,6 +506,9 @@ class _HistoryCard extends ConsumerWidget {
 
   /// Supports possédés pour ce titre/saison (pastilles affichées sur l'affiche).
   final List<Medium> mediums;
+
+  /// Toutes les saisons vues pour cette série (depuis l'historique complet).
+  final Set<int> watchedSeasons;
   final VoidCallback onTap;
 
   @override
@@ -551,7 +565,7 @@ class _HistoryCard extends ConsumerWidget {
                     left: 0,
                     bottom: 0,
                     child: SeasonBand(
-                      watched: {event.seasonNumber!},
+                      watched: watchedSeasons,
                       known: tmdbSeasons,
                     ),
                   ),
