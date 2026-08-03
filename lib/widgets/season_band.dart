@@ -18,21 +18,11 @@ class SeasonBand extends StatelessWidget {
 
     final count = all.length;
 
-    final int cols;
-    final double dotSize;
-    final double fontSize;
-    if (count <= 8) {
-      cols = 1; dotSize = 18; fontSize = 9;
-    } else if (count <= 12) {
-      cols = 1; dotSize = 15; fontSize = 8;
-    } else if (count <= 20) {
-      cols = 2; dotSize = 13; fontSize = 7;
-    } else {
-      cols = 3; dotSize = 11; fontSize = 6.5;
-    }
-
-    final perCol = (count / cols).ceil();
-    // largeur = padding horizontal (3×2) + colonnes + gaps entre colonnes
+    // Toujours 10 slots par colonne, du haut vers le bas.
+    const int perCol = 10;
+    final int cols = count <= 10 ? 1 : count <= 20 ? 2 : 3;
+    final double dotSize = cols == 1 ? 18 : cols == 2 ? 13 : 11;
+    final double fontSize = cols == 1 ? 9 : cols == 2 ? 7 : 6.5;
     final bandWidth = 6.0 + cols * dotSize + (cols - 1) * 3.0;
 
     Widget dot(int season) => Container(
@@ -69,16 +59,21 @@ class SeasonBand extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 3),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             for (int c = 0; c < cols; c++) ...[
               if (c > 0) const SizedBox(width: 3),
               Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  for (int r = 0; r < perCol; r++)
-                    if (c * perCol + r < count) dot(all[c * perCol + r]),
+                  for (int r = 0; r < perCol; r++) ...[
+                    if (r > 0) const SizedBox(height: 2),
+                    if (c * perCol + r < count)
+                      dot(all[c * perCol + r])
+                    else
+                      SizedBox(width: dotSize, height: dotSize),
+                  ],
                 ],
               ),
             ],
