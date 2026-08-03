@@ -30,9 +30,11 @@ class SeasonBand extends StatelessWidget {
         width: dotSize + 6,
         color: Colors.black.withValues(alpha: 0.55),
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 3),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
             for (int i = 0; i < all.length; i++) ...[
               if (i > 0) const SizedBox(height: 2),
               Container(
@@ -59,6 +61,7 @@ class SeasonBand extends StatelessWidget {
               ),
             ],
           ],
+          ),
         ),
       ),
     );
