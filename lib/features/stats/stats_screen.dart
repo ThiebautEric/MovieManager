@@ -202,21 +202,27 @@ class _WatchedPie extends StatelessWidget {
                 sections: [
                   PieChartSectionData(
                     value: watched.toDouble(),
-                    title: '$watched',
+                    title: context.l10n.statsLegendWatched(watched),
                     color: scheme.primary,
                     radius: 72,
-                    titleStyle: TextStyle(
-                        color: scheme.onPrimary,
+                    titleStyle: const TextStyle(
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14),
+                        fontSize: 12,
+                        shadows: [Shadow(color: Colors.black54, blurRadius: 3)]),
+                    titlePositionPercentageOffset: 0.62,
                   ),
                   PieChartSectionData(
                     value: unwatched.toDouble(),
-                    title: '$unwatched',
+                    title: context.l10n.statsLegendUnwatched(unwatched),
                     color: scheme.secondaryContainer,
                     radius: 72,
-                    titleStyle: TextStyle(
-                        color: scheme.onSecondaryContainer, fontSize: 14),
+                    titleStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        shadows: [Shadow(color: Colors.black54, blurRadius: 3)]),
+                    titlePositionPercentageOffset: 0.62,
                   ),
                 ],
               ),
@@ -369,13 +375,23 @@ const _kPalette = [
 ];
 
 /// Camembert générique : liste de (label, count), pie à gauche + légende à droite.
+/// Le label est écrit directement sur chaque tranche assez grande (≥ 5 %).
 class _SlicePie extends StatelessWidget {
   const _SlicePie({required this.data});
 
   final List<(String, int)> data;
 
+  static const _titleStyle = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+    fontSize: 11,
+    shadows: [Shadow(color: Colors.black54, blurRadius: 3)],
+  );
+
   @override
   Widget build(BuildContext context) {
+    final total = data.fold<int>(0, (s, e) => s + e.$2);
+
     return SizedBox(
       height: 260,
       child: Row(
@@ -391,7 +407,12 @@ class _SlicePie extends StatelessWidget {
                   for (var i = 0; i < data.length; i++)
                     PieChartSectionData(
                       value: data[i].$2.toDouble(),
-                      title: '',
+                      // Affiche le label sur les tranches ≥ 5 % de la surface.
+                      title: total > 0 && data[i].$2 / total >= 0.05
+                          ? data[i].$1
+                          : '',
+                      titleStyle: _titleStyle,
+                      titlePositionPercentageOffset: 0.62,
                       color: _kPalette[i % _kPalette.length],
                       radius: 72,
                     ),
