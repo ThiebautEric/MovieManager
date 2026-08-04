@@ -88,8 +88,7 @@ class StatsScreen extends ConsumerWidget {
           Text(l10n.statsWatchedUnwatched,
               style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
-          SizedBox(
-              height: 200, child: _WatchedPie(watched: watched, total: total)),
+          _WatchedPie(watched: watched, total: total),
           const SizedBox(height: 24),
           Text(l10n.statsTopGenres,
               style: theme.textTheme.titleMedium),
@@ -190,53 +189,66 @@ class _WatchedPie extends StatelessWidget {
     final unwatched = total - watched;
     final scheme = Theme.of(context).colorScheme;
 
-    return Row(
-      children: [
-        Expanded(
-          child: PieChart(
-            PieChartData(
-              sectionsSpace: 2,
-              centerSpaceRadius: 40,
-              sections: [
-                PieChartSectionData(
-                  value: watched.toDouble(),
-                  title: '$watched',
-                  color: scheme.primary,
-                  radius: 50,
-                  titleStyle: TextStyle(
-                      color: scheme.onPrimary, fontWeight: FontWeight.bold),
-                ),
-                PieChartSectionData(
-                  value: unwatched.toDouble(),
-                  title: '$unwatched',
-                  color: scheme.secondaryContainer,
-                  radius: 50,
-                  titleStyle: TextStyle(color: scheme.onSecondaryContainer),
-                ),
-              ],
+    return SizedBox(
+      height: 260,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 5,
+            child: PieChart(
+              PieChartData(
+                sectionsSpace: 2,
+                centerSpaceRadius: 38,
+                sections: [
+                  PieChartSectionData(
+                    value: watched.toDouble(),
+                    title: '$watched',
+                    color: scheme.primary,
+                    radius: 72,
+                    titleStyle: TextStyle(
+                        color: scheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
+                  PieChartSectionData(
+                    value: unwatched.toDouble(),
+                    title: '$unwatched',
+                    color: scheme.secondaryContainer,
+                    radius: 72,
+                    titleStyle: TextStyle(
+                        color: scheme.onSecondaryContainer, fontSize: 14),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _Legend(
-                color: scheme.primary,
-                label: context.l10n.statsLegendWatched(watched)),
-            const SizedBox(height: 8),
-            _Legend(
-                color: scheme.secondaryContainer,
-                label: context.l10n.statsLegendUnwatched(unwatched)),
-          ],
-        ),
-      ],
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _LegendItem(
+                      color: scheme.primary,
+                      label: context.l10n.statsLegendWatched(watched)),
+                  const SizedBox(height: 10),
+                  _LegendItem(
+                      color: scheme.secondaryContainer,
+                      label: context.l10n.statsLegendUnwatched(unwatched)),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _Legend extends StatelessWidget {
-  const _Legend({required this.color, required this.label});
+class _LegendItem extends StatelessWidget {
+  const _LegendItem({required this.color, required this.label});
 
   final Color color;
   final String label;
@@ -246,9 +258,20 @@ class _Legend extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(width: 14, height: 14, color: color),
-        const SizedBox(width: 6),
-        Text(label),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Flexible(
+          child: Text(label,
+              style: Theme.of(context).textTheme.bodySmall,
+              overflow: TextOverflow.ellipsis),
+        ),
       ],
     );
   }
@@ -345,7 +368,7 @@ const _kPalette = [
   Color(0xFFBAB0AC),
 ];
 
-/// Camembert générique : liste de (label, count), rendu + légende en Wrap.
+/// Camembert générique : liste de (label, count), pie à gauche + légende à droite.
 class _SlicePie extends StatelessWidget {
   const _SlicePie({required this.data});
 
@@ -353,40 +376,50 @@ class _SlicePie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 180,
-          child: PieChart(
-            PieChartData(
-              sectionsSpace: 2,
-              centerSpaceRadius: 32,
-              sections: [
-                for (var i = 0; i < data.length; i++)
-                  PieChartSectionData(
-                    value: data[i].$2.toDouble(),
-                    title: '',
-                    color: _kPalette[i % _kPalette.length],
-                    radius: 48,
-                  ),
-              ],
+    return SizedBox(
+      height: 260,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 5,
+            child: PieChart(
+              PieChartData(
+                sectionsSpace: 2,
+                centerSpaceRadius: 38,
+                sections: [
+                  for (var i = 0; i < data.length; i++)
+                    PieChartSectionData(
+                      value: data[i].$2.toDouble(),
+                      title: '',
+                      color: _kPalette[i % _kPalette.length],
+                      radius: 72,
+                    ),
+                ],
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 16,
-          runSpacing: 4,
-          children: [
-            for (var i = 0; i < data.length; i++)
-              _Legend(
-                color: _kPalette[i % _kPalette.length],
-                label: '${data[i].$1}  (${data[i].$2})',
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var i = 0; i < data.length; i++) ...[
+                    if (i > 0) const SizedBox(height: 5),
+                    _LegendItem(
+                      color: _kPalette[i % _kPalette.length],
+                      label: '${data[i].$1}  (${data[i].$2})',
+                    ),
+                  ],
+                ],
               ),
-          ],
-        ),
-      ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
