@@ -7,6 +7,7 @@ import '../../core/prefs/original_titles_controller.dart';
 import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../widgets/account_button.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/keyboard_scroll.dart';
@@ -118,6 +119,7 @@ class PhysicalCollectionScreen extends ConsumerWidget {
           const OriginalTitleButton(),
           const LanguageButton(),
           const ThemeToggleButton(),
+          const AccountButton(),
         ],
       ),
       body: wide

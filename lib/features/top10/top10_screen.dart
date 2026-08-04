@@ -13,6 +13,7 @@ import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/poster_image.dart';
+import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
 
@@ -34,6 +35,7 @@ class Top10Screen extends ConsumerWidget {
           OriginalTitleButton(),
           LanguageButton(),
           ThemeToggleButton(),
+          AccountButton(),
         ],
       ),
       body: async.when(

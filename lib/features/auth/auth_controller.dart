@@ -21,6 +21,10 @@ class AuthController {
     return res.session == null;
   }
 
+  Future<void> updatePassword(String password) async {
+    await _client.auth.updateUser(UserAttributes(password: password));
+  }
+
   Future<void> signOut() async {
     await _client.auth.signOut();
   }

@@ -7,6 +7,7 @@ import '../../core/utils/format.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
+import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import 'friends_controller.dart';
 
@@ -26,6 +27,7 @@ class FriendsScreen extends ConsumerWidget {
           OriginalTitleButton(),
           LanguageButton(),
           ThemeToggleButton(),
+          AccountButton(),
         ],
       ),
       body: switch (async) {

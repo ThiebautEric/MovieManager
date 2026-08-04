@@ -12,6 +12,7 @@ import '../../core/utils/format.dart';
 import '../../data/models/film.dart';
 import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../widgets/account_button.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/keyboard_scroll.dart';
@@ -288,6 +289,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           const OriginalTitleButton(),
           const LanguageButton(),
           const ThemeToggleButton(),
+          const AccountButton(),
         ],
       ),
       body: wide

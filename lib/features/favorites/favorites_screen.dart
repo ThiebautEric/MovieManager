@@ -7,6 +7,7 @@ import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
+import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
 
@@ -21,7 +22,7 @@ class FavoritesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(context.l10n.favoritesTitle),
-        actions: const [LanguageButton(), ThemeToggleButton()],
+        actions: const [LanguageButton(), ThemeToggleButton(), AccountButton()],
       ),
       body: favorites.isEmpty
           ? Center(

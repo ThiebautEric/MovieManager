@@ -7,9 +7,9 @@ import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
+import '../../widgets/account_button.dart';
 import '../../widgets/poster_image.dart';
 import '../admin/admin_screen.dart';
-import '../auth/auth_controller.dart';
 import '../friends/friends_screen.dart';
 import '../collection/collection_screen.dart';
 import '../collection/physical_collection_screen.dart';
@@ -285,9 +285,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
               destinations: destinations,
               top: top,
               onSelect: _selectTab,
-              onSignOut: AppConfig.hasSupabase
-                  ? () => ref.read(authControllerProvider).signOut()
-                  : null,
+              showAccount: AppConfig.hasSupabase,
               onCloseDetail: () => closeDetail(ref),
             ),
             const VerticalDivider(width: 1),
@@ -305,15 +303,6 @@ class _HomeShellState extends ConsumerState<HomeShell>
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: destinations,
       ),
-      floatingActionButton: (_index == 0 && AppConfig.hasSupabase)
-          ? FloatingActionButton(
-              tooltip: context.l10n.logout,
-              mini: true,
-              child: const Icon(Icons.logout),
-              onPressed: () => ref.read(authControllerProvider).signOut(),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
@@ -326,7 +315,7 @@ class _SideRail extends StatelessWidget {
     required this.destinations,
     required this.top,
     required this.onSelect,
-    required this.onSignOut,
+    required this.showAccount,
     required this.onCloseDetail,
   });
 
@@ -334,7 +323,7 @@ class _SideRail extends StatelessWidget {
   final List<NavigationDestination> destinations;
   final DetailEntry? top;
   final ValueChanged<int> onSelect;
-  final VoidCallback? onSignOut;
+  final bool showAccount;
   final VoidCallback onCloseDetail;
 
   @override
@@ -351,16 +340,12 @@ class _SideRail extends StatelessWidget {
       selectedIndex: index,
       onDestinationSelected: onSelect,
       labelType: NavigationRailLabelType.all,
-      leading: onSignOut == null
-          ? null
-          : Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: IconButton(
-                tooltip: context.l10n.logout,
-                icon: const Icon(Icons.logout),
-                onPressed: onSignOut,
-              ),
-            ),
+      leading: showAccount
+          ? const Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: AccountButton(),
+            )
+          : null,
       trailing: top == null
           ? null
           : Expanded(

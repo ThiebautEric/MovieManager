@@ -20,6 +20,7 @@ import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
+import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
 import 'search_controller.dart';
@@ -63,6 +64,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
           OriginalTitleButton(),
           LanguageButton(),
           ThemeToggleButton(),
+          AccountButton(),
         ],
       ),
       body: Column(

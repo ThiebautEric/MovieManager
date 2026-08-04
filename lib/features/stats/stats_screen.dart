@@ -8,6 +8,7 @@ import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
+import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 
 /// Tableau de bord : compteurs + graphiques sur la collection et l'historique.
@@ -23,7 +24,7 @@ class StatsScreen extends ConsumerWidget {
       return Scaffold(
         appBar: AppBar(
           title: AppBarTitle(context.l10n.statsTitle),
-          actions: const [LanguageButton(), ThemeToggleButton()],
+          actions: const [LanguageButton(), ThemeToggleButton(), AccountButton()],
         ),
         body: const Center(child: CircularProgressIndicator()),
       );
@@ -56,7 +57,7 @@ class StatsScreen extends ConsumerWidget {
       return Scaffold(
         appBar: AppBar(
           title: AppBarTitle(context.l10n.statsTitle),
-          actions: const [LanguageButton(), ThemeToggleButton()],
+          actions: const [LanguageButton(), ThemeToggleButton(), AccountButton()],
         ),
         body: Center(child: Text(context.l10n.statsEmpty)),
       );
