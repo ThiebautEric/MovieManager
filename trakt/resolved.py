@@ -37,7 +37,7 @@ def tmdb_movie(tid):
             "genres": [g["id"] for g in d.get("genres", [])], "cast_ids": list(dict.fromkeys(cast + dirs))}
 
 
-st, b = sup("POST", "/auth/v1/token", {"email": "eric.thiebaut@laposte.net", "password": "demo123456"}, pa="?grant_type=password")
+st, b = sup("POST", "/auth/v1/token", {"email": "thiebaut.eric@laposte.net", "password": "demo123456"}, pa="?grant_type=password")
 auth = json.loads(b); uid = auth["user"]["id"]; AH = {"Authorization": "Bearer " + auth["access_token"]}
 
 # (tmdb_film, watched_at) à importer

@@ -16,7 +16,7 @@ trakt = defaultdict(int)
 for h in load("watched-history-*.json"):
     trakt[h["watched_at"][:4]] += 1
 
-data = json.dumps({"email": "eric.thiebaut@laposte.net", "password": "demo123456"}).encode()
+data = json.dumps({"email": "thiebaut.eric@laposte.net", "password": "demo123456"}).encode()
 ar = urllib.request.Request(SUP + "/auth/v1/token?grant_type=password", data=data, method="POST")
 ar.add_header("apikey", ANON); ar.add_header("Content-Type", "application/json")
 tok = json.loads(urllib.request.urlopen(ar).read().decode())["access_token"]

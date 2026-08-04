@@ -28,7 +28,7 @@ def sup(method, path, body=None, headers=None, params=""):
         return e.code, e.read().decode()
 
 
-st, b = sup("POST", "/auth/v1/token", {"email": "eric.thiebaut@laposte.net", "password": "demo123456"}, params="?grant_type=password")
+st, b = sup("POST", "/auth/v1/token", {"email": "thiebaut.eric@laposte.net", "password": "demo123456"}, params="?grant_type=password")
 auth = json.loads(b); uid = auth["user"]["id"]; AH = {"Authorization": "Bearer " + auth["access_token"]}
 for tbl in ["history", "collection", "wishlist", "film_seasons", "films", "favorites"]:
     sup("DELETE", "/rest/v1/" + tbl, headers=AH, params="?user_id=eq." + uid)

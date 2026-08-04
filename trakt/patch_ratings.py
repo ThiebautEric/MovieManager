@@ -37,7 +37,7 @@ def sup(method, path, body=None, headers=None, params=""):
 
 # Authentification
 st, b = sup("POST", "/auth/v1/token",
-            {"email": "eric.thiebaut@laposte.net", "password": "demo123456"},
+            {"email": "thiebaut.eric@laposte.net", "password": "demo123456"},
             params="?grant_type=password")
 auth = json.loads(b)
 uid  = auth["user"]["id"]
