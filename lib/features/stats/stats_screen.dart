@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/l10n.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
-import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/account_button.dart';
@@ -32,7 +31,6 @@ class StatsScreen extends ConsumerWidget {
 
     final collection = collAsync.value ?? [];
     final history = histAsync.value ?? [];
-    final genresById = ref.watch(genresByIdProvider);
 
     // Films distincts connus (union collection + historique), par clé TMDB.
     final films = <String, Film>{
@@ -66,14 +64,6 @@ class StatsScreen extends ConsumerWidget {
     }
 
     final filmList = films.values.toList();
-
-    // Points (année, note) pour le diagramme de dispersion.
-    final ratingsByYear = <(int, double)>[
-      for (final entry in ratingByFilm.entries)
-        if (films[entry.key]?.releaseYear != null)
-          (films[entry.key]!.releaseYear!, entry.value),
-    ];
-
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
@@ -98,20 +88,9 @@ class StatsScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           _WatchedPie(watched: watched, total: total),
           const SizedBox(height: 24),
-          Text(l10n.statsTopGenres,
-              style: theme.textTheme.titleMedium),
-          const SizedBox(height: 12),
-          _GenreBars(films: filmList, genresById: genresById),
-          const SizedBox(height: 24),
           Text(l10n.statsFilmsByYear, style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
           _FilmsByYearBars(films: filmList),
-          if (ratingsByYear.isNotEmpty) ...[
-            const SizedBox(height: 24),
-            Text(l10n.statsRatingByYear, style: theme.textTheme.titleMedium),
-            const SizedBox(height: 12),
-            _RatingByYearScatter(data: ratingsByYear),
-          ],
           const SizedBox(height: 24),
           Text(l10n.statsTopDecades, style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
@@ -127,9 +106,12 @@ class StatsScreen extends ConsumerWidget {
           const SizedBox(height: 24),
           Text(l10n.statsTopRatings, style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
-          ratings.isEmpty
-              ? Text(l10n.statsNoRatings)
-              : _RatingPie(ratings: ratings),
+          _RatingPie(
+            ratings: ratings,
+            unratedCount: total - ratingByFilm.length,
+            unratedLabel: l10n.statsUnrated,
+            noDataLabel: l10n.statsNoRatings,
+          ),
           const SizedBox(height: 24),
         ],
       ),
@@ -524,14 +506,23 @@ class _CountryPie extends StatelessWidget {
   }
 }
 
-/// Camembert de la répartition des notes (1–10, tous visionnages notés).
+/// Camembert de la répartition des notes (1–10) + tranche "Non notés".
 class _RatingPie extends StatelessWidget {
-  const _RatingPie({required this.ratings});
+  const _RatingPie({
+    required this.ratings,
+    required this.unratedCount,
+    required this.unratedLabel,
+    required this.noDataLabel,
+  });
 
   final List<double> ratings;
+  final int unratedCount;
+  final String unratedLabel;
+  final String noDataLabel;
 
   @override
   Widget build(BuildContext context) {
+    if (ratings.isEmpty && unratedCount == 0) return Text(noDataLabel);
     final counts = <int, int>{};
     for (final r in ratings) {
       final key = r.round().clamp(1, 10);
@@ -540,7 +531,10 @@ class _RatingPie extends StatelessWidget {
     final data = counts.entries.toList()
       ..sort((a, b) => a.key.compareTo(b.key));
     return _SlicePie(
-      data: data.map((e) => ('${e.key}★', e.value)).toList(),
+      data: [
+        ...data.map((e) => ('${e.key}★', e.value)),
+        if (unratedCount > 0) (unratedLabel, unratedCount),
+      ],
     );
   }
 }

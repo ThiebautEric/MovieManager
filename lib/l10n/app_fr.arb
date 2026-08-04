@@ -470,6 +470,7 @@
   "statsNoYears": "Aucune date de sortie renseignée.",
   "statsNoCountries": "Aucun pays renseigné.",
   "statsNoRatings": "Aucune note renseignée.",
+  "statsUnrated": "Non notés",
   "statsOther": "Autres",
   "favEmpty": "Aucune personne favorite.\nOuvrez la fiche d'un acteur (depuis le casting d'un film) et touchez l'étoile pour l'ajouter ici.",
   "friendsEmpty": "Aucun autre utilisateur pour le moment.",
