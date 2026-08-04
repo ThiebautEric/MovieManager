@@ -105,7 +105,7 @@ class StatsScreen extends ConsumerWidget {
           const SizedBox(height: 24),
           Text(l10n.statsFilmsByYear, style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
-          _FilmsByYearBars(films: filmList, medianLabel: l10n.statsMedian),
+          _FilmsByYearBars(films: filmList),
           if (ratingsByYear.isNotEmpty) ...[
             const SizedBox(height: 24),
             Text(l10n.statsRatingByYear, style: theme.textTheme.titleMedium),
@@ -545,13 +545,23 @@ class _RatingPie extends StatelessWidget {
   }
 }
 
-/// Histogramme : nombre de titres par année de sortie + ligne de médiane.
+/// Histogramme : nombre de titres par année de sortie.
+/// Barres = comptage annuel. Courbe rouge = moyenne mobile (fenêtre 7 pts)
+/// qui suit les maximums sans être plate.
 class _FilmsByYearBars extends StatelessWidget {
-  const _FilmsByYearBars(
-      {required this.films, required this.medianLabel});
+  const _FilmsByYearBars({required this.films});
 
   final List<Film> films;
-  final String medianLabel;
+
+  // Moyenne mobile centrée sur une fenêtre de [window] points.
+  static List<double> _movAvg(List<int> data, int window) => [
+        for (var i = 0; i < data.length; i++) () {
+          final s = (i - window ~/ 2).clamp(0, data.length - 1);
+          final e = (i + window ~/ 2 + 1).clamp(0, data.length);
+          final slice = data.sublist(s, e);
+          return slice.reduce((a, b) => a + b) / slice.length;
+        }(),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -565,125 +575,149 @@ class _FilmsByYearBars extends StatelessWidget {
 
     final years = counts.keys.toList()..sort();
     final countList = years.map((y) => counts[y]!).toList();
-
-    final sortedCounts = [...countList]..sort();
-    final mid = sortedCounts.length ~/ 2;
-    final median = sortedCounts.length.isOdd
-        ? sortedCounts[mid].toDouble()
-        : (sortedCounts[mid - 1] + sortedCounts[mid]) / 2.0;
-    final medianLabel2 =
-        '$medianLabel: ${median == median.truncateToDouble() ? median.toInt() : median.toStringAsFixed(1)}';
+    final n = years.length;
+    // Fenêtre plus petite pour les petites collections.
+    final movAvg = _movAvg(countList, n < 10 ? 3 : 7);
 
     final scheme = Theme.of(context).colorScheme;
     final maxY =
-        (countList.reduce((a, b) => a > b ? a : b) * 1.15).ceilToDouble();
+        (countList.reduce((a, b) => a > b ? a : b) * 1.2).ceilToDouble();
 
     final range = years.last - years.first;
     final labelEvery = range > 40 ? 10 : range > 20 ? 5 : 2;
 
+    // Marges identiques dans les deux charts pour aligner les zones de tracé.
+    const leftReserved = 32.0;
+    const bottomReserved = 24.0;
+
+    FlTitlesData _hiddenTitles() => FlTitlesData(
+          leftTitles: AxisTitles(
+              sideTitles:
+                  SideTitles(showTitles: false, reservedSize: leftReserved)),
+          bottomTitles: AxisTitles(
+              sideTitles:
+                  SideTitles(showTitles: false, reservedSize: bottomReserved)),
+          topTitles:
+              const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles:
+              const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        );
+
     return SizedBox(
       height: 280,
-      child: BarChart(
-        BarChartData(
-          alignment: BarChartAlignment.spaceEvenly,
-          maxY: maxY,
-          groupsSpace: 2,
-          barTouchData: BarTouchData(
-            enabled: true,
-            touchTooltipData: BarTouchTooltipData(
-              getTooltipItem: (group, groupIndex, rod, rodIndex) =>
-                  BarTooltipItem(
-                '${years[group.x]}  ×${rod.toY.toInt()}',
-                TextStyle(color: scheme.onPrimary, fontSize: 12),
-              ),
-            ),
-          ),
-          titlesData: FlTitlesData(
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 32,
-                getTitlesWidget: (v, _) {
-                  final n = v.toInt();
-                  if (v != n) return const SizedBox.shrink();
-                  return Text('$n',
-                      style: const TextStyle(fontSize: 10),
-                      textAlign: TextAlign.right);
-                },
-              ),
-            ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 24,
-                getTitlesWidget: (v, _) {
-                  final idx = v.toInt();
-                  if (idx < 0 || idx >= years.length) {
-                    return const SizedBox.shrink();
-                  }
-                  final year = years[idx];
-                  if ((year - years.first) % labelEvery != 0) {
-                    return const SizedBox.shrink();
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text('$year',
-                        style: const TextStyle(fontSize: 9)),
-                  );
-                },
-              ),
-            ),
-            topTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false)),
-            rightTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false)),
-          ),
-          gridData: FlGridData(
-            show: true,
-            drawVerticalLine: false,
-            getDrawingHorizontalLine: (_) => FlLine(
-              color: scheme.outlineVariant.withValues(alpha: 0.4),
-              strokeWidth: 1,
-            ),
-          ),
-          borderData: FlBorderData(show: false),
-          extraLinesData: ExtraLinesData(
-            horizontalLines: [
-              HorizontalLine(
-                y: median,
-                color: scheme.error,
-                strokeWidth: 2,
-                dashArray: [8, 4],
-                label: HorizontalLineLabel(
-                  show: true,
-                  alignment: Alignment.topRight,
-                  padding: const EdgeInsets.only(right: 4, bottom: 4),
-                  labelResolver: (_) => medianLabel2,
-                  style: TextStyle(
-                    color: scheme.error,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
+      child: Stack(
+        children: [
+          // ── Barres ──────────────────────────────────────────────────────
+          BarChart(
+            BarChartData(
+              alignment: BarChartAlignment.spaceEvenly,
+              maxY: maxY,
+              groupsSpace: 2,
+              barTouchData: BarTouchData(
+                enabled: true,
+                touchTooltipData: BarTouchTooltipData(
+                  getTooltipItem: (group, _, rod, __) => BarTooltipItem(
+                    '${years[group.x]}  ×${rod.toY.toInt()}',
+                    TextStyle(color: scheme.onPrimary, fontSize: 12),
                   ),
                 ),
               ),
-            ],
+              titlesData: FlTitlesData(
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: leftReserved,
+                    getTitlesWidget: (v, _) {
+                      final iv = v.toInt();
+                      if (v != iv.toDouble()) return const SizedBox.shrink();
+                      return Text('$iv',
+                          style: const TextStyle(fontSize: 10),
+                          textAlign: TextAlign.right);
+                    },
+                  ),
+                ),
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: bottomReserved,
+                    getTitlesWidget: (v, _) {
+                      final idx = v.toInt();
+                      if (idx < 0 || idx >= n) return const SizedBox.shrink();
+                      final year = years[idx];
+                      if ((year - years.first) % labelEvery != 0) {
+                        return const SizedBox.shrink();
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child:
+                            Text('$year', style: const TextStyle(fontSize: 9)),
+                      );
+                    },
+                  ),
+                ),
+                topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false)),
+                rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false)),
+              ),
+              gridData: FlGridData(
+                show: true,
+                drawVerticalLine: false,
+                getDrawingHorizontalLine: (_) => FlLine(
+                  color: scheme.outlineVariant.withValues(alpha: 0.4),
+                  strokeWidth: 1,
+                ),
+              ),
+              borderData: FlBorderData(show: false),
+              barGroups: [
+                for (var i = 0; i < n; i++)
+                  BarChartGroupData(
+                    x: i,
+                    barRods: [
+                      BarChartRodData(
+                        toY: countList[i].toDouble(),
+                        color: scheme.primary,
+                        width: 5,
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(2)),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           ),
-          barGroups: [
-            for (var i = 0; i < years.length; i++)
-              BarChartGroupData(
-                x: i,
-                barRods: [
-                  BarChartRodData(
-                    toY: countList[i].toDouble(),
-                    color: scheme.primary,
-                    width: 5,
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(2)),
+          // ── Courbe de tendance (moyenne mobile) ─────────────────────────
+          // minX=0 maxX=n → spot à x=i+0.5 s'aligne avec le centre de la
+          // barre i en mode spaceEvenly.
+          IgnorePointer(
+            child: LineChart(
+              LineChartData(
+                minX: 0,
+                maxX: n.toDouble(),
+                minY: 0,
+                maxY: maxY,
+                backgroundColor: Colors.transparent,
+                titlesData: _hiddenTitles(),
+                gridData: FlGridData(show: false),
+                borderData: FlBorderData(show: false),
+                lineTouchData: LineTouchData(enabled: false),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: [
+                      for (var i = 0; i < n; i++)
+                        FlSpot(i + 0.5, movAvg[i]),
+                    ],
+                    isCurved: true,
+                    curveSmoothness: 0.35,
+                    color: scheme.error,
+                    barWidth: 2.5,
+                    dotData: FlDotData(show: false),
                   ),
                 ],
               ),
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
