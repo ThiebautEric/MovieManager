@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 SUP = "https://msawdukkcgjkxfktthdj.supabase.co"
 ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zYXdkdWtrY2dqa3hma3R0aGRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTU3MjAsImV4cCI6MjA5NzE5MTcyMH0.0UG-Fd0SxpZM2CbVmU2e301E6UqYI8jCexurqGUVxSY"
 TMDB = "3889808a354ed5f7476794b8b4abc105"
-BASE = os.path.join(os.path.dirname(__file__), "extracted")
+BASE = os.path.dirname(__file__)
 
 
 def load(pat):
@@ -28,7 +28,7 @@ def sup(method, path, body=None, headers=None, params=""):
         return e.code, e.read().decode()
 
 
-st, b = sup("POST", "/auth/v1/token", {"email": "demo@movie.app", "password": "demo123456"}, params="?grant_type=password")
+st, b = sup("POST", "/auth/v1/token", {"email": "eric.thiebaut@laposte.net", "password": "demo123456"}, params="?grant_type=password")
 auth = json.loads(b); uid = auth["user"]["id"]; AH = {"Authorization": "Bearer " + auth["access_token"]}
 for tbl in ["history", "collection", "wishlist", "film_seasons", "films", "favorites"]:
     sup("DELETE", "/rest/v1/" + tbl, headers=AH, params="?user_id=eq." + uid)
@@ -198,7 +198,8 @@ hist_rows = []
 for (k, sn, wat, rt, ep) in hrows:
     if k not in idmap:
         continue
-    row = {"user_id": uid, "film_id": idmap[k], "season_number": sn, "watched_at": wat, "rating": rt}
+    row = {"user_id": uid, "film_id": idmap[k], "season_number": sn, "watched_at": wat, "rating": rt,
+           "episode_number": None, "episode_name": None, "episode_runtime": None}
     if ep:
         row.update(ep)
     hist_rows.append(row)
@@ -209,3 +210,11 @@ for c in chunks(hist_rows, 400):
     else: hist_err.append((st, b[:150]))
 print("history inseres=%d erreurs lots=%d" % (ins_hist, len(hist_err)))
 print("RESUME films=%d history=%d sans_tmdb=%d tmdb_fail=%d" % (ins_film, ins_hist, len(no_tmdb), len(enrich_fail)))
+print("DETAIL_NO_TMDB_START")
+for typ, title, year, date in no_tmdb:
+    print("  NO_TMDB|%s|%s|%s|%s" % (typ, title or "?", year or "?", date))
+print("DETAIL_NO_TMDB_END")
+print("DETAIL_TMDB_FAIL_START")
+for key, title, err in enrich_fail:
+    print("  TMDB_FAIL|%s|%s|%s|%s" % (key[0], key[1], title, err))
+print("DETAIL_TMDB_FAIL_END")

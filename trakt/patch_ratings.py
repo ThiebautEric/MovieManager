@@ -11,7 +11,7 @@ import json, io, glob, os, urllib.request, urllib.error
 
 SUP  = "https://msawdukkcgjkxfktthdj.supabase.co"
 ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zYXdkdWtrY2dqa3hma3R0aGRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTU3MjAsImV4cCI6MjA5NzE5MTcyMH0.0UG-Fd0SxpZM2CbVmU2e301E6UqYI8jCexurqGUVxSY"
-BASE = os.path.join(os.path.dirname(__file__), "extracted")
+BASE = os.path.dirname(__file__)
 
 
 def load(pat):
@@ -37,7 +37,7 @@ def sup(method, path, body=None, headers=None, params=""):
 
 # Authentification
 st, b = sup("POST", "/auth/v1/token",
-            {"email": "demo@movie.app", "password": "demo123456"},
+            {"email": "eric.thiebaut@laposte.net", "password": "demo123456"},
             params="?grant_type=password")
 auth = json.loads(b)
 uid  = auth["user"]["id"]

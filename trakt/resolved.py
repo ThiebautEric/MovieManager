@@ -2,7 +2,7 @@ import json, glob, io, os, urllib.request, urllib.parse
 SUP = "https://msawdukkcgjkxfktthdj.supabase.co"
 ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zYXdkdWtrY2dqa3hma3R0aGRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTU3MjAsImV4cCI6MjA5NzE5MTcyMH0.0UG-Fd0SxpZM2CbVmU2e301E6UqYI8jCexurqGUVxSY"
 TMDB = "3889808a354ed5f7476794b8b4abc105"
-BASE = os.path.join(os.path.dirname(__file__), "extracted")
+BASE = os.path.dirname(__file__)
 PINK = {1: 149193, 2: 379141, 3: 379155, 4: 379241}  # saison Trakt -> tmdb court-metrage
 
 
@@ -37,7 +37,7 @@ def tmdb_movie(tid):
             "genres": [g["id"] for g in d.get("genres", [])], "cast_ids": list(dict.fromkeys(cast + dirs))}
 
 
-st, b = sup("POST", "/auth/v1/token", {"email": "demo@movie.app", "password": "demo123456"}, pa="?grant_type=password")
+st, b = sup("POST", "/auth/v1/token", {"email": "eric.thiebaut@laposte.net", "password": "demo123456"}, pa="?grant_type=password")
 auth = json.loads(b); uid = auth["user"]["id"]; AH = {"Authorization": "Bearer " + auth["access_token"]}
 
 # (tmdb_film, watched_at) à importer

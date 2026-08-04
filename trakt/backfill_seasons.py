@@ -41,7 +41,7 @@ def sup_all(path, select, extra=""):
         offset += 1000
 
 
-st, b = sup("POST", "/auth/v1/token", {"email": "demo@movie.app", "password": "demo123456"}, params="?grant_type=password")
+st, b = sup("POST", "/auth/v1/token", {"email": "eric.thiebaut@laposte.net", "password": "demo123456"}, params="?grant_type=password")
 auth = json.loads(b); uid = auth["user"]["id"]; AH = {"Authorization": "Bearer " + auth["access_token"]}
 
 # (film_id, season_number) référencés par history + collection.
