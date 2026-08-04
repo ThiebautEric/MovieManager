@@ -181,6 +181,8 @@
   "statsLegendUnwatched": "Ungesehen ({count})",
   "statsNoGenres": "Keine Genres hinterlegt.",
   "statsRatingByYear": "Noten nach Erscheinungsjahr",
+  "statsFilmsByYear": "Filme nach Erscheinungsjahr",
+  "statsMedian": "Median",
   "statsTopDecades": "Nach Jahrzehnt",
   "statsTopCountries": "Nach Herkunftsland",
   "statsTopRatings": "Notenverteilung",

@@ -102,6 +102,10 @@ class StatsScreen extends ConsumerWidget {
               style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
           _GenreBars(films: filmList, genresById: genresById),
+          const SizedBox(height: 24),
+          Text(l10n.statsFilmsByYear, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 12),
+          _FilmsByYearBars(films: filmList, medianLabel: l10n.statsMedian),
           if (ratingsByYear.isNotEmpty) ...[
             const SizedBox(height: 24),
             Text(l10n.statsRatingByYear, style: theme.textTheme.titleMedium),
@@ -537,6 +541,150 @@ class _RatingPie extends StatelessWidget {
       ..sort((a, b) => a.key.compareTo(b.key));
     return _SlicePie(
       data: data.map((e) => ('${e.key}★', e.value)).toList(),
+    );
+  }
+}
+
+/// Histogramme : nombre de titres par année de sortie + ligne de médiane.
+class _FilmsByYearBars extends StatelessWidget {
+  const _FilmsByYearBars(
+      {required this.films, required this.medianLabel});
+
+  final List<Film> films;
+  final String medianLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final counts = <int, int>{};
+    for (final f in films) {
+      if (f.releaseYear != null) {
+        counts[f.releaseYear!] = (counts[f.releaseYear!] ?? 0) + 1;
+      }
+    }
+    if (counts.isEmpty) return const SizedBox.shrink();
+
+    final years = counts.keys.toList()..sort();
+    final countList = years.map((y) => counts[y]!).toList();
+
+    final sortedCounts = [...countList]..sort();
+    final mid = sortedCounts.length ~/ 2;
+    final median = sortedCounts.length.isOdd
+        ? sortedCounts[mid].toDouble()
+        : (sortedCounts[mid - 1] + sortedCounts[mid]) / 2.0;
+    final medianLabel2 =
+        '$medianLabel: ${median == median.truncateToDouble() ? median.toInt() : median.toStringAsFixed(1)}';
+
+    final scheme = Theme.of(context).colorScheme;
+    final maxY =
+        (countList.reduce((a, b) => a > b ? a : b) * 1.15).ceilToDouble();
+
+    final range = years.last - years.first;
+    final labelEvery = range > 40 ? 10 : range > 20 ? 5 : 2;
+
+    return SizedBox(
+      height: 280,
+      child: BarChart(
+        BarChartData(
+          alignment: BarChartAlignment.spaceEvenly,
+          maxY: maxY,
+          groupsSpace: 2,
+          barTouchData: BarTouchData(
+            enabled: true,
+            touchTooltipData: BarTouchTooltipData(
+              getTooltipItem: (group, groupIndex, rod, rodIndex) =>
+                  BarTooltipItem(
+                '${years[group.x]}  ×${rod.toY.toInt()}',
+                TextStyle(color: scheme.onPrimary, fontSize: 12),
+              ),
+            ),
+          ),
+          titlesData: FlTitlesData(
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 32,
+                getTitlesWidget: (v, _) {
+                  final n = v.toInt();
+                  if (v != n) return const SizedBox.shrink();
+                  return Text('$n',
+                      style: const TextStyle(fontSize: 10),
+                      textAlign: TextAlign.right);
+                },
+              ),
+            ),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 24,
+                getTitlesWidget: (v, _) {
+                  final idx = v.toInt();
+                  if (idx < 0 || idx >= years.length) {
+                    return const SizedBox.shrink();
+                  }
+                  final year = years[idx];
+                  if ((year - years.first) % labelEvery != 0) {
+                    return const SizedBox.shrink();
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text('$year',
+                        style: const TextStyle(fontSize: 9)),
+                  );
+                },
+              ),
+            ),
+            topTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false)),
+            rightTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false)),
+          ),
+          gridData: FlGridData(
+            show: true,
+            drawVerticalLine: false,
+            getDrawingHorizontalLine: (_) => FlLine(
+              color: scheme.outlineVariant.withValues(alpha: 0.4),
+              strokeWidth: 1,
+            ),
+          ),
+          borderData: FlBorderData(show: false),
+          extraLinesData: ExtraLinesData(
+            horizontalLines: [
+              HorizontalLine(
+                y: median,
+                color: scheme.error,
+                strokeWidth: 2,
+                dashArray: [8, 4],
+                label: HorizontalLineLabel(
+                  show: true,
+                  alignment: Alignment.topRight,
+                  padding: const EdgeInsets.only(right: 4, bottom: 4),
+                  labelResolver: (_) => medianLabel2,
+                  style: TextStyle(
+                    color: scheme.error,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          barGroups: [
+            for (var i = 0; i < years.length; i++)
+              BarChartGroupData(
+                x: i,
+                barRods: [
+                  BarChartRodData(
+                    toY: countList[i].toDouble(),
+                    color: scheme.primary,
+                    width: 5,
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(2)),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

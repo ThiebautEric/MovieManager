@@ -462,6 +462,8 @@
   },
   "statsNoGenres": "Pas de genres renseignés.",
   "statsRatingByYear": "Notes par année de sortie",
+  "statsFilmsByYear": "Films par année de sortie",
+  "statsMedian": "Médiane",
   "statsTopDecades": "Par décennie",
   "statsTopCountries": "Par pays d'origine",
   "statsTopRatings": "Répartition des notes",
