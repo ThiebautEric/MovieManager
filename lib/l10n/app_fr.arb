@@ -461,6 +461,13 @@
     }
   },
   "statsNoGenres": "Pas de genres renseignés.",
+  "statsTopDecades": "Par décennie",
+  "statsTopCountries": "Par pays d'origine",
+  "statsTopRatings": "Répartition des notes",
+  "statsNoYears": "Aucune date de sortie renseignée.",
+  "statsNoCountries": "Aucun pays renseigné.",
+  "statsNoRatings": "Aucune note renseignée.",
+  "statsOther": "Autres",
   "favEmpty": "Aucune personne favorite.\nOuvrez la fiche d'un acteur (depuis le casting d'un film) et touchez l'étoile pour l'ajouter ici.",
   "friendsEmpty": "Aucun autre utilisateur pour le moment.",
   "friendsViewLibrary": "Voir sa bibliothèque (lecture seule)",

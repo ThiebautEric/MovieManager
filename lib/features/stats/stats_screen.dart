@@ -63,10 +63,14 @@ class StatsScreen extends ConsumerWidget {
       );
     }
 
+    final filmList = films.values.toList();
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.statsTitle),
-        actions: const [LanguageButton(), ThemeToggleButton()],
+        title: Text(l10n.statsTitle),
+        actions: const [LanguageButton(), ThemeToggleButton(), AccountButton()],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -79,16 +83,35 @@ class StatsScreen extends ConsumerWidget {
             avg: avg,
           ),
           const SizedBox(height: 24),
-          Text(context.l10n.statsWatchedUnwatched,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.statsWatchedUnwatched,
+              style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
           SizedBox(
               height: 200, child: _WatchedPie(watched: watched, total: total)),
           const SizedBox(height: 24),
-          Text(context.l10n.statsTopGenres,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.statsTopGenres,
+              style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
-          _GenreBars(films: films.values.toList(), genresById: genresById),
+          _GenreBars(films: filmList, genresById: genresById),
+          const SizedBox(height: 24),
+          Text(l10n.statsTopDecades, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 12),
+          _YearPie(films: filmList, noDataLabel: l10n.statsNoYears),
+          const SizedBox(height: 24),
+          Text(l10n.statsTopCountries, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 12),
+          _CountryPie(
+            films: filmList,
+            otherLabel: l10n.statsOther,
+            noDataLabel: l10n.statsNoCountries,
+          ),
+          const SizedBox(height: 24),
+          Text(l10n.statsTopRatings, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 12),
+          ratings.isEmpty
+              ? Text(l10n.statsNoRatings)
+              : _RatingPie(ratings: ratings),
+          const SizedBox(height: 24),
         ],
       ),
     );
@@ -302,6 +325,148 @@ class _GenreBars extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// Palette partagée pour les camemberts multi-tranches.
+const _kPalette = [
+  Color(0xFF4E79A7),
+  Color(0xFFF28E2B),
+  Color(0xFFE15759),
+  Color(0xFF76B7B2),
+  Color(0xFF59A14F),
+  Color(0xFFEDC948),
+  Color(0xFFB07AA1),
+  Color(0xFFFF9DA7),
+  Color(0xFF9C755F),
+  Color(0xFFBAB0AC),
+];
+
+/// Camembert générique : liste de (label, count), rendu + légende en Wrap.
+class _SlicePie extends StatelessWidget {
+  const _SlicePie({required this.data});
+
+  final List<(String, int)> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 180,
+          child: PieChart(
+            PieChartData(
+              sectionsSpace: 2,
+              centerSpaceRadius: 32,
+              sections: [
+                for (var i = 0; i < data.length; i++)
+                  PieChartSectionData(
+                    value: data[i].$2.toDouble(),
+                    title: '',
+                    color: _kPalette[i % _kPalette.length],
+                    radius: 48,
+                  ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 16,
+          runSpacing: 4,
+          children: [
+            for (var i = 0; i < data.length; i++)
+              _Legend(
+                color: _kPalette[i % _kPalette.length],
+                label: '${data[i].$1}  (${data[i].$2})',
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+/// Camembert par décennie de sortie (films + séries).
+class _YearPie extends StatelessWidget {
+  const _YearPie({required this.films, required this.noDataLabel});
+
+  final List<Film> films;
+  final String noDataLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final counts = <int, int>{};
+    for (final f in films) {
+      if (f.releaseYear != null) {
+        final decade = (f.releaseYear! ~/ 10) * 10;
+        counts[decade] = (counts[decade] ?? 0) + 1;
+      }
+    }
+    if (counts.isEmpty) return Text(noDataLabel);
+    final data = counts.entries.toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+    return _SlicePie(
+      data: data.map((e) => ('${e.key}s', e.value)).toList(),
+    );
+  }
+}
+
+/// Camembert par pays d'origine (films + séries) — top 7 + "Autres".
+class _CountryPie extends StatelessWidget {
+  const _CountryPie({
+    required this.films,
+    required this.otherLabel,
+    required this.noDataLabel,
+  });
+
+  final List<Film> films;
+  final String otherLabel;
+  final String noDataLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final counts = <String, int>{};
+    for (final f in films) {
+      if (f.originCountry != null) {
+        final c = f.originCountry!;
+        counts[c] = (counts[c] ?? 0) + 1;
+      }
+    }
+    if (counts.isEmpty) return Text(noDataLabel);
+    final sorted = counts.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    const maxTop = 7;
+    final top = sorted.take(maxTop).toList();
+    final others =
+        sorted.skip(maxTop).fold<int>(0, (s, e) => s + e.value);
+    final data = <(String, int)>[
+      ...top.map((e) => (e.key, e.value)),
+      if (others > 0) (otherLabel, others),
+    ];
+    return _SlicePie(data: data);
+  }
+}
+
+/// Camembert de la répartition des notes (1–10, tous visionnages notés).
+class _RatingPie extends StatelessWidget {
+  const _RatingPie({required this.ratings});
+
+  final List<double> ratings;
+
+  @override
+  Widget build(BuildContext context) {
+    final counts = <int, int>{};
+    for (final r in ratings) {
+      final key = r.round().clamp(1, 10);
+      counts[key] = (counts[key] ?? 0) + 1;
+    }
+    final data = counts.entries.toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+    return _SlicePie(
+      data: data.map((e) => ('${e.key}★', e.value)).toList(),
     );
   }
 }
