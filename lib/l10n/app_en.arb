@@ -180,6 +180,7 @@
   "statsLegendWatched": "Watched ({count})",
   "statsLegendUnwatched": "Unwatched ({count})",
   "statsNoGenres": "No genres recorded.",
+  "statsRatingByYear": "Ratings by release year",
   "statsTopDecades": "By decade",
   "statsTopCountries": "By country of origin",
   "statsTopRatings": "Rating distribution",

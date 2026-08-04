@@ -66,6 +66,14 @@ class StatsScreen extends ConsumerWidget {
     }
 
     final filmList = films.values.toList();
+
+    // Points (année, note) pour le diagramme de dispersion.
+    final ratingsByYear = <(int, double)>[
+      for (final entry in ratingByFilm.entries)
+        if (films[entry.key]?.releaseYear != null)
+          (films[entry.key]!.releaseYear!, entry.value),
+    ];
+
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
@@ -94,6 +102,12 @@ class StatsScreen extends ConsumerWidget {
               style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
           _GenreBars(films: filmList, genresById: genresById),
+          if (ratingsByYear.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Text(l10n.statsRatingByYear, style: theme.textTheme.titleMedium),
+            const SizedBox(height: 12),
+            _RatingByYearScatter(data: ratingsByYear),
+          ],
           const SizedBox(height: 24),
           Text(l10n.statsTopDecades, style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
@@ -523,6 +537,103 @@ class _RatingPie extends StatelessWidget {
       ..sort((a, b) => a.key.compareTo(b.key));
     return _SlicePie(
       data: data.map((e) => ('${e.key}★', e.value)).toList(),
+    );
+  }
+}
+
+/// Diagramme de dispersion : année de sortie (X) × note (Y), un point par titre.
+class _RatingByYearScatter extends StatelessWidget {
+  const _RatingByYearScatter({required this.data});
+
+  // (releaseYear, rating) — un seul point par titre (note la plus récente).
+  final List<(int, double)> data;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    double xMin = data.first.$1.toDouble();
+    double xMax = xMin;
+    for (final (y, _) in data) {
+      if (y < xMin) xMin = y.toDouble();
+      if (y > xMax) xMax = y.toDouble();
+    }
+    // Marges et arrondi aux 5 ans.
+    xMin = (xMin / 5).floor() * 5.0 - 1;
+    xMax = (xMax / 5).ceil() * 5.0 + 1;
+
+    final range = xMax - xMin;
+    final xInterval = range > 25 ? 10.0 : 5.0;
+
+    return SizedBox(
+      height: 300,
+      child: ScatterChart(
+        ScatterChartData(
+          scatterSpots: [
+            for (final (year, rating) in data)
+              ScatterSpot(
+                year.toDouble(),
+                rating,
+                dotPainter: FlDotCirclePainter(
+                  radius: 5,
+                  color: scheme.primary.withValues(alpha: 0.55),
+                  strokeWidth: 0,
+                ),
+              ),
+          ],
+          minX: xMin,
+          maxX: xMax,
+          minY: 0.5,
+          maxY: 10.5,
+          titlesData: FlTitlesData(
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 28,
+                interval: 1,
+                getTitlesWidget: (v, _) {
+                  final n = v.toInt();
+                  if (n < 1 || n > 10) return const SizedBox.shrink();
+                  return Text('$n',
+                      style: const TextStyle(fontSize: 10),
+                      textAlign: TextAlign.right);
+                },
+              ),
+            ),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 24,
+                interval: xInterval,
+                getTitlesWidget: (v, _) => Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text('${v.toInt()}',
+                      style: const TextStyle(fontSize: 10)),
+                ),
+              ),
+            ),
+            topTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false)),
+            rightTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false)),
+          ),
+          gridData: FlGridData(
+            show: true,
+            horizontalInterval: 1,
+            verticalInterval: xInterval,
+            getDrawingHorizontalLine: (v) => FlLine(
+              color: scheme.outlineVariant.withValues(alpha: 0.4),
+              strokeWidth: 1,
+            ),
+            getDrawingVerticalLine: (v) => FlLine(
+              color: scheme.outlineVariant.withValues(alpha: 0.4),
+              strokeWidth: 1,
+            ),
+          ),
+          borderData: FlBorderData(show: false),
+          scatterTouchData: ScatterTouchData(enabled: false),
+        ),
+      ),
     );
   }
 }
