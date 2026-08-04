@@ -547,16 +547,6 @@ class _FilmsByYearBars extends StatelessWidget {
 
   final List<Film> films;
 
-  // Moyenne mobile centrée sur une fenêtre de [window] points.
-  static List<double> _movAvg(List<int> data, int window) => [
-        for (var i = 0; i < data.length; i++) () {
-          final s = (i - window ~/ 2).clamp(0, data.length - 1);
-          final e = (i + window ~/ 2 + 1).clamp(0, data.length);
-          final slice = data.sublist(s, e);
-          return slice.reduce((a, b) => a + b) / slice.length;
-        }(),
-      ];
-
   @override
   Widget build(BuildContext context) {
     final counts = <int, int>{};
@@ -570,8 +560,6 @@ class _FilmsByYearBars extends StatelessWidget {
     final years = counts.keys.toList()..sort();
     final countList = years.map((y) => counts[y]!).toList();
     final n = years.length;
-    // Fenêtre plus petite pour les petites collections.
-    final movAvg = _movAvg(countList, n < 10 ? 3 : 7);
 
     final scheme = Theme.of(context).colorScheme;
     final maxY =
@@ -580,30 +568,10 @@ class _FilmsByYearBars extends StatelessWidget {
     final range = years.last - years.first;
     final labelEvery = range > 40 ? 10 : range > 20 ? 5 : 2;
 
-    // Marges identiques dans les deux charts pour aligner les zones de tracé.
-    const leftReserved = 32.0;
-    const bottomReserved = 24.0;
-
-    FlTitlesData _hiddenTitles() => FlTitlesData(
-          leftTitles: AxisTitles(
-              sideTitles:
-                  SideTitles(showTitles: false, reservedSize: leftReserved)),
-          bottomTitles: AxisTitles(
-              sideTitles:
-                  SideTitles(showTitles: false, reservedSize: bottomReserved)),
-          topTitles:
-              const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles:
-              const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        );
-
     return SizedBox(
       height: 280,
-      child: Stack(
-        children: [
-          // ── Barres ──────────────────────────────────────────────────────
-          BarChart(
-            BarChartData(
+      child: BarChart(
+        BarChartData(
               alignment: BarChartAlignment.spaceEvenly,
               maxY: maxY,
               groupsSpace: 2,
@@ -620,7 +588,7 @@ class _FilmsByYearBars extends StatelessWidget {
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    reservedSize: leftReserved,
+                    reservedSize: 32,
                     getTitlesWidget: (v, _) {
                       final iv = v.toInt();
                       if (v != iv.toDouble()) return const SizedBox.shrink();
@@ -633,7 +601,7 @@ class _FilmsByYearBars extends StatelessWidget {
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    reservedSize: bottomReserved,
+                    reservedSize: 24,
                     getTitlesWidget: (v, _) {
                       final idx = v.toInt();
                       if (idx < 0 || idx >= n) return const SizedBox.shrink();
@@ -680,40 +648,7 @@ class _FilmsByYearBars extends StatelessWidget {
               ],
             ),
           ),
-          // ── Courbe de tendance (moyenne mobile) ─────────────────────────
-          // minX=0 maxX=n → spot à x=i+0.5 s'aligne avec le centre de la
-          // barre i en mode spaceEvenly.
-          IgnorePointer(
-            child: LineChart(
-              LineChartData(
-                minX: 0,
-                maxX: n.toDouble(),
-                minY: 0,
-                maxY: maxY,
-                backgroundColor: Colors.transparent,
-                titlesData: _hiddenTitles(),
-                gridData: FlGridData(show: false),
-                borderData: FlBorderData(show: false),
-                lineTouchData: LineTouchData(enabled: false),
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: [
-                      for (var i = 0; i < n; i++)
-                        FlSpot(i + 0.5, movAvg[i]),
-                    ],
-                    isCurved: true,
-                    curveSmoothness: 0.35,
-                    color: scheme.error,
-                    barWidth: 2.5,
-                    dotData: FlDotData(show: false),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        );
   }
 }
 
