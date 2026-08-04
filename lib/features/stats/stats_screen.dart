@@ -41,10 +41,12 @@ class StatsScreen extends ConsumerWidget {
     };
     final watchedKeys = {for (final v in history) v.film.mediaKey};
     final ownedKeys = {for (final c in collection) c.film.mediaKey};
-    final ratings = [
-      for (final v in history)
-        if (v.rating != null) v.rating!
-    ];
+    // Une note par titre (la plus récente — history est triée par id asc).
+    final ratingByFilm = <String, double>{};
+    for (final v in history) {
+      if (v.rating != null) ratingByFilm[v.film.mediaKey] = v.rating!;
+    }
+    final ratings = ratingByFilm.values.toList();
 
     final total = films.length;
     final watched = watchedKeys.length;
