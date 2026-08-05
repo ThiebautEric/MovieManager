@@ -99,6 +99,7 @@ class _PersonBody extends ConsumerWidget {
     for (final v in history) {
       (byKey[v.film.mediaKey] ??= _MediaStatus()).addWatching(
         seasonNumber: v.seasonNumber,
+        episodeNumber: v.episodeNumber,
         rating: v.rating,
       );
     }
@@ -281,19 +282,33 @@ class _MediaStatus {
   Medium? medium;
   bool watched = false;
   final Set<int> watchedSeasons = {};
-  final List<double> _ratings = [];
+  final List<double> _movieRatings = [];
+  final Map<int, List<double>> _seasonRatings = {};
 
   bool get owned => medium != null;
 
-  /// Moyenne des notes de tous les visionnages (null si aucun noté).
-  double? get rating => _ratings.isEmpty
-      ? null
-      : _ratings.reduce((a, b) => a + b) / _ratings.length;
+  /// Films : moyenne plate. Séries : moyenne des moyennes par saison.
+  double? get rating {
+    if (_seasonRatings.isNotEmpty) {
+      final avgs = _seasonRatings.values
+          .map((r) => r.reduce((a, b) => a + b) / r.length)
+          .toList();
+      return avgs.reduce((a, b) => a + b) / avgs.length;
+    }
+    if (_movieRatings.isEmpty) return null;
+    return _movieRatings.reduce((a, b) => a + b) / _movieRatings.length;
+  }
 
-  void addWatching({int? seasonNumber, double? rating}) {
+  void addWatching({int? seasonNumber, int? episodeNumber, double? rating}) {
     watched = true;
     if (seasonNumber != null) watchedSeasons.add(seasonNumber);
-    if (rating != null) _ratings.add(rating);
+    if (rating != null) {
+      if (seasonNumber == null) {
+        _movieRatings.add(rating);
+      } else if (episodeNumber == null) {
+        (_seasonRatings[seasonNumber] ??= []).add(rating);
+      }
+    }
   }
 }
 

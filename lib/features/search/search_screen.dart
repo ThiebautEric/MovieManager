@@ -19,6 +19,7 @@ import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/card_title.dart';
+import '../../widgets/dark_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
@@ -124,6 +125,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final mediumByKey = ref.watch(ownedMediumByKeyProvider);
     final watchedKeys = ref.watch(watchedKeysProvider);
     final watchedSeasonsByKey = ref.watch(watchedSeasonsByKeyProvider);
+    final ratingByKey = ref.watch(ratingByKeyProvider);
     return GridView.builder(
       padding: const EdgeInsets.all(12),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -144,6 +146,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               watchedSeasons: watchedSeasonsByKey[
                       '${h.media.mediaType}:${h.media.tmdbId}'] ??
                   const {},
+              rating: ratingByKey['${h.media.mediaType}:${h.media.tmdbId}'],
               onTap: () => openMedia(
                 context,
                 ref,
@@ -176,6 +179,7 @@ class _ResultCard extends ConsumerWidget {
     this.medium,
     this.watched = false,
     this.watchedSeasons = const {},
+    this.rating,
   });
 
   final MediaSummary item;
@@ -183,6 +187,7 @@ class _ResultCard extends ConsumerWidget {
   final Medium? medium;
   final bool watched;
   final Set<int> watchedSeasons;
+  final double? rating;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -232,6 +237,15 @@ class _ResultCard extends ConsumerWidget {
                       child: const Icon(Icons.visibility,
                           size: 13, color: Colors.white),
                     ),
+                  ),
+                if (rating != null)
+                  Positioned(
+                    bottom: 6,
+                    left: hasBand ? null : 6,
+                    right: hasBand ? 6 : null,
+                    child: DarkBadge(
+                        icon: Icons.star,
+                        label: rating!.toStringAsFixed(1)),
                   ),
                 Positioned(
                   bottom: 6,

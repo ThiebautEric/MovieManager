@@ -13,6 +13,7 @@ import '../../widgets/empty_state.dart';
 import '../../widgets/keyboard_scroll.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
+import '../../widgets/dark_badge.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
@@ -36,6 +37,7 @@ class PhysicalCollectionScreen extends ConsumerWidget {
     final filter = ref.watch(collectionFilterProvider);
     final entries = ref.watch(filteredCollectionProvider);
     final films = [for (final c in (async.value ?? const <CollectionView>[])) c.film];
+    final ratingBySeason = ref.watch(ratingByKeySeasonProvider);
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
 
     final content = async.when(
@@ -83,6 +85,8 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                   dateLabel: entry.addedAt != null
                       ? dateFmt.format(entry.addedAt!)
                       : null,
+                  rating: ratingBySeason[
+                      '${entry.film.mediaKey}|${entry.seasonNumber}'],
                   onTap: () => openMedia(
                     context,
                     ref,
@@ -147,6 +151,7 @@ class _CollectionCard extends StatelessWidget {
     required this.seasonNumber,
     required this.dateLabel,
     required this.onTap,
+    this.rating,
   });
 
   final String? poster;
@@ -156,6 +161,7 @@ class _CollectionCard extends StatelessWidget {
   final int? seasonNumber;
   final String? dateLabel;
   final VoidCallback onTap;
+  final double? rating;
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +188,14 @@ class _CollectionCard extends StatelessWidget {
                     top: 6,
                     right: 6,
                     child: _chip(Icons.live_tv, 'S$seasonNumber'),
+                  ),
+                if (rating != null)
+                  Positioned(
+                    bottom: 6,
+                    left: 6,
+                    child: DarkBadge(
+                        icon: Icons.star,
+                        label: rating!.toStringAsFixed(1)),
                   ),
               ],
             ),

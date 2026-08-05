@@ -1104,3 +1104,57 @@ final knownSeasonsByKeyProvider =
   }
   return map;
 });
+
+/// Note moyenne par œuvre (mediaKey → double).
+/// Films : moyenne de tous les visionnages notés (entrées sans saison).
+/// Séries : moyenne des moyennes par saison (entrées saison sans épisode).
+final ratingByKeyProvider = Provider.autoDispose<Map<String, double>>((ref) {
+  final hist = ref.watch(historyStreamProvider).value ?? [];
+  final movieRatings = <String, List<double>>{};
+  final seasonRatings = <String, Map<int, List<double>>>{};
+
+  for (final v in hist) {
+    if (v.rating == null) continue;
+    final key = v.film.mediaKey;
+    if (v.seasonNumber == null) {
+      (movieRatings[key] ??= []).add(v.rating!);
+    } else if (v.episodeNumber == null) {
+      ((seasonRatings[key] ??= {})[v.seasonNumber!] ??= []).add(v.rating!);
+    }
+  }
+
+  final map = <String, double>{};
+
+  for (final entry in movieRatings.entries) {
+    map[entry.key] = entry.value.reduce((a, b) => a + b) / entry.value.length;
+  }
+
+  for (final entry in seasonRatings.entries) {
+    final seasonAvgs = entry.value.values
+        .map((r) => r.reduce((a, b) => a + b) / r.length)
+        .toList();
+    map[entry.key] = seasonAvgs.reduce((a, b) => a + b) / seasonAvgs.length;
+  }
+
+  return map;
+});
+
+/// Note moyenne par œuvre+saison ("mediaKey|seasonNumber" → double).
+/// Clé : "movie:123|null" (film) ou "tv:456|2" (saison précise).
+/// Seules les entrées sans épisode sont prises en compte.
+final ratingByKeySeasonProvider =
+    Provider.autoDispose<Map<String, double>>((ref) {
+  final hist = ref.watch(historyStreamProvider).value ?? [];
+  final buckets = <String, List<double>>{};
+
+  for (final v in hist) {
+    if (v.rating == null || v.episodeNumber != null) continue;
+    final key = '${v.film.mediaKey}|${v.seasonNumber}';
+    (buckets[key] ??= []).add(v.rating!);
+  }
+
+  return {
+    for (final e in buckets.entries)
+      e.key: e.value.reduce((a, b) => a + b) / e.value.length,
+  };
+});

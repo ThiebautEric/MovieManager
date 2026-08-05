@@ -8,6 +8,7 @@ import '../../core/utils/format.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/wishlist_entry.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../widgets/dark_badge.dart';
 import '../../widgets/add_entry_dialogs.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/keyboard_scroll.dart';
@@ -147,6 +148,9 @@ class _WishlistTile extends ConsumerWidget {
       originalTitle: film.originalTitle,
     );
     final dateFmt = DateFormat.yMd(Localizations.localeOf(context).toString());
+    final ratingBySeason = ref.watch(ratingByKeySeasonProvider);
+    final rating =
+        ratingBySeason['${film.mediaKey}|${item.seasonNumber}'];
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -169,8 +173,22 @@ class _WishlistTile extends ConsumerWidget {
                 child: SizedBox(
                   width: 52,
                   height: 78,
-                  child:
-                      PosterImage(posterPath: item.posterPath, size: 'w185'),
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: PosterImage(
+                            posterPath: item.posterPath, size: 'w185'),
+                      ),
+                      if (rating != null)
+                        Positioned(
+                          bottom: 3,
+                          left: 3,
+                          child: DarkBadge(
+                              icon: Icons.star,
+                              label: rating.toStringAsFixed(1)),
+                        ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
