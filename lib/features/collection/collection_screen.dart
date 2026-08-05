@@ -232,7 +232,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         }
 
         bool isCollapsed(int year) =>
-            !filter.isActive && _collapsed.contains(year);
+            _titleQuery.isEmpty && !filter.isActive && _collapsed.contains(year);
 
         final slivers = <Widget>[];
         int? lastYear;
@@ -286,23 +286,41 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     );
 
     final searchBar = Padding(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 2),
       child: TextField(
         controller: _titleController,
         onChanged: _onTitleChanged,
+        style: const TextStyle(fontSize: 13),
         decoration: InputDecoration(
           hintText: l10n.historySearchHint,
-          prefixIcon: const Icon(Icons.search),
+          hintStyle: const TextStyle(fontSize: 13),
+          prefixIcon: const Icon(Icons.search, size: 18),
+          prefixIconConstraints:
+              const BoxConstraints(minWidth: 36, minHeight: 36),
           suffixIcon: _titleQuery.isNotEmpty
               ? IconButton(
-                  icon: const Icon(Icons.clear),
+                  icon: const Icon(Icons.clear, size: 16),
                   onPressed: () {
                     _titleController.clear();
                     _onTitleChanged('');
                   },
                 )
               : null,
-          border: const OutlineInputBorder(),
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
           isDense: true,
         ),
       ),
