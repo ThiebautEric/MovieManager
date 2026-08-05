@@ -274,8 +274,15 @@ class _HomeShellState extends ConsumerState<HomeShell>
     final tabs = IndexedStack(index: _index, children: pages);
 
     if (isWide) {
-      final content =
-          top == null ? tabs : _buildEntry(top, stack.length);
+      // tabs reste toujours dans le tree (Offstage quand un détail est ouvert)
+      // pour préserver l'état local des écrans (champs de texte, scroll, etc.).
+      final content = Stack(
+        fit: StackFit.expand,
+        children: [
+          Offstage(offstage: top != null, child: tabs),
+          if (top != null) _buildEntry(top, stack.length),
+        ],
+      );
 
       return Scaffold(
         body: Row(
