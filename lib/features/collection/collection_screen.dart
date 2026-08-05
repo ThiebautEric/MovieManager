@@ -865,6 +865,8 @@ class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
             _btn(Medium.dvd, 'DVD'),
             Container(width: 1, height: 30, color: Colors.white24),
             _btn(Medium.bluray, 'BLU-RAY'),
+            Container(width: 1, height: 30, color: Colors.white24),
+            _btn(Medium.digital, 'DIGITAL'),
           ],
         ),
       ),
