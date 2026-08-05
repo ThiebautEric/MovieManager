@@ -572,36 +572,31 @@ class _HistoryCard extends ConsumerWidget {
                       current: event.seasonNumber,
                     ),
                   ),
-                if (mediums.isNotEmpty)
-                  Positioned(
-                    top: 6,
-                    left: 6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (final m in mediums)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 3),
-                            child: MediumBadge(medium: m, compact: true),
-                          ),
+                Positioned(
+                  top: 6,
+                  right: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (isSeason) ...[
+                        DarkBadge(
+                            icon: Icons.live_tv,
+                            label: 'S${event.seasonNumber}'
+                                '${event.episodeNumber != null ? 'E${event.episodeNumber}' : ''}'),
+                        const SizedBox(height: 4),
                       ],
-                    ),
+                      for (final m in mediums) ...[
+                        MediumBadge(medium: m, compact: true),
+                        const SizedBox(height: 3),
+                      ],
+                      if (rating != null)
+                        DarkBadge(
+                            icon: Icons.star,
+                            label: rating.toStringAsFixed(1)),
+                    ],
                   ),
-                if (isSeason)
-                  Positioned(
-                    top: 6,
-                    right: 6,
-                    child: DarkBadge(
-                        icon: Icons.live_tv,
-                        label: 'S${event.seasonNumber}'
-                            '${event.episodeNumber != null ? 'E${event.episodeNumber}' : ''}'),
-                  ),
-                if (rating != null)
-                  Positioned(
-                    bottom: 6,
-                    left: 6,
-                    child: DarkBadge(icon: Icons.star, label: rating.toStringAsFixed(1)),
-                  ),
+                ),
               ],
             ),
           ),

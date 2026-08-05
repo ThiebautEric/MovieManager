@@ -376,27 +376,28 @@ class _FilmographyCard extends ConsumerWidget {
                     bottom: 0,
                     child: SeasonBand(watched: c.watchedSeasons, known: allKnown),
                   ),
-                if (c != null && c.medium != null)
-                  Positioned(
-                    top: 6,
-                    left: 6,
-                    child: MediumBadge(medium: c.medium!),
-                  ),
-                if (c != null && c.watched && c.watchedSeasons.isEmpty)
+                if (c != null)
                   Positioned(
                     top: 6,
                     right: 6,
-                    child: DarkBadge(
-                        icon: Icons.visibility,
-                        label: context.l10n.personWatchedBadge),
-                  ),
-                if (c != null && c.rating != null)
-                  Positioned(
-                    bottom: 6,
-                    left: 6,
-                    child: DarkBadge(
-                        icon: Icons.star,
-                        label: c.rating!.toStringAsFixed(1)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (c.medium != null) ...[
+                          MediumBadge(medium: c.medium!),
+                          const SizedBox(height: 4),
+                        ],
+                        if (c.rating != null) ...[
+                          DarkBadge(
+                              icon: Icons.star,
+                              label: c.rating!.toStringAsFixed(1)),
+                          const SizedBox(height: 4),
+                        ],
+                        if (c.watched && c.watchedSeasons.isEmpty)
+                          DarkBadge(icon: Icons.visibility),
+                      ],
+                    ),
                   ),
               ],
               ),

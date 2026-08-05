@@ -217,34 +217,28 @@ class _ResultCard extends ConsumerWidget {
                     bottom: 0,
                     child: SeasonBand(watched: watchedSeasons, known: allKnown),
                   ),
-                if (medium != null)
-                  Positioned(
-                    top: 6,
-                    left: 6,
-                    child: MediumBadge(medium: medium!),
+                Positioned(
+                  top: 6,
+                  right: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (medium != null) ...[
+                        MediumBadge(medium: medium!),
+                        const SizedBox(height: 4),
+                      ],
+                      if (rating != null) ...[
+                        DarkBadge(
+                            icon: Icons.star,
+                            label: rating!.toStringAsFixed(1)),
+                        const SizedBox(height: 4),
+                      ],
+                      if (watched && !hasBand)
+                        DarkBadge(icon: Icons.visibility),
+                    ],
                   ),
-                if (watched && !hasBand)
-                  Positioned(
-                    top: 6,
-                    right: 6,
-                    child: Container(
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.65),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Icon(Icons.visibility,
-                          size: 13, color: Colors.white),
-                    ),
-                  ),
-                if (rating != null)
-                  Positioned(
-                    bottom: 6,
-                    left: 6,
-                    child: DarkBadge(
-                        icon: Icons.star,
-                        label: rating!.toStringAsFixed(1)),
-                  ),
+                ),
                 Positioned(
                   bottom: 6,
                   right: 6,

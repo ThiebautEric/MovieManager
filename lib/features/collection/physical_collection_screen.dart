@@ -182,21 +182,27 @@ class _CollectionCard extends StatelessWidget {
                     child: PosterImage(posterPath: poster),
                   ),
                 ),
-                Positioned(top: 6, left: 6, child: badge),
-                if (seasonNumber != null)
-                  Positioned(
-                    top: 6,
-                    right: 6,
-                    child: _chip(Icons.live_tv, 'S$seasonNumber'),
+                Positioned(
+                  top: 6,
+                  right: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      badge,
+                      if (seasonNumber != null) ...[
+                        const SizedBox(height: 4),
+                        _chip(Icons.live_tv, 'S$seasonNumber'),
+                      ],
+                      if (rating != null) ...[
+                        const SizedBox(height: 4),
+                        DarkBadge(
+                            icon: Icons.star,
+                            label: rating!.toStringAsFixed(1)),
+                      ],
+                    ],
                   ),
-                if (rating != null)
-                  Positioned(
-                    bottom: 6,
-                    left: 6,
-                    child: DarkBadge(
-                        icon: Icons.star,
-                        label: rating!.toStringAsFixed(1)),
-                  ),
+                ),
               ],
             ),
           ),
