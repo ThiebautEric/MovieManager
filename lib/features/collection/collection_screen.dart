@@ -29,10 +29,7 @@ import '../home/selected_media.dart';
 import 'collection_filter.dart';
 import 'filter_sheet.dart';
 
-/// Écran « Historique » : la grille des visionnages, du plus récent au plus
-/// ancien. Un titre vu plusieurs fois (ou plusieurs saisons) = une vignette par
-/// visionnage. Donnée totalement indépendante de la collection.
-///
+final _historyTitleQueryProvider = StateProvider<String>((ref) => '');
 
 class CollectionScreen extends ConsumerStatefulWidget {
   const CollectionScreen({super.key});
@@ -44,9 +41,16 @@ class CollectionScreen extends ConsumerStatefulWidget {
 class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   final Set<int> _collapsed = {};
   bool _initCollapse = false;
-  final _titleController = TextEditingController();
-  String _titleQuery = '';
+  late final TextEditingController _titleController;
   Timer? _debounce;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(
+      text: ref.read(_historyTitleQueryProvider),
+    );
+  }
 
   @override
   void dispose() {
@@ -58,7 +62,8 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   void _onTitleChanged(String value) {
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 250), () {
-      setState(() => _titleQuery = value.trim().toLowerCase());
+      ref.read(_historyTitleQueryProvider.notifier).state =
+          value.trim().toLowerCase();
     });
   }
 
@@ -120,11 +125,12 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     final async = ref.watch(historyStreamProvider);
     final filter = ref.watch(historyFilterProvider);
     final events = ref.watch(filteredHistoryProvider);
-    final displayedEvents = _titleQuery.isEmpty
+    final titleQuery = ref.watch(_historyTitleQueryProvider);
+    final displayedEvents = titleQuery.isEmpty
         ? events
         : events.where((v) {
-            return v.film.title.toLowerCase().contains(_titleQuery) ||
-                (v.film.originalTitle?.toLowerCase().contains(_titleQuery) ??
+            return v.film.title.toLowerCase().contains(titleQuery) ||
+                (v.film.originalTitle?.toLowerCase().contains(titleQuery) ??
                     false);
           }).toList();
     final films = [for (final v in (async.value ?? const <HistoryView>[])) v.film];
@@ -232,7 +238,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         }
 
         bool isCollapsed(int year) =>
-            _titleQuery.isEmpty && !filter.isActive && _collapsed.contains(year);
+            titleQuery.isEmpty && !filter.isActive && _collapsed.contains(year);
 
         final slivers = <Widget>[];
         int? lastYear;
@@ -297,7 +303,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           prefixIcon: const Icon(Icons.search, size: 18),
           prefixIconConstraints:
               const BoxConstraints(minWidth: 36, minHeight: 36),
-          suffixIcon: _titleQuery.isNotEmpty
+          suffixIcon: titleQuery.isNotEmpty
               ? IconButton(
                   icon: const Icon(Icons.clear, size: 16),
                   onPressed: () {
