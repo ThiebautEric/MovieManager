@@ -217,7 +217,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         final shownEvents = _discFilter
             ? displayedEvents.where((e) {
                 final m = mediumsFor(e);
-                return !m.contains(Medium.dvd) && !m.contains(Medium.bluray);
+                return m.isEmpty;
               }).toList()
             : displayedEvents;
 
