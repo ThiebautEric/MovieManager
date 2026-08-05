@@ -26,6 +26,7 @@ import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/dark_badge.dart';
 import '../../widgets/season_band.dart';
 import '../../widgets/theme_toggle_button.dart';
+import '../../core/supabase/supabase_providers.dart';
 import '../home/selected_media.dart';
 import 'collection_filter.dart';
 import 'filter_sheet.dart';
@@ -622,6 +623,8 @@ class _HistoryCard extends ConsumerWidget {
                 ?.year ??
             event.film.releaseYear)
         : event.film.releaseYear;
+    final isEric =
+        ref.watch(currentUserProvider)?.email == 'thiebaut.eric@laposte.net';
     final rating = event.rating;
     final title = resolveTitle(
       ref,
@@ -684,6 +687,13 @@ class _HistoryCard extends ConsumerWidget {
                     ],
                   ),
                 ),
+                if (isEric)
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: _BulkAddBar(event: event, owned: mediums),
+                  ),
               ],
             ),
           ),
@@ -755,6 +765,85 @@ class _HistoryCard extends ConsumerWidget {
     );
   }
 
+}
+
+// ---------------------------------------------------------------------------
+// Barre de saisie rapide DVD / Blu-ray (visible uniquement pour thiebaut.eric)
+// ---------------------------------------------------------------------------
+
+class _BulkAddBar extends ConsumerStatefulWidget {
+  const _BulkAddBar({required this.event, required this.owned});
+  final HistoryView event;
+  final List<Medium> owned;
+
+  @override
+  ConsumerState<_BulkAddBar> createState() => _BulkAddBarState();
+}
+
+class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
+  final _loading = <Medium>{};
+
+  Future<void> _add(Medium m) async {
+    if (_loading.contains(m)) return;
+    setState(() => _loading.add(m));
+    try {
+      await ref.read(libraryRepositoryProvider).addToCollection(
+            widget.event.film,
+            season: widget.event.season,
+            medium: m,
+            addedAt: DateTime.now(),
+          );
+    } finally {
+      if (mounted) setState(() => _loading.remove(m));
+    }
+  }
+
+  Widget _btn(Medium m, String label) {
+    final owned = widget.owned.contains(m);
+    final loading = _loading.contains(m);
+    return Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: (owned || loading) ? null : () => _add(m),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Center(
+            child: loading
+                ? const SizedBox(
+                    width: 14,
+                    height: 14,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 2, color: Colors.white))
+                : owned
+                    ? const Icon(Icons.check_circle,
+                        size: 18, color: Colors.greenAccent)
+                    : Text(label,
+                        style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(8)),
+      child: ColoredBox(
+        color: Colors.black.withValues(alpha: 0.65),
+        child: Row(
+          children: [
+            _btn(Medium.dvd, 'DVD'),
+            Container(width: 1, height: 30, color: Colors.white24),
+            _btn(Medium.bluray, 'BLU-RAY'),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 
