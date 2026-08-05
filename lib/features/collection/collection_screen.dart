@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:file_saver/file_saver.dart';
@@ -41,11 +42,25 @@ class CollectionScreen extends ConsumerStatefulWidget {
 }
 
 class _CollectionScreenState extends ConsumerState<CollectionScreen> {
-  /// Années repliées (masquent leurs mois/vignettes).
   final Set<int> _collapsed = {};
-
-  /// Vrai une fois le repli par défaut appliqué (toutes années sauf la courante).
   bool _initCollapse = false;
+  final _titleController = TextEditingController();
+  String _titleQuery = '';
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  void _onTitleChanged(String value) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 250), () {
+      setState(() => _titleQuery = value.trim().toLowerCase());
+    });
+  }
 
   /// Exporte l'historique affiché en CSV (enrichi pour ré-import).
   /// Web : téléchargement navigateur ; Android/iOS : dossier Téléchargements ;
@@ -105,6 +120,13 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     final async = ref.watch(historyStreamProvider);
     final filter = ref.watch(historyFilterProvider);
     final events = ref.watch(filteredHistoryProvider);
+    final displayedEvents = _titleQuery.isEmpty
+        ? events
+        : events.where((v) {
+            return v.film.title.toLowerCase().contains(_titleQuery) ||
+                (v.film.originalTitle?.toLowerCase().contains(_titleQuery) ??
+                    false);
+          }).toList();
     final films = [for (final v in (async.value ?? const <HistoryView>[])) v.film];
 
     // Repli par défaut (une seule fois) : toutes les années sauf la courante.
@@ -177,11 +199,11 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
       data: (_) {
-        if (events.isEmpty) {
+        if (displayedEvents.isEmpty) {
           return EmptyState(message: l10n.historyEmpty);
         }
 
-        final allItems = events.map(_SingleItem.new).toList();
+        final allItems = displayedEvents.map(_SingleItem.new).toList();
 
         // Regroupe les items par mois.
         final groups = <_MonthGroup>[];
@@ -263,6 +285,29 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
       },
     );
 
+    final searchBar = Padding(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+      child: TextField(
+        controller: _titleController,
+        onChanged: _onTitleChanged,
+        decoration: InputDecoration(
+          hintText: l10n.historySearchHint,
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon: _titleQuery.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    _titleController.clear();
+                    _onTitleChanged('');
+                  },
+                )
+              : null,
+          border: const OutlineInputBorder(),
+          isDense: true,
+        ),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(l10n.historyTitle),
@@ -293,17 +338,29 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         ],
       ),
       body: wide
-          ? Row(
+          ? Column(
               children: [
-                Expanded(child: content),
-                FilterSidePanel(
-                  filterProvider: historyFilterProvider,
-                  films: films,
-                  showRating: true,
+                searchBar,
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(child: content),
+                      FilterSidePanel(
+                        filterProvider: historyFilterProvider,
+                        films: films,
+                        showRating: true,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             )
-          : content,
+          : Column(
+              children: [
+                searchBar,
+                Expanded(child: content),
+              ],
+            ),
     );
   }
 }

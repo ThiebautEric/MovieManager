@@ -367,6 +367,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get historyExportedSnack => 'Historique exporté (historique.csv)';
 
   @override
+  String get historySearchHint => 'Rechercher dans l\'historique…';
+
+  @override
   String get historyCsvHeader =>
       'Numero;TmdbId;TypeMedia;Titre;TitreOriginal;NumSaison;NumEpisode;NomEpisode;Note;Date;Commentaire';
 
@@ -658,6 +661,39 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get statsNoGenres => 'Pas de genres renseignés.';
+
+  @override
+  String get statsRatingByYear => 'Notes par année de sortie';
+
+  @override
+  String get statsFilmsByYear => 'Films par année de sortie';
+
+  @override
+  String get statsMedian => 'Médiane';
+
+  @override
+  String get statsTopDecades => 'Par décennie';
+
+  @override
+  String get statsTopCountries => 'Par pays d\'origine';
+
+  @override
+  String get statsTopRatings => 'Répartition des notes';
+
+  @override
+  String get statsNoYears => 'Aucune date de sortie renseignée.';
+
+  @override
+  String get statsNoCountries => 'Aucun pays renseigné.';
+
+  @override
+  String get statsNoRatings => 'Aucune note renseignée.';
+
+  @override
+  String get statsUnrated => 'Non notés';
+
+  @override
+  String get statsOther => 'Autres';
 
   @override
   String get favEmpty =>

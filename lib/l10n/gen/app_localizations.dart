@@ -676,6 +676,12 @@ abstract class AppLocalizations {
   /// **'Historique exporté (historique.csv)'**
   String get historyExportedSnack;
 
+  /// No description provided for @historySearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher dans l\'historique…'**
+  String get historySearchHint;
+
   /// En-tête des colonnes du CSV exporté (séparateur ;)
   ///
   /// In fr, this message translates to:
@@ -1137,6 +1143,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Pas de genres renseignés.'**
   String get statsNoGenres;
+
+  /// No description provided for @statsRatingByYear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes par année de sortie'**
+  String get statsRatingByYear;
+
+  /// No description provided for @statsFilmsByYear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Films par année de sortie'**
+  String get statsFilmsByYear;
+
+  /// No description provided for @statsMedian.
+  ///
+  /// In fr, this message translates to:
+  /// **'Médiane'**
+  String get statsMedian;
+
+  /// No description provided for @statsTopDecades.
+  ///
+  /// In fr, this message translates to:
+  /// **'Par décennie'**
+  String get statsTopDecades;
+
+  /// No description provided for @statsTopCountries.
+  ///
+  /// In fr, this message translates to:
+  /// **'Par pays d\'origine'**
+  String get statsTopCountries;
+
+  /// No description provided for @statsTopRatings.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répartition des notes'**
+  String get statsTopRatings;
+
+  /// No description provided for @statsNoYears.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune date de sortie renseignée.'**
+  String get statsNoYears;
+
+  /// No description provided for @statsNoCountries.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun pays renseigné.'**
+  String get statsNoCountries;
+
+  /// No description provided for @statsNoRatings.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune note renseignée.'**
+  String get statsNoRatings;
+
+  /// No description provided for @statsUnrated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non notés'**
+  String get statsUnrated;
+
+  /// No description provided for @statsOther.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autres'**
+  String get statsOther;
 
   /// No description provided for @favEmpty.
   ///

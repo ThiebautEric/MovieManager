@@ -368,6 +368,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get historyExportedSnack => 'Verlauf exportiert (historique.csv)';
 
   @override
+  String get historySearchHint => 'Im Verlauf suchen…';
+
+  @override
   String get historyCsvHeader =>
       'Nummer;TmdbId;Medientyp;Titel;OriginalTitel;StaffelNr;FolgeNr;FolgeName;Bewertung;Datum;Kommentar';
 
@@ -659,6 +662,39 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get statsNoGenres => 'Keine Genres hinterlegt.';
+
+  @override
+  String get statsRatingByYear => 'Noten nach Erscheinungsjahr';
+
+  @override
+  String get statsFilmsByYear => 'Filme nach Erscheinungsjahr';
+
+  @override
+  String get statsMedian => 'Median';
+
+  @override
+  String get statsTopDecades => 'Nach Jahrzehnt';
+
+  @override
+  String get statsTopCountries => 'Nach Herkunftsland';
+
+  @override
+  String get statsTopRatings => 'Notenverteilung';
+
+  @override
+  String get statsNoYears => 'Keine Erscheinungsjahre vorhanden.';
+
+  @override
+  String get statsNoCountries => 'Keine Länder vorhanden.';
+
+  @override
+  String get statsNoRatings => 'Keine Bewertungen vorhanden.';
+
+  @override
+  String get statsUnrated => 'Ohne Wertung';
+
+  @override
+  String get statsOther => 'Sonstige';
 
   @override
   String get favEmpty =>
