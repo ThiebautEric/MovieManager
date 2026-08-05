@@ -799,12 +799,11 @@ class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
   }
 
   Widget _btn(Medium m, String label) {
-    final owned = widget.owned.contains(m);
     final loading = _loading.contains(m);
     return Expanded(
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: (owned || loading) ? null : () => _add(m),
+        onTap: loading ? null : () => _add(m),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Center(
@@ -814,14 +813,11 @@ class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
                     height: 14,
                     child: CircularProgressIndicator(
                         strokeWidth: 2, color: Colors.white))
-                : owned
-                    ? const Icon(Icons.check_circle,
-                        size: 18, color: Colors.greenAccent)
-                    : Text(label,
-                        style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
+                : Text(label,
+                    style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
           ),
         ),
       ),
@@ -830,15 +826,19 @@ class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
 
   @override
   Widget build(BuildContext context) {
+    final showDvd = !widget.owned.contains(Medium.dvd);
+    final showBluray = !widget.owned.contains(Medium.bluray);
+    if (!showDvd && !showBluray) return const SizedBox.shrink();
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(bottom: Radius.circular(8)),
       child: ColoredBox(
         color: Colors.black.withValues(alpha: 0.65),
         child: Row(
           children: [
-            _btn(Medium.dvd, 'DVD'),
-            Container(width: 1, height: 30, color: Colors.white24),
-            _btn(Medium.bluray, 'BLU-RAY'),
+            if (showDvd) _btn(Medium.dvd, 'DVD'),
+            if (showDvd && showBluray)
+              Container(width: 1, height: 30, color: Colors.white24),
+            if (showBluray) _btn(Medium.bluray, 'BLU-RAY'),
           ],
         ),
       ),
