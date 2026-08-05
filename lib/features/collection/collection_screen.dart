@@ -46,6 +46,7 @@ class CollectionScreen extends ConsumerStatefulWidget {
 class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   final Set<int> _collapsed = {};
   bool _initCollapse = false;
+  bool _discFilter = false;
   late final TextEditingController _titleController;
   Timer? _debounce;
 
@@ -129,6 +130,8 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     final dateFmt = DateFormat.yMd(locale);
     final async = ref.watch(historyStreamProvider);
     final filter = ref.watch(historyFilterProvider);
+    final isEric =
+        ref.watch(currentUserProvider)?.email == 'thiebaut.eric@laposte.net';
     final events = ref.watch(filteredHistoryProvider);
     final titleQuery = ref.watch(_historyTitleQueryProvider);
     final displayedEvents = titleQuery.isEmpty
@@ -210,11 +213,18 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
       data: (_) {
-        if (displayedEvents.isEmpty) {
+        final shownEvents = _discFilter
+            ? displayedEvents.where((e) {
+                final m = mediumsFor(e);
+                return !m.contains(Medium.dvd) && !m.contains(Medium.bluray);
+              }).toList()
+            : displayedEvents;
+
+        if (shownEvents.isEmpty) {
           return EmptyState(message: l10n.historyEmpty);
         }
 
-        final allItems = displayedEvents.map(_SingleItem.new).toList();
+        final allItems = shownEvents.map(_SingleItem.new).toList();
 
         // Regroupe les items par mois.
         final groups = <_MonthGroup>[];
@@ -359,6 +369,17 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
                 films: films,
                 showRating: true,
               ),
+            ),
+          if (isEric)
+            IconButton(
+              tooltip: 'Sans DVD / Blu-ray',
+              icon: Icon(
+                Icons.album_outlined,
+                color: _discFilter
+                    ? Theme.of(context).colorScheme.primary
+                    : null,
+              ),
+              onPressed: () => setState(() => _discFilter = !_discFilter),
             ),
           const OriginalTitleButton(),
           const LanguageButton(),
