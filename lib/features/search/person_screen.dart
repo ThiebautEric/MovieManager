@@ -376,15 +376,12 @@ class _FilmographyCard extends ConsumerWidget {
                     bottom: 0,
                     child: SeasonBand(watched: c.watchedSeasons, known: allKnown),
                   ),
-                // Badge support : à droite quand le bandeau occupe la gauche
                 if (c != null && c.medium != null)
                   Positioned(
                     top: 6,
-                    left: c.watchedSeasons.isNotEmpty ? null : 6,
-                    right: c.watchedSeasons.isNotEmpty ? 6 : null,
+                    left: 6,
                     child: MediumBadge(medium: c.medium!),
                   ),
-                // Badge « vu » uniquement si pas de bandeau de saisons
                 if (c != null && c.watched && c.watchedSeasons.isEmpty)
                   Positioned(
                     top: 6,
@@ -396,8 +393,7 @@ class _FilmographyCard extends ConsumerWidget {
                 if (c != null && c.rating != null)
                   Positioned(
                     bottom: 6,
-                    left: c.watchedSeasons.isNotEmpty ? null : 6,
-                    right: c.watchedSeasons.isNotEmpty ? 6 : null,
+                    left: 6,
                     child: DarkBadge(
                         icon: Icons.star,
                         label: c.rating!.toStringAsFixed(1)),
