@@ -253,7 +253,10 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         }
 
         bool isCollapsed(int year) =>
-            titleQuery.isEmpty && !filter.isActive && _collapsed.contains(year);
+            !_discFilter &&
+            titleQuery.isEmpty &&
+            !filter.isActive &&
+            _collapsed.contains(year);
 
         final slivers = <Widget>[];
         int? lastYear;
