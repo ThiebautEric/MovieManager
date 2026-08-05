@@ -241,8 +241,7 @@ class _ResultCard extends ConsumerWidget {
                 if (rating != null)
                   Positioned(
                     bottom: 6,
-                    left: hasBand ? null : 6,
-                    right: hasBand ? 6 : null,
+                    left: 6,
                     child: DarkBadge(
                         icon: Icons.star,
                         label: rating!.toStringAsFixed(1)),
