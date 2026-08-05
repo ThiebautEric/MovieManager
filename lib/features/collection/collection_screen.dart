@@ -579,6 +579,12 @@ class _HistoryCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      if (rating != null) ...[
+                        DarkBadge(
+                            icon: Icons.star,
+                            label: rating.toStringAsFixed(1)),
+                        const SizedBox(height: 4),
+                      ],
                       if (isSeason) ...[
                         DarkBadge(
                             icon: Icons.live_tv,
@@ -590,10 +596,6 @@ class _HistoryCard extends ConsumerWidget {
                         MediumBadge(medium: m, compact: true),
                         const SizedBox(height: 3),
                       ],
-                      if (rating != null)
-                        DarkBadge(
-                            icon: Icons.star,
-                            label: rating.toStringAsFixed(1)),
                     ],
                   ),
                 ),

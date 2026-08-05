@@ -189,16 +189,16 @@ class _CollectionCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      if (rating != null) ...[
+                        DarkBadge(
+                            icon: Icons.star,
+                            label: rating!.toStringAsFixed(1)),
+                        const SizedBox(height: 4),
+                      ],
                       badge,
                       if (seasonNumber != null) ...[
                         const SizedBox(height: 4),
                         _chip(Icons.live_tv, 'S$seasonNumber'),
-                      ],
-                      if (rating != null) ...[
-                        const SizedBox(height: 4),
-                        DarkBadge(
-                            icon: Icons.star,
-                            label: rating!.toStringAsFixed(1)),
                       ],
                     ],
                   ),

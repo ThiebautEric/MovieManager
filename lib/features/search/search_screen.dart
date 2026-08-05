@@ -224,14 +224,14 @@ class _ResultCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (medium != null) ...[
-                        MediumBadge(medium: medium!),
-                        const SizedBox(height: 4),
-                      ],
                       if (rating != null) ...[
                         DarkBadge(
                             icon: Icons.star,
                             label: rating!.toStringAsFixed(1)),
+                        const SizedBox(height: 4),
+                      ],
+                      if (medium != null) ...[
+                        MediumBadge(medium: medium!),
                         const SizedBox(height: 4),
                       ],
                       if (watched && !hasBand)

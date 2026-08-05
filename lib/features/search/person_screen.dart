@@ -384,14 +384,14 @@ class _FilmographyCard extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (c.medium != null) ...[
-                          MediumBadge(medium: c.medium!),
-                          const SizedBox(height: 4),
-                        ],
                         if (c.rating != null) ...[
                           DarkBadge(
                               icon: Icons.star,
                               label: c.rating!.toStringAsFixed(1)),
+                          const SizedBox(height: 4),
+                        ],
+                        if (c.medium != null) ...[
+                          MediumBadge(medium: c.medium!),
                           const SizedBox(height: 4),
                         ],
                         if (c.watched && c.watchedSeasons.isEmpty)
