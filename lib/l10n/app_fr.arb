@@ -218,6 +218,7 @@
   "personWatchedBadge": "Vu",
   "historyExportTooltip": "Exporter en CSV",
   "historyExportedSnack": "Historique exporté (historique.csv)",
+  "historySearchHint": "Rechercher dans l'historique…",
   "historyCsvHeader": "Numero;TmdbId;TypeMedia;Titre;TitreOriginal;NumSaison;NumEpisode;NomEpisode;Note;Date;Commentaire",
   "@historyCsvHeader": {
     "description": "En-tête des colonnes du CSV exporté (séparateur ;)"

@@ -96,6 +96,7 @@
   "personWatchedBadge": "Watched",
   "historyExportTooltip": "Export as CSV",
   "historyExportedSnack": "History exported (historique.csv)",
+  "historySearchHint": "Search history…",
   "historyCsvHeader": "Number;TmdbId;MediaType;Title;OriginalTitle;SeasonNumber;EpisodeNumber;EpisodeName;Rating;Date;Comment",
   "historyEmpty": "No viewings to display.\nAdd a movie or a season to your history (or adjust the filters).",
   "historyDayAbbrev": "d",
