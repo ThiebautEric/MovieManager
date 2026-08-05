@@ -311,42 +311,58 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
 
     final searchBar = Padding(
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 2),
-      child: TextField(
-        controller: _titleController,
-        onChanged: _onTitleChanged,
-        style: const TextStyle(fontSize: 13),
-        decoration: InputDecoration(
-          hintText: l10n.historySearchHint,
-          hintStyle: const TextStyle(fontSize: 13),
-          prefixIcon: const Icon(Icons.search, size: 18),
-          prefixIconConstraints:
-              const BoxConstraints(minWidth: 36, minHeight: 36),
-          suffixIcon: titleQuery.isNotEmpty
-              ? IconButton(
-                  icon: const Icon(Icons.clear, size: 16),
-                  onPressed: () {
-                    _titleController.clear();
-                    _onTitleChanged('');
-                  },
-                )
-              : null,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide.none,
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _titleController,
+              onChanged: _onTitleChanged,
+              style: const TextStyle(fontSize: 13),
+              decoration: InputDecoration(
+                hintText: l10n.historySearchHint,
+                hintStyle: const TextStyle(fontSize: 13),
+                prefixIcon: const Icon(Icons.search, size: 18),
+                prefixIconConstraints:
+                    const BoxConstraints(minWidth: 36, minHeight: 36),
+                suffixIcon: titleQuery.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, size: 16),
+                        onPressed: () {
+                          _titleController.clear();
+                          _onTitleChanged('');
+                        },
+                      )
+                    : null,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                isDense: true,
+              ),
+            ),
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide.none,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-          isDense: true,
-        ),
+          if (isEric) ...[
+            const SizedBox(width: 8),
+            FilterChip(
+              label: const Text('Sans disque',
+                  style: TextStyle(fontSize: 12)),
+              selected: _discFilter,
+              onSelected: (v) => setState(() => _discFilter = v),
+              visualDensity: VisualDensity.compact,
+            ),
+          ],
+        ],
       ),
     );
 
@@ -372,17 +388,6 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
                 films: films,
                 showRating: true,
               ),
-            ),
-          if (isEric)
-            IconButton(
-              tooltip: 'Sans DVD / Blu-ray',
-              icon: Icon(
-                Icons.album_outlined,
-                color: _discFilter
-                    ? Theme.of(context).colorScheme.primary
-                    : null,
-              ),
-              onPressed: () => setState(() => _discFilter = !_discFilter),
             ),
           const OriginalTitleButton(),
           const LanguageButton(),
