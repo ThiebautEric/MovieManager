@@ -29,7 +29,10 @@ import '../home/selected_media.dart';
 import 'collection_filter.dart';
 import 'filter_sheet.dart';
 
-final _historyTitleQueryProvider = StateProvider<String>((ref) => '');
+final _historyTitleQueryProvider = StateProvider<String>((ref) {
+  ref.keepAlive();
+  return '';
+});
 
 class CollectionScreen extends ConsumerStatefulWidget {
   const CollectionScreen({super.key});
