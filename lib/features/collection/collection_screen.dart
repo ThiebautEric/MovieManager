@@ -826,19 +826,16 @@ class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
 
   @override
   Widget build(BuildContext context) {
-    final showDvd = !widget.owned.contains(Medium.dvd);
-    final showBluray = !widget.owned.contains(Medium.bluray);
-    if (!showDvd && !showBluray) return const SizedBox.shrink();
+    if (widget.owned.isNotEmpty) return const SizedBox.shrink();
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(bottom: Radius.circular(8)),
       child: ColoredBox(
         color: Colors.black.withValues(alpha: 0.65),
         child: Row(
           children: [
-            if (showDvd) _btn(Medium.dvd, 'DVD'),
-            if (showDvd && showBluray)
-              Container(width: 1, height: 30, color: Colors.white24),
-            if (showBluray) _btn(Medium.bluray, 'BLU-RAY'),
+            _btn(Medium.dvd, 'DVD'),
+            Container(width: 1, height: 30, color: Colors.white24),
+            _btn(Medium.bluray, 'BLU-RAY'),
           ],
         ),
       ),
