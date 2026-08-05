@@ -47,57 +47,104 @@ class PhysicalCollectionScreen extends ConsumerWidget {
         if (entries.isEmpty) {
           return EmptyState(message: l10n.collEmpty);
         }
+
+        // Tri : année desc, puis titre asc à année égale ; sans année à la fin.
+        final sorted = [...entries]
+          ..sort((a, b) {
+            final ay = a.film.releaseYear;
+            final by = b.film.releaseYear;
+            if (ay == null && by == null) {
+              return a.film.title.compareTo(b.film.title);
+            }
+            if (ay == null) return 1;
+            if (by == null) return -1;
+            if (ay != by) return by.compareTo(ay);
+            return a.film.title.compareTo(b.film.title);
+          });
+
+        // Regroupement par année.
+        final groups = <({int? year, List<CollectionView> items})>[];
+        for (final e in sorted) {
+          final y = e.film.releaseYear;
+          if (groups.isEmpty || groups.last.year != y) {
+            groups.add((year: y, items: [e]));
+          } else {
+            groups.last.items.add(e);
+          }
+        }
+
+        const grid = SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 160,
+          childAspectRatio: 0.52,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        );
+
+        final slivers = <Widget>[];
+        for (final g in groups) {
+          slivers.add(SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 6),
+              child: Text(
+                g.year?.toString() ?? '—',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ));
+          slivers.add(SliverPadding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
+            sliver: SliverGrid(
+              gridDelegate: grid,
+              delegate: SliverChildBuilderDelegate(
+                (context, i) {
+                  final entry = g.items[i];
+                  final duration = entry.totalMinutes != null
+                      ? '${entry.isExactDuration ? '' : '≈'}${fmtDuration(entry.totalMinutes!)}'
+                      : null;
+                  return _CollectionCard(
+                    poster: entry.posterPath,
+                    title: resolveTitle(
+                      ref,
+                      tmdbId: entry.film.tmdbId,
+                      mediaType: entry.film.mediaType,
+                      title: entry.film.title,
+                      originalTitle: entry.film.originalTitle,
+                    ),
+                    subtitle: (entry.seasonNumber != null
+                            ? l10n.collSeasonLabel(entry.seasonNumber!)
+                            : entry.film.isMovie ? l10n.film : l10n.serie) +
+                        (duration != null ? ' · $duration' : ''),
+                    badge: MediumBadge(medium: entry.medium),
+                    seasonNumber: entry.seasonNumber,
+                    dateLabel: entry.addedAt != null
+                        ? dateFmt.format(entry.addedAt!)
+                        : null,
+                    rating: ratingBySeason[
+                        '${entry.film.mediaKey}|${entry.seasonNumber}'],
+                    onTap: () => openMedia(
+                      context,
+                      ref,
+                      type: entry.film.mediaType,
+                      id: entry.film.tmdbId,
+                      title: entry.film.title,
+                      posterPath: entry.film.posterPath,
+                    ),
+                  );
+                },
+                childCount: g.items.length,
+              ),
+            ),
+          ));
+        }
+        slivers.add(const SliverToBoxAdapter(child: SizedBox(height: 16)));
+
         return KeyboardScroll(
           builder: (ctrl) => RefreshIndicator(
             onRefresh: () => ref.read(libraryRepositoryProvider).refresh(),
-            child: GridView.builder(
-              controller: ctrl,
-              padding: const EdgeInsets.all(12),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 160,
-                childAspectRatio: 0.52,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-              ),
-              itemCount: entries.length,
-              itemBuilder: (context, i) {
-                final entry = entries[i];
-                final duration = entry.totalMinutes != null
-                    ? '${entry.isExactDuration ? '' : '≈'}${fmtDuration(entry.totalMinutes!)}'
-                    : null;
-                return _CollectionCard(
-                  poster: entry.posterPath,
-                  title: resolveTitle(
-                    ref,
-                    tmdbId: entry.film.tmdbId,
-                    mediaType: entry.film.mediaType,
-                    title: entry.film.title,
-                    originalTitle: entry.film.originalTitle,
-                  ),
-                  subtitle: (entry.seasonNumber != null
-                          ? '${l10n.collSeasonLabel(entry.seasonNumber!)}'
-                              '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}'
-                          : '${entry.film.isMovie ? l10n.film : l10n.serie}'
-                              '${entry.film.releaseYear != null ? ' · ${entry.film.releaseYear}' : ''}') +
-                      (duration != null ? ' · $duration' : ''),
-                  badge: MediumBadge(medium: entry.medium),
-                  seasonNumber: entry.seasonNumber,
-                  dateLabel: entry.addedAt != null
-                      ? dateFmt.format(entry.addedAt!)
-                      : null,
-                  rating: ratingBySeason[
-                      '${entry.film.mediaKey}|${entry.seasonNumber}'],
-                  onTap: () => openMedia(
-                    context,
-                    ref,
-                    type: entry.film.mediaType,
-                    id: entry.film.tmdbId,
-                    title: entry.film.title,
-                    posterPath: entry.film.posterPath,
-                  ),
-                );
-              },
-            ),
+            child: CustomScrollView(controller: ctrl, slivers: slivers),
           ),
         );
       },
