@@ -184,6 +184,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           dateLabel: dateFmt.format(e.watchedAt),
           mediums: mediumsFor(e),
           watchedSeasons: watchedSeasonsByKey[e.film.mediaKey] ?? const {},
+          showBulk: isEric && _discFilter,
           onTap: () => openMedia(
             context,
             ref,
@@ -615,6 +616,7 @@ class _HistoryCard extends ConsumerWidget {
     required this.dateLabel,
     required this.mediums,
     required this.watchedSeasons,
+    required this.showBulk,
     required this.onTap,
   });
 
@@ -626,6 +628,7 @@ class _HistoryCard extends ConsumerWidget {
 
   /// Toutes les saisons vues pour cette série (depuis l'historique complet).
   final Set<int> watchedSeasons;
+  final bool showBulk;
   final VoidCallback onTap;
 
   @override
@@ -652,8 +655,6 @@ class _HistoryCard extends ConsumerWidget {
                 ?.year ??
             event.film.releaseYear)
         : event.film.releaseYear;
-    final isEric =
-        ref.watch(currentUserProvider)?.email == 'thiebaut.eric@laposte.net';
     final rating = event.rating;
     final title = resolveTitle(
       ref,
@@ -716,7 +717,7 @@ class _HistoryCard extends ConsumerWidget {
                     ],
                   ),
                 ),
-                if (isEric)
+                if (showBulk)
                   Positioned(
                     bottom: 0,
                     left: 0,
