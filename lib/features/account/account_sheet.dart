@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../core/config/app_version.dart';
 import '../../core/supabase/supabase_providers.dart';
 import '../auth/auth_controller.dart';
 
@@ -166,6 +167,12 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
                 Navigator.of(context).pop();
                 ref.read(authControllerProvider).signOut();
               },
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'v$kDeployVersion',
+              textAlign: TextAlign.center,
+              style: tt.bodySmall?.copyWith(color: cs.outlineVariant),
             ),
           ],
         ),
