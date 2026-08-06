@@ -344,70 +344,79 @@ class _SideRail extends StatelessWidget {
       null => (null, ''),
     };
 
-    return NavigationRail(
-      selectedIndex: index,
-      onDestinationSelected: onSelect,
-      labelType: NavigationRailLabelType.all,
-      leading: showAccount
-          ? const Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: AccountButton(),
-            )
-          : null,
-      trailing: Expanded(
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (top != null) ...[
-                  const Divider(),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: SizedBox(
-                      width: 64,
-                      height: 96,
-                      child: PosterImage(posterPath: poster, size: 'w185'),
+    return Column(
+      children: [
+        Expanded(
+          child: NavigationRail(
+            selectedIndex: index,
+            onDestinationSelected: onSelect,
+            labelType: NavigationRailLabelType.all,
+            leading: showAccount
+                ? const Padding(
+                    padding: EdgeInsets.only(top: 8),
+                    child: AccountButton(),
+                  )
+                : null,
+            trailing: top == null
+                ? null
+                : Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Divider(),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: SizedBox(
+                                width: 64,
+                                height: 96,
+                                child: PosterImage(posterPath: poster, size: 'w185'),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            SizedBox(
+                              width: 72,
+                              child: Text(
+                                label,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: theme.textTheme.labelSmall,
+                              ),
+                            ),
+                            IconButton(
+                              tooltip: context.l10n.navCloseDetail,
+                              visualDensity: VisualDensity.compact,
+                              icon: const Icon(Icons.close, size: 18),
+                              onPressed: onCloseDetail,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  SizedBox(
-                    width: 72,
-                    child: Text(
-                      label,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.labelSmall,
-                    ),
-                  ),
-                  IconButton(
-                    tooltip: context.l10n.navCloseDetail,
-                    visualDensity: VisualDensity.compact,
-                    icon: const Icon(Icons.close, size: 18),
-                    onPressed: onCloseDetail,
-                  ),
-                ],
-                Text(
-                  'v$kDeployVersion',
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
+            destinations: destinations
+                .map((d) => NavigationRailDestination(
+                      icon: d.icon,
+                      selectedIcon: d.selectedIcon ?? d.icon,
+                      label: Text(d.label),
+                    ))
+                .toList(),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Text(
+            'v$kDeployVersion',
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
         ),
-      ),
-      destinations: destinations
-          .map((d) => NavigationRailDestination(
-                icon: d.icon,
-                selectedIcon: d.selectedIcon ?? d.icon,
-                label: Text(d.label),
-              ))
-          .toList(),
+      ],
     );
   }
 }
