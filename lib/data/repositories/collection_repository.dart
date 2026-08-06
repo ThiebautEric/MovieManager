@@ -85,6 +85,14 @@ abstract class LibraryRepository {
     int? episodeAirYear,
   });
 
+  /// Stocke la somme exacte des runtimes d'épisodes dans film_seasons.
+  /// N'est appelé que si TOUS les épisodes TMDB ont un runtime connu.
+  Future<void> backfillSeasonRuntime(
+    String filmId,
+    int seasonNumber,
+    int runtimeMinutes,
+  );
+
   /// Resynchronise avec la source de vérité (autres appareils).
   Future<void> refresh();
 
@@ -438,6 +446,38 @@ class SupabaseLibraryRepository implements LibraryRepository {
           )
         else
           e,
+    ];
+    _rebuild();
+  }
+
+  @override
+  Future<void> backfillSeasonRuntime(
+    String filmId,
+    int seasonNumber,
+    int runtimeMinutes,
+  ) async {
+    if (readOnly) return;
+    await _client
+        .from('film_seasons')
+        .update({'runtime_minutes': runtimeMinutes})
+        .eq('film_id', filmId)
+        .eq('season_number', seasonNumber)
+        .eq('user_id', _userId);
+    _seasons = [
+      for (final s in _seasons)
+        if (s.filmId == filmId && s.seasonNumber == seasonNumber)
+          FilmSeason(
+            id: s.id,
+            filmId: s.filmId,
+            seasonNumber: s.seasonNumber,
+            name: s.name,
+            posterPath: s.posterPath,
+            airYear: s.airYear,
+            episodeCount: s.episodeCount,
+            runtimeMinutes: runtimeMinutes,
+          )
+        else
+          s,
     ];
     _rebuild();
   }
@@ -908,6 +948,32 @@ class LocalLibraryRepository implements LibraryRepository {
           e,
     ];
     await _persistCollection();
+    _emit();
+  }
+
+  @override
+  Future<void> backfillSeasonRuntime(
+    String filmId,
+    int seasonNumber,
+    int runtimeMinutes,
+  ) async {
+    _seasons = [
+      for (final s in _seasons)
+        if (s.filmId == filmId && s.seasonNumber == seasonNumber)
+          FilmSeason(
+            id: s.id,
+            filmId: s.filmId,
+            seasonNumber: s.seasonNumber,
+            name: s.name,
+            posterPath: s.posterPath,
+            airYear: s.airYear,
+            episodeCount: s.episodeCount,
+            runtimeMinutes: runtimeMinutes,
+          )
+        else
+          s,
+    ];
+    await _persistSeasons();
     _emit();
   }
 

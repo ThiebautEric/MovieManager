@@ -139,48 +139,9 @@ class PhysicalCollectionScreen extends ConsumerWidget {
               delegate: SliverChildBuilderDelegate(
                 (context, i) {
                   final entry = g.items[i];
-                  // Durée : stockée en base → somme épisodes TMDB → runtime×count.
-                  int? totalMin = entry.totalMinutes;
-                  bool exact = entry.isExactDuration;
-                  if (totalMin == null && entry.seasonNumber != null) {
-                    // Fallback 1 : somme des runtimes d'épisodes TMDB.
-                    final eps = ref
-                        .watch(seasonEpisodesProvider(
-                            (id: entry.film.tmdbId,
-                             season: entry.seasonNumber!)))
-                        .value;
-                    if (eps != null && eps.isNotEmpty) {
-                      if (entry.episodeNumber != null) {
-                        totalMin = eps
-                            .where((e) => e.episodeNumber == entry.episodeNumber)
-                            .firstOrNull
-                            ?.runtime;
-                      } else {
-                        final sum = eps.fold<int>(
-                            0, (acc, e) => acc + (e.runtime ?? 0));
-                        if (sum > 0) { totalMin = sum; exact = true; }
-                      }
-                    }
-                    // Fallback 2 : runtime typique × nb épisodes (mediaDetails).
-                    if (totalMin == null && entry.episodeNumber == null) {
-                      final details = ref
-                          .watch(mediaDetailsProvider(
-                              (id: entry.film.tmdbId,
-                               type: entry.film.mediaType)))
-                          .value;
-                      final rt = details?.runtime;
-                      final season = details?.seasons
-                          .where((s) => s.seasonNumber == entry.seasonNumber)
-                          .firstOrNull;
-                      final count = season?.episodeCount;
-                      if (rt != null && rt > 0 && count != null && count > 0) {
-                        totalMin = rt * count;
-                        exact = false;
-                      }
-                    }
-                  }
+                  final totalMin = entry.totalMinutes;
                   final duration = totalMin != null
-                      ? '${exact ? '' : '≈'}${fmtDuration(totalMin)}'
+                      ? fmtDuration(totalMin)
                       : null;
                   return _CollectionCard(
                     poster: entry.posterPath,
