@@ -63,7 +63,8 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
 
     return Padding(
       padding: EdgeInsets.fromLTRB(24, 16, 24, 24 + bottom),
-      child: Form(
+      child: SingleChildScrollView(
+        child: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -172,9 +173,10 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
             Text(
               'v$kDeployVersion',
               textAlign: TextAlign.center,
-              style: tt.bodySmall?.copyWith(color: cs.outlineVariant),
+              style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
             ),
           ],
+        ),
         ),
       ),
     );
