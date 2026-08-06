@@ -639,19 +639,21 @@ class _HistoryCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final isSeason = event.seasonNumber != null;
     final isSeasonOnly = isSeason && event.episodeNumber == null;
-    final tmdbDetails = isSeasonOnly
+    // Chargé pour toutes les entrées de saison (saison entière ou épisode
+    // individuel) afin d'afficher l'année correcte de la saison.
+    final tmdbDetails = isSeason
         ? ref
             .watch(mediaDetailsProvider(
                 (id: event.film.tmdbId, type: event.film.mediaType)))
             .value
         : null;
-    final tmdbSeasons = tmdbDetails != null
+    final tmdbSeasons = isSeasonOnly && tmdbDetails != null
         ? <int>{
             for (final s in tmdbDetails.seasons)
               if (s.seasonNumber > 0) s.seasonNumber
           }
         : const <int>{};
-    final seasonYear = isSeasonOnly
+    final seasonYear = isSeason
         ? (tmdbDetails?.seasons
                 .where((s) => s.seasonNumber == event.seasonNumber)
                 .firstOrNull
