@@ -83,10 +83,11 @@ class CollectionView {
   /// Affiche : celle de la saison si disponible, sinon celle du film.
   String? get posterPath => season?.posterPath ?? film.posterPath;
 
-  /// Durée totale en minutes : le film, ou le cumul de la saison — somme
-  /// exacte des épisodes si connue, sinon estimation épisodes × durée.
+  /// Durée totale en minutes : le film, la durée d'épisode (individuel),
+  /// ou le cumul de la saison — somme exacte si connue, sinon estimation.
   int? get totalMinutes {
     if (film.isMovie) return film.runtime;
+    if (episodeNumber != null) return film.runtime; // durée typique par épisode
     final exact = season?.runtimeMinutes;
     if (exact != null) return exact;
     final eps = season?.episodeCount;
@@ -96,5 +97,6 @@ class CollectionView {
   }
 
   /// Vrai si [totalMinutes] est une somme exacte (pas une estimation « ≈ »).
-  bool get isExactDuration => film.isMovie || season?.runtimeMinutes != null;
+  bool get isExactDuration =>
+      film.isMovie || (episodeNumber == null && season?.runtimeMinutes != null);
 }
