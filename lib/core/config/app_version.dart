@@ -1,2 +1,2 @@
 /// Numéro de déploiement — à incrémenter manuellement à chaque push.
-const int kDeployVersion = 7;
+const int kDeployVersion = 8;

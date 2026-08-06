@@ -16,7 +16,6 @@ import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/dark_badge.dart';
 import '../../widgets/owned_format_badge.dart';
-import '../../widgets/card_title.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
@@ -149,6 +148,7 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                       title: entry.film.title,
                       originalTitle: entry.film.originalTitle,
                     ),
+                    year: effectiveYear(entry),
                     subtitle: (entry.episodeNumber != null
                             ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber!, episodeNumber: entry.episodeNumber!, stored: null)}'
                             : entry.seasonNumber != null
@@ -233,6 +233,7 @@ class _CollectionCard extends StatelessWidget {
   const _CollectionCard({
     required this.poster,
     required this.title,
+    required this.year,
     required this.subtitle,
     required this.badge,
     required this.seasonNumber,
@@ -243,6 +244,7 @@ class _CollectionCard extends StatelessWidget {
 
   final String? poster;
   final String title;
+  final int? year;
   final String subtitle;
   final Widget badge;
   final int? seasonNumber;
@@ -294,7 +296,22 @@ class _CollectionCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          CardTitle(title, style: theme.textTheme.bodyMedium),
+          Text.rich(
+            TextSpan(
+              text: title,
+              style: theme.textTheme.bodyMedium,
+              children: [
+                if (year != null)
+                  TextSpan(
+                    text: '  ($year)',
+                    style: theme.textTheme.labelSmall
+                        ?.copyWith(color: theme.colorScheme.outline),
+                  ),
+              ],
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
           Text(subtitle, style: theme.textTheme.bodySmall),
           if (dateLabel != null)
             Row(
