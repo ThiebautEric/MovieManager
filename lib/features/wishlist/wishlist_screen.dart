@@ -218,7 +218,7 @@ class _WishlistTile extends ConsumerWidget {
                     Text(
                       '${film.isMovie ? l10n.film : l10n.serie}'
                       '${item.seasonNumber != null ? ' · ${l10n.collSeasonLabel(item.seasonNumber!)}' : ''}'
-                      '${item.addedAt != null ? ' · ${l10n.wishlistAddedOn(dateFmt.format(item.addedAt!))}' : ''}',
+                      '${item.addedAt != null ? ' · ${l10n.wishlistAddedOn(dateFmt.format(item.addedAt!.toLocal()))}' : ''}',
                       style: theme.textTheme.bodySmall
                           ?.copyWith(color: theme.colorScheme.outline),
                     ),

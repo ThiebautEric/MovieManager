@@ -163,7 +163,7 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                     badge: MediumBadge(medium: entry.medium),
                     seasonNumber: entry.seasonNumber,
                     dateLabel: entry.addedAt != null
-                        ? dateFmt.format(entry.addedAt!)
+                        ? dateFmt.format(entry.addedAt!.toLocal())
                         : null,
                     rating: ratingBySeason[
                         '${entry.film.mediaKey}|${entry.seasonNumber}'],

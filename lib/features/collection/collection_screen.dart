@@ -185,7 +185,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
 
     Widget card(HistoryView e) => _HistoryCard(
           event: e,
-          dateLabel: dateFmt.format(e.watchedAt),
+          dateLabel: dateFmt.format(e.watchedAt.toLocal()),
           mediums: mediumsFor(e),
           watchedSeasons: watchedSeasonsByKey[e.film.mediaKey] ?? const {},
           showBulk: isEric && _discFilter,

@@ -219,7 +219,11 @@ class DateRow extends StatelessWidget {
               firstDate: DateTime(1900),
               lastDate: now,
             );
-            if (picked != null) onPick(picked);
+            // UTC midi : évite le glissement d'un jour lors de la conversion
+            // minuit heure locale → UTC (ex. 00h00 UTC+2 → 22h00 UTC la veille).
+            if (picked != null) {
+              onPick(DateTime.utc(picked.year, picked.month, picked.day, 12));
+            }
           },
           child: Text(context.l10n.detailsEditButton),
         ),
