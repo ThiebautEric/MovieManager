@@ -12,6 +12,8 @@ class CollectionEntry {
     this.historyId,
     required this.medium,
     this.addedAt,
+    this.seasonAirYear,
+    this.episodeAirYear,
   });
 
   final String? id;
@@ -23,6 +25,10 @@ class CollectionEntry {
   final String? historyId;
   final Medium medium;
   final DateTime? addedAt;
+  /// Année de diffusion TMDB de la saison (pour tri/groupement, sans appel TMDB).
+  final int? seasonAirYear;
+  /// Année de diffusion TMDB de l'épisode (priorité sur [seasonAirYear]).
+  final int? episodeAirYear;
 
   factory CollectionEntry.fromJson(Map<String, dynamic> json) => CollectionEntry(
         id: json['id'] as String?,
@@ -34,6 +40,8 @@ class CollectionEntry {
         addedAt: json['added_at'] != null
             ? DateTime.tryParse(json['added_at'] as String)
             : null,
+        seasonAirYear: (json['season_air_year'] as num?)?.toInt(),
+        episodeAirYear: (json['episode_air_year'] as num?)?.toInt(),
       );
 
   Map<String, dynamic> toUpsertJson() => {
@@ -43,6 +51,8 @@ class CollectionEntry {
         if (historyId != null) 'history_id': historyId,
         'medium': medium.name,
         if (addedAt != null) 'added_at': addedAt!.toIso8601String(),
+        if (seasonAirYear != null) 'season_air_year': seasonAirYear,
+        if (episodeAirYear != null) 'episode_air_year': episodeAirYear,
       };
 
   Map<String, dynamic> toFullJson() => {...toUpsertJson(), 'id': id};
@@ -67,6 +77,8 @@ class CollectionView {
   int? get episodeNumber => entry.episodeNumber;
   String? get historyId => entry.historyId;
   DateTime? get addedAt => entry.addedAt;
+  int? get seasonAirYear => entry.seasonAirYear;
+  int? get episodeAirYear => entry.episodeAirYear;
 
   /// Affiche : celle de la saison si disponible, sinon celle du film.
   String? get posterPath => season?.posterPath ?? film.posterPath;

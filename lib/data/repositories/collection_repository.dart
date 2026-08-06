@@ -33,6 +33,8 @@ abstract class LibraryRepository {
     String? historyId,
     required Medium medium,
     DateTime? addedAt,
+    int? seasonAirYear,
+    int? episodeAirYear,
   });
 
   Future<void> addToHistory(
@@ -74,6 +76,14 @@ abstract class LibraryRepository {
   /// film s'il n'est pas déjà référencé. Sert au « backfill » des anciennes
   /// entrées à l'ouverture de leur fiche.
   Future<void> backfillFilm(Film film);
+
+  /// Met à jour les années d'air TMDB d'une entrée de collection existante.
+  /// Sert au backfill one-shot des entrées créées avant v9.
+  Future<void> backfillCollectionAirYears(
+    String entryId, {
+    int? seasonAirYear,
+    int? episodeAirYear,
+  });
 
   /// Resynchronise avec la source de vérité (autres appareils).
   Future<void> refresh();
@@ -359,6 +369,8 @@ class SupabaseLibraryRepository implements LibraryRepository {
     String? historyId,
     required Medium medium,
     DateTime? addedAt,
+    int? seasonAirYear,
+    int? episodeAirYear,
   }) async {
     _assertWritable();
     final saved = await _upsertFilm(film);
@@ -382,6 +394,8 @@ class SupabaseLibraryRepository implements LibraryRepository {
       historyId: historyId,
       medium: medium,
       addedAt: addedAt ?? DateTime.now(),
+      seasonAirYear: seasonAirYear,
+      episodeAirYear: episodeAirYear,
     );
     final row = await _client
         .from('collection')
@@ -392,6 +406,38 @@ class SupabaseLibraryRepository implements LibraryRepository {
     _collection = [
       ..._collection.where((e) => e.id != saved2.id),
       saved2,
+    ];
+    _rebuild();
+  }
+
+  @override
+  Future<void> backfillCollectionAirYears(
+    String entryId, {
+    int? seasonAirYear,
+    int? episodeAirYear,
+  }) async {
+    if (readOnly) return;
+    if (seasonAirYear == null && episodeAirYear == null) return;
+    await _client.from('collection').update({
+      if (seasonAirYear != null) 'season_air_year': seasonAirYear,
+      if (episodeAirYear != null) 'episode_air_year': episodeAirYear,
+    }).eq('id', entryId).eq('user_id', _userId);
+    _collection = [
+      for (final e in _collection)
+        if (e.id == entryId)
+          CollectionEntry(
+            id: e.id,
+            filmId: e.filmId,
+            seasonNumber: e.seasonNumber,
+            episodeNumber: e.episodeNumber,
+            historyId: e.historyId,
+            medium: e.medium,
+            addedAt: e.addedAt,
+            seasonAirYear: seasonAirYear ?? e.seasonAirYear,
+            episodeAirYear: episodeAirYear ?? e.episodeAirYear,
+          )
+        else
+          e,
     ];
     _rebuild();
   }
@@ -805,6 +851,8 @@ class LocalLibraryRepository implements LibraryRepository {
     String? historyId,
     required Medium medium,
     DateTime? addedAt,
+    int? seasonAirYear,
+    int? episodeAirYear,
   }) async {
     final saved = _ensureFilm(film);
     if (season != null) _ensureSeason(saved, season);
@@ -827,9 +875,39 @@ class LocalLibraryRepository implements LibraryRepository {
         historyId: historyId,
         medium: medium,
         addedAt: addedAt ?? DateTime.now(),
+        seasonAirYear: seasonAirYear,
+        episodeAirYear: episodeAirYear,
       ),
     ];
     await Future.wait([_persistFilms(), _persistSeasons(), _persistCollection()]);
+    _emit();
+  }
+
+  @override
+  Future<void> backfillCollectionAirYears(
+    String entryId, {
+    int? seasonAirYear,
+    int? episodeAirYear,
+  }) async {
+    if (seasonAirYear == null && episodeAirYear == null) return;
+    _collection = [
+      for (final e in _collection)
+        if (e.id == entryId)
+          CollectionEntry(
+            id: e.id,
+            filmId: e.filmId,
+            seasonNumber: e.seasonNumber,
+            episodeNumber: e.episodeNumber,
+            historyId: e.historyId,
+            medium: e.medium,
+            addedAt: e.addedAt,
+            seasonAirYear: seasonAirYear ?? e.seasonAirYear,
+            episodeAirYear: episodeAirYear ?? e.episodeAirYear,
+          )
+        else
+          e,
+    ];
+    await _persistCollection();
     _emit();
   }
 

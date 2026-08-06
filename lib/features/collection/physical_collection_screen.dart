@@ -40,10 +40,13 @@ class PhysicalCollectionScreen extends ConsumerWidget {
     final ratingBySeason = ref.watch(ratingByKeySeasonProvider);
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
 
-    // Année effective d'une entrée : épisode → air_date TMDB de l'épisode ;
-    // saison → air_date TMDB de la saison ; film → releaseYear.
+    // Année effective d'une entrée : valeur stockée en base (rapide) ou TMDB.
     int? effectiveYear(CollectionView e) {
       if (e.film.isMovie) return e.film.releaseYear;
+      // Valeurs pré-calculées stockées dans la collection (backfill v9).
+      if (e.episodeAirYear != null) return e.episodeAirYear;
+      if (e.seasonAirYear != null) return e.seasonAirYear;
+      // Fallback TMDB (entrées antérieures au backfill).
       if (e.episodeNumber != null && e.seasonNumber != null) {
         final eps = ref
             .watch(seasonEpisodesProvider(

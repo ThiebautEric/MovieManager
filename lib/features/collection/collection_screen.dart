@@ -842,6 +842,31 @@ class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
     if (_loading.contains(m)) return;
     setState(() => _loading.add(m));
     try {
+      final film = widget.event.film;
+      final sn = widget.event.seasonNumber;
+      final en = widget.event.episodeNumber;
+      int? seasonAirYear;
+      int? episodeAirYear;
+      if (sn != null) {
+        if (en != null) {
+          try {
+            final eps = await ref.read(
+                seasonEpisodesProvider((id: film.tmdbId, season: sn)).future);
+            episodeAirYear =
+                eps.where((ep) => ep.episodeNumber == en).firstOrNull?.airYear;
+          } catch (_) {}
+        } else {
+          try {
+            final details = await ref.read(mediaDetailsProvider(
+                    (id: film.tmdbId, type: film.mediaType))
+                .future);
+            seasonAirYear = details.seasons
+                .where((s) => s.seasonNumber == sn)
+                .firstOrNull
+                ?.year;
+          } catch (_) {}
+        }
+      }
       await ref.read(libraryRepositoryProvider).addToCollection(
             widget.event.film,
             season: widget.event.season,
@@ -849,6 +874,8 @@ class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
             historyId: widget.event.id,
             medium: m,
             addedAt: DateTime.now(),
+            seasonAirYear: seasonAirYear,
+            episodeAirYear: episodeAirYear,
           );
     } finally {
       if (mounted) setState(() => _loading.remove(m));

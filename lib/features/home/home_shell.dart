@@ -7,6 +7,9 @@ import '../../core/l10n/l10n.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../tmdb/models/media_details.dart';
+import '../../tmdb/models/season_episodes.dart';
+import '../../tmdb/tmdb_client.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/poster_image.dart';
@@ -47,6 +50,9 @@ class _HomeShellState extends ConsumerState<HomeShell>
   /// changement de version déclenche un rafraîchissement complet **une fois**.
   static const _backfillVersion = 5;
   static const _backfillKey = 'metadata_backfill_version';
+  /// Clé de suivi du backfill one-shot des années d'air (season_air_year /
+  /// episode_air_year) sur les entrées de collection antérieures à v9.
+  static const _airYearBackfillKey = 'collection_air_year_backfill_v1';
 
   @override
   void initState() {
@@ -104,10 +110,93 @@ class _HomeShellState extends ConsumerState<HomeShell>
       // Marque cette version comme traitée : le refresh complet ne se relancera
       // plus (les futurs titres vides restent rattrapés ci-dessus).
       if (fullRefresh) await prefs.setInt(_backfillKey, _backfillVersion);
+
+      // Phase 2 : backfill one-shot des années d'air pour les entrées de
+      // collection créées avant v9 (qui n'ont pas season_air_year /
+      // episode_air_year renseignés).
+      final doneAirYear = prefs.getBool(_airYearBackfillKey) ?? false;
+      if (!doneAirYear) {
+        await _backfillAirYears(repo);
+        if (mounted) await prefs.setBool(_airYearBackfillKey, true);
+      }
     } catch (_) {
       // pas connecté / données pas prêtes : on réessaiera au prochain lancement.
     } finally {
       _backfilling = false;
+    }
+  }
+
+  Future<void> _backfillAirYears(LibraryRepository repo) async {
+    final tmdb = ref.read(tmdbClientProvider);
+    final coll = await ref.read(collectionStreamProvider.future);
+
+    // Entrées saison (sans épisode) où season_air_year est nul.
+    final needsSeason = coll
+        .where((e) =>
+            e.seasonNumber != null &&
+            e.episodeNumber == null &&
+            e.seasonAirYear == null &&
+            e.id != null)
+        .toList();
+
+    // Regrouper par tmdbId pour n'appeler details() qu'une fois par série.
+    final byShow = <int, List<({String id, int seasonNumber})>>{};
+    for (final e in needsSeason) {
+      (byShow[e.film.tmdbId] ??= [])
+          .add((id: e.id!, seasonNumber: e.seasonNumber!));
+    }
+    for (final entry in byShow.entries) {
+      if (!mounted) return;
+      try {
+        final MediaDetails d = await tmdb.details(entry.key, 'tv');
+        for (final item in entry.value) {
+          final SeasonInfo? season = d.seasons
+              .where((s) => s.seasonNumber == item.seasonNumber)
+              .firstOrNull;
+          final sYear = season?.year;
+          if (sYear != null) {
+            await repo.backfillCollectionAirYears(item.id,
+                seasonAirYear: sYear);
+          }
+        }
+      } catch (_) {}
+      await Future.delayed(const Duration(milliseconds: 80));
+    }
+
+    // Entrées épisode où episode_air_year est nul.
+    final needsEpisode = coll
+        .where((e) =>
+            e.episodeNumber != null &&
+            e.seasonNumber != null &&
+            e.episodeAirYear == null &&
+            e.id != null)
+        .toList();
+
+    // Regrouper par (tmdbId, seasonNumber) pour n'appeler seasonEpisodes()
+    // qu'une fois par saison.
+    final bySeasonKey = <(int, int), List<({String id, int episodeNumber})>>{};
+    for (final e in needsEpisode) {
+      final key = (e.film.tmdbId, e.seasonNumber!);
+      (bySeasonKey[key] ??= [])
+          .add((id: e.id!, episodeNumber: e.episodeNumber!));
+    }
+    for (final entry in bySeasonKey.entries) {
+      if (!mounted) return;
+      try {
+        final List<EpisodeInfo> episodes =
+            await tmdb.seasonEpisodes(entry.key.$1, entry.key.$2);
+        for (final item in entry.value) {
+          final EpisodeInfo? ep = episodes
+              .where((ep) => ep.episodeNumber == item.episodeNumber)
+              .firstOrNull;
+          final epYear = ep?.airYear;
+          if (epYear != null) {
+            await repo.backfillCollectionAirYears(item.id,
+                episodeAirYear: epYear);
+          }
+        }
+      } catch (_) {}
+      await Future.delayed(const Duration(milliseconds: 80));
     }
   }
 
