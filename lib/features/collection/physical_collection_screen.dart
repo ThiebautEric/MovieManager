@@ -139,8 +139,30 @@ class PhysicalCollectionScreen extends ConsumerWidget {
               delegate: SliverChildBuilderDelegate(
                 (context, i) {
                   final entry = g.items[i];
-                  final duration = entry.totalMinutes != null
-                      ? '${entry.isExactDuration ? '' : '≈'}${fmtDuration(entry.totalMinutes!)}'
+                  // Durée : valeur stockée en priorité, sinon TMDB (épisodes).
+                  int? totalMin = entry.totalMinutes;
+                  bool exact = entry.isExactDuration;
+                  if (totalMin == null && entry.seasonNumber != null) {
+                    final eps = ref
+                        .watch(seasonEpisodesProvider(
+                            (id: entry.film.tmdbId, season: entry.seasonNumber!)))
+                        .value;
+                    if (eps != null && eps.isNotEmpty) {
+                      if (entry.episodeNumber != null) {
+                        totalMin = eps
+                            .where((e) => e.episodeNumber == entry.episodeNumber)
+                            .firstOrNull
+                            ?.runtime;
+                      } else {
+                        final sum = eps.fold<int>(
+                            0, (acc, e) => acc + (e.runtime ?? 0));
+                        if (sum > 0) totalMin = sum;
+                        exact = true;
+                      }
+                    }
+                  }
+                  final duration = totalMin != null
+                      ? '${exact ? '' : '≈'}${fmtDuration(totalMin)}'
                       : null;
                   return _CollectionCard(
                     poster: entry.posterPath,
