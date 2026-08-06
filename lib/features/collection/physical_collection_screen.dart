@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/l10n/l10n.dart';
 import '../../core/prefs/original_titles_controller.dart';
+import '../../tmdb/tmdb_providers.dart';
 import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
 import '../../data/repositories/collection_repository.dart';
@@ -40,6 +41,33 @@ class PhysicalCollectionScreen extends ConsumerWidget {
     final ratingBySeason = ref.watch(ratingByKeySeasonProvider);
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
 
+    // Année effective d'une entrée : épisode → air_date TMDB de l'épisode ;
+    // saison → air_date TMDB de la saison ; film → releaseYear.
+    int? effectiveYear(CollectionView e) {
+      if (e.film.isMovie) return e.film.releaseYear;
+      if (e.episodeNumber != null && e.seasonNumber != null) {
+        final eps = ref
+            .watch(seasonEpisodesProvider(
+                (id: e.film.tmdbId, season: e.seasonNumber!)))
+            .value;
+        final ep = eps
+            ?.where((ep) => ep.episodeNumber == e.episodeNumber)
+            .firstOrNull;
+        if (ep?.airYear != null) return ep!.airYear;
+      }
+      final details = ref
+          .watch(
+              mediaDetailsProvider((id: e.film.tmdbId, type: e.film.mediaType)))
+          .value;
+      if (details != null && e.seasonNumber != null) {
+        final season = details.seasons
+            .where((s) => s.seasonNumber == e.seasonNumber)
+            .firstOrNull;
+        if (season?.year != null) return season!.year;
+      }
+      return e.film.releaseYear;
+    }
+
     final content = async.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
@@ -51,8 +79,8 @@ class PhysicalCollectionScreen extends ConsumerWidget {
         // Tri : année desc, titre asc, saison asc, épisode asc.
         final sorted = [...entries]
           ..sort((a, b) {
-            final ay = a.film.releaseYear;
-            final by = b.film.releaseYear;
+            final ay = effectiveYear(a);
+            final by = effectiveYear(b);
             if (ay == null && by == null) {
               final t = a.film.title.compareTo(b.film.title);
               if (t != 0) return t;
@@ -73,7 +101,7 @@ class PhysicalCollectionScreen extends ConsumerWidget {
         // Regroupement par année.
         final groups = <({int? year, List<CollectionView> items})>[];
         for (final e in sorted) {
-          final y = e.film.releaseYear;
+          final y = effectiveYear(e);
           if (groups.isEmpty || groups.last.year != y) {
             groups.add((year: y, items: [e]));
           } else {
