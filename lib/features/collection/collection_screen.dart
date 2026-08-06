@@ -172,11 +172,14 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     }
 
     List<Medium> mediumsFor(HistoryView e) {
-      final set = owned['${e.film.mediaKey}|${e.seasonNumber}|${e.episodeNumber}'];
-      if (set == null) return const [];
-      return Medium.values.where(set.contains).toList(); // ordre dvd/bluray/digital
+      // Priorité : clé par visionnage si dispo, sinon clé (film|saison|épisode).
+      final histSet = e.id != null ? owned['hist:${e.id}'] : null;
+      final keySet = owned['${e.film.mediaKey}|${e.seasonNumber}|${e.episodeNumber}'];
+      final combined = {...?histSet, ...?keySet};
+      return Medium.values.where(combined.contains).toList();
     }
     bool inColl(HistoryView e) =>
+        (e.id != null && owned.containsKey('hist:${e.id}')) ||
         owned.containsKey('${e.film.mediaKey}|${e.seasonNumber}|${e.episodeNumber}');
 
     Widget card(HistoryView e) => _HistoryCard(
@@ -821,6 +824,7 @@ class _BulkAddBarState extends ConsumerState<_BulkAddBar> {
             widget.event.film,
             season: widget.event.season,
             episodeNumber: widget.event.episodeNumber,
+            historyId: widget.event.id,
             medium: m,
             addedAt: DateTime.now(),
           );

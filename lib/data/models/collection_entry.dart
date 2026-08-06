@@ -9,6 +9,7 @@ class CollectionEntry {
     required this.filmId,
     this.seasonNumber,
     this.episodeNumber,
+    this.historyId,
     required this.medium,
     this.addedAt,
   });
@@ -17,6 +18,9 @@ class CollectionEntry {
   final String filmId;
   final int? seasonNumber;
   final int? episodeNumber;
+  /// UUID de l'entrée historique liée (saisie rapide depuis le Verlauf).
+  /// Null pour les entrées ajoutées depuis la fiche détail.
+  final String? historyId;
   final Medium medium;
   final DateTime? addedAt;
 
@@ -25,6 +29,7 @@ class CollectionEntry {
         filmId: json['film_id'] as String,
         seasonNumber: (json['season_number'] as num?)?.toInt(),
         episodeNumber: (json['episode_number'] as num?)?.toInt(),
+        historyId: json['history_id'] as String?,
         medium: Medium.fromName(json['medium'] as String?),
         addedAt: json['added_at'] != null
             ? DateTime.tryParse(json['added_at'] as String)
@@ -35,6 +40,7 @@ class CollectionEntry {
         'film_id': filmId,
         'season_number': seasonNumber,
         'episode_number': episodeNumber,
+        if (historyId != null) 'history_id': historyId,
         'medium': medium.name,
         if (addedAt != null) 'added_at': addedAt!.toIso8601String(),
       };
@@ -59,6 +65,7 @@ class CollectionView {
   Medium get medium => entry.medium;
   int? get seasonNumber => entry.seasonNumber;
   int? get episodeNumber => entry.episodeNumber;
+  String? get historyId => entry.historyId;
   DateTime? get addedAt => entry.addedAt;
 
   /// Affiche : celle de la saison si disponible, sinon celle du film.

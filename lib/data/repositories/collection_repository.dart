@@ -30,6 +30,7 @@ abstract class LibraryRepository {
     Film film, {
     FilmSeason? season,
     int? episodeNumber,
+    String? historyId,
     required Medium medium,
     DateTime? addedAt,
   });
@@ -355,6 +356,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
     Film film, {
     FilmSeason? season,
     int? episodeNumber,
+    String? historyId,
     required Medium medium,
     DateTime? addedAt,
   }) async {
@@ -362,18 +364,22 @@ class SupabaseLibraryRepository implements LibraryRepository {
     final saved = await _upsertFilm(film);
     if (season != null) await _upsertSeason(saved, season);
 
-    // Évite le doublon exact (film, saison, épisode, support).
-    final already = _collection.any((e) =>
-        e.filmId == saved.id &&
-        e.seasonNumber == season?.seasonNumber &&
-        e.episodeNumber == episodeNumber &&
-        e.medium == medium);
+    // Dédup : par entrée historique (saisie rapide) ou par (film, saison, épisode, support).
+    final already = historyId != null
+        ? _collection.any((e) => e.historyId == historyId && e.medium == medium)
+        : _collection.any((e) =>
+            e.filmId == saved.id &&
+            e.seasonNumber == season?.seasonNumber &&
+            e.episodeNumber == episodeNumber &&
+            e.historyId == null &&
+            e.medium == medium);
     if (already) return;
 
     final entry = CollectionEntry(
       filmId: saved.id!,
       seasonNumber: season?.seasonNumber,
       episodeNumber: episodeNumber,
+      historyId: historyId,
       medium: medium,
       addedAt: addedAt ?? DateTime.now(),
     );
@@ -796,16 +802,20 @@ class LocalLibraryRepository implements LibraryRepository {
     Film film, {
     FilmSeason? season,
     int? episodeNumber,
+    String? historyId,
     required Medium medium,
     DateTime? addedAt,
   }) async {
     final saved = _ensureFilm(film);
     if (season != null) _ensureSeason(saved, season);
-    final already = _collection.any((e) =>
-        e.filmId == saved.id &&
-        e.seasonNumber == season?.seasonNumber &&
-        e.episodeNumber == episodeNumber &&
-        e.medium == medium);
+    final already = historyId != null
+        ? _collection.any((e) => e.historyId == historyId && e.medium == medium)
+        : _collection.any((e) =>
+            e.filmId == saved.id &&
+            e.seasonNumber == season?.seasonNumber &&
+            e.episodeNumber == episodeNumber &&
+            e.historyId == null &&
+            e.medium == medium);
     if (already) return;
     _collection = [
       ..._collection,
@@ -814,6 +824,7 @@ class LocalLibraryRepository implements LibraryRepository {
         filmId: saved.id!,
         seasonNumber: season?.seasonNumber,
         episodeNumber: episodeNumber,
+        historyId: historyId,
         medium: medium,
         addedAt: addedAt ?? DateTime.now(),
       ),
@@ -1079,15 +1090,18 @@ final watchedSeasonsByKeyProvider =
   return map;
 });
 
-/// Map (mediaKey|saison|épisode) → ensemble de Medium possédés.
-/// Clé : `"movie:123|null|null"`, `"tv:456|2|null"`, `"tv:456|0|3"`.
+/// Map clé → ensemble de Medium possédés.
+/// - Entrées liées à un visionnage : clé `"hist:{historyId}"`.
+/// - Entrées ajoutées depuis la fiche : clé `"${mediaKey}|${seasonNumber}|${episodeNumber}"`.
 final ownedMediumsByKeySeasonProvider =
     Provider.autoDispose<Map<String, Set<Medium>>>((ref) {
   final coll = ref.watch(collectionStreamProvider).value ?? [];
   final map = <String, Set<Medium>>{};
   for (final c in coll) {
-    (map['${c.film.mediaKey}|${c.seasonNumber}|${c.episodeNumber}'] ??= {})
-        .add(c.medium);
+    final key = c.historyId != null
+        ? 'hist:${c.historyId}'
+        : '${c.film.mediaKey}|${c.seasonNumber}|${c.episodeNumber}';
+    (map[key] ??= {}).add(c.medium);
   }
   return map;
 });
