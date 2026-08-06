@@ -122,7 +122,7 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                       originalTitle: entry.film.originalTitle,
                     ),
                     subtitle: (entry.episodeNumber != null
-                            ? 'S${entry.seasonNumber}E${entry.episodeNumber}'
+                            ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber!, episodeNumber: entry.episodeNumber!, stored: null)}'
                             : entry.seasonNumber != null
                                 ? l10n.collSeasonLabel(entry.seasonNumber!)
                                 : entry.film.isMovie
