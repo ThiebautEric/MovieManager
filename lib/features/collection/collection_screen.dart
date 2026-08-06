@@ -22,6 +22,7 @@ import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
+import '../../tmdb/models/season_episodes.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/dark_badge.dart';
 import '../../widgets/season_band.dart';
@@ -653,12 +654,31 @@ class _HistoryCard extends ConsumerWidget {
               if (s.seasonNumber > 0) s.seasonNumber
           }
         : const <int>{};
+    // Pour les épisodes individuels, charge les détails de la saison afin
+    // d'obtenir l'année d'diffusion exacte de l'épisode (et non l'année de la
+    // saison entière, qui serait celle du premier épisode).
+    final episodeInfos = (isSeason && event.episodeNumber != null)
+        ? ref
+            .watch(seasonEpisodesProvider(
+                (id: event.film.tmdbId, season: event.seasonNumber!)))
+            .value
+        : null;
     final seasonYear = isSeason
-        ? (tmdbDetails?.seasons
-                .where((s) => s.seasonNumber == event.seasonNumber)
-                .firstOrNull
-                ?.year ??
-            event.film.releaseYear)
+        ? (event.episodeNumber != null && episodeInfos != null
+            ? episodeInfos
+                    .where((ep) => ep.episodeNumber == event.episodeNumber)
+                    .firstOrNull
+                    ?.airYear ??
+                tmdbDetails?.seasons
+                    .where((s) => s.seasonNumber == event.seasonNumber)
+                    .firstOrNull
+                    ?.year ??
+                event.film.releaseYear
+            : tmdbDetails?.seasons
+                    .where((s) => s.seasonNumber == event.seasonNumber)
+                    .firstOrNull
+                    ?.year ??
+                event.film.releaseYear)
         : event.film.releaseYear;
     final rating = event.rating;
     final title = resolveTitle(
