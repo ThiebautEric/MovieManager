@@ -2,12 +2,13 @@ import 'film.dart';
 import 'film_season.dart';
 
 /// Une possession (ligne de la table `collection`). `seasonNumber` null = œuvre
-/// entière. Indépendante de l'historique.
+/// entière. `episodeNumber` non null = épisode individuel.
 class CollectionEntry {
   CollectionEntry({
     this.id,
     required this.filmId,
     this.seasonNumber,
+    this.episodeNumber,
     required this.medium,
     this.addedAt,
   });
@@ -15,6 +16,7 @@ class CollectionEntry {
   final String? id;
   final String filmId;
   final int? seasonNumber;
+  final int? episodeNumber;
   final Medium medium;
   final DateTime? addedAt;
 
@@ -22,6 +24,7 @@ class CollectionEntry {
         id: json['id'] as String?,
         filmId: json['film_id'] as String,
         seasonNumber: (json['season_number'] as num?)?.toInt(),
+        episodeNumber: (json['episode_number'] as num?)?.toInt(),
         medium: Medium.fromName(json['medium'] as String?),
         addedAt: json['added_at'] != null
             ? DateTime.tryParse(json['added_at'] as String)
@@ -31,6 +34,7 @@ class CollectionEntry {
   Map<String, dynamic> toUpsertJson() => {
         'film_id': filmId,
         'season_number': seasonNumber,
+        'episode_number': episodeNumber,
         'medium': medium.name,
         if (addedAt != null) 'added_at': addedAt!.toIso8601String(),
       };
@@ -54,6 +58,7 @@ class CollectionView {
   String? get id => entry.id;
   Medium get medium => entry.medium;
   int? get seasonNumber => entry.seasonNumber;
+  int? get episodeNumber => entry.episodeNumber;
   DateTime? get addedAt => entry.addedAt;
 
   /// Affiche : celle de la saison si disponible, sinon celle du film.

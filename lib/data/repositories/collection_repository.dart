@@ -29,6 +29,7 @@ abstract class LibraryRepository {
   Future<void> addToCollection(
     Film film, {
     FilmSeason? season,
+    int? episodeNumber,
     required Medium medium,
     DateTime? addedAt,
   });
@@ -353,6 +354,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
   Future<void> addToCollection(
     Film film, {
     FilmSeason? season,
+    int? episodeNumber,
     required Medium medium,
     DateTime? addedAt,
   }) async {
@@ -360,17 +362,18 @@ class SupabaseLibraryRepository implements LibraryRepository {
     final saved = await _upsertFilm(film);
     if (season != null) await _upsertSeason(saved, season);
 
-    // Évite le doublon exact (film, saison, support) — `null` n'est pas dédupé
-    // par la contrainte unique côté Postgres.
+    // Évite le doublon exact (film, saison, épisode, support).
     final already = _collection.any((e) =>
         e.filmId == saved.id &&
         e.seasonNumber == season?.seasonNumber &&
+        e.episodeNumber == episodeNumber &&
         e.medium == medium);
     if (already) return;
 
     final entry = CollectionEntry(
       filmId: saved.id!,
       seasonNumber: season?.seasonNumber,
+      episodeNumber: episodeNumber,
       medium: medium,
       addedAt: addedAt ?? DateTime.now(),
     );
@@ -792,6 +795,7 @@ class LocalLibraryRepository implements LibraryRepository {
   Future<void> addToCollection(
     Film film, {
     FilmSeason? season,
+    int? episodeNumber,
     required Medium medium,
     DateTime? addedAt,
   }) async {
@@ -800,6 +804,7 @@ class LocalLibraryRepository implements LibraryRepository {
     final already = _collection.any((e) =>
         e.filmId == saved.id &&
         e.seasonNumber == season?.seasonNumber &&
+        e.episodeNumber == episodeNumber &&
         e.medium == medium);
     if (already) return;
     _collection = [
@@ -808,6 +813,7 @@ class LocalLibraryRepository implements LibraryRepository {
         id: _nextId(),
         filmId: saved.id!,
         seasonNumber: season?.seasonNumber,
+        episodeNumber: episodeNumber,
         medium: medium,
         addedAt: addedAt ?? DateTime.now(),
       ),
@@ -1073,14 +1079,15 @@ final watchedSeasonsByKeyProvider =
   return map;
 });
 
-/// Map (mediaKey|saison) → ensemble de Medium possédés.
-/// Clé : `"movie:123|null"` ou `"tv:456|2"` selon la saison.
+/// Map (mediaKey|saison|épisode) → ensemble de Medium possédés.
+/// Clé : `"movie:123|null|null"`, `"tv:456|2|null"`, `"tv:456|0|3"`.
 final ownedMediumsByKeySeasonProvider =
     Provider.autoDispose<Map<String, Set<Medium>>>((ref) {
   final coll = ref.watch(collectionStreamProvider).value ?? [];
   final map = <String, Set<Medium>>{};
   for (final c in coll) {
-    (map['${c.film.mediaKey}|${c.seasonNumber}'] ??= {}).add(c.medium);
+    (map['${c.film.mediaKey}|${c.seasonNumber}|${c.episodeNumber}'] ??= {})
+        .add(c.medium);
   }
   return map;
 });

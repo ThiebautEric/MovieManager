@@ -48,18 +48,26 @@ class PhysicalCollectionScreen extends ConsumerWidget {
           return EmptyState(message: l10n.collEmpty);
         }
 
-        // Tri : année desc, puis titre asc à année égale ; sans année à la fin.
+        // Tri : année desc, titre asc, saison asc, épisode asc.
         final sorted = [...entries]
           ..sort((a, b) {
             final ay = a.film.releaseYear;
             final by = b.film.releaseYear;
             if (ay == null && by == null) {
-              return a.film.title.compareTo(b.film.title);
+              final t = a.film.title.compareTo(b.film.title);
+              if (t != 0) return t;
+              final s = (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
+              if (s != 0) return s;
+              return (a.episodeNumber ?? -1).compareTo(b.episodeNumber ?? -1);
             }
             if (ay == null) return 1;
             if (by == null) return -1;
             if (ay != by) return by.compareTo(ay);
-            return a.film.title.compareTo(b.film.title);
+            final t = a.film.title.compareTo(b.film.title);
+            if (t != 0) return t;
+            final s = (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
+            if (s != 0) return s;
+            return (a.episodeNumber ?? -1).compareTo(b.episodeNumber ?? -1);
           });
 
         // Regroupement par année.
@@ -113,9 +121,13 @@ class PhysicalCollectionScreen extends ConsumerWidget {
                       title: entry.film.title,
                       originalTitle: entry.film.originalTitle,
                     ),
-                    subtitle: (entry.seasonNumber != null
-                            ? l10n.collSeasonLabel(entry.seasonNumber!)
-                            : entry.film.isMovie ? l10n.film : l10n.serie) +
+                    subtitle: (entry.episodeNumber != null
+                            ? 'S${entry.seasonNumber}E${entry.episodeNumber}'
+                            : entry.seasonNumber != null
+                                ? l10n.collSeasonLabel(entry.seasonNumber!)
+                                : entry.film.isMovie
+                                    ? l10n.film
+                                    : l10n.serie) +
                         (duration != null ? ' · $duration' : ''),
                     badge: MediumBadge(medium: entry.medium),
                     seasonNumber: entry.seasonNumber,
