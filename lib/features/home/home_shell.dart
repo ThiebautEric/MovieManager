@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/config/app_config.dart';
+import '../../core/config/app_version.dart';
 import '../../core/l10n/l10n.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
@@ -353,48 +354,53 @@ class _SideRail extends StatelessWidget {
               child: AccountButton(),
             )
           : null,
-      trailing: top == null
-          ? null
-          : Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Divider(),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: SizedBox(
-                          width: 64,
-                          height: 96,
-                          child:
-                              PosterImage(posterPath: poster, size: 'w185'),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      SizedBox(
-                        width: 72,
-                        child: Text(
-                          label,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.labelSmall,
-                        ),
-                      ),
-                      IconButton(
-                        tooltip: context.l10n.navCloseDetail,
-                        visualDensity: VisualDensity.compact,
-                        icon: const Icon(Icons.close, size: 18),
-                        onPressed: onCloseDetail,
-                      ),
-                    ],
+      trailing: Expanded(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (top != null) ...[
+                  const Divider(),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: SizedBox(
+                      width: 64,
+                      height: 96,
+                      child: PosterImage(posterPath: poster, size: 'w185'),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  SizedBox(
+                    width: 72,
+                    child: Text(
+                      label,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.labelSmall,
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: context.l10n.navCloseDetail,
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.close, size: 18),
+                    onPressed: onCloseDetail,
+                  ),
+                ],
+                Text(
+                  'v$kDeployVersion',
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
-              ),
+              ],
             ),
+          ),
+        ),
+      ),
       destinations: destinations
           .map((d) => NavigationRailDestination(
                 icon: d.icon,
