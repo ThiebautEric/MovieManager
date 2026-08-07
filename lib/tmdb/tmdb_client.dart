@@ -167,16 +167,25 @@ class TmdbClient {
   }
 
   /// Casting d'un épisode — endpoint `/tv/{id}/season/{n}/episode/{e}/credits`.
+  /// Retourne les vedettes invitées (`guest_stars`) suivies du cast régulier
+  /// (`cast`), les premières étant spécifiques à l'épisode.
   Future<List<CastMember>> episodeCast(
       int tvId, int seasonNumber, int episodeNumber) async {
     final res = await _dio.get(
       '/tv/$tvId/season/$seasonNumber/episode/$episodeNumber/credits',
       queryParameters: {'language': language},
     );
-    return ((res.data['cast'] as List<dynamic>?) ?? [])
+    CastMember parse(dynamic e) =>
+        CastMember.fromJson(e as Map<String, dynamic>);
+    final guests = ((res.data['guest_stars'] as List<dynamic>?) ?? [])
         .whereType<Map<String, dynamic>>()
         .map(CastMember.fromJson)
         .toList();
+    final cast = ((res.data['cast'] as List<dynamic>?) ?? [])
+        .whereType<Map<String, dynamic>>()
+        .map(parse)
+        .toList();
+    return [...guests, ...cast];
   }
 
   /// Fiche détaillée d'une personne, avec sa filmographie (movie + tv credits).
