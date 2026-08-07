@@ -7,9 +7,9 @@ import '../../core/l10n/l10n.dart';
 import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../data/models/collection_entry.dart';
 import '../../tmdb/models/media_details.dart';
 import '../../tmdb/models/season_episodes.dart';
-import '../../tmdb/tmdb_client.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/poster_image.dart';
@@ -53,16 +53,15 @@ class _HomeShellState extends ConsumerState<HomeShell>
   /// Clé de suivi du backfill one-shot des années d'air (season_air_year /
   /// episode_air_year) sur les entrées de collection antérieures à v9.
   static const _airYearBackfillKey = 'collection_air_year_backfill_v1';
-  /// Clé de suivi du backfill des durées exactes de saison (runtime_minutes).
-  /// Déclenché en continu : re-tenté à chaque lancement jusqu'à ce que toutes
-  /// les saisons sans durée aient été traitées (ou que TMDB n'ait pas les données).
-  static const _seasonRuntimeBackfillKey = 'season_runtime_backfill_v1';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _backfillMetadata());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(const Duration(seconds: 3));
+      _backfillMetadata();
+    });
   }
 
   /// Rafraîchit automatiquement les métadonnées (pays, casting, réalisateurs)
@@ -109,7 +108,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
         }
         // Petite pause entre chaque requête pour ne pas saturer l'API TMDB
         // ni déclencher trop de rebuilds Supabase en rafale.
-        await Future.delayed(const Duration(milliseconds: 80));
+        await Future.delayed(const Duration(milliseconds: 30));
       }
       // Marque cette version comme traitée : le refresh complet ne se relancera
       // plus (les futurs titres vides restent rattrapés ci-dessus).
@@ -120,14 +119,14 @@ class _HomeShellState extends ConsumerState<HomeShell>
       // episode_air_year renseignés).
       final doneAirYear = prefs.getBool(_airYearBackfillKey) ?? false;
       if (!doneAirYear) {
-        await _backfillAirYears(repo);
+        await _backfillAirYears(repo, coll);
         if (mounted) await prefs.setBool(_airYearBackfillKey, true);
       }
 
       // Phase 3 : durées exactes de saison (runtime_minutes).
       // Re-tenté à chaque lancement tant qu'il reste des saisons sans durée :
       // TMDB peut ne pas avoir les données aujourd'hui mais les avoir demain.
-      await _backfillSeasonRuntimes(repo);
+      await _backfillSeasonRuntimes(repo, coll);
     } catch (_) {
       // pas connecté / données pas prêtes : on réessaiera au prochain lancement.
     } finally {
@@ -138,9 +137,10 @@ class _HomeShellState extends ConsumerState<HomeShell>
   /// Pour chaque saison en collection sans runtime_minutes, tente de calculer
   /// la somme exacte via TMDB. Ne sauvegarde QUE si TOUS les épisodes ont un
   /// runtime connu — sinon ne fait rien (re-tenté au prochain lancement).
-  Future<void> _backfillSeasonRuntimes(LibraryRepository repo) async {
+  /// Traite 3 saisons en parallèle pour réduire le temps total.
+  Future<void> _backfillSeasonRuntimes(
+      LibraryRepository repo, List<CollectionView> coll) async {
     final tmdb = ref.read(tmdbClientProvider);
-    final coll = await ref.read(collectionStreamProvider.future);
 
     // Dédupliquer par (filmId, seasonNumber) pour éviter N appels TMDB si
     // la même saison est possédée en DVD et en Blu-ray.
@@ -161,26 +161,34 @@ class _HomeShellState extends ConsumerState<HomeShell>
       }
     }
 
-    for (final t in targets) {
+    // Traitement par lots de 3 requêtes simultanées.
+    const batchSize = 3;
+    for (int i = 0; i < targets.length; i += batchSize) {
       if (!mounted) return;
-      try {
-        final List<EpisodeInfo> eps =
-            await tmdb.seasonEpisodes(t.tmdbId, t.seasonNumber);
-        // N'enregistre que si TOUS les épisodes ont un runtime exact.
-        if (eps.isEmpty) continue;
-        if (eps.any((e) => e.runtime == null || e.runtime! <= 0)) continue;
-        final sum = eps.fold<int>(0, (acc, e) => acc + e.runtime!);
-        await repo.backfillSeasonRuntime(t.filmId, t.seasonNumber, sum);
-      } catch (_) {
-        // Réseau indisponible ou show introuvable : on réessaiera.
+      final batch = targets.sublist(
+          i, (i + batchSize).clamp(0, targets.length));
+      await Future.wait(batch.map((t) async {
+        try {
+          final List<EpisodeInfo> eps =
+              await tmdb.seasonEpisodes(t.tmdbId, t.seasonNumber);
+          // N'enregistre que si TOUS les épisodes ont un runtime exact.
+          if (eps.isEmpty) return;
+          if (eps.any((e) => e.runtime == null || e.runtime! <= 0)) return;
+          final sum = eps.fold<int>(0, (acc, e) => acc + e.runtime!);
+          await repo.backfillSeasonRuntime(t.filmId, t.seasonNumber, sum);
+        } catch (_) {
+          // Réseau indisponible ou show introuvable : on réessaiera.
+        }
+      }));
+      if (i + batchSize < targets.length) {
+        await Future.delayed(const Duration(milliseconds: 30));
       }
-      await Future.delayed(const Duration(milliseconds: 80));
     }
   }
 
-  Future<void> _backfillAirYears(LibraryRepository repo) async {
+  Future<void> _backfillAirYears(
+      LibraryRepository repo, List<CollectionView> coll) async {
     final tmdb = ref.read(tmdbClientProvider);
-    final coll = await ref.read(collectionStreamProvider.future);
 
     // Entrées saison (sans épisode) où season_air_year est nul.
     final needsSeason = coll
@@ -212,7 +220,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
           }
         }
       } catch (_) {}
-      await Future.delayed(const Duration(milliseconds: 80));
+      await Future.delayed(const Duration(milliseconds: 30));
     }
 
     // Entrées épisode où episode_air_year est nul.
@@ -248,7 +256,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
           }
         }
       } catch (_) {}
-      await Future.delayed(const Duration(milliseconds: 80));
+      await Future.delayed(const Duration(milliseconds: 30));
     }
   }
 
