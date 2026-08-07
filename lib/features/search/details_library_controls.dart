@@ -1137,6 +1137,13 @@ class EpisodeScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
+                if (episode.overview.isNotEmpty) ...[
+                  const SizedBox(height: 16),
+                  Text(l10n.detailsSynopsis,
+                      style: theme.textTheme.titleMedium),
+                  const SizedBox(height: 8),
+                  Text(episode.overview),
+                ],
                 const SizedBox(height: 16),
                 if (!readOnly) ...[
                   _WishlistButton(film: _film, season: _season()),
@@ -1160,13 +1167,6 @@ class EpisodeScreen extends ConsumerWidget {
                   onEdit: (e) => _editHistory(context, repo, e),
                   onRemove: (id) => _confirmRemoveHistory(context, repo, id),
                 ),
-                if (episode.overview.isNotEmpty) ...[
-                  const SizedBox(height: 20),
-                  Text(l10n.detailsSynopsis,
-                      style: theme.textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text(episode.overview),
-                ],
               ],
             ),
           ),
