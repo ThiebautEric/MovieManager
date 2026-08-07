@@ -18,6 +18,7 @@ import '../../widgets/poster_image.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
+import '../search/details_library_controls.dart';
 
 /// Écran « Pense-bête » : les titres/saisons gardés pour plus tard. Chaque
 /// entrée se convertit en 1-2 clics en visionnage (→ Historique, dialogue
@@ -155,13 +156,14 @@ class _WishlistTile extends ConsumerWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => openMedia(
+        onTap: () => openEntry(
           context,
           ref,
-          type: film.mediaType,
-          id: film.tmdbId,
+          tmdbId: film.tmdbId,
+          mediaType: film.mediaType,
           title: film.title,
           posterPath: film.posterPath,
+          seasonNumber: item.seasonNumber,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

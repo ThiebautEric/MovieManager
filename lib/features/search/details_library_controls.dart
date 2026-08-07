@@ -51,6 +51,114 @@ Future<bool> _confirm(
   return res == true;
 }
 
+// ---------------------------------------------------------------------------
+// Navigation saison / épisode (utilisée depuis les écrans liste ET la série)
+// ---------------------------------------------------------------------------
+
+/// Ouvre la fiche appropriée depuis n'importe quelle page :
+/// - épisode (episodeNumber non nul) → EpisodeScreen
+/// - saison (seasonNumber non nul, episodeNumber nul) → SeasonScreen
+/// - film / série sans saison → DetailsScreen via [openMedia]
+Future<void> openEntry(
+  BuildContext context,
+  WidgetRef ref, {
+  required int tmdbId,
+  required String mediaType,
+  required String title,
+  String? posterPath,
+  int? seasonNumber,
+  int? episodeNumber,
+  String? episodeName,
+}) async {
+  if (seasonNumber == null || mediaType != 'tv') {
+    openMedia(context, ref,
+        type: mediaType, id: tmdbId, title: title, posterPath: posterPath);
+    return;
+  }
+  try {
+    final details = await ref
+        .read(mediaDetailsProvider((id: tmdbId, type: mediaType)).future);
+    if (!context.mounted) return;
+    final info = details.seasons.firstWhere(
+      (s) => s.seasonNumber == seasonNumber,
+      orElse: () => SeasonInfo(
+        seasonNumber: seasonNumber,
+        name: '',
+        episodeCount: 0,
+        overview: '',
+        posterPath: null,
+        airDate: null,
+      ),
+    );
+    if (episodeNumber == null) {
+      _pushSeason(context, ref, details: details, info: info);
+    } else {
+      final episodes = await ref.read(
+          seasonEpisodesProvider((id: tmdbId, season: seasonNumber)).future);
+      if (!context.mounted) return;
+      final episode = episodes.firstWhere(
+        (e) => e.episodeNumber == episodeNumber,
+        orElse: () => EpisodeInfo(
+          episodeNumber: episodeNumber,
+          name: episodeName ?? '',
+          runtime: null,
+          airDate: null,
+          stillPath: null,
+          overview: '',
+        ),
+      );
+      _pushEpisode(context, ref, details: details, info: info, episode: episode);
+    }
+  } catch (_) {
+    if (context.mounted) {
+      openMedia(context, ref,
+          type: mediaType, id: tmdbId, title: title, posterPath: posterPath);
+    }
+  }
+}
+
+void _pushSeason(
+  BuildContext context,
+  WidgetRef ref, {
+  required MediaDetails details,
+  required SeasonInfo info,
+}) {
+  if (MediaQuery.of(context).size.width >= kWideBreakpoint) {
+    ref.read(detailStackProvider.notifier).state = [
+      ...ref.read(detailStackProvider),
+      SeasonEntry(details: details, info: info),
+    ];
+  } else {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (_) => SeasonScreen(details: details, info: info)),
+    );
+  }
+}
+
+void _pushEpisode(
+  BuildContext context,
+  WidgetRef ref, {
+  required MediaDetails details,
+  required SeasonInfo info,
+  required EpisodeInfo episode,
+}) {
+  if (MediaQuery.of(context).size.width >= kWideBreakpoint) {
+    ref.read(detailStackProvider.notifier).state = [
+      ...ref.read(detailStackProvider),
+      EpisodeEntry(details: details, info: info, episode: episode),
+    ];
+  } else {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (_) =>
+              EpisodeScreen(details: details, info: info, episode: episode)),
+    );
+  }
+}
+
 /// Deux sections INDÉPENDANTES : la collection (possessions) et l'historique
 /// (visionnages). Pour les séries, suivi par saison avec `ExpansionTile`.
 class LibraryControls extends ConsumerWidget {
@@ -281,18 +389,7 @@ class LibraryControls extends ConsumerWidget {
   }
 
   void _showSeasonDetail(BuildContext context, WidgetRef ref, SeasonInfo info) {
-    if (MediaQuery.of(context).size.width >= kWideBreakpoint) {
-      ref.read(detailStackProvider.notifier).state = [
-        ...ref.read(detailStackProvider),
-        SeasonEntry(details: details, info: info),
-      ];
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => SeasonScreen(details: details, info: info)),
-      );
-    }
+    _pushSeason(context, ref, details: details, info: info);
   }
 
   Future<void> _rateEpisode(BuildContext context, LibraryRepository repo,
@@ -786,20 +883,7 @@ class SeasonScreen extends ConsumerWidget {
   }
 
   void _openEpisode(BuildContext context, WidgetRef ref, EpisodeInfo ep) {
-    if (MediaQuery.of(context).size.width >= kWideBreakpoint) {
-      ref.read(detailStackProvider.notifier).state = [
-        ...ref.read(detailStackProvider),
-        EpisodeEntry(details: details, info: info, episode: ep),
-      ];
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              EpisodeScreen(details: details, info: info, episode: ep),
-        ),
-      );
-    }
+    _pushEpisode(context, ref, details: details, info: info, episode: ep);
   }
 
   Future<void> _addEpisodeToHistory(

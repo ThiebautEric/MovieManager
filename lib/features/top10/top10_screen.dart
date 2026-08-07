@@ -16,6 +16,7 @@ import '../../widgets/poster_image.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
+import '../search/details_library_controls.dart';
 
 /// Écran « Top 10 » : les titres préférés, classés par note moyenne
 /// personnelle, bonifiée par le nombre de visionnages (revoir un titre est un
@@ -214,13 +215,16 @@ class _Top10Tile extends ConsumerWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => openMedia(
+        onTap: () => openEntry(
           context,
           ref,
-          type: film.mediaType,
-          id: film.tmdbId,
+          tmdbId: film.tmdbId,
+          mediaType: film.mediaType,
           title: film.title,
           posterPath: film.posterPath,
+          seasonNumber: entry.seasonNumber,
+          episodeNumber: entry.episodeNumber,
+          episodeName: entry.episodeName,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

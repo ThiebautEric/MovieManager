@@ -22,6 +22,7 @@ import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
+import '../search/details_library_controls.dart';
 import 'collection_filter.dart';
 import 'filter_sheet.dart';
 
@@ -285,13 +286,15 @@ class _PhysicalCollectionScreenState
                         : null,
                     rating: ratingBySeason[
                         '${entry.film.mediaKey}|${entry.seasonNumber}'],
-                    onTap: () => openMedia(
+                    onTap: () => openEntry(
                       context,
                       ref,
-                      type: entry.film.mediaType,
-                      id: entry.film.tmdbId,
+                      tmdbId: entry.film.tmdbId,
+                      mediaType: entry.film.mediaType,
                       title: entry.film.title,
                       posterPath: entry.film.posterPath,
+                      seasonNumber: entry.seasonNumber,
+                      episodeNumber: entry.episodeNumber,
                     ),
                   );
                 },

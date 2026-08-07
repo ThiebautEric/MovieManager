@@ -28,6 +28,7 @@ import '../../widgets/season_band.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../../core/supabase/supabase_providers.dart';
 import '../home/selected_media.dart';
+import '../search/details_library_controls.dart';
 import 'collection_filter.dart';
 import 'filter_sheet.dart';
 
@@ -188,13 +189,16 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           mediums: mediumsFor(e),
           watchedSeasons: watchedSeasonsByKey[e.film.mediaKey] ?? const {},
           showBulk: isEric && _discFilter,
-          onTap: () => openMedia(
+          onTap: () => openEntry(
             context,
             ref,
-            type: e.film.mediaType,
-            id: e.film.tmdbId,
+            tmdbId: e.film.tmdbId,
+            mediaType: e.film.mediaType,
             title: e.film.title,
             posterPath: e.film.posterPath,
+            seasonNumber: e.seasonNumber,
+            episodeNumber: e.episodeNumber,
+            episodeName: e.episodeName,
           ),
         );
 
