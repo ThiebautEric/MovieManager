@@ -121,6 +121,22 @@ class _PhysicalCollectionScreenState
       return e.film.releaseYear;
     }
 
+    // Durée effective : stockée (film/saison) ou TMDB pour les épisodes individuels.
+    int? effectiveRuntime(CollectionView e) {
+      if (e.film.isMovie) return e.film.runtime;
+      if (e.episodeNumber != null && e.seasonNumber != null) {
+        final eps = ref
+            .watch(seasonEpisodesProvider(
+                (id: e.film.tmdbId, season: e.seasonNumber!)))
+            .value;
+        final ep = eps
+            ?.where((ep) => ep.episodeNumber == e.episodeNumber)
+            .firstOrNull;
+        return ep?.runtime;
+      }
+      return e.season?.runtimeMinutes;
+    }
+
     final theme = Theme.of(context);
 
     final searchBar = Padding(
@@ -232,7 +248,7 @@ class _PhysicalCollectionScreenState
               delegate: SliverChildBuilderDelegate(
                 (context, i) {
                   final entry = g.items[i];
-                  final totalMin = entry.totalMinutes;
+                  final totalMin = effectiveRuntime(entry);
                   final duration = totalMin != null
                       ? fmtDuration(totalMin)
                       : null;
