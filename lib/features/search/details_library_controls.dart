@@ -661,10 +661,18 @@ class SeasonScreen extends ConsumerWidget {
         .where((c) =>
             c.film.mediaKey == mediaKey && c.seasonNumber == info.seasonNumber)
         .toList();
+    // Entrées de collection niveau saison (sans épisode précis) → section.
+    // Entrées épisodiques → dans la fiche épisode.
+    final collSection =
+        coll.where((c) => c.episodeNumber == null).toList();
     final hist = (ref.watch(historyStreamProvider).value ?? [])
         .where((h) =>
             h.film.mediaKey == mediaKey && h.seasonNumber == info.seasonNumber)
         .toList();
+    // Visionnages sans épisode précis (niveau saison) → affichés ici.
+    // Visionnages épisodiques → affichés uniquement dans la fiche épisode.
+    final histSection =
+        hist.where((h) => h.episodeNumber == null).toList();
 
     final episodesAsync = ref.watch(
         seasonEpisodesProvider((id: details.tmdbId, season: info.seasonNumber)));
@@ -733,7 +741,7 @@ class SeasonScreen extends ConsumerWidget {
             const SizedBox(height: 12),
           ],
           _CollectionSection(
-            entries: coll,
+            entries: collSection,
             isSeries: true,
             scopeLabel: scopeLabel,
             readOnly: readOnly,
@@ -742,7 +750,7 @@ class SeasonScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
           _HistorySection(
-            entries: hist,
+            entries: histSection,
             isSeries: true,
             scopeLabel: scopeLabel,
             readOnly: readOnly,
