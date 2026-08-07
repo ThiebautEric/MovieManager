@@ -128,6 +128,7 @@ class TmdbClient {
                 runtime: e.runtime,
                 airDate: e.airDate,
                 stillPath: e.stillPath,
+                overview: e.overview,
               )
             : e,
     ];

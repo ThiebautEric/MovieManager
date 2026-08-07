@@ -7,6 +7,7 @@ class EpisodeInfo {
     required this.runtime,
     required this.airDate,
     required this.stillPath,
+    required this.overview,
   });
 
   final int episodeNumber;
@@ -14,6 +15,7 @@ class EpisodeInfo {
   final int? runtime; // minutes
   final String? airDate; // 'YYYY-MM-DD'
   final String? stillPath; // image 16:9 de l'épisode (TMDB)
+  final String overview;
 
   int? get airYear {
     if (airDate == null || airDate!.length < 4) return null;
@@ -26,6 +28,7 @@ class EpisodeInfo {
         runtime: (json['runtime'] as num?)?.toInt(),
         airDate: json['air_date'] as String?,
         stillPath: json['still_path'] as String?,
+        overview: (json['overview'] as String?) ?? '',
       );
 
   /// Parse la réponse de `/tv/{id}/season/{n}`.

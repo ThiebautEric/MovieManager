@@ -731,9 +731,16 @@ class SeasonScreen extends ConsumerWidget {
                   _EpisodeCard(
                     episode: ep,
                     hist: hist,
-                    onTap: readOnly
-                        ? null
-                        : () => _addEpisodeToHistory(context, repo, ep),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => EpisodeScreen(
+                          details: details,
+                          info: info,
+                          episode: ep,
+                        ),
+                      ),
+                    ),
                   ),
               ],
             ),
@@ -1038,5 +1045,225 @@ class _EpisodeCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Écran de détail d'un épisode
+// ---------------------------------------------------------------------------
+
+/// Page dédiée à un épisode : still, métadonnées, synopsis, collection et
+/// historique filtrés sur cet épisode.
+class EpisodeScreen extends ConsumerWidget {
+  const EpisodeScreen({
+    super.key,
+    required this.details,
+    required this.info,
+    required this.episode,
+  });
+
+  final MediaDetails details;
+  final SeasonInfo info;
+  final EpisodeInfo episode;
+
+  Film get _film => Film.fromDetails(details);
+  FilmSeason _season() => FilmSeason.fromInfo(info);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final repo = ref.read(libraryRepositoryProvider);
+    final readOnly = ref.watch(isViewingAsProvider);
+
+    final mediaKey = '${details.mediaType}:${details.tmdbId}';
+    final coll = (ref.watch(collectionStreamProvider).value ?? [])
+        .where((c) =>
+            c.film.mediaKey == mediaKey &&
+            c.seasonNumber == info.seasonNumber &&
+            c.episodeNumber == episode.episodeNumber)
+        .toList();
+    final hist = (ref.watch(historyStreamProvider).value ?? [])
+        .where((h) =>
+            h.film.mediaKey == mediaKey &&
+            h.seasonNumber == info.seasonNumber &&
+            h.episodeNumber == episode.episodeNumber)
+        .toList();
+
+    final label = 'S${info.seasonNumber}E${episode.episodeNumber}';
+    String scopeLabel(int? _) => label;
+
+    final title = episode.name.isEmpty ? label : episode.name;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          // Still pleine largeur 16:9
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: episode.stillPath != null
+                ? PosterImage(posterPath: episode.stillPath, size: 'w780')
+                : Container(
+                    color: theme.colorScheme.surfaceContainerHighest,
+                    child: Icon(Icons.live_tv,
+                        size: 64, color: theme.colorScheme.outline),
+                  ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: theme.textTheme.titleLarge),
+                const SizedBox(height: 6),
+                Text.rich(
+                  TextSpan(
+                    text: label,
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(color: theme.colorScheme.outline),
+                    children: [
+                      if (episode.airYear != null)
+                        TextSpan(text: ' · ${episode.airYear}'),
+                      if (episode.runtime != null)
+                        TextSpan(text: ' · ${fmtDuration(episode.runtime!)}'),
+                    ],
+                  ),
+                ),
+                if (episode.overview.isNotEmpty) ...[
+                  const SizedBox(height: 20),
+                  Text(l10n.detailsSynopsis,
+                      style: theme.textTheme.titleMedium),
+                  const SizedBox(height: 8),
+                  Text(episode.overview),
+                ],
+                const SizedBox(height: 24),
+                if (!readOnly) ...[
+                  _WishlistButton(film: _film, season: _season()),
+                  const SizedBox(height: 8),
+                ],
+                _CollectionSection(
+                  entries: coll,
+                  isSeries: true,
+                  scopeLabel: scopeLabel,
+                  readOnly: readOnly,
+                  onAdd: () => _addCollection(context, repo),
+                  onRemove: (id) => _confirmRemoveCollection(context, repo, id),
+                ),
+                const SizedBox(height: 8),
+                _HistorySection(
+                  entries: hist,
+                  isSeries: true,
+                  scopeLabel: scopeLabel,
+                  readOnly: readOnly,
+                  onAdd: () => _addHistory(context, repo),
+                  onEdit: (e) => _editHistory(context, repo, e),
+                  onRemove: (id) => _confirmRemoveHistory(context, repo, id),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _addCollection(
+      BuildContext context, LibraryRepository repo) async {
+    final res = await showDialog<CollChoice>(
+      context: context,
+      builder: (_) => const AddCollectionDialog(),
+    );
+    if (res == null) return;
+    try {
+      await repo.addToCollection(_film,
+          season: _season(),
+          episodeNumber: episode.episodeNumber,
+          medium: res.medium,
+          addedAt: res.date);
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+
+  Future<void> _addHistory(
+      BuildContext context, LibraryRepository repo) async {
+    final res = await showDialog<HistChoice>(
+      context: context,
+      builder: (_) => AddHistoryDialog(
+        title: episode.name.isEmpty ? 'E${episode.episodeNumber}' : episode.name,
+        header: EpisodeHeader(episode: episode),
+      ),
+    );
+    if (res == null) return;
+    try {
+      await repo.addToHistory(
+        _film,
+        season: _season(),
+        episodeNumber: episode.episodeNumber,
+        episodeName: episode.name.isEmpty ? null : episode.name,
+        episodeRuntime: episode.runtime,
+        watchedAt: res.date,
+        rating: res.rating,
+        comment: res.comment,
+      );
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+
+  Future<void> _editHistory(
+      BuildContext context, LibraryRepository repo, HistoryView e) async {
+    final res = await showDialog<HistChoice>(
+      context: context,
+      builder: (_) => AddHistoryDialog(
+        initialDate: e.watchedAt,
+        initialRating: e.rating,
+        initialComment: e.comment,
+        title: context.l10n.detailsEditViewing,
+      ),
+    );
+    if (res == null || e.id == null) return;
+    try {
+      await repo.updateHistory(e.id!,
+          watchedAt: res.date, rating: res.rating, comment: res.comment);
+    } catch (err) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(err)));
+    }
+  }
+
+  Future<void> _confirmRemoveCollection(
+      BuildContext context, LibraryRepository repo, String id) async {
+    final ok = await _confirm(context,
+        title: context.l10n.detailsRemoveCollectionTitle,
+        body: context.l10n.detailsRemoveCollectionBody,
+        action: context.l10n.detailsRemoveAction);
+    if (!ok) return;
+    try {
+      await repo.removeFromCollection(id);
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+
+  Future<void> _confirmRemoveHistory(
+      BuildContext context, LibraryRepository repo, String id) async {
+    final ok = await _confirm(context,
+        title: context.l10n.detailsDeleteViewingTitle,
+        body: context.l10n.detailsDeleteViewingBody,
+        action: context.l10n.delete);
+    if (!ok) return;
+    try {
+      await repo.removeFromHistory(id);
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
   }
 }
