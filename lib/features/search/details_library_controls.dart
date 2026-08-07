@@ -789,6 +789,36 @@ class SeasonScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // Lien retour vers la fiche série
+          InkWell(
+            borderRadius: BorderRadius.circular(4),
+            onTap: () => openMedia(context, ref,
+                type: details.mediaType,
+                id: details.tmdbId,
+                title: details.title,
+                posterPath: details.libraryPosterPath),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.arrow_back_ios_new,
+                      size: 12, color: theme.colorScheme.primary),
+                  const SizedBox(width: 4),
+                  Flexible(
+                    child: Text(
+                      details.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodySmall
+                          ?.copyWith(color: theme.colorScheme.primary),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+
           // En-tête
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1220,13 +1250,51 @@ class EpisodeScreen extends ConsumerWidget {
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
-          // Titre + métadonnées + synopsis (AU-DESSUS de l'image)
+          // Fil d'Ariane + métadonnées + synopsis (AU-DESSUS de l'image)
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: theme.textTheme.titleLarge),
+                // Série › Saison
+                Row(
+                  children: [
+                    Flexible(
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(4),
+                        onTap: () => openMedia(context, ref,
+                            type: details.mediaType,
+                            id: details.tmdbId,
+                            title: details.title,
+                            posterPath: details.libraryPosterPath),
+                        child: Text(
+                          details.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(color: theme.colorScheme.primary),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: Icon(Icons.chevron_right,
+                          size: 14, color: theme.colorScheme.outline),
+                    ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(4),
+                      onTap: () => _pushSeason(context, ref,
+                          details: details, info: info),
+                      child: Text(
+                        info.name.isNotEmpty
+                            ? info.name
+                            : l10n.detailsSeasonNumber(info.seasonNumber),
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall
+                            ?.copyWith(color: theme.colorScheme.primary),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 6),
                 Text.rich(
                   TextSpan(
