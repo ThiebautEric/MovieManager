@@ -185,7 +185,7 @@ class TmdbClient {
         .whereType<Map<String, dynamic>>()
         .map(parse)
         .toList();
-    return [...guests, ...cast];
+    return [...cast, ...guests];
   }
 
   /// Fiche détaillée d'une personne, avec sa filmographie (movie + tv credits).
