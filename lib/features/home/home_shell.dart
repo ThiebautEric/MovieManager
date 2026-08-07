@@ -8,6 +8,7 @@ import '../../core/supabase/view_as.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../data/models/collection_entry.dart';
+import '../../data/models/history_entry.dart';
 import '../../tmdb/models/season_episodes.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/account_button.dart';
@@ -115,6 +116,10 @@ class _HomeShellState extends ConsumerState<HomeShell>
       // Re-tenté à chaque lancement tant qu'il reste des saisons sans durée :
       // TMDB peut ne pas avoir les données aujourd'hui mais les avoir demain.
       await _backfillSeasonRuntimes(repo, coll);
+
+      // Phase 3 : épisodes du verlauf sans runtime — récupération depuis TMDB
+      // (uniquement si TMDB fournit la valeur exacte ; sinon on n'écrit rien).
+      await _backfillHistoryEpisodeRuntimes(repo, hist);
     } catch (_) {
       // pas connecté / données pas prêtes : on réessaiera au prochain lancement.
     } finally {
@@ -169,6 +174,53 @@ class _HomeShellState extends ConsumerState<HomeShell>
         }
       }));
       if (i + batchSize < targets.length) {
+        await Future.delayed(const Duration(milliseconds: 30));
+      }
+    }
+  }
+
+  /// Pour chaque épisode du verlauf sans runtime, tente de récupérer la durée
+  /// exacte depuis TMDB et la sauvegarde. N'écrit rien si TMDB ne répond pas
+  /// ou si l'épisode TMDB n'a pas de runtime. Traite 3 saisons en parallèle.
+  Future<void> _backfillHistoryEpisodeRuntimes(
+      LibraryRepository repo, List<HistoryView> hist) async {
+    final tmdb = ref.read(tmdbClientProvider);
+
+    // Grouper par (tmdbId, saison) pour n'appeler TMDB qu'une fois par saison.
+    final byKey = <({int tmdbId, int season}), List<HistoryView>>{};
+    for (final h in hist) {
+      if (h.episodeNumber == null) continue;
+      if (h.seasonNumber == null) continue;
+      if (h.entry.episodeRuntime != null) continue; // déjà connu
+      if (h.entry.id == null) continue;
+      final key = (tmdbId: h.film.tmdbId, season: h.seasonNumber!);
+      (byKey[key] ??= []).add(h);
+    }
+    if (byKey.isEmpty) return;
+
+    final keys = byKey.keys.toList();
+    const batchSize = 3;
+    for (int i = 0; i < keys.length; i += batchSize) {
+      if (!mounted) return;
+      final batch = keys.sublist(i, (i + batchSize).clamp(0, keys.length));
+      await Future.wait(batch.map((k) async {
+        try {
+          final eps = await tmdb.seasonEpisodes(k.tmdbId, k.season);
+          final runtimeByEp = <int, int>{
+            for (final e in eps)
+              if (e.runtime != null && e.runtime! > 0) e.episodeNumber: e.runtime!,
+          };
+          if (runtimeByEp.isEmpty) return;
+          for (final h in byKey[k]!) {
+            final rt = runtimeByEp[h.episodeNumber!];
+            if (rt == null) continue;
+            await repo.updateHistoryEpisodeMeta(h.entry.id!, episodeRuntime: rt);
+          }
+        } catch (_) {
+          // Réseau indisponible ou épisode TMDB sans runtime : on réessaiera.
+        }
+      }));
+      if (i + batchSize < keys.length) {
         await Future.delayed(const Duration(milliseconds: 30));
       }
     }

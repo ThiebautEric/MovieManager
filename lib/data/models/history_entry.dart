@@ -80,26 +80,15 @@ class HistoryView {
 
   String? get posterPath => season?.posterPath ?? film.posterPath;
 
-  /// Durée totale en minutes : le film, l'épisode (durée exacte si connue),
-  /// ou le cumul de la saison — somme exacte des épisodes si connue, sinon
-  /// estimation épisodes × durée.
+  /// Durée totale en minutes : exacte uniquement, jamais d'estimation.
+  /// Épisode → runtime stocké depuis TMDB ; saison → somme exacte backfillée ;
+  /// film → runtime TMDB. Null si la donnée n'est pas disponible.
   int? get totalMinutes {
     if (film.isMovie) return film.runtime;
-    if (entry.episodeNumber != null) {
-      return entry.episodeRuntime ?? film.runtime;
-    }
-    final exact = season?.runtimeMinutes;
-    if (exact != null) return exact;
-    final eps = season?.episodeCount;
-    final rt = film.runtime;
-    if (eps == null || rt == null) return null;
-    return eps * rt;
+    if (entry.episodeNumber != null) return entry.episodeRuntime;
+    return season?.runtimeMinutes;
   }
 
-  /// Vrai si [totalMinutes] est une somme exacte (pas une estimation « ≈ »).
-  bool get isExactDuration {
-    if (film.isMovie) return true;
-    if (entry.episodeNumber != null) return entry.episodeRuntime != null;
-    return season?.runtimeMinutes != null;
-  }
+  /// Toujours vrai car [totalMinutes] ne retourne jamais d'estimation.
+  bool get isExactDuration => totalMinutes != null;
 }
