@@ -93,6 +93,9 @@ abstract class LibraryRepository {
     int runtimeMinutes,
   );
 
+  /// Stocke la durée exacte d'un épisode individuel dans collection.
+  Future<void> backfillEpisodeRuntime(String entryId, int runtimeMinutes);
+
   /// Resynchronise avec la source de vérité (autres appareils).
   Future<void> refresh();
 
@@ -427,8 +430,8 @@ class SupabaseLibraryRepository implements LibraryRepository {
     if (readOnly) return;
     if (seasonAirYear == null && episodeAirYear == null) return;
     await _client.from('collection').update({
-      if (seasonAirYear != null) 'season_air_year': seasonAirYear,
-      if (episodeAirYear != null) 'episode_air_year': episodeAirYear,
+      'season_air_year': ?seasonAirYear,
+      'episode_air_year': ?episodeAirYear,
     }).eq('id', entryId).eq('user_id', _userId);
     _collection = [
       for (final e in _collection)
@@ -478,6 +481,35 @@ class SupabaseLibraryRepository implements LibraryRepository {
           )
         else
           s,
+    ];
+    _rebuild();
+  }
+
+  @override
+  Future<void> backfillEpisodeRuntime(String entryId, int runtimeMinutes) async {
+    if (readOnly) return;
+    await _client
+        .from('collection')
+        .update({'episode_runtime_minutes': runtimeMinutes})
+        .eq('id', entryId)
+        .eq('user_id', _userId);
+    _collection = [
+      for (final e in _collection)
+        if (e.id == entryId)
+          CollectionEntry(
+            id: e.id,
+            filmId: e.filmId,
+            seasonNumber: e.seasonNumber,
+            episodeNumber: e.episodeNumber,
+            historyId: e.historyId,
+            medium: e.medium,
+            addedAt: e.addedAt,
+            seasonAirYear: e.seasonAirYear,
+            episodeAirYear: e.episodeAirYear,
+            episodeRuntimeMinutes: runtimeMinutes,
+          )
+        else
+          e,
     ];
     _rebuild();
   }
@@ -974,6 +1006,30 @@ class LocalLibraryRepository implements LibraryRepository {
           s,
     ];
     await _persistSeasons();
+    _emit();
+  }
+
+  @override
+  Future<void> backfillEpisodeRuntime(String entryId, int runtimeMinutes) async {
+    _collection = [
+      for (final e in _collection)
+        if (e.id == entryId)
+          CollectionEntry(
+            id: e.id,
+            filmId: e.filmId,
+            seasonNumber: e.seasonNumber,
+            episodeNumber: e.episodeNumber,
+            historyId: e.historyId,
+            medium: e.medium,
+            addedAt: e.addedAt,
+            seasonAirYear: e.seasonAirYear,
+            episodeAirYear: e.episodeAirYear,
+            episodeRuntimeMinutes: runtimeMinutes,
+          )
+        else
+          e,
+    ];
+    await _persistCollection();
     _emit();
   }
 

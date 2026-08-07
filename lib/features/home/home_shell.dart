@@ -127,6 +127,9 @@ class _HomeShellState extends ConsumerState<HomeShell>
       // Re-tenté à chaque lancement tant qu'il reste des saisons sans durée :
       // TMDB peut ne pas avoir les données aujourd'hui mais les avoir demain.
       await _backfillSeasonRuntimes(repo, coll);
+
+      // Phase 4 : durées exactes des épisodes individuels (episode_runtime_minutes).
+      await _backfillEpisodeRuntimes(repo, coll);
     } catch (_) {
       // pas connecté / données pas prêtes : on réessaiera au prochain lancement.
     } finally {
@@ -181,6 +184,50 @@ class _HomeShellState extends ConsumerState<HomeShell>
         }
       }));
       if (i + batchSize < targets.length) {
+        await Future.delayed(const Duration(milliseconds: 30));
+      }
+    }
+  }
+
+  /// Pour chaque épisode individuel en collection sans episode_runtime_minutes,
+  /// récupère la durée exacte via TMDB et la stocke. Groupé par saison pour
+  /// minimiser les appels API. Re-tenté à chaque lancement.
+  Future<void> _backfillEpisodeRuntimes(
+      LibraryRepository repo, List<CollectionView> coll) async {
+    final tmdb = ref.read(tmdbClientProvider);
+
+    // Regrouper les épisodes sans runtime par (tmdbId, seasonNumber).
+    final bySeasonKey =
+        <(int, int), List<({String id, int episodeNumber})>>{};
+    for (final e in coll) {
+      if (e.episodeNumber == null || e.seasonNumber == null) continue;
+      if (e.episodeRuntimeMinutes != null) continue; // déjà connu
+      if (e.id == null) continue;
+      final key = (e.film.tmdbId, e.seasonNumber!);
+      (bySeasonKey[key] ??= [])
+          .add((id: e.id!, episodeNumber: e.episodeNumber!));
+    }
+
+    final seasonKeys = bySeasonKey.keys.toList();
+    const batchSize = 3;
+    for (int i = 0; i < seasonKeys.length; i += batchSize) {
+      if (!mounted) return;
+      final batch =
+          seasonKeys.sublist(i, (i + batchSize).clamp(0, seasonKeys.length));
+      await Future.wait(batch.map((key) async {
+        try {
+          final eps = await tmdb.seasonEpisodes(key.$1, key.$2);
+          for (final t in bySeasonKey[key]!) {
+            final ep = eps
+                .where((e) => e.episodeNumber == t.episodeNumber)
+                .firstOrNull;
+            if (ep?.runtime != null && ep!.runtime! > 0) {
+              await repo.backfillEpisodeRuntime(t.id, ep.runtime!);
+            }
+          }
+        } catch (_) {}
+      }));
+      if (i + batchSize < seasonKeys.length) {
         await Future.delayed(const Duration(milliseconds: 30));
       }
     }

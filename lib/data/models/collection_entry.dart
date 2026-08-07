@@ -14,6 +14,7 @@ class CollectionEntry {
     this.addedAt,
     this.seasonAirYear,
     this.episodeAirYear,
+    this.episodeRuntimeMinutes,
   });
 
   final String? id;
@@ -29,6 +30,8 @@ class CollectionEntry {
   final int? seasonAirYear;
   /// Année de diffusion TMDB de l'épisode (priorité sur [seasonAirYear]).
   final int? episodeAirYear;
+  /// Durée exacte de l'épisode individuel (backfill TMDB, stocké une fois pour toutes).
+  final int? episodeRuntimeMinutes;
 
   factory CollectionEntry.fromJson(Map<String, dynamic> json) => CollectionEntry(
         id: json['id'] as String?,
@@ -42,6 +45,8 @@ class CollectionEntry {
             : null,
         seasonAirYear: (json['season_air_year'] as num?)?.toInt(),
         episodeAirYear: (json['episode_air_year'] as num?)?.toInt(),
+        episodeRuntimeMinutes:
+            (json['episode_runtime_minutes'] as num?)?.toInt(),
       );
 
   Map<String, dynamic> toUpsertJson() => {
@@ -53,6 +58,8 @@ class CollectionEntry {
         if (addedAt != null) 'added_at': addedAt!.toIso8601String(),
         if (seasonAirYear != null) 'season_air_year': seasonAirYear,
         if (episodeAirYear != null) 'episode_air_year': episodeAirYear,
+        if (episodeRuntimeMinutes != null)
+          'episode_runtime_minutes': episodeRuntimeMinutes,
       };
 
   Map<String, dynamic> toFullJson() => {...toUpsertJson(), 'id': id};
@@ -79,6 +86,7 @@ class CollectionView {
   DateTime? get addedAt => entry.addedAt;
   int? get seasonAirYear => entry.seasonAirYear;
   int? get episodeAirYear => entry.episodeAirYear;
+  int? get episodeRuntimeMinutes => entry.episodeRuntimeMinutes;
 
   /// Affiche : celle de la saison si disponible, sinon celle du film.
   String? get posterPath => season?.posterPath ?? film.posterPath;
@@ -86,10 +94,10 @@ class CollectionView {
   /// Durée en minutes : exacte uniquement (jamais estimée).
   /// - Film : runtime TMDB stocké.
   /// - Saison : somme exacte des épisodes (backfill, ou null si inconnu).
-  /// - Épisode individuel : non affiché (pas de champ dédié en collection).
+  /// - Épisode individuel : runtime stocké via backfill TMDB (null avant backfill).
   int? get totalMinutes {
     if (film.isMovie) return film.runtime;
-    if (episodeNumber != null) return null;
+    if (episodeNumber != null) return entry.episodeRuntimeMinutes;
     return season?.runtimeMinutes;
   }
 

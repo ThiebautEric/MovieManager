@@ -121,20 +121,22 @@ class _PhysicalCollectionScreenState
       return e.film.releaseYear;
     }
 
-    // Durée effective : stockée (film/saison) ou TMDB pour les épisodes individuels.
+    // Durée effective : stockée en priorité, fallback TMDB pour les épisodes
+    // en attente de backfill (avant le prochain démarrage).
     int? effectiveRuntime(CollectionView e) {
-      if (e.film.isMovie) return e.film.runtime;
+      final stored = e.totalMinutes;
+      if (stored != null) return stored;
       if (e.episodeNumber != null && e.seasonNumber != null) {
         final eps = ref
             .watch(seasonEpisodesProvider(
                 (id: e.film.tmdbId, season: e.seasonNumber!)))
             .value;
-        final ep = eps
+        return eps
             ?.where((ep) => ep.episodeNumber == e.episodeNumber)
-            .firstOrNull;
-        return ep?.runtime;
+            .firstOrNull
+            ?.runtime;
       }
-      return e.season?.runtimeMinutes;
+      return null;
     }
 
     final theme = Theme.of(context);
