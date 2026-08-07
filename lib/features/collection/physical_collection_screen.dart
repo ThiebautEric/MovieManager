@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/l10n/l10n.dart';
+import '../../l10n/gen/app_localizations.dart';
 import '../../core/prefs/original_titles_controller.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../core/utils/format.dart';
@@ -65,6 +66,22 @@ class _PhysicalCollectionScreenState
     _titleController.dispose();
     super.dispose();
   }
+
+  Widget _seenSegment(AppLocalizations l10n) => SegmentedButton<_SeenFilter>(
+        segments: [
+          ButtonSegment(value: _SeenFilter.all,    label: Text(l10n.filterAll)),
+          ButtonSegment(value: _SeenFilter.seen,   label: Text(l10n.filterSeen)),
+          ButtonSegment(value: _SeenFilter.unseen, label: Text(l10n.filterUnseen)),
+        ],
+        selected: {_seenFilter},
+        onSelectionChanged: (v) => setState(() => _seenFilter = v.first),
+        style: SegmentedButton.styleFrom(
+          visualDensity: VisualDensity.compact,
+          textStyle: const TextStyle(fontSize: 11),
+          minimumSize: const Size(0, 28),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+        ),
+      );
 
   void _onTitleChanged(String value) {
     _debounce?.cancel();
@@ -334,35 +351,28 @@ class _PhysicalCollectionScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppBarTitle(l10n.collectionTitle),
-            const SizedBox(width: 10),
-            SegmentedButton<_SeenFilter>(
-              segments: [
-                ButtonSegment(
-                    value: _SeenFilter.all,
-                    label: Text(l10n.filterAll)),
-                ButtonSegment(
-                    value: _SeenFilter.seen,
-                    label: Text(l10n.filterSeen)),
-                ButtonSegment(
-                    value: _SeenFilter.unseen,
-                    label: Text(l10n.filterUnseen)),
-              ],
-              selected: {_seenFilter},
-              onSelectionChanged: (v) =>
-                  setState(() => _seenFilter = v.first),
-              style: SegmentedButton.styleFrom(
-                visualDensity: VisualDensity.compact,
-                textStyle: const TextStyle(fontSize: 11),
-                minimumSize: const Size(0, 28),
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+        title: wide
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppBarTitle(l10n.collectionTitle),
+                  const SizedBox(width: 12),
+                  _seenSegment(l10n),
+                ],
+              )
+            : AppBarTitle(l10n.collectionTitle),
+        bottom: wide
+            ? null
+            : PreferredSize(
+                preferredSize: const Size.fromHeight(36),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: _seenSegment(l10n),
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
         actions: [
           if (!wide)
             IconButton(
