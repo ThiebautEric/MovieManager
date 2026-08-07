@@ -682,6 +682,12 @@ abstract class AppLocalizations {
   /// **'Rechercher dans l\'historique…'**
   String get historySearchHint;
 
+  /// No description provided for @collectionSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher dans la collection…'**
+  String get collectionSearchHint;
+
   /// En-tête des colonnes du CSV exporté (séparateur ;)
   ///
   /// In fr, this message translates to:

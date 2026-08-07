@@ -370,6 +370,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get historySearchHint => 'Rechercher dans l\'historique…';
 
   @override
+  String get collectionSearchHint => 'Rechercher dans la collection…';
+
+  @override
   String get historyCsvHeader =>
       'Numero;TmdbId;TypeMedia;Titre;TitreOriginal;NumSaison;NumEpisode;NomEpisode;Note;Date;Commentaire';
 

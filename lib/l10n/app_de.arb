@@ -97,6 +97,7 @@
   "historyExportTooltip": "Als CSV exportieren",
   "historyExportedSnack": "Verlauf exportiert (historique.csv)",
   "historySearchHint": "Im Verlauf suchen…",
+  "collectionSearchHint": "In der Sammlung suchen…",
   "historyCsvHeader": "Nummer;TmdbId;Medientyp;Titel;OriginalTitel;StaffelNr;FolgeNr;FolgeName;Bewertung;Datum;Kommentar",
   "historyEmpty": "Keine Sichtungen anzuzeigen.\nFüge einen Film oder eine Staffel zu deinem Verlauf hinzu (oder passe die Filter an).",
   "historyDayAbbrev": "T",

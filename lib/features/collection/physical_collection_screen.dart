@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/l10n/l10n.dart';
@@ -22,23 +25,71 @@ import '../home/selected_media.dart';
 import 'collection_filter.dart';
 import 'filter_sheet.dart';
 
+final _collectionTitleQueryProvider = StateProvider<String>((ref) {
+  ref.keepAlive();
+  return '';
+});
+
 /// Écran « Collection » : tout ce que l'utilisateur possède (DVD, Blu-ray,
 /// Digital), en grille d'affiches. Pour les séries, chaque saison possédée
 /// apparaît avec sa propre affiche. Trié par titre puis n° de saison.
-class PhysicalCollectionScreen extends ConsumerWidget {
+class PhysicalCollectionScreen extends ConsumerStatefulWidget {
   const PhysicalCollectionScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PhysicalCollectionScreen> createState() =>
+      _PhysicalCollectionScreenState();
+}
+
+class _PhysicalCollectionScreenState
+    extends ConsumerState<PhysicalCollectionScreen> {
+  late final TextEditingController _titleController;
+  Timer? _debounce;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(
+      text: ref.read(_collectionTitleQueryProvider),
+    );
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  void _onTitleChanged(String value) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 250), () {
+      ref.read(_collectionTitleQueryProvider.notifier).state =
+          value.trim().toLowerCase();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final dateFmt = DateFormat.yMd(locale);
     final async = ref.watch(collectionStreamProvider);
     final filter = ref.watch(collectionFilterProvider);
     final entries = ref.watch(filteredCollectionProvider);
+    final titleQuery = ref.watch(_collectionTitleQueryProvider);
     final films = [for (final c in (async.value ?? const <CollectionView>[])) c.film];
     final ratingBySeason = ref.watch(ratingByKeySeasonProvider);
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
+
+    // Filtre texte appliqué après les autres filtres.
+    final displayedEntries = titleQuery.isEmpty
+        ? entries
+        : entries.where((e) {
+            final q = titleQuery;
+            return e.film.title.toLowerCase().contains(q) ||
+                (e.film.originalTitle?.toLowerCase().contains(q) ?? false);
+          }).toList();
 
     // Année effective d'une entrée : valeur stockée en base (rapide) ou TMDB.
     int? effectiveYear(CollectionView e) {
@@ -70,16 +121,56 @@ class PhysicalCollectionScreen extends ConsumerWidget {
       return e.film.releaseYear;
     }
 
+    final theme = Theme.of(context);
+
+    final searchBar = Padding(
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 2),
+      child: TextField(
+        controller: _titleController,
+        onChanged: _onTitleChanged,
+        style: const TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+          hintText: l10n.collectionSearchHint,
+          hintStyle: const TextStyle(fontSize: 13),
+          prefixIcon: const Icon(Icons.search, size: 18),
+          prefixIconConstraints:
+              const BoxConstraints(minWidth: 36, minHeight: 36),
+          suffixIcon: titleQuery.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(Icons.clear, size: 16),
+                  onPressed: () {
+                    _titleController.clear();
+                    _onTitleChanged('');
+                  },
+                )
+              : null,
+          filled: true,
+          fillColor: theme.colorScheme.surfaceContainerHighest,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        ),
+      ),
+    );
+
     final content = async.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text(l10n.errorMessage(friendlyError(e)))),
       data: (_) {
-        if (entries.isEmpty) {
-          return EmptyState(message: l10n.collEmpty);
+        if (displayedEntries.isEmpty) {
+          return Column(
+            children: [
+              searchBar,
+              Expanded(child: EmptyState(message: l10n.collEmpty)),
+            ],
+          );
         }
 
         // Tri : année desc, titre asc, saison asc, épisode asc.
-        final sorted = [...entries]
+        final sorted = [...displayedEntries]
           ..sort((a, b) {
             final ay = effectiveYear(a);
             final by = effectiveYear(b);
@@ -118,7 +209,9 @@ class PhysicalCollectionScreen extends ConsumerWidget {
           mainAxisSpacing: 12,
         );
 
-        final slivers = <Widget>[];
+        final slivers = <Widget>[
+          SliverToBoxAdapter(child: searchBar),
+        ];
         for (final g in groups) {
           slivers.add(SliverToBoxAdapter(
             child: Padding(
@@ -356,4 +449,3 @@ class _CollectionCard extends StatelessWidget {
     );
   }
 }
-
