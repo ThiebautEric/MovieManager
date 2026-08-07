@@ -716,6 +716,31 @@ class SeasonScreen extends ConsumerWidget {
             Text(info.overview),
           ],
 
+          // Sections bibliothèque
+          const SizedBox(height: 20),
+          if (!readOnly) ...[
+            _WishlistButton(film: _film, season: _season()),
+            const SizedBox(height: 8),
+          ],
+          _CollectionSection(
+            entries: coll,
+            isSeries: true,
+            scopeLabel: scopeLabel,
+            readOnly: readOnly,
+            onAdd: () => _addCollection(context, repo),
+            onRemove: (id) => _confirmRemoveCollection(context, repo, id),
+          ),
+          const SizedBox(height: 8),
+          _HistorySection(
+            entries: hist,
+            isSeries: true,
+            scopeLabel: scopeLabel,
+            readOnly: readOnly,
+            onAdd: () => _addHistory(context, repo),
+            onEdit: (e) => _editHistory(context, repo, e),
+            onRemove: (id) => _confirmRemoveHistory(context, repo, id),
+          ),
+
           // Grille d'épisodes
           const SizedBox(height: 24),
           Text(l10n.detailsEpisodesTitle, style: theme.textTheme.titleMedium),
@@ -746,42 +771,6 @@ class SeasonScreen extends ConsumerWidget {
               ],
             ),
           ),
-
-          // Sections bibliothèque
-          const SizedBox(height: 24),
-          if (!readOnly) ...[
-            _WishlistButton(film: _film, season: _season()),
-            const SizedBox(height: 8),
-          ],
-          _CollectionSection(
-            entries: coll,
-            isSeries: true,
-            scopeLabel: scopeLabel,
-            readOnly: readOnly,
-            onAdd: () => _addCollection(context, repo),
-            onRemove: (id) => _confirmRemoveCollection(context, repo, id),
-          ),
-          const SizedBox(height: 8),
-          _HistorySection(
-            entries: hist,
-            isSeries: true,
-            scopeLabel: scopeLabel,
-            readOnly: readOnly,
-            onAdd: () => _addHistory(context, repo),
-            onEdit: (e) => _editHistory(context, repo, e),
-            onRemove: (id) => _confirmRemoveHistory(context, repo, id),
-          ),
-          if (!readOnly) ...[
-            const SizedBox(height: 8),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton.icon(
-                onPressed: () => _rateEpisode(context, repo, hist),
-                icon: const Icon(Icons.live_tv, size: 18),
-                label: Text(l10n.detailsRateEpisode),
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -1148,14 +1137,7 @@ class EpisodeScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                if (episode.overview.isNotEmpty) ...[
-                  const SizedBox(height: 20),
-                  Text(l10n.detailsSynopsis,
-                      style: theme.textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text(episode.overview),
-                ],
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
                 if (!readOnly) ...[
                   _WishlistButton(film: _film, season: _season()),
                   const SizedBox(height: 8),
@@ -1178,6 +1160,13 @@ class EpisodeScreen extends ConsumerWidget {
                   onEdit: (e) => _editHistory(context, repo, e),
                   onRemove: (id) => _confirmRemoveHistory(context, repo, id),
                 ),
+                if (episode.overview.isNotEmpty) ...[
+                  const SizedBox(height: 20),
+                  Text(l10n.detailsSynopsis,
+                      style: theme.textTheme.titleMedium),
+                  const SizedBox(height: 8),
+                  Text(episode.overview),
+                ],
               ],
             ),
           ),
