@@ -247,13 +247,13 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
           ],
         ),
         const SizedBox(height: 16),
-        LibraryControls(details: details),
         if (details.overview.isNotEmpty) ...[
-          const SizedBox(height: 24),
           Text(l10n.detailsSynopsis, style: theme.textTheme.titleMedium),
           const SizedBox(height: 8),
           Text(details.overview),
+          const SizedBox(height: 24),
         ],
+        LibraryControls(details: details),
         if (details.trailers.isNotEmpty) ...[
           const SizedBox(height: 24),
           Text(l10n.detailsTrailers, style: theme.textTheme.titleMedium),

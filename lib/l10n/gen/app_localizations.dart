@@ -424,6 +424,12 @@ abstract class AppLocalizations {
   /// **'Ajouter un visionnage'**
   String get detailsAddViewing;
 
+  /// No description provided for @detailsEpisodesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épisodes'**
+  String get detailsEpisodesTitle;
+
   /// No description provided for @detailsRateEpisode.
   ///
   /// In fr, this message translates to:

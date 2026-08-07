@@ -213,6 +213,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get detailsAddViewing => 'Ajouter un visionnage';
 
   @override
+  String get detailsEpisodesTitle => 'Épisodes';
+
+  @override
   String get detailsRateEpisode => 'Noter un épisode';
 
   @override

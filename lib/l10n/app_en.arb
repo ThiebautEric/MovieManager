@@ -54,6 +54,7 @@
   "detailsMediaCount": "{count, plural, one{{count} copy} other{{count} copies}}",
   "detailsViewingCount": "{count, plural, one{{count} viewing} other{{count} viewings}}",
   "detailsAddViewing": "Add a viewing",
+  "detailsEpisodesTitle": "Episodes",
   "detailsRateEpisode": "Rate an episode",
   "detailsEditViewing": "Edit viewing",
   "detailsRemoveCollectionTitle": "Remove from collection?",

@@ -213,6 +213,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get detailsAddViewing => 'Add a viewing';
 
   @override
+  String get detailsEpisodesTitle => 'Episodes';
+
+  @override
   String get detailsRateEpisode => 'Rate an episode';
 
   @override

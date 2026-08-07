@@ -54,6 +54,7 @@
   "detailsMediaCount": "{count, plural, one{{count} Medium} other{{count} Medien}}",
   "detailsViewingCount": "{count, plural, one{{count} Sichtung} other{{count} Sichtungen}}",
   "detailsAddViewing": "Sichtung hinzufügen",
+  "detailsEpisodesTitle": "Folgen",
   "detailsRateEpisode": "Eine Folge bewerten",
   "detailsEditViewing": "Sichtung bearbeiten",
   "detailsRemoveCollectionTitle": "Aus der Sammlung entfernen?",

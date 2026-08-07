@@ -213,6 +213,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get detailsAddViewing => 'Sichtung hinzufügen';
 
   @override
+  String get detailsEpisodesTitle => 'Folgen';
+
+  @override
   String get detailsRateEpisode => 'Eine Folge bewerten';
 
   @override

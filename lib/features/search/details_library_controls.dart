@@ -12,6 +12,7 @@ import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_details.dart';
 import '../../tmdb/models/season_episodes.dart';
+import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/add_entry_dialogs.dart';
 import '../../widgets/dark_badge.dart';
 import '../../widgets/owned_format_badge.dart';
@@ -281,141 +282,10 @@ class LibraryControls extends ConsumerWidget {
     SeasonInfo info,
     bool readOnly,
   ) {
-    final l10n = context.l10n;
-    final mediaKey = '${details.mediaType}:${details.tmdbId}';
-    final title = info.name.isNotEmpty
-        ? info.name
-        : l10n.detailsSeasonNumber(info.seasonNumber);
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (sheetCtx) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.55,
-        maxChildSize: 0.95,
-        minChildSize: 0.3,
-        builder: (_, scrollCtrl) => Consumer(
-          builder: (_, ref, __) {
-            final coll = (ref.watch(collectionStreamProvider).value ?? [])
-                .where((c) =>
-                    c.film.mediaKey == mediaKey &&
-                    c.seasonNumber == info.seasonNumber)
-                .toList();
-            final hist = (ref.watch(historyStreamProvider).value ?? [])
-                .where((h) =>
-                    h.film.mediaKey == mediaKey &&
-                    h.seasonNumber == info.seasonNumber)
-                .toList();
-
-            return SingleChildScrollView(
-              controller: scrollCtrl,
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Container(
-                      width: 36,
-                      height: 4,
-                      margin: const EdgeInsets.only(bottom: 16),
-                      decoration: BoxDecoration(
-                        color:
-                            Theme.of(sheetCtx).colorScheme.outlineVariant,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 52,
-                        height: 78,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: PosterImage(
-                              posterPath: info.posterPath, size: 'w185'),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(title,
-                                style: Theme.of(sheetCtx)
-                                    .textTheme
-                                    .titleMedium),
-                            if (info.year != null || info.episodeCount > 0)
-                              Text(
-                                [
-                                  if (info.year != null) '${info.year}',
-                                  if (info.episodeCount > 0)
-                                    l10n.detailsEpisodeCount(
-                                        info.episodeCount),
-                                ].join(' · '),
-                                style: Theme.of(sheetCtx)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      color: Theme.of(sheetCtx)
-                                          .colorScheme
-                                          .outline,
-                                    ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  if (!readOnly) ...[
-                    _WishlistButton(
-                        film: _film, season: _season(info.seasonNumber)),
-                    const SizedBox(height: 8),
-                  ],
-                  _CollectionSection(
-                    entries: coll,
-                    isSeries: true,
-                    scopeLabel: (n) => _scopeLabel(context, n),
-                    readOnly: readOnly,
-                    onAdd: () =>
-                        _addCollection(context, repo, season: info.seasonNumber),
-                    onRemove: (id) =>
-                        _confirmRemoveCollection(context, repo, id),
-                  ),
-                  const SizedBox(height: 8),
-                  _HistorySection(
-                    entries: hist,
-                    isSeries: true,
-                    scopeLabel: (n) => _scopeLabel(context, n),
-                    readOnly: readOnly,
-                    onAdd: () =>
-                        _addHistory(context, repo, season: info.seasonNumber),
-                    onEdit: (e) => _editHistory(context, repo, e),
-                    onRemove: (id) =>
-                        _confirmRemoveHistory(context, repo, id),
-                  ),
-                  if (!readOnly) ...[
-                    const SizedBox(height: 8),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton.icon(
-                        onPressed: () =>
-                            _rateEpisode(context, repo, info, hist),
-                        icon: const Icon(Icons.live_tv, size: 18),
-                        label: Text(l10n.detailsRateEpisode),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (_) => SeasonScreen(details: details, info: info)),
     );
   }
 
@@ -747,6 +617,425 @@ class _WishlistButton extends ConsumerWidget {
             }
           }
         },
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Écran de détail d'une saison
+// ---------------------------------------------------------------------------
+
+/// Page dédiée à une saison : synopsis, épisodes en vignettes, sections
+/// collection / historique. Accessible depuis la grille des saisons.
+class SeasonScreen extends ConsumerWidget {
+  const SeasonScreen({
+    super.key,
+    required this.details,
+    required this.info,
+  });
+
+  final MediaDetails details;
+  final SeasonInfo info;
+
+  Film get _film => Film.fromDetails(details);
+  FilmSeason _season() => FilmSeason.fromInfo(info);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final repo = ref.read(libraryRepositoryProvider);
+    final readOnly = ref.watch(isViewingAsProvider);
+
+    final mediaKey = '${details.mediaType}:${details.tmdbId}';
+    final coll = (ref.watch(collectionStreamProvider).value ?? [])
+        .where((c) =>
+            c.film.mediaKey == mediaKey && c.seasonNumber == info.seasonNumber)
+        .toList();
+    final hist = (ref.watch(historyStreamProvider).value ?? [])
+        .where((h) =>
+            h.film.mediaKey == mediaKey && h.seasonNumber == info.seasonNumber)
+        .toList();
+
+    final episodesAsync = ref.watch(
+        seasonEpisodesProvider((id: details.tmdbId, season: info.seasonNumber)));
+
+    final title = info.name.isNotEmpty
+        ? info.name
+        : l10n.detailsSeasonNumber(info.seasonNumber);
+
+    String scopeLabel(int? n) =>
+        l10n.detailsSeasonNumber(n ?? info.seasonNumber);
+
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          // En-tête
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 80,
+                height: 120,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: PosterImage(posterPath: info.posterPath, size: 'w185'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: theme.textTheme.titleLarge),
+                    const SizedBox(height: 4),
+                    if (info.year != null || info.episodeCount > 0)
+                      Text(
+                        [
+                          if (info.year != null) '${info.year}',
+                          if (info.episodeCount > 0)
+                            l10n.detailsEpisodeCount(info.episodeCount),
+                        ].join(' · '),
+                        style: theme.textTheme.bodyMedium
+                            ?.copyWith(color: theme.colorScheme.outline),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          // Synopsis de la saison
+          if (info.overview.isNotEmpty) ...[
+            const SizedBox(height: 20),
+            Text(l10n.detailsSynopsis, style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Text(info.overview),
+          ],
+
+          // Grille d'épisodes
+          const SizedBox(height: 24),
+          Text(l10n.detailsEpisodesTitle, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 12),
+          episodesAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (e, _) => Text(l10n.errorMessage(friendlyError(e))),
+            data: (episodes) => Wrap(
+              spacing: 10,
+              runSpacing: 12,
+              children: [
+                for (final ep in episodes)
+                  _EpisodeCard(
+                    episode: ep,
+                    hist: hist,
+                    onTap: readOnly
+                        ? null
+                        : () => _addEpisodeToHistory(context, repo, ep),
+                  ),
+              ],
+            ),
+          ),
+
+          // Sections bibliothèque
+          const SizedBox(height: 24),
+          if (!readOnly) ...[
+            _WishlistButton(film: _film, season: _season()),
+            const SizedBox(height: 8),
+          ],
+          _CollectionSection(
+            entries: coll,
+            isSeries: true,
+            scopeLabel: scopeLabel,
+            readOnly: readOnly,
+            onAdd: () => _addCollection(context, repo),
+            onRemove: (id) => _confirmRemoveCollection(context, repo, id),
+          ),
+          const SizedBox(height: 8),
+          _HistorySection(
+            entries: hist,
+            isSeries: true,
+            scopeLabel: scopeLabel,
+            readOnly: readOnly,
+            onAdd: () => _addHistory(context, repo),
+            onEdit: (e) => _editHistory(context, repo, e),
+            onRemove: (id) => _confirmRemoveHistory(context, repo, id),
+          ),
+          if (!readOnly) ...[
+            const SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () => _rateEpisode(context, repo, hist),
+                icon: const Icon(Icons.live_tv, size: 18),
+                label: Text(l10n.detailsRateEpisode),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Future<void> _addEpisodeToHistory(
+      BuildContext context, LibraryRepository repo, EpisodeInfo ep) async {
+    final res = await showDialog<HistChoice>(
+      context: context,
+      builder: (_) => AddHistoryDialog(
+        title: ep.name.isEmpty ? 'E${ep.episodeNumber}' : ep.name,
+        header: EpisodeHeader(episode: ep),
+      ),
+    );
+    if (res == null || !context.mounted) return;
+    try {
+      await repo.addToHistory(
+        _film,
+        season: _season(),
+        episodeNumber: ep.episodeNumber,
+        episodeName: ep.name.isEmpty ? null : ep.name,
+        episodeRuntime: ep.runtime,
+        watchedAt: res.date,
+        rating: res.rating,
+        comment: res.comment,
+      );
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+
+  Future<void> _rateEpisode(BuildContext context, LibraryRepository repo,
+      List<HistoryView> hist) async {
+    final ep = await showDialog<EpisodeInfo>(
+      context: context,
+      builder: (_) => EpisodePickerDialog(
+        tmdbId: details.tmdbId,
+        seasonNumber: info.seasonNumber,
+        watched: {
+          for (final h in hist)
+            if (h.episodeNumber != null) h.episodeNumber!,
+        },
+      ),
+    );
+    if (ep == null || !context.mounted) return;
+    final res = await showDialog<HistChoice>(
+      context: context,
+      builder: (_) => AddHistoryDialog(
+        title: ep.name.isEmpty ? 'E${ep.episodeNumber}' : ep.name,
+        header: EpisodeHeader(episode: ep),
+      ),
+    );
+    if (res == null) return;
+    try {
+      await repo.addToHistory(
+        _film,
+        season: _season(),
+        episodeNumber: ep.episodeNumber,
+        episodeName: ep.name.isEmpty ? null : ep.name,
+        episodeRuntime: ep.runtime,
+        watchedAt: res.date,
+        rating: res.rating,
+        comment: res.comment,
+      );
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+
+  Future<void> _addCollection(
+      BuildContext context, LibraryRepository repo) async {
+    final res = await showDialog<CollChoice>(
+      context: context,
+      builder: (_) => const AddCollectionDialog(),
+    );
+    if (res == null) return;
+    try {
+      await repo.addToCollection(_film,
+          season: _season(), medium: res.medium, addedAt: res.date);
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+
+  Future<void> _addHistory(
+      BuildContext context, LibraryRepository repo) async {
+    final res = await showDialog<HistChoice>(
+      context: context,
+      builder: (_) => const AddHistoryDialog(),
+    );
+    if (res == null) return;
+    try {
+      await repo.addToHistory(_film,
+          season: _season(),
+          watchedAt: res.date,
+          rating: res.rating,
+          comment: res.comment);
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+
+  Future<void> _editHistory(
+      BuildContext context, LibraryRepository repo, HistoryView e) async {
+    final res = await showDialog<HistChoice>(
+      context: context,
+      builder: (_) => AddHistoryDialog(
+        initialDate: e.watchedAt,
+        initialRating: e.rating,
+        initialComment: e.comment,
+        title: context.l10n.detailsEditViewing,
+      ),
+    );
+    if (res == null || e.id == null) return;
+    try {
+      await repo.updateHistory(e.id!,
+          watchedAt: res.date, rating: res.rating, comment: res.comment);
+    } catch (err) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(err)));
+    }
+  }
+
+  Future<void> _confirmRemoveCollection(
+      BuildContext context, LibraryRepository repo, String id) async {
+    final ok = await _confirm(context,
+        title: context.l10n.detailsRemoveCollectionTitle,
+        body: context.l10n.detailsRemoveCollectionBody,
+        action: context.l10n.detailsRemoveAction);
+    if (!ok) return;
+    try {
+      await repo.removeFromCollection(id);
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+
+  Future<void> _confirmRemoveHistory(
+      BuildContext context, LibraryRepository repo, String id) async {
+    final ok = await _confirm(context,
+        title: context.l10n.detailsDeleteViewingTitle,
+        body: context.l10n.detailsDeleteViewingBody,
+        action: context.l10n.delete);
+    if (!ok) return;
+    try {
+      await repo.removeFromHistory(id);
+    } catch (e) {
+      if (context.mounted)
+        _toast(context, context.l10n.errorMessage(friendlyError(e)));
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Carte vignette d'épisode
+// ---------------------------------------------------------------------------
+
+class _EpisodeCard extends StatelessWidget {
+  const _EpisodeCard({
+    required this.episode,
+    required this.hist,
+    this.onTap,
+  });
+
+  final EpisodeInfo episode;
+  final List<HistoryView> hist;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final ep = episode;
+
+    final watches =
+        hist.where((h) => h.episodeNumber == ep.episodeNumber).toList();
+    final isWatched = watches.isNotEmpty;
+
+    String? rating;
+    if (watches.isNotEmpty && watches.every((h) => h.rating != null)) {
+      final avg = watches.map((h) => h.rating!).reduce((a, b) => a + b) /
+          watches.length;
+      rating = avg.toStringAsFixed(1);
+    }
+
+    return SizedBox(
+      width: 160,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: onTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: ep.stillPath != null
+                          ? PosterImage(posterPath: ep.stillPath, size: 'w300')
+                          : Container(
+                              color: theme.colorScheme.surfaceContainerHighest,
+                              child: Icon(Icons.live_tv,
+                                  size: 32, color: theme.colorScheme.outline),
+                            ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 4,
+                    right: 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (rating != null) ...[
+                          DarkBadge(icon: Icons.star, label: rating),
+                          const SizedBox(height: 3),
+                        ] else if (isWatched) ...[
+                          const DarkBadge(icon: Icons.visibility),
+                          const SizedBox(height: 3),
+                        ],
+                        DarkBadge(
+                            icon: Icons.live_tv, label: 'E${ep.episodeNumber}'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text.rich(
+              TextSpan(
+                text: ep.name.isEmpty ? 'E${ep.episodeNumber}' : ep.name,
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(fontWeight: FontWeight.w600),
+                children: [
+                  if (ep.runtime != null)
+                    TextSpan(
+                      text: '  ${fmtDuration(ep.runtime!)}',
+                      style: theme.textTheme.labelSmall
+                          ?.copyWith(color: theme.colorScheme.outline),
+                    ),
+                ],
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            if (ep.airYear != null)
+              Text(
+                '${ep.airYear}',
+                style: theme.textTheme.labelSmall
+                    ?.copyWith(color: theme.colorScheme.outline),
+              ),
+          ],
+        ),
       ),
     );
   }
