@@ -731,6 +731,7 @@ class SeasonScreen extends ConsumerWidget {
                   _EpisodeCard(
                     episode: ep,
                     hist: hist,
+                    coll: coll,
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -947,11 +948,13 @@ class _EpisodeCard extends StatelessWidget {
   const _EpisodeCard({
     required this.episode,
     required this.hist,
+    required this.coll,
     this.onTap,
   });
 
   final EpisodeInfo episode;
   final List<HistoryView> hist;
+  final List<CollectionView> coll;
   final VoidCallback? onTap;
 
   @override
@@ -962,6 +965,13 @@ class _EpisodeCard extends StatelessWidget {
     final watches =
         hist.where((h) => h.episodeNumber == ep.episodeNumber).toList();
     final isWatched = watches.isNotEmpty;
+
+    // Support possédé pour cet épisode (entrée saison entière OU épisode seul)
+    final ownedMedium = coll
+        .where((c) =>
+            c.episodeNumber == null || c.episodeNumber == ep.episodeNumber)
+        .map((c) => c.medium)
+        .firstOrNull;
 
     String? rating;
     if (watches.isNotEmpty && watches.every((h) => h.rating != null)) {
@@ -995,6 +1005,12 @@ class _EpisodeCard extends StatelessWidget {
                             ),
                     ),
                   ),
+                  if (ownedMedium != null)
+                    Positioned(
+                      top: 4,
+                      left: 4,
+                      child: MediumBadge(medium: ownedMedium, compact: true),
+                    ),
                   Positioned(
                     top: 4,
                     right: 4,
