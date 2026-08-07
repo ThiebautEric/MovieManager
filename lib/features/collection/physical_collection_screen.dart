@@ -270,14 +270,14 @@ class _PhysicalCollectionScreenState
                       originalTitle: entry.film.originalTitle,
                     ),
                     year: effectiveYear(entry),
-                    subtitle: (entry.episodeNumber != null
-                            ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber!, episodeNumber: entry.episodeNumber!, stored: null)}'
-                            : entry.seasonNumber != null
-                                ? l10n.collSeasonLabel(entry.seasonNumber!)
-                                : entry.film.isMovie
-                                    ? l10n.film
-                                    : l10n.serie) +
-                        (duration != null ? ' · $duration' : ''),
+                    duration: duration,
+                    subtitle: entry.episodeNumber != null
+                        ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber!, episodeNumber: entry.episodeNumber!, stored: null)}'
+                        : entry.seasonNumber != null
+                            ? l10n.collSeasonLabel(entry.seasonNumber!)
+                            : entry.film.isMovie
+                                ? l10n.film
+                                : l10n.serie,
                     badge: MediumBadge(medium: entry.medium),
                     seasonNumber: entry.seasonNumber,
                     dateLabel: entry.addedAt != null
@@ -360,12 +360,14 @@ class _CollectionCard extends StatelessWidget {
     required this.seasonNumber,
     required this.dateLabel,
     required this.onTap,
+    this.duration,
     this.rating,
   });
 
   final String? poster;
   final String title;
   final int? year;
+  final String? duration;
   final String subtitle;
   final Widget badge;
   final int? seasonNumber;
@@ -425,6 +427,12 @@ class _CollectionCard extends StatelessWidget {
                 if (year != null)
                   TextSpan(
                     text: '  ($year)',
+                    style: theme.textTheme.labelSmall
+                        ?.copyWith(color: theme.colorScheme.outline),
+                  ),
+                if (duration != null)
+                  TextSpan(
+                    text: '  $duration',
                     style: theme.textTheme.labelSmall
                         ?.copyWith(color: theme.colorScheme.outline),
                   ),
