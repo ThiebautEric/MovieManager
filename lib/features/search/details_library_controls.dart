@@ -919,7 +919,7 @@ class SeasonScreen extends ConsumerWidget {
                 ? const SizedBox.shrink()
                 : Padding(
                     padding: const EdgeInsets.only(top: 24),
-                    child: CastSection(cast: cast),
+                    child: CastSection(cast: cast, maxCollapsed: 6),
                   ),
           ),
         ],
@@ -1390,7 +1390,7 @@ class EpisodeScreen extends ConsumerWidget {
                       ? const SizedBox.shrink()
                       : Padding(
                           padding: const EdgeInsets.only(top: 8),
-                          child: CastSection(cast: cast),
+                          child: CastSection(cast: cast, maxCollapsed: 4),
                         ),
                 ),
               ],

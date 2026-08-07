@@ -6,18 +6,19 @@ import '../../tmdb/models/media_details.dart';
 import '../../widgets/poster_image.dart';
 import '../home/selected_media.dart';
 
-/// Grille du casting, repliée à 12 vignettes avec un bouton « +N ».
+/// Grille du casting, repliée à [maxCollapsed] vignettes avec un bouton « +N ».
 class CastSection extends ConsumerStatefulWidget {
-  const CastSection({super.key, required this.cast});
+  const CastSection({super.key, required this.cast, this.maxCollapsed = 12});
 
   final List<CastMember> cast;
+  final int maxCollapsed;
 
   @override
   ConsumerState<CastSection> createState() => _CastSectionState();
 }
 
 class _CastSectionState extends ConsumerState<CastSection> {
-  static const _maxCollapsed = 12;
+  int get _maxCollapsed => widget.maxCollapsed;
 
   bool _expanded = false;
 
