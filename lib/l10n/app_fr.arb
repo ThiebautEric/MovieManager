@@ -302,6 +302,8 @@
   "filterType": "Type",
   "filterAll": "Tous",
   "filterAllFeminine": "Toutes",
+  "filterSeen": "Vus",
+  "filterUnseen": "Non vus",
   "@filterAllFeminine": {
     "description": "Variante féminine de « Tous » (ex. toutes les années)"
   },

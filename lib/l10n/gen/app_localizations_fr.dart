@@ -456,6 +456,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get filterAllFeminine => 'Toutes';
 
   @override
+  String get filterSeen => 'Vus';
+
+  @override
+  String get filterUnseen => 'Non vus';
+
+  @override
   String get filterFilms => 'Films';
 
   @override

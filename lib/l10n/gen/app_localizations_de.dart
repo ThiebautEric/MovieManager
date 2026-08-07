@@ -457,6 +457,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get filterAllFeminine => 'Alle';
 
   @override
+  String get filterSeen => 'Gesehen';
+
+  @override
+  String get filterUnseen => 'Ungesehen';
+
+  @override
   String get filterFilms => 'Filme';
 
   @override

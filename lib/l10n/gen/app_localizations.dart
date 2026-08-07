@@ -796,6 +796,18 @@ abstract class AppLocalizations {
   /// **'Toutes'**
   String get filterAllFeminine;
 
+  /// No description provided for @filterSeen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vus'**
+  String get filterSeen;
+
+  /// No description provided for @filterUnseen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non vus'**
+  String get filterUnseen;
+
   /// No description provided for @filterFilms.
   ///
   /// In fr, this message translates to:

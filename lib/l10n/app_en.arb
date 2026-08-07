@@ -116,6 +116,8 @@
   "filterType": "Type",
   "filterAll": "All",
   "filterAllFeminine": "All",
+  "filterSeen": "Seen",
+  "filterUnseen": "Unseen",
   "filterFilms": "Movies",
   "filterSeries": "Series",
   "filterGenre": "Genre",

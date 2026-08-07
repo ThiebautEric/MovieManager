@@ -10,6 +10,7 @@ import '../../core/prefs/original_titles_controller.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../core/utils/format.dart';
 import '../../data/models/collection_entry.dart';
+import '../../data/models/history_entry.dart';
 import '../../data/repositories/collection_repository.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/app_bar_title.dart';
@@ -31,6 +32,8 @@ final _collectionTitleQueryProvider = StateProvider<String>((ref) {
   return '';
 });
 
+enum _SeenFilter { all, seen, unseen }
+
 /// Écran « Collection » : tout ce que l'utilisateur possède (DVD, Blu-ray,
 /// Digital), en grille d'affiches. Pour les séries, chaque saison possédée
 /// apparaît avec sa propre affiche. Trié par titre puis n° de saison.
@@ -46,6 +49,7 @@ class _PhysicalCollectionScreenState
     extends ConsumerState<PhysicalCollectionScreen> {
   late final TextEditingController _titleController;
   Timer? _debounce;
+  _SeenFilter _seenFilter = _SeenFilter.all;
 
   @override
   void initState() {
@@ -83,14 +87,28 @@ class _PhysicalCollectionScreenState
     final ratingBySeason = ref.watch(ratingByKeySeasonProvider);
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
 
+    // Clés des films déjà visionnés (pour le filtre Vus / Non vus).
+    final watchedKeys = {
+      for (final v in ref.watch(historyStreamProvider).value ?? const <HistoryView>[])
+        v.film.mediaKey
+    };
+
     // Filtre texte appliqué après les autres filtres.
-    final displayedEntries = titleQuery.isEmpty
+    final textFiltered = titleQuery.isEmpty
         ? entries
         : entries.where((e) {
             final q = titleQuery;
             return e.film.title.toLowerCase().contains(q) ||
                 (e.film.originalTitle?.toLowerCase().contains(q) ?? false);
           }).toList();
+
+    final displayedEntries = switch (_seenFilter) {
+      _SeenFilter.all => textFiltered,
+      _SeenFilter.seen =>
+        textFiltered.where((e) => watchedKeys.contains(e.film.mediaKey)).toList(),
+      _SeenFilter.unseen =>
+        textFiltered.where((e) => !watchedKeys.contains(e.film.mediaKey)).toList(),
+    };
 
     // Année effective d'une entrée : TMDB (keepAlive, un seul appel par série/saison).
     int? effectiveYear(CollectionView e) {
@@ -317,6 +335,35 @@ class _PhysicalCollectionScreenState
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(l10n.collectionTitle),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(40),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: SegmentedButton<_SeenFilter>(
+                segments: [
+                  ButtonSegment(
+                      value: _SeenFilter.all,
+                      label: Text(l10n.filterAll)),
+                  ButtonSegment(
+                      value: _SeenFilter.seen,
+                      label: Text(l10n.filterSeen)),
+                  ButtonSegment(
+                      value: _SeenFilter.unseen,
+                      label: Text(l10n.filterUnseen)),
+                ],
+                selected: {_seenFilter},
+                onSelectionChanged: (v) =>
+                    setState(() => _seenFilter = v.first),
+                style: SegmentedButton.styleFrom(
+                  visualDensity: VisualDensity.compact,
+                  textStyle: const TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
+          ),
+        ),
         actions: [
           if (!wide)
             IconButton(
