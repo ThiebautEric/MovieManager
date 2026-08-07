@@ -117,8 +117,8 @@ class _PhysicalCollectionScreenState
       return e.film.releaseYear;
     }
 
-    // Durée effective : stockée en priorité, fallback TMDB pour les épisodes
-    // en attente de backfill (avant le prochain démarrage).
+    // Durée effective : stockée en priorité, puis fallback TMDB.
+    // Saison (tous épisodes) → épisode individuel en dernier recours (saison 0).
     int? effectiveRuntime(CollectionView e) {
       final stored = e.totalMinutes;
       if (stored != null) return stored;
@@ -127,10 +127,20 @@ class _PhysicalCollectionScreenState
             .watch(seasonEpisodesProvider(
                 (id: e.film.tmdbId, season: e.seasonNumber!)))
             .value;
-        return eps
+        final rt = eps
             ?.where((ep) => ep.episodeNumber == e.episodeNumber)
             .firstOrNull
             ?.runtime;
+        if (rt != null) return rt;
+        // Fallback : endpoint épisode individuel (spéciaux / saison 0 sans
+        // runtime dans l'endpoint saison).
+        return ref
+            .watch(episodeRuntimeProvider((
+              id: e.film.tmdbId,
+              season: e.seasonNumber!,
+              episode: e.episodeNumber!,
+            )))
+            .value;
       }
       return null;
     }

@@ -82,6 +82,19 @@ final englishSeasonEpisodesProvider =
   },
 );
 
+/// Runtime exact d'un épisode individuel — endpoint `/season/{n}/episode/{m}`.
+/// Utilisé en fallback quand l'endpoint saison ne retourne pas de runtime
+/// (fréquent pour saison 0 / spéciaux de séries britanniques).
+final episodeRuntimeProvider =
+    FutureProvider.family<int?, ({int id, int season, int episode})>(
+  (ref, key) {
+    ref.keepAlive();
+    return ref
+        .watch(tmdbClientProvider)
+        .episodeRuntime(key.id, key.season, key.episode);
+  },
+);
+
 /// Liste des genres TMDB (chargée une fois), indexée par id pour l'affichage.
 final genresProvider = FutureProvider<List<Genre>>((ref) {
   ref.keepAlive();

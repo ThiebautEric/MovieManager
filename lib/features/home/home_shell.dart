@@ -210,7 +210,16 @@ class _HomeShellState extends ConsumerState<HomeShell>
             for (final e in eps)
               if (e.runtime != null && e.runtime! > 0) e.episodeNumber: e.runtime!,
           };
-          if (runtimeByEp.isEmpty) return;
+          // Fallback épisode individuel pour les spéciaux (saison 0) : l'endpoint
+          // saison retourne souvent null même quand TMDB a la donnée.
+          for (final h in byKey[k]!) {
+            if (runtimeByEp.containsKey(h.episodeNumber!)) continue;
+            try {
+              final rt = await tmdb.episodeRuntime(
+                  k.tmdbId, k.season, h.episodeNumber!);
+              if (rt != null && rt > 0) runtimeByEp[h.episodeNumber!] = rt;
+            } catch (_) {}
+          }
           for (final h in byKey[k]!) {
             final rt = runtimeByEp[h.episodeNumber!];
             if (rt == null) continue;

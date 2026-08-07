@@ -143,6 +143,16 @@ class TmdbClient {
         s == 'folge $n';
   }
 
+  /// Runtime d'un épisode individuel — fallback quand l'endpoint saison ne
+  /// retourne pas de runtime (courant pour saison 0 / spéciaux). Null si
+  /// TMDB ne connaît pas la durée.
+  Future<int?> episodeRuntime(
+      int tvId, int seasonNumber, int episodeNumber) async {
+    final res = await _dio.get(
+        '/tv/$tvId/season/$seasonNumber/episode/$episodeNumber');
+    return (res.data['runtime'] as num?)?.toInt();
+  }
+
   /// Fiche détaillée d'une personne, avec sa filmographie (movie + tv credits).
   Future<PersonDetails> person(int personId) async {
     final res = await _dio.get('/person/$personId', queryParameters: {
