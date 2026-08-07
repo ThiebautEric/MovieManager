@@ -334,35 +334,34 @@ class _PhysicalCollectionScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: AppBarTitle(l10n.collectionTitle),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(40),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: SegmentedButton<_SeenFilter>(
-                segments: [
-                  ButtonSegment(
-                      value: _SeenFilter.all,
-                      label: Text(l10n.filterAll)),
-                  ButtonSegment(
-                      value: _SeenFilter.seen,
-                      label: Text(l10n.filterSeen)),
-                  ButtonSegment(
-                      value: _SeenFilter.unseen,
-                      label: Text(l10n.filterUnseen)),
-                ],
-                selected: {_seenFilter},
-                onSelectionChanged: (v) =>
-                    setState(() => _seenFilter = v.first),
-                style: SegmentedButton.styleFrom(
-                  visualDensity: VisualDensity.compact,
-                  textStyle: const TextStyle(fontSize: 12),
-                ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppBarTitle(l10n.collectionTitle),
+            const SizedBox(width: 10),
+            SegmentedButton<_SeenFilter>(
+              segments: [
+                ButtonSegment(
+                    value: _SeenFilter.all,
+                    label: Text(l10n.filterAll)),
+                ButtonSegment(
+                    value: _SeenFilter.seen,
+                    label: Text(l10n.filterSeen)),
+                ButtonSegment(
+                    value: _SeenFilter.unseen,
+                    label: Text(l10n.filterUnseen)),
+              ],
+              selected: {_seenFilter},
+              onSelectionChanged: (v) =>
+                  setState(() => _seenFilter = v.first),
+              style: SegmentedButton.styleFrom(
+                visualDensity: VisualDensity.compact,
+                textStyle: const TextStyle(fontSize: 11),
+                minimumSize: const Size(0, 28),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
               ),
             ),
-          ),
+          ],
         ),
         actions: [
           if (!wide)
