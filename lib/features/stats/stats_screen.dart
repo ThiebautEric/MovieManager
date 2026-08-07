@@ -39,10 +39,16 @@ class StatsScreen extends ConsumerWidget {
     };
     final watchedKeys = {for (final v in history) v.film.mediaKey};
     final ownedKeys = {for (final c in collection) c.film.mediaKey};
-    // Une note par titre (la plus récente — history est triée par id asc).
+    // Une note par entrée distincte : film/série entière par mediaKey,
+    // épisode individuel par mediaKey:sN:eM.
     final ratingByFilm = <String, double>{};
     for (final v in history) {
-      if (v.rating != null) ratingByFilm[v.film.mediaKey] = v.rating!;
+      if (v.rating != null) {
+        final key = v.episodeNumber != null
+            ? '${v.film.mediaKey}:s${v.seasonNumber}:e${v.episodeNumber}'
+            : v.film.mediaKey;
+        ratingByFilm[key] = v.rating!;
+      }
     }
     final ratings = ratingByFilm.values.toList();
 
