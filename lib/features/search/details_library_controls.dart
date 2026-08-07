@@ -13,6 +13,7 @@ import '../../data/repositories/collection_repository.dart';
 import '../../tmdb/models/media_details.dart';
 import '../../tmdb/models/season_episodes.dart';
 import '../../widgets/add_entry_dialogs.dart';
+import '../../widgets/dark_badge.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import 'details_episode_picker.dart';
@@ -132,30 +133,30 @@ class LibraryControls extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.only(bottom: 12),
           child: Text(context.l10n.detailsSeasonsTitle,
               style: theme.textTheme.titleMedium),
         ),
-        Text(
-          context.l10n.detailsSeasonsHint,
-          style: theme.textTheme.bodySmall
-              ?.copyWith(color: theme.colorScheme.outline),
+        Wrap(
+          spacing: 10,
+          runSpacing: 12,
+          children: [
+            for (final s in details.seasons)
+              _seasonCard(
+                context,
+                repo,
+                s,
+                collBySeason[s.seasonNumber] ?? const [],
+                histBySeason[s.seasonNumber] ?? const [],
+                readOnly: readOnly,
+              ),
+          ],
         ),
-        const SizedBox(height: 8),
-        for (final s in details.seasons)
-          _seasonTile(
-            context,
-            repo,
-            s,
-            collBySeason[s.seasonNumber] ?? const [],
-            histBySeason[s.seasonNumber] ?? const [],
-            readOnly: readOnly,
-          ),
       ],
     );
   }
 
-  Widget _seasonTile(
+  Widget _seasonCard(
     BuildContext context,
     LibraryRepository repo,
     SeasonInfo info,
@@ -168,76 +169,252 @@ class LibraryControls extends ConsumerWidget {
     final title = info.name.isNotEmpty
         ? info.name
         : l10n.detailsSeasonNumber(info.seasonNumber);
-    final meta = [
-      if (info.episodeCount > 0) l10n.detailsEpisodeCount(info.episodeCount),
-      if (info.year != null) '${info.year}',
-    ].join(' · ');
-    final summary = (coll.isEmpty && hist.isEmpty)
-        ? l10n.detailsSeasonNotTracked
-        : '${l10n.detailsMediaCount(coll.length)} · ${l10n.detailsViewingCount(hist.length)}';
 
     String? seasonRating;
     if (hist.isNotEmpty && hist.every((h) => h.rating != null)) {
-      final avg = hist.map((h) => h.rating!).reduce((a, b) => a + b) / hist.length;
+      final avg =
+          hist.map((h) => h.rating!).reduce((a, b) => a + b) / hist.length;
       seasonRating = avg.toStringAsFixed(1);
     }
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: ExpansionTile(
-        tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-        leading: SizedBox(
-          width: 46,
-          height: 69,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: PosterImage(posterPath: info.posterPath, size: 'w185'),
-          ),
-        ),
-        title: Text(title, style: theme.textTheme.titleSmall),
-        subtitle: Text(
-          [
-            if (meta.isNotEmpty) meta,
-            summary,
-            if (seasonRating != null) '★ $seasonRating/10',
-          ].join('\n'),
-          style: theme.textTheme.bodySmall,
-        ),
-        children: [
-          if (!readOnly) ...[
-            _WishlistButton(film: _film, season: _season(info.seasonNumber)),
-            const SizedBox(height: 4),
-          ],
-          _CollectionSection(
-            entries: coll,
-            isSeries: true,
-            scopeLabel: (n) => _scopeLabel(context, n),
-            readOnly: readOnly,
-            onAdd: () => _addCollection(context, repo, season: info.seasonNumber),
-            onRemove: (id) => _confirmRemoveCollection(context, repo, id),
-          ),
-          const SizedBox(height: 8),
-          _HistorySection(
-            entries: hist,
-            isSeries: true,
-            scopeLabel: (n) => _scopeLabel(context, n),
-            readOnly: readOnly,
-            onAdd: () => _addHistory(context, repo, season: info.seasonNumber),
-            onEdit: (e) => _editHistory(context, repo, e),
-            onRemove: (id) => _confirmRemoveHistory(context, repo, id),
-          ),
-          if (!readOnly)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton.icon(
-                onPressed: () => _rateEpisode(context, repo, info, hist),
-                icon: const Icon(Icons.live_tv, size: 18),
-                label: Text(l10n.detailsRateEpisode),
+    final runtimeMin = coll.firstOrNull?.season?.runtimeMinutes ??
+        hist.firstOrNull?.season?.runtimeMinutes;
+    final mediums = coll.map((c) => c.medium).toSet().toList();
+
+    final metaParts = <String>[
+      if (info.year != null) '${info.year}',
+      if (info.episodeCount > 0) l10n.detailsEpisodeCount(info.episodeCount),
+    ];
+
+    final tracked = coll.isNotEmpty || hist.isNotEmpty;
+    final statusParts = <String>[
+      if (hist.isNotEmpty) l10n.detailsViewingCount(hist.length),
+      if (coll.isNotEmpty) l10n.detailsMediaCount(coll.length),
+    ];
+    final statusText =
+        tracked ? statusParts.join(' · ') : l10n.detailsSeasonNotTracked;
+
+    return SizedBox(
+      width: 130,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: () => _showSeasonDetail(context, repo, info, readOnly),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AspectRatio(
+              aspectRatio: 2 / 3,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child:
+                          PosterImage(posterPath: info.posterPath, size: 'w185'),
+                    ),
+                  ),
+                  Positioned(
+                    top: 6,
+                    right: 6,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (seasonRating != null) ...[
+                          DarkBadge(icon: Icons.star, label: seasonRating),
+                          const SizedBox(height: 4),
+                        ],
+                        for (final m in mediums) ...[
+                          MediumBadge(medium: m, compact: true),
+                          const SizedBox(height: 3),
+                        ],
+                        DarkBadge(
+                            icon: Icons.live_tv,
+                            label: 'S${info.seasonNumber}'),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-        ],
+            const SizedBox(height: 6),
+            Text.rich(
+              TextSpan(
+                text: title,
+                style: theme.textTheme.bodyMedium,
+                children: [
+                  if (runtimeMin != null)
+                    TextSpan(
+                      text: '  ${fmtDuration(runtimeMin)}',
+                      style: theme.textTheme.labelSmall
+                          ?.copyWith(color: theme.colorScheme.outline),
+                    ),
+                ],
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            if (metaParts.isNotEmpty)
+              Text(
+                metaParts.join(' · '),
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.outline),
+              ),
+            Text(
+              statusText,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: tracked
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.outline,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showSeasonDetail(
+    BuildContext context,
+    LibraryRepository repo,
+    SeasonInfo info,
+    bool readOnly,
+  ) {
+    final l10n = context.l10n;
+    final mediaKey = '${details.mediaType}:${details.tmdbId}';
+    final title = info.name.isNotEmpty
+        ? info.name
+        : l10n.detailsSeasonNumber(info.seasonNumber);
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (sheetCtx) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.55,
+        maxChildSize: 0.95,
+        minChildSize: 0.3,
+        builder: (_, scrollCtrl) => Consumer(
+          builder: (_, ref, __) {
+            final coll = (ref.watch(collectionStreamProvider).value ?? [])
+                .where((c) =>
+                    c.film.mediaKey == mediaKey &&
+                    c.seasonNumber == info.seasonNumber)
+                .toList();
+            final hist = (ref.watch(historyStreamProvider).value ?? [])
+                .where((h) =>
+                    h.film.mediaKey == mediaKey &&
+                    h.seasonNumber == info.seasonNumber)
+                .toList();
+
+            return SingleChildScrollView(
+              controller: scrollCtrl,
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 36,
+                      height: 4,
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        color:
+                            Theme.of(sheetCtx).colorScheme.outlineVariant,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 52,
+                        height: 78,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: PosterImage(
+                              posterPath: info.posterPath, size: 'w185'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(title,
+                                style: Theme.of(sheetCtx)
+                                    .textTheme
+                                    .titleMedium),
+                            if (info.year != null || info.episodeCount > 0)
+                              Text(
+                                [
+                                  if (info.year != null) '${info.year}',
+                                  if (info.episodeCount > 0)
+                                    l10n.detailsEpisodeCount(
+                                        info.episodeCount),
+                                ].join(' · '),
+                                style: Theme.of(sheetCtx)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                      color: Theme.of(sheetCtx)
+                                          .colorScheme
+                                          .outline,
+                                    ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  if (!readOnly) ...[
+                    _WishlistButton(
+                        film: _film, season: _season(info.seasonNumber)),
+                    const SizedBox(height: 8),
+                  ],
+                  _CollectionSection(
+                    entries: coll,
+                    isSeries: true,
+                    scopeLabel: (n) => _scopeLabel(context, n),
+                    readOnly: readOnly,
+                    onAdd: () =>
+                        _addCollection(context, repo, season: info.seasonNumber),
+                    onRemove: (id) =>
+                        _confirmRemoveCollection(context, repo, id),
+                  ),
+                  const SizedBox(height: 8),
+                  _HistorySection(
+                    entries: hist,
+                    isSeries: true,
+                    scopeLabel: (n) => _scopeLabel(context, n),
+                    readOnly: readOnly,
+                    onAdd: () =>
+                        _addHistory(context, repo, season: info.seasonNumber),
+                    onEdit: (e) => _editHistory(context, repo, e),
+                    onRemove: (id) =>
+                        _confirmRemoveHistory(context, repo, id),
+                  ),
+                  if (!readOnly) ...[
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton.icon(
+                        onPressed: () =>
+                            _rateEpisode(context, repo, info, hist),
+                        icon: const Icon(Icons.live_tv, size: 18),
+                        label: Text(l10n.detailsRateEpisode),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
