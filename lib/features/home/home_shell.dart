@@ -18,6 +18,7 @@ import '../friends/friends_screen.dart';
 import '../collection/collection_screen.dart';
 import '../collection/physical_collection_screen.dart';
 import '../favorites/favorites_screen.dart';
+import '../search/details_library_controls.dart';
 import '../search/details_screen.dart';
 import '../search/person_screen.dart';
 import '../search/search_screen.dart';
@@ -317,6 +318,19 @@ class _HomeShellState extends ConsumerState<HomeShell>
           personId: e.id,
           embedded: true,
         ),
+      SeasonEntry e => SeasonScreen(
+          key: ValueKey('s${e.details.tmdbId}_${e.info.seasonNumber}_$depth'),
+          details: e.details,
+          info: e.info,
+          embedded: true,
+        ),
+      EpisodeEntry e => EpisodeScreen(
+          key: ValueKey('ep${e.details.tmdbId}_${e.info.seasonNumber}_${e.episode.episodeNumber}_$depth'),
+          details: e.details,
+          info: e.info,
+          episode: e.episode,
+          embedded: true,
+        ),
     };
   }
 
@@ -465,6 +479,16 @@ class _SideRail extends StatelessWidget {
     final (String? poster, String label) = switch (top) {
       MediaEntry e => (e.posterPath, e.title),
       PersonEntry e => (e.profilePath, e.name),
+      SeasonEntry e => (
+          e.info.posterPath,
+          e.info.name.isNotEmpty ? e.info.name : 'S${e.info.seasonNumber}',
+        ),
+      EpisodeEntry e => (
+          e.episode.stillPath,
+          e.episode.name.isNotEmpty
+              ? e.episode.name
+              : 'E${e.episode.episodeNumber}',
+        ),
       null => (null, ''),
     };
 

@@ -17,6 +17,8 @@ import '../../widgets/add_entry_dialogs.dart';
 import '../../widgets/dark_badge.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
+import '../home/detail_app_bar.dart';
+import '../home/selected_media.dart';
 import 'details_episode_picker.dart';
 
 void _toast(BuildContext context, String msg) {
@@ -145,6 +147,7 @@ class LibraryControls extends ConsumerWidget {
             for (final s in details.seasons)
               _seasonCard(
                 context,
+                ref,
                 repo,
                 s,
                 collBySeason[s.seasonNumber] ?? const [],
@@ -159,6 +162,7 @@ class LibraryControls extends ConsumerWidget {
 
   Widget _seasonCard(
     BuildContext context,
+    WidgetRef ref,
     LibraryRepository repo,
     SeasonInfo info,
     List<CollectionView> coll,
@@ -199,7 +203,7 @@ class LibraryControls extends ConsumerWidget {
       width: 130,
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
-        onTap: () => _showSeasonDetail(context, repo, info, readOnly),
+        onTap: () => _showSeasonDetail(context, ref, info),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -276,17 +280,19 @@ class LibraryControls extends ConsumerWidget {
     );
   }
 
-  void _showSeasonDetail(
-    BuildContext context,
-    LibraryRepository repo,
-    SeasonInfo info,
-    bool readOnly,
-  ) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (_) => SeasonScreen(details: details, info: info)),
-    );
+  void _showSeasonDetail(BuildContext context, WidgetRef ref, SeasonInfo info) {
+    if (MediaQuery.of(context).size.width >= kWideBreakpoint) {
+      ref.read(detailStackProvider.notifier).state = [
+        ...ref.read(detailStackProvider),
+        SeasonEntry(details: details, info: info),
+      ];
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => SeasonScreen(details: details, info: info)),
+      );
+    }
   }
 
   Future<void> _rateEpisode(BuildContext context, LibraryRepository repo,
@@ -633,10 +639,12 @@ class SeasonScreen extends ConsumerWidget {
     super.key,
     required this.details,
     required this.info,
+    this.embedded = false,
   });
 
   final MediaDetails details;
   final SeasonInfo info;
+  final bool embedded;
 
   Film get _film => Film.fromDetails(details);
   FilmSeason _season() => FilmSeason.fromInfo(info);
@@ -669,7 +677,10 @@ class SeasonScreen extends ConsumerWidget {
         l10n.detailsSeasonNumber(n ?? info.seasonNumber);
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: Text(title),
+        leading: DetailLeadingButton(embedded: embedded),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -716,26 +727,9 @@ class SeasonScreen extends ConsumerWidget {
             Text(info.overview),
           ],
 
-          // Barre d'actions rapides
           const SizedBox(height: 16),
           if (!readOnly) ...[
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                FilledButton.icon(
-                  onPressed: () => _addHistory(context, repo),
-                  icon: const Icon(Icons.add, size: 18),
-                  label: Text(l10n.detailsAddViewing),
-                ),
-                OutlinedButton.icon(
-                  onPressed: () => _addCollection(context, repo),
-                  icon: const Icon(Icons.add, size: 18),
-                  label: Text(l10n.detailsAddToCollection),
-                ),
-                _WishlistButton(film: _film, season: _season()),
-              ],
-            ),
+            _WishlistButton(film: _film, season: _season()),
             const SizedBox(height: 12),
           ],
           _CollectionSection(
@@ -773,16 +767,7 @@ class SeasonScreen extends ConsumerWidget {
                     episode: ep,
                     hist: hist,
                     coll: coll,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => EpisodeScreen(
-                          details: details,
-                          info: info,
-                          episode: ep,
-                        ),
-                      ),
-                    ),
+                    onTap: () => _openEpisode(context, ref, ep),
                   ),
               ],
             ),
@@ -790,6 +775,23 @@ class SeasonScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  void _openEpisode(BuildContext context, WidgetRef ref, EpisodeInfo ep) {
+    if (MediaQuery.of(context).size.width >= kWideBreakpoint) {
+      ref.read(detailStackProvider.notifier).state = [
+        ...ref.read(detailStackProvider),
+        EpisodeEntry(details: details, info: info, episode: ep),
+      ];
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) =>
+              EpisodeScreen(details: details, info: info, episode: ep),
+        ),
+      );
+    }
   }
 
   Future<void> _addEpisodeToHistory(
@@ -1081,11 +1083,13 @@ class EpisodeScreen extends ConsumerWidget {
     required this.details,
     required this.info,
     required this.episode,
+    this.embedded = false,
   });
 
   final MediaDetails details;
   final SeasonInfo info;
   final EpisodeInfo episode;
+  final bool embedded;
 
   Film get _film => Film.fromDetails(details);
   FilmSeason _season() => FilmSeason.fromInfo(info);
@@ -1117,24 +1121,16 @@ class EpisodeScreen extends ConsumerWidget {
     final title = episode.name.isEmpty ? label : episode.name;
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: Text(title),
+        leading: DetailLeadingButton(embedded: embedded),
+      ),
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
-          // Still pleine largeur 16:9
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: episode.stillPath != null
-                ? PosterImage(posterPath: episode.stillPath, size: 'w780')
-                : Container(
-                    color: theme.colorScheme.surfaceContainerHighest,
-                    child: Icon(Icons.live_tv,
-                        size: 64, color: theme.colorScheme.outline),
-                  ),
-          ),
-
+          // Titre + métadonnées + synopsis (AU-DESSUS de l'image)
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1160,26 +1156,31 @@ class EpisodeScreen extends ConsumerWidget {
                   const SizedBox(height: 8),
                   Text(episode.overview),
                 ],
-                // Barre d'actions rapides
                 const SizedBox(height: 16),
-                if (!readOnly) ...[
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      FilledButton.icon(
-                        onPressed: () => _addHistory(context, repo),
-                        icon: const Icon(Icons.add, size: 18),
-                        label: Text(l10n.detailsAddViewing),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: () => _addCollection(context, repo),
-                        icon: const Icon(Icons.add, size: 18),
-                        label: Text(l10n.detailsAddToCollection),
-                      ),
-                      _WishlistButton(film: _film, season: _season()),
-                    ],
+              ],
+            ),
+          ),
+
+          // Still 16:9 (sous le synopsis)
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: episode.stillPath != null
+                ? PosterImage(posterPath: episode.stillPath, size: 'w780')
+                : Container(
+                    color: theme.colorScheme.surfaceContainerHighest,
+                    child: Icon(Icons.live_tv,
+                        size: 64, color: theme.colorScheme.outline),
                   ),
+          ),
+
+          // Barre rapide + sections
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (!readOnly) ...[
+                  _WishlistButton(film: _film, season: _season()),
                   const SizedBox(height: 12),
                 ],
                 _CollectionSection(

@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../tmdb/models/media_details.dart';
+import '../../tmdb/models/season_episodes.dart';
+
 /// Une entrée de la pile de détail (grand écran) : un film/série ou une personne.
 sealed class DetailEntry {
   const DetailEntry();
@@ -30,6 +33,23 @@ class PersonEntry extends DetailEntry {
   final int id;
   final String name;
   final String? profilePath;
+}
+
+class SeasonEntry extends DetailEntry {
+  const SeasonEntry({required this.details, required this.info});
+  final MediaDetails details;
+  final SeasonInfo info;
+}
+
+class EpisodeEntry extends DetailEntry {
+  const EpisodeEntry({
+    required this.details,
+    required this.info,
+    required this.episode,
+  });
+  final MediaDetails details;
+  final SeasonInfo info;
+  final EpisodeInfo episode;
 }
 
 /// Pile de fiches ouvertes dans la zone de droite (maître-détail, grand écran).
