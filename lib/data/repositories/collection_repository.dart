@@ -33,8 +33,6 @@ abstract class LibraryRepository {
     String? historyId,
     required Medium medium,
     DateTime? addedAt,
-    int? seasonAirYear,
-    int? episodeAirYear,
   });
 
   Future<void> addToHistory(
@@ -77,14 +75,6 @@ abstract class LibraryRepository {
   /// entrées à l'ouverture de leur fiche.
   Future<void> backfillFilm(Film film);
 
-  /// Met à jour les années d'air TMDB d'une entrée de collection existante.
-  /// Sert au backfill one-shot des entrées créées avant v9.
-  Future<void> backfillCollectionAirYears(
-    String entryId, {
-    int? seasonAirYear,
-    int? episodeAirYear,
-  });
-
   /// Stocke la somme exacte des runtimes d'épisodes dans film_seasons.
   /// N'est appelé que si TOUS les épisodes TMDB ont un runtime connu.
   Future<void> backfillSeasonRuntime(
@@ -92,9 +82,6 @@ abstract class LibraryRepository {
     int seasonNumber,
     int runtimeMinutes,
   );
-
-  /// Stocke la durée exacte d'un épisode individuel dans collection.
-  Future<void> backfillEpisodeRuntime(String entryId, int runtimeMinutes);
 
   /// Resynchronise avec la source de vérité (autres appareils).
   Future<void> refresh();
@@ -252,6 +239,9 @@ class SupabaseLibraryRepository implements LibraryRepository {
       for (final s in _seasons)
         if (s.filmId != null) _seasonKey(s.filmId!, s.seasonNumber): s,
     };
+    final historyById = <String, HistoryEntry>{
+      for (final h in _history) if (h.id != null) h.id!: h,
+    };
 
     // Dédoublonnage par id : évite tout doublon transitoire entre la mise à
     // jour optimiste et l'écho temps réel d'un insert (corrigé sinon au reload).
@@ -267,6 +257,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
         season: e.seasonNumber == null
             ? null
             : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
+        linkedHistory: e.historyId != null ? historyById[e.historyId] : null,
       ));
     }
     coll.sort((a, b) {
@@ -380,8 +371,6 @@ class SupabaseLibraryRepository implements LibraryRepository {
     String? historyId,
     required Medium medium,
     DateTime? addedAt,
-    int? seasonAirYear,
-    int? episodeAirYear,
   }) async {
     _assertWritable();
     final saved = await _upsertFilm(film);
@@ -405,8 +394,6 @@ class SupabaseLibraryRepository implements LibraryRepository {
       historyId: historyId,
       medium: medium,
       addedAt: addedAt ?? DateTime.now(),
-      seasonAirYear: seasonAirYear,
-      episodeAirYear: episodeAirYear,
     );
     final row = await _client
         .from('collection')
@@ -417,38 +404,6 @@ class SupabaseLibraryRepository implements LibraryRepository {
     _collection = [
       ..._collection.where((e) => e.id != saved2.id),
       saved2,
-    ];
-    _rebuild();
-  }
-
-  @override
-  Future<void> backfillCollectionAirYears(
-    String entryId, {
-    int? seasonAirYear,
-    int? episodeAirYear,
-  }) async {
-    if (readOnly) return;
-    if (seasonAirYear == null && episodeAirYear == null) return;
-    await _client.from('collection').update({
-      'season_air_year': ?seasonAirYear,
-      'episode_air_year': ?episodeAirYear,
-    }).eq('id', entryId).eq('user_id', _userId);
-    _collection = [
-      for (final e in _collection)
-        if (e.id == entryId)
-          CollectionEntry(
-            id: e.id,
-            filmId: e.filmId,
-            seasonNumber: e.seasonNumber,
-            episodeNumber: e.episodeNumber,
-            historyId: e.historyId,
-            medium: e.medium,
-            addedAt: e.addedAt,
-            seasonAirYear: seasonAirYear ?? e.seasonAirYear,
-            episodeAirYear: episodeAirYear ?? e.episodeAirYear,
-          )
-        else
-          e,
     ];
     _rebuild();
   }
@@ -481,35 +436,6 @@ class SupabaseLibraryRepository implements LibraryRepository {
           )
         else
           s,
-    ];
-    _rebuild();
-  }
-
-  @override
-  Future<void> backfillEpisodeRuntime(String entryId, int runtimeMinutes) async {
-    if (readOnly) return;
-    await _client
-        .from('collection')
-        .update({'episode_runtime_minutes': runtimeMinutes})
-        .eq('id', entryId)
-        .eq('user_id', _userId);
-    _collection = [
-      for (final e in _collection)
-        if (e.id == entryId)
-          CollectionEntry(
-            id: e.id,
-            filmId: e.filmId,
-            seasonNumber: e.seasonNumber,
-            episodeNumber: e.episodeNumber,
-            historyId: e.historyId,
-            medium: e.medium,
-            addedAt: e.addedAt,
-            seasonAirYear: e.seasonAirYear,
-            episodeAirYear: e.episodeAirYear,
-            episodeRuntimeMinutes: runtimeMinutes,
-          )
-        else
-          e,
     ];
     _rebuild();
   }
@@ -813,6 +739,9 @@ class LocalLibraryRepository implements LibraryRepository {
       for (final s in _seasons)
         if (s.filmId != null) _seasonKey(s.filmId!, s.seasonNumber): s,
     };
+    final historyById = <String, HistoryEntry>{
+      for (final h in _history) if (h.id != null) h.id!: h,
+    };
     final coll = [
       for (final e in _collection)
         if (_filmsById[e.filmId] != null)
@@ -822,6 +751,7 @@ class LocalLibraryRepository implements LibraryRepository {
             season: e.seasonNumber == null
                 ? null
                 : seasonByKey[_seasonKey(e.filmId, e.seasonNumber!)],
+            linkedHistory: e.historyId != null ? historyById[e.historyId] : null,
           )
     ]..sort((a, b) {
         final t =
@@ -923,8 +853,6 @@ class LocalLibraryRepository implements LibraryRepository {
     String? historyId,
     required Medium medium,
     DateTime? addedAt,
-    int? seasonAirYear,
-    int? episodeAirYear,
   }) async {
     final saved = _ensureFilm(film);
     if (season != null) _ensureSeason(saved, season);
@@ -947,39 +875,9 @@ class LocalLibraryRepository implements LibraryRepository {
         historyId: historyId,
         medium: medium,
         addedAt: addedAt ?? DateTime.now(),
-        seasonAirYear: seasonAirYear,
-        episodeAirYear: episodeAirYear,
       ),
     ];
     await Future.wait([_persistFilms(), _persistSeasons(), _persistCollection()]);
-    _emit();
-  }
-
-  @override
-  Future<void> backfillCollectionAirYears(
-    String entryId, {
-    int? seasonAirYear,
-    int? episodeAirYear,
-  }) async {
-    if (seasonAirYear == null && episodeAirYear == null) return;
-    _collection = [
-      for (final e in _collection)
-        if (e.id == entryId)
-          CollectionEntry(
-            id: e.id,
-            filmId: e.filmId,
-            seasonNumber: e.seasonNumber,
-            episodeNumber: e.episodeNumber,
-            historyId: e.historyId,
-            medium: e.medium,
-            addedAt: e.addedAt,
-            seasonAirYear: seasonAirYear ?? e.seasonAirYear,
-            episodeAirYear: episodeAirYear ?? e.episodeAirYear,
-          )
-        else
-          e,
-    ];
-    await _persistCollection();
     _emit();
   }
 
@@ -1009,29 +907,7 @@ class LocalLibraryRepository implements LibraryRepository {
     _emit();
   }
 
-  @override
-  Future<void> backfillEpisodeRuntime(String entryId, int runtimeMinutes) async {
-    _collection = [
-      for (final e in _collection)
-        if (e.id == entryId)
-          CollectionEntry(
-            id: e.id,
-            filmId: e.filmId,
-            seasonNumber: e.seasonNumber,
-            episodeNumber: e.episodeNumber,
-            historyId: e.historyId,
-            medium: e.medium,
-            addedAt: e.addedAt,
-            seasonAirYear: e.seasonAirYear,
-            episodeAirYear: e.episodeAirYear,
-            episodeRuntimeMinutes: runtimeMinutes,
-          )
-        else
-          e,
-    ];
-    await _persistCollection();
-    _emit();
-  }
+
 
   @override
   Future<void> addToHistory(

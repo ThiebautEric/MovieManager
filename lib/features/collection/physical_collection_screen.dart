@@ -91,13 +91,9 @@ class _PhysicalCollectionScreenState
                 (e.film.originalTitle?.toLowerCase().contains(q) ?? false);
           }).toList();
 
-    // Année effective d'une entrée : valeur stockée en base (rapide) ou TMDB.
+    // Année effective d'une entrée : TMDB (keepAlive, un seul appel par série/saison).
     int? effectiveYear(CollectionView e) {
       if (e.film.isMovie) return e.film.releaseYear;
-      // Valeurs pré-calculées stockées dans la collection (backfill v9).
-      if (e.episodeAirYear != null) return e.episodeAirYear;
-      if (e.seasonAirYear != null) return e.seasonAirYear;
-      // Fallback TMDB (entrées antérieures au backfill).
       if (e.episodeNumber != null && e.seasonNumber != null) {
         final eps = ref
             .watch(seasonEpisodesProvider(

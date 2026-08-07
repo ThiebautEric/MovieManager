@@ -1,5 +1,6 @@
 import 'film.dart';
 import 'film_season.dart';
+import 'history_entry.dart';
 
 /// Une possession (ligne de la table `collection`). `seasonNumber` null = œuvre
 /// entière. `episodeNumber` non null = épisode individuel.
@@ -12,9 +13,6 @@ class CollectionEntry {
     this.historyId,
     required this.medium,
     this.addedAt,
-    this.seasonAirYear,
-    this.episodeAirYear,
-    this.episodeRuntimeMinutes,
   });
 
   final String? id;
@@ -26,12 +24,6 @@ class CollectionEntry {
   final String? historyId;
   final Medium medium;
   final DateTime? addedAt;
-  /// Année de diffusion TMDB de la saison (pour tri/groupement, sans appel TMDB).
-  final int? seasonAirYear;
-  /// Année de diffusion TMDB de l'épisode (priorité sur [seasonAirYear]).
-  final int? episodeAirYear;
-  /// Durée exacte de l'épisode individuel (backfill TMDB, stocké une fois pour toutes).
-  final int? episodeRuntimeMinutes;
 
   factory CollectionEntry.fromJson(Map<String, dynamic> json) => CollectionEntry(
         id: json['id'] as String?,
@@ -43,10 +35,6 @@ class CollectionEntry {
         addedAt: json['added_at'] != null
             ? DateTime.tryParse(json['added_at'] as String)
             : null,
-        seasonAirYear: (json['season_air_year'] as num?)?.toInt(),
-        episodeAirYear: (json['episode_air_year'] as num?)?.toInt(),
-        episodeRuntimeMinutes:
-            (json['episode_runtime_minutes'] as num?)?.toInt(),
       );
 
   Map<String, dynamic> toUpsertJson() => {
@@ -56,27 +44,27 @@ class CollectionEntry {
         if (historyId != null) 'history_id': historyId,
         'medium': medium.name,
         if (addedAt != null) 'added_at': addedAt!.toIso8601String(),
-        if (seasonAirYear != null) 'season_air_year': seasonAirYear,
-        if (episodeAirYear != null) 'episode_air_year': episodeAirYear,
-        if (episodeRuntimeMinutes != null)
-          'episode_runtime_minutes': episodeRuntimeMinutes,
       };
 
   Map<String, dynamic> toFullJson() => {...toUpsertJson(), 'id': id};
 }
 
 /// Vue composite (jointure faite par le repository) pour l'affichage : une
-/// possession enrichie de son film et, le cas échéant, de sa saison.
+/// possession enrichie de son film, de sa saison et de l'entrée historique liée.
 class CollectionView {
   CollectionView({
     required this.entry,
     required this.film,
     this.season,
+    this.linkedHistory,
   });
 
   final CollectionEntry entry;
   final Film film;
   final FilmSeason? season;
+  /// Visionnage lié (non null quand history_id est renseigné).
+  /// Donne accès à episode_runtime sans dupliquer la donnée dans collection.
+  final HistoryEntry? linkedHistory;
 
   String? get id => entry.id;
   Medium get medium => entry.medium;
@@ -84,23 +72,20 @@ class CollectionView {
   int? get episodeNumber => entry.episodeNumber;
   String? get historyId => entry.historyId;
   DateTime? get addedAt => entry.addedAt;
-  int? get seasonAirYear => entry.seasonAirYear;
-  int? get episodeAirYear => entry.episodeAirYear;
-  int? get episodeRuntimeMinutes => entry.episodeRuntimeMinutes;
 
   /// Affiche : celle de la saison si disponible, sinon celle du film.
   String? get posterPath => season?.posterPath ?? film.posterPath;
 
   /// Durée en minutes : exacte uniquement (jamais estimée).
   /// - Film : runtime TMDB stocké.
-  /// - Saison : somme exacte des épisodes (backfill, ou null si inconnu).
-  /// - Épisode individuel : runtime stocké via backfill TMDB (null avant backfill).
+  /// - Saison entière : somme exacte des épisodes (backfill film_seasons).
+  /// - Épisode individuel : runtime du visionnage lié (linkedHistory),
+  ///   ou null si pas de visionnage lié (TMDB fallback dans l'écran).
   int? get totalMinutes {
     if (film.isMovie) return film.runtime;
-    if (episodeNumber != null) return entry.episodeRuntimeMinutes;
+    if (episodeNumber != null) return linkedHistory?.episodeRuntime;
     return season?.runtimeMinutes;
   }
 
-  /// Toujours vrai quand [totalMinutes] est non-null (données exactes seulement).
   bool get isExactDuration => true;
 }
