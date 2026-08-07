@@ -6,21 +6,22 @@ import '../../tmdb/models/media_details.dart';
 import '../../widgets/poster_image.dart';
 import '../home/selected_media.dart';
 
-/// Grille du casting, repliée à [maxCollapsed] vignettes avec un bouton « +N ».
+/// Grille du casting, initialement repliée à 12 vignettes.
+/// Chaque clic sur « +N » affiche 20 entrées de plus.
 class CastSection extends ConsumerStatefulWidget {
-  const CastSection({super.key, required this.cast, this.maxCollapsed = 12});
+  const CastSection({super.key, required this.cast});
 
   final List<CastMember> cast;
-  final int maxCollapsed;
 
   @override
   ConsumerState<CastSection> createState() => _CastSectionState();
 }
 
 class _CastSectionState extends ConsumerState<CastSection> {
-  int get _maxCollapsed => widget.maxCollapsed;
+  static const _initial = 12;
+  static const _step = 20;
 
-  bool _expanded = false;
+  int _shown = _initial;
 
   Widget _tile(CastMember c) {
     final theme = Theme.of(context);
@@ -30,7 +31,8 @@ class _CastSectionState extends ConsumerState<CastSection> {
         borderRadius: BorderRadius.circular(8),
         onTap: c.id == 0
             ? null
-            : () => openPerson(context, ref, id: c.id, name: c.name, profilePath: c.profilePath),
+            : () => openPerson(context, ref,
+                id: c.id, name: c.name, profilePath: c.profilePath),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -63,11 +65,12 @@ class _CastSectionState extends ConsumerState<CastSection> {
 
   Widget _moreTile(int hidden) {
     final theme = Theme.of(context);
+    final next = hidden.clamp(0, _step);
     return SizedBox(
       width: 96,
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
-        onTap: () => setState(() => _expanded = true),
+        onTap: () => setState(() => _shown += _step),
         child: Column(
           children: [
             Container(
@@ -78,7 +81,7 @@ class _CastSectionState extends ConsumerState<CastSection> {
                 borderRadius: BorderRadius.circular(8),
               ),
               alignment: Alignment.center,
-              child: Text('+$hidden',
+              child: Text('+$next',
                   style: theme.textTheme.titleMedium
                       ?.copyWith(color: theme.colorScheme.primary)),
             ),
@@ -96,7 +99,7 @@ class _CastSectionState extends ConsumerState<CastSection> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cast = widget.cast;
-    final overflowing = cast.length > _maxCollapsed;
+    final hasMore = _shown < cast.length;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,9 +110,9 @@ class _CastSectionState extends ConsumerState<CastSection> {
               child: Text(context.l10n.detailsCastTitle(cast.length),
                   style: theme.textTheme.titleMedium),
             ),
-            if (_expanded)
+            if (_shown > _initial)
               TextButton(
-                onPressed: () => setState(() => _expanded = false),
+                onPressed: () => setState(() => _shown = _initial),
                 child: Text(context.l10n.detailsCollapse),
               ),
           ],
@@ -119,8 +122,8 @@ class _CastSectionState extends ConsumerState<CastSection> {
           spacing: 12,
           runSpacing: 16,
           children: [
-            for (final c in _expanded ? cast : cast.take(_maxCollapsed)) _tile(c),
-            if (overflowing && !_expanded) _moreTile(cast.length - _maxCollapsed),
+            for (final c in cast.take(_shown)) _tile(c),
+            if (hasMore) _moreTile(cast.length - _shown),
           ],
         ),
       ],
