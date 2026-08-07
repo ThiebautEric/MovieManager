@@ -154,6 +154,31 @@ class TmdbClient {
     return (res.data['runtime'] as num?)?.toInt();
   }
 
+  /// Casting d'une saison TV — endpoint `/tv/{id}/season/{n}/credits`.
+  Future<List<CastMember>> seasonCast(int tvId, int seasonNumber) async {
+    final res = await _dio.get(
+      '/tv/$tvId/season/$seasonNumber/credits',
+      queryParameters: {'language': language},
+    );
+    return ((res.data['cast'] as List<dynamic>?) ?? [])
+        .whereType<Map<String, dynamic>>()
+        .map(CastMember.fromJson)
+        .toList();
+  }
+
+  /// Casting d'un épisode — endpoint `/tv/{id}/season/{n}/episode/{e}/credits`.
+  Future<List<CastMember>> episodeCast(
+      int tvId, int seasonNumber, int episodeNumber) async {
+    final res = await _dio.get(
+      '/tv/$tvId/season/$seasonNumber/episode/$episodeNumber/credits',
+      queryParameters: {'language': language},
+    );
+    return ((res.data['cast'] as List<dynamic>?) ?? [])
+        .whereType<Map<String, dynamic>>()
+        .map(CastMember.fromJson)
+        .toList();
+  }
+
   /// Fiche détaillée d'une personne, avec sa filmographie (movie + tv credits).
   Future<PersonDetails> person(int personId) async {
     final res = await _dio.get('/person/$personId', queryParameters: {

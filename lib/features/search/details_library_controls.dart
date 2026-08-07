@@ -19,6 +19,7 @@ import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../home/detail_app_bar.dart';
 import '../home/selected_media.dart';
+import 'details_cast_section.dart';
 import 'details_episode_picker.dart';
 
 void _toast(BuildContext context, String msg) {
@@ -773,6 +774,8 @@ class SeasonScreen extends ConsumerWidget {
 
     final episodesAsync = ref.watch(
         seasonEpisodesProvider((id: details.tmdbId, season: info.seasonNumber)));
+    final castAsync = ref.watch(
+        seasonCastProvider((id: details.tmdbId, season: info.seasonNumber)));
 
     final title = info.name.isNotEmpty
         ? info.name
@@ -906,6 +909,18 @@ class SeasonScreen extends ConsumerWidget {
                   ),
               ],
             ),
+          ),
+
+          // Casting de la saison
+          castAsync.when(
+            loading: () => const SizedBox.shrink(),
+            error: (_, __) => const SizedBox.shrink(),
+            data: (cast) => cast.isEmpty
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: CastSection(cast: cast),
+                  ),
           ),
         ],
       ),
@@ -1237,6 +1252,12 @@ class EpisodeScreen extends ConsumerWidget {
             h.episodeNumber == episode.episodeNumber)
         .toList();
 
+    final castAsync = ref.watch(episodeCastProvider((
+      id: details.tmdbId,
+      season: info.seasonNumber,
+      episode: episode.episodeNumber,
+    )));
+
     final label = 'S${info.seasonNumber}E${episode.episodeNumber}';
     String scopeLabel(int? _) => label;
 
@@ -1360,6 +1381,17 @@ class EpisodeScreen extends ConsumerWidget {
                   onAdd: () => _addHistory(context, repo),
                   onEdit: (e) => _editHistory(context, repo, e),
                   onRemove: (id) => _confirmRemoveHistory(context, repo, id),
+                ),
+                // Casting de l'épisode
+                castAsync.when(
+                  loading: () => const SizedBox.shrink(),
+                  error: (_, __) => const SizedBox.shrink(),
+                  data: (cast) => cast.isEmpty
+                      ? const SizedBox.shrink()
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: CastSection(cast: cast),
+                        ),
                 ),
               ],
             ),

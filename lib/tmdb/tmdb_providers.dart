@@ -95,6 +95,26 @@ final episodeRuntimeProvider =
   },
 );
 
+/// Casting d'une saison TV — endpoint `/tv/{id}/season/{n}/credits`.
+final seasonCastProvider =
+    FutureProvider.family<List<CastMember>, ({int id, int season})>(
+  (ref, key) {
+    ref.keepAlive();
+    return ref.watch(tmdbClientProvider).seasonCast(key.id, key.season);
+  },
+);
+
+/// Casting d'un épisode — endpoint `/tv/{id}/season/{n}/episode/{e}/credits`.
+final episodeCastProvider =
+    FutureProvider.family<List<CastMember>, ({int id, int season, int episode})>(
+  (ref, key) {
+    ref.keepAlive();
+    return ref
+        .watch(tmdbClientProvider)
+        .episodeCast(key.id, key.season, key.episode);
+  },
+);
+
 /// Liste des genres TMDB (chargée une fois), indexée par id pour l'affichage.
 final genresProvider = FutureProvider<List<Genre>>((ref) {
   ref.keepAlive();
