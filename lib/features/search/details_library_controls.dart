@@ -716,11 +716,27 @@ class SeasonScreen extends ConsumerWidget {
             Text(info.overview),
           ],
 
-          // Sections bibliothèque
-          const SizedBox(height: 20),
+          // Barre d'actions rapides
+          const SizedBox(height: 16),
           if (!readOnly) ...[
-            _WishlistButton(film: _film, season: _season()),
-            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                FilledButton.icon(
+                  onPressed: () => _addHistory(context, repo),
+                  icon: const Icon(Icons.add, size: 18),
+                  label: Text(l10n.detailsAddViewing),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => _addCollection(context, repo),
+                  icon: const Icon(Icons.add, size: 18),
+                  label: Text(l10n.detailsAddToCollection),
+                ),
+                _WishlistButton(film: _film, season: _season()),
+              ],
+            ),
+            const SizedBox(height: 12),
           ],
           _CollectionSection(
             entries: coll,
@@ -1144,10 +1160,27 @@ class EpisodeScreen extends ConsumerWidget {
                   const SizedBox(height: 8),
                   Text(episode.overview),
                 ],
+                // Barre d'actions rapides
                 const SizedBox(height: 16),
                 if (!readOnly) ...[
-                  _WishlistButton(film: _film, season: _season()),
-                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      FilledButton.icon(
+                        onPressed: () => _addHistory(context, repo),
+                        icon: const Icon(Icons.add, size: 18),
+                        label: Text(l10n.detailsAddViewing),
+                      ),
+                      OutlinedButton.icon(
+                        onPressed: () => _addCollection(context, repo),
+                        icon: const Icon(Icons.add, size: 18),
+                        label: Text(l10n.detailsAddToCollection),
+                      ),
+                      _WishlistButton(film: _film, season: _season()),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
                 ],
                 _CollectionSection(
                   entries: coll,
