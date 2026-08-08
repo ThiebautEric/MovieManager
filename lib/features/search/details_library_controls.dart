@@ -249,21 +249,29 @@ class LibraryControls extends ConsumerWidget {
           child: Text(context.l10n.detailsSeasonsTitle,
               style: theme.textTheme.titleMedium),
         ),
-        Wrap(
-          spacing: 10,
-          runSpacing: 12,
-          children: [
-            for (final s in details.seasons)
-              _seasonCard(
-                context,
-                ref,
-                repo,
-                s,
-                collBySeason[s.seasonNumber] ?? const [],
-                histBySeason[s.seasonNumber] ?? const [],
-                readOnly: readOnly,
-              ),
-          ],
+        LayoutBuilder(
+          builder: (context, constraints) {
+            const cols = 3;
+            const spacing = 10.0;
+            final cardWidth = (constraints.maxWidth - spacing * (cols - 1)) / cols;
+            return Wrap(
+              spacing: spacing,
+              runSpacing: 12,
+              children: [
+                for (final s in details.seasons)
+                  _seasonCard(
+                    context,
+                    ref,
+                    repo,
+                    s,
+                    collBySeason[s.seasonNumber] ?? const [],
+                    histBySeason[s.seasonNumber] ?? const [],
+                    readOnly: readOnly,
+                    width: cardWidth,
+                  ),
+              ],
+            );
+          },
         ),
       ],
     );
@@ -277,6 +285,7 @@ class LibraryControls extends ConsumerWidget {
     List<CollectionView> coll,
     List<HistoryView> hist, {
     required bool readOnly,
+    double width = 160,
   }) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
@@ -309,7 +318,7 @@ class LibraryControls extends ConsumerWidget {
         tracked ? statusParts.join(' · ') : l10n.detailsSeasonNotTracked;
 
     return SizedBox(
-      width: 160,
+      width: width,
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: () => _showSeasonDetail(context, ref, info),
