@@ -309,7 +309,7 @@ class LibraryControls extends ConsumerWidget {
         tracked ? statusParts.join(' · ') : l10n.detailsSeasonNotTracked;
 
     return SizedBox(
-      width: 64,
+      width: 160,
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: () => _showSeasonDetail(context, ref, info),
