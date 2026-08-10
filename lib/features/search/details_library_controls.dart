@@ -251,8 +251,9 @@ class LibraryControls extends ConsumerWidget {
         ),
         LayoutBuilder(
           builder: (context, constraints) {
-            const cols = 3;
+            const maxExtent = 160.0;
             const spacing = 10.0;
+            final cols = (constraints.maxWidth / maxExtent).ceil().clamp(1, 100);
             final cardWidth = (constraints.maxWidth - spacing * (cols - 1)) / cols;
             return Wrap(
               spacing: spacing,
