@@ -168,6 +168,8 @@
   "wishlistEmpty": "Nichts auf der Merkliste.\nTippe auf einer Detailseite oder in den Suchergebnissen auf das Lesezeichen, um dir einen Titel zu merken.",
   "wishlistAddTooltip": "Zur Merkliste hinzufügen",
   "wishlistRemoveTooltip": "Von der Merkliste entfernen",
+  "wishlistConfirmRemoveTitle": "Von der Merkliste entfernen?",
+  "wishlistConfirmRemoveBody": "Dieser Titel wird von deiner Merkliste entfernt.",
   "wishlistToHistory": "Gesehen",
   "wishlistToCollection": "Gekauft",
   "wishlistAddedOn": "Hinzugefügt am {date}",

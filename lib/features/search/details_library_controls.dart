@@ -294,10 +294,11 @@ class LibraryControls extends ConsumerWidget {
         ? info.name
         : l10n.detailsSeasonNumber(info.seasonNumber);
 
+    final ratedHist = hist.where((h) => h.rating != null).toList();
     String? seasonRating;
-    if (hist.isNotEmpty && hist.every((h) => h.rating != null)) {
+    if (ratedHist.isNotEmpty) {
       final avg =
-          hist.map((h) => h.rating!).reduce((a, b) => a + b) / hist.length;
+          ratedHist.map((h) => h.rating!).reduce((a, b) => a + b) / ratedHist.length;
       seasonRating = avg.toStringAsFixed(1);
     }
 
@@ -1127,10 +1128,11 @@ class _EpisodeCard extends StatelessWidget {
         .map((c) => c.medium)
         .firstOrNull;
 
+    final ratedWatches = watches.where((h) => h.rating != null).toList();
     String? rating;
-    if (watches.isNotEmpty && watches.every((h) => h.rating != null)) {
-      final avg = watches.map((h) => h.rating!).reduce((a, b) => a + b) /
-          watches.length;
+    if (ratedWatches.isNotEmpty) {
+      final avg = ratedWatches.map((h) => h.rating!).reduce((a, b) => a + b) /
+          ratedWatches.length;
       rating = avg.toStringAsFixed(1);
     }
 

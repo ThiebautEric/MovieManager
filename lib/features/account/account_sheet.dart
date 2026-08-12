@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/config/app_version.dart';
 import '../../core/supabase/supabase_providers.dart';
+import '../../core/utils/format.dart';
 import '../auth/auth_controller.dart';
 
 class AccountSheet extends ConsumerStatefulWidget {
@@ -50,7 +51,7 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
         _confirmCtrl.clear();
       }
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loading = false; });
+      if (mounted) setState(() { _error = friendlyError(e); _loading = false; });
     }
   }
 

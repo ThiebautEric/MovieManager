@@ -39,18 +39,24 @@ class StatsScreen extends ConsumerWidget {
     };
     final watchedKeys = {for (final v in history) v.film.mediaKey};
     final ownedKeys = {for (final c in collection) c.film.mediaKey};
-    // Une note par entrée distincte : film/série entière par mediaKey,
-    // épisode individuel par mediaKey:sN:eM.
-    final ratingByFilm = <String, double>{};
+    // Moyenne des notes par œuvre/épisode — tous les visionnages contribuent.
+    final ratingsByKey = <String, List<double>>{};
     for (final v in history) {
       if (v.rating != null) {
         final key = v.episodeNumber != null
             ? '${v.film.mediaKey}:s${v.seasonNumber}:e${v.episodeNumber}'
             : v.film.mediaKey;
-        ratingByFilm[key] = v.rating!;
+        (ratingsByKey[key] ??= []).add(v.rating!);
       }
     }
-    final ratings = ratingByFilm.values.toList();
+    final ratings = ratingsByKey.values
+        .map((r) => r.reduce((a, b) => a + b) / r.length)
+        .toList();
+    // Titres (films/séries, sans suffixe épisodique) ayant au moins une note.
+    final ratedMediaKeys = {
+      for (final v in history)
+        if (v.rating != null) v.film.mediaKey,
+    };
 
     final total = films.length;
     final watched = watchedKeys.length;
@@ -114,7 +120,7 @@ class StatsScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           _RatingPie(
             ratings: ratings,
-            unratedCount: total - ratingByFilm.length,
+            unratedCount: total - ratedMediaKeys.length,
             unratedLabel: l10n.statsUnrated,
             noDataLabel: l10n.statsNoRatings,
           ),
@@ -289,82 +295,6 @@ class _LegendItem extends StatelessWidget {
   }
 }
 
-class _GenreBars extends StatelessWidget {
-  const _GenreBars({required this.films, required this.genresById});
-
-  final List<Film> films;
-  final Map<int, String> genresById;
-
-  @override
-  Widget build(BuildContext context) {
-    final counts = <int, int>{};
-    for (final f in films) {
-      for (final g in f.genres) {
-        counts[g] = (counts[g] ?? 0) + 1;
-      }
-    }
-    final top = counts.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
-    final shown = top.take(6).toList();
-    if (shown.isEmpty) {
-      return Text(context.l10n.statsNoGenres);
-    }
-    final maxCount = shown.first.value.toDouble();
-    final scheme = Theme.of(context).colorScheme;
-
-    return SizedBox(
-      height: 240,
-      child: BarChart(
-        BarChartData(
-          alignment: BarChartAlignment.spaceAround,
-          maxY: maxCount + 1,
-          barTouchData: BarTouchData(enabled: true),
-          titlesData: FlTitlesData(
-            leftTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: true, reservedSize: 28)),
-            topTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false)),
-            rightTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false)),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 48,
-                getTitlesWidget: (value, meta) {
-                  final idx = value.toInt();
-                  if (idx < 0 || idx >= shown.length) {
-                    return const SizedBox.shrink();
-                  }
-                  final name = genresById[shown[idx].key] ?? '?';
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      name.length > 8 ? '${name.substring(0, 7)}…' : name,
-                      style: const TextStyle(fontSize: 10),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          borderData: FlBorderData(show: false),
-          barGroups: [
-            for (var i = 0; i < shown.length; i++)
-              BarChartGroupData(x: i, barRods: [
-                BarChartRodData(
-                  toY: shown[i].value.toDouble(),
-                  color: scheme.primary,
-                  width: 18,
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(4)),
-                ),
-              ]),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 // Palette partagée pour les camemberts multi-tranches.
 const _kPalette = [
@@ -658,99 +588,3 @@ class _FilmsByYearBars extends StatelessWidget {
   }
 }
 
-/// Diagramme de dispersion : année de sortie (X) × note (Y), un point par titre.
-class _RatingByYearScatter extends StatelessWidget {
-  const _RatingByYearScatter({required this.data});
-
-  // (releaseYear, rating) — un seul point par titre (note la plus récente).
-  final List<(int, double)> data;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    double xMin = data.first.$1.toDouble();
-    double xMax = xMin;
-    for (final (y, _) in data) {
-      if (y < xMin) xMin = y.toDouble();
-      if (y > xMax) xMax = y.toDouble();
-    }
-    // Marges et arrondi aux 5 ans.
-    xMin = (xMin / 5).floor() * 5.0 - 1;
-    xMax = (xMax / 5).ceil() * 5.0 + 1;
-
-    final range = xMax - xMin;
-    final xInterval = range > 25 ? 10.0 : 5.0;
-
-    return SizedBox(
-      height: 300,
-      child: ScatterChart(
-        ScatterChartData(
-          scatterSpots: [
-            for (final (year, rating) in data)
-              ScatterSpot(
-                year.toDouble(),
-                rating,
-                dotPainter: FlDotCirclePainter(
-                  radius: 5,
-                  color: scheme.primary.withValues(alpha: 0.55),
-                  strokeWidth: 0,
-                ),
-              ),
-          ],
-          minX: xMin,
-          maxX: xMax,
-          minY: 0.5,
-          maxY: 10.5,
-          titlesData: FlTitlesData(
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 28,
-                interval: 1,
-                getTitlesWidget: (v, _) {
-                  final n = v.toInt();
-                  if (n < 1 || n > 10) return const SizedBox.shrink();
-                  return Text('$n',
-                      style: const TextStyle(fontSize: 10),
-                      textAlign: TextAlign.right);
-                },
-              ),
-            ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 24,
-                interval: xInterval,
-                getTitlesWidget: (v, _) => Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text('${v.toInt()}',
-                      style: const TextStyle(fontSize: 10)),
-                ),
-              ),
-            ),
-            topTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false)),
-            rightTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false)),
-          ),
-          gridData: FlGridData(
-            show: true,
-            horizontalInterval: 1,
-            verticalInterval: xInterval,
-            getDrawingHorizontalLine: (v) => FlLine(
-              color: scheme.outlineVariant.withValues(alpha: 0.4),
-              strokeWidth: 1,
-            ),
-            getDrawingVerticalLine: (v) => FlLine(
-              color: scheme.outlineVariant.withValues(alpha: 0.4),
-              strokeWidth: 1,
-            ),
-          ),
-          borderData: FlBorderData(show: false),
-          scatterTouchData: ScatterTouchData(enabled: false),
-        ),
-      ),
-    );
-  }
-}

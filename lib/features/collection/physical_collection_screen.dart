@@ -229,11 +229,20 @@ class _PhysicalCollectionScreenState
           );
         }
 
+        // Pré-calcul des années et durées — évite d'appeler ref.watch dans le
+        // comparateur de sort (O(n log n) appels) et dans les builders de grille.
+        final yearCache = <String?, int?>{
+          for (final e in displayedEntries) e.id: effectiveYear(e),
+        };
+        final runtimeCache = <String?, int?>{
+          for (final e in displayedEntries) e.id: effectiveRuntime(e),
+        };
+
         // Tri : année desc, titre asc, saison asc, épisode asc.
         final sorted = [...displayedEntries]
           ..sort((a, b) {
-            final ay = effectiveYear(a);
-            final by = effectiveYear(b);
+            final ay = yearCache[a.id];
+            final by = yearCache[b.id];
             if (ay == null && by == null) {
               final t = a.film.title.compareTo(b.film.title);
               if (t != 0) return t;
@@ -254,7 +263,7 @@ class _PhysicalCollectionScreenState
         // Regroupement par année.
         final groups = <({int? year, List<CollectionView> items})>[];
         for (final e in sorted) {
-          final y = effectiveYear(e);
+          final y = yearCache[e.id];
           if (groups.isEmpty || groups.last.year != y) {
             groups.add((year: y, items: [e]));
           } else {
@@ -292,7 +301,7 @@ class _PhysicalCollectionScreenState
               delegate: SliverChildBuilderDelegate(
                 (context, i) {
                   final entry = g.items[i];
-                  final totalMin = effectiveRuntime(entry);
+                  final totalMin = runtimeCache[entry.id];
                   final duration = totalMin != null
                       ? fmtDuration(totalMin)
                       : null;
@@ -305,7 +314,7 @@ class _PhysicalCollectionScreenState
                       title: entry.film.title,
                       originalTitle: entry.film.originalTitle,
                     ),
-                    year: effectiveYear(entry),
+                    year: yearCache[entry.id],
                     duration: duration,
                     subtitle: entry.episodeNumber != null
                         ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber!, episodeNumber: entry.episodeNumber!, stored: null)}'

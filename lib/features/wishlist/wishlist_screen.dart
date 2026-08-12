@@ -129,6 +129,23 @@ class _WishlistTile extends ConsumerWidget {
 
   Future<void> _remove(BuildContext context, WidgetRef ref) async {
     if (item.id == null) return;
+    final l10n = context.l10n;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(l10n.wishlistConfirmRemoveTitle),
+        content: Text(l10n.wishlistConfirmRemoveBody),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text(l10n.cancel)),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: Text(l10n.delete)),
+        ],
+      ),
+    );
+    if (ok != true || !context.mounted) return;
     try {
       await ref.read(libraryRepositoryProvider).removeFromWishlist(item.id!);
     } catch (e) {

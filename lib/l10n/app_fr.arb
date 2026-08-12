@@ -428,6 +428,8 @@
   "wishlistEmpty": "Rien dans le pense-bête.\nDepuis une fiche ou un résultat de recherche, touche le marque-page pour garder un titre à voir ou à acheter.",
   "wishlistAddTooltip": "Ajouter au pense-bête",
   "wishlistRemoveTooltip": "Retirer du pense-bête",
+  "wishlistConfirmRemoveTitle": "Retirer du pense-bête ?",
+  "wishlistConfirmRemoveBody": "Ce titre sera retiré de ton pense-bête.",
   "wishlistToHistory": "Vu",
   "wishlistToCollection": "Acquis",
   "wishlistAddedOn": "Ajouté le {date}",

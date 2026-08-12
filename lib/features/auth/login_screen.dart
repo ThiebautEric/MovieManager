@@ -4,6 +4,7 @@ import '../../core/l10n/l10n.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../../widgets/tmdb_badge.dart';
+import '../../core/utils/format.dart';
 import '../../widgets/yellow_frame_logo.dart';
 import 'auth_controller.dart';
 
@@ -54,7 +55,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       }
       // La redirection est gérée par le routeur via l'état d'auth.
     } catch (e) {
-      setState(() => _error = e.toString());
+      setState(() => _error = friendlyError(e));
     } finally {
       if (mounted) setState(() => _loading = false);
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n.dart';
 import 'selected_media.dart';
 
 /// Bouton de gauche d'une fiche (film ou personne).
@@ -20,13 +21,13 @@ class DetailLeadingButton extends ConsumerWidget {
     final depth = ref.watch(detailStackProvider).length;
     if (depth > 1) {
       return IconButton(
-        tooltip: 'Retour',
+        tooltip: MaterialLocalizations.of(context).backButtonTooltip,
         icon: const Icon(Icons.arrow_back),
         onPressed: () => popDetail(ref),
       );
     }
     return IconButton(
-      tooltip: 'Fermer',
+      tooltip: context.l10n.close,
       icon: const Icon(Icons.close),
       onPressed: () => closeDetail(ref),
     );

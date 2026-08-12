@@ -43,6 +43,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
   int _index = 0;
 
   bool _backfilling = false;
+  DateTime? _lastRefresh;
 
   /// Version des métadonnées capturées. À incrémenter quand on enrichit le
   /// modèle (v1 : pays/casting ; v2 : + réalisateurs ; v3 : casting complet,
@@ -97,17 +98,21 @@ class _HomeShellState extends ConsumerState<HomeShell>
 
       final repo = ref.read(libraryRepositoryProvider);
       final tmdb = ref.read(tmdbClientProvider);
-      for (final f in targets) {
+      // Traitement par lots de 5 requêtes simultanées — x5 plus rapide que
+      // le séquentiel tout en restant dans les limites de l'API TMDB.
+      const batchSize = 5;
+      for (int i = 0; i < targets.length; i += batchSize) {
         if (!mounted) break;
-        try {
-          final d = await tmdb.details(f.tmdbId, f.mediaType);
-          await repo.backfillFilm(Film.fromDetails(d));
-        } catch (_) {
-          // titre introuvable / erreur réseau : on ignore et on continue.
+        final batch = targets.sublist(i, (i + batchSize).clamp(0, targets.length));
+        await Future.wait(batch.map((f) async {
+          try {
+            final d = await tmdb.details(f.tmdbId, f.mediaType);
+            await repo.backfillFilm(Film.fromDetails(d));
+          } catch (_) {}
+        }));
+        if (i + batchSize < targets.length) {
+          await Future.delayed(const Duration(milliseconds: 100));
         }
-        // Petite pause entre chaque requête pour ne pas saturer l'API TMDB
-        // ni déclencher trop de rebuilds Supabase en rafale.
-        await Future.delayed(const Duration(milliseconds: 30));
       }
       // Marque cette version comme traitée : le refresh complet ne se relancera
       // plus (les futurs titres vides restent rattrapés ci-dessus).
@@ -244,10 +249,15 @@ class _HomeShellState extends ConsumerState<HomeShell>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Au retour dans l'app, resynchronise avec la base (récupère les
-    // changements faits ailleurs, ex. suppressions non reçues en temps réel).
     if (state == AppLifecycleState.resumed) {
-      ref.read(libraryRepositoryProvider).refresh();
+      // Resynchronise avec la base, mais pas plus d'une fois toutes les 5 min
+      // pour éviter un rechargement complet à chaque retour d'écran veille.
+      final now = DateTime.now();
+      if (_lastRefresh == null ||
+          now.difference(_lastRefresh!) > const Duration(minutes: 5)) {
+        _lastRefresh = now;
+        ref.read(libraryRepositoryProvider).refresh();
+      }
     }
   }
 

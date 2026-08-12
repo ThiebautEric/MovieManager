@@ -83,6 +83,7 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
     if (ref.read(isViewingAsProvider)) return;
     try {
       final hist = await ref.read(historyStreamProvider.future);
+      if (!mounted) return;
       final key = '${d.mediaType}:${d.tmdbId}';
       final broken = [
         for (final h in hist)

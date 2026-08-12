@@ -168,6 +168,8 @@
   "wishlistEmpty": "Nothing on your watchlist.\nFrom a details page or a search result, tap the bookmark to keep a title to watch or buy.",
   "wishlistAddTooltip": "Add to watchlist",
   "wishlistRemoveTooltip": "Remove from watchlist",
+  "wishlistConfirmRemoveTitle": "Remove from watchlist?",
+  "wishlistConfirmRemoveBody": "This title will be removed from your watchlist.",
   "wishlistToHistory": "Watched",
   "wishlistToCollection": "Acquired",
   "wishlistAddedOn": "Added on {date}",
