@@ -79,6 +79,8 @@ class CoverOcrService {
         .where((l) => l.isNotEmpty)
         .toList();
 
+    if (lines.isEmpty) return null;
+
     // Regrouper les lignes non-bruit en blocs contigus.
     final blocks = <List<String>>[];
     var current = <String>[];
@@ -93,19 +95,33 @@ class CoverOcrService {
       }
     }
     if (current.isNotEmpty) blocks.add(current);
-    if (blocks.isEmpty) return null;
 
-    // Prendre le premier bloc d'au moins 3 caractères.
-    for (final block in blocks) {
-      final joined = block.join(' ').trim();
-      if (joined.length >= 3) {
-        final normalized = _normalize(joined);
-        return normalized.length > 100
-            ? normalized.substring(0, 100).trim()
-            : normalized;
-      }
+    // Parmi les blocs propres, prendre le plus long (le titre est souvent
+    // le texte le plus long sur la jaquette).
+    if (blocks.isNotEmpty) {
+      final best = blocks
+          .map((b) => b.join(' ').trim())
+          .where((s) => s.isNotEmpty)
+          .reduce((a, b) => a.length >= b.length ? a : b);
+      if (best.isNotEmpty) return _finalize(best);
     }
-    return null;
+
+    // Fallback : aucun bloc propre trouvé — retourner la ligne non-bruit
+    // la plus longue pour laisser TMDB tenter quand même.
+    final fallback = lines
+        .where((l) => !_isNoise(l))
+        .fold<String>('', (best, l) => l.length > best.length ? l : best);
+    if (fallback.isNotEmpty) return _finalize(fallback);
+
+    // Dernier recours : première ligne brute.
+    return _finalize(lines.first);
+  }
+
+  static String _finalize(String text) {
+    final normalized = _normalize(text);
+    return normalized.length > 100
+        ? normalized.substring(0, 100).trim()
+        : normalized;
   }
 
   /// Si le texte est entièrement en majuscules, le convertit en title-case.
