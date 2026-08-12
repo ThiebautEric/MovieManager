@@ -96,25 +96,20 @@ class CoverOcrService {
     }
     if (current.isNotEmpty) blocks.add(current);
 
-    // Parmi les blocs propres, prendre le plus long (le titre est souvent
-    // le texte le plus long sur la jaquette).
     if (blocks.isNotEmpty) {
-      final best = blocks
-          .map((b) => b.join(' ').trim())
-          .where((s) => s.isNotEmpty)
-          .reduce((a, b) => a.length >= b.length ? a : b);
-      if (best.isNotEmpty) return _finalize(best);
+      // Stratégie : premier bloc court (≤ 50 chars) = titre.
+      // Les titres sont courts ; taglines et descriptions sont longs.
+      for (final block in blocks) {
+        final candidate = block.take(2).join(' ').trim();
+        if (candidate.length <= 50) return _finalize(candidate);
+      }
+      // Tous les blocs sont longs : prendre juste la 1re ligne du 1er bloc.
+      return _finalize(blocks.first.first);
     }
 
-    // Fallback : aucun bloc propre trouvé — retourner la ligne non-bruit
-    // la plus longue pour laisser TMDB tenter quand même.
-    final fallback = lines
-        .where((l) => !_isNoise(l))
-        .fold<String>('', (best, l) => l.length > best.length ? l : best);
-    if (fallback.isNotEmpty) return _finalize(fallback);
-
-    // Dernier recours : première ligne brute.
-    return _finalize(lines.first);
+    // Fallback : première ligne non-bruit, ou première ligne brute.
+    final fallback = lines.firstWhere((l) => !_isNoise(l), orElse: () => lines.first);
+    return _finalize(fallback);
   }
 
   static String _finalize(String text) {
