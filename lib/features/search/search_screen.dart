@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -58,7 +59,11 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   Future<void> _runPhotoSearch() async {
     final picker = ImagePicker();
-    final XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    // Sur le web mobile, ImageSource.camera ajoute capture="environment"
+    // → ouvre directement la caméra. Sur natif Android, gallery donne
+    // accès aux deux (galerie + appareil photo).
+    final source = kIsWeb ? ImageSource.camera : ImageSource.gallery;
+    final XFile? file = await picker.pickImage(source: source);
     if (file == null || !mounted) return;
     final bytes = await file.readAsBytes();
     if (!mounted) return;
