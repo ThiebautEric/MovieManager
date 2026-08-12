@@ -617,6 +617,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wishlistRemoveTooltip => 'Remove from watchlist';
 
   @override
+  String get wishlistConfirmRemoveTitle => 'Remove from watchlist?';
+
+  @override
+  String get wishlistConfirmRemoveBody =>
+      'This title will be removed from your watchlist.';
+
+  @override
   String get wishlistToHistory => 'Watched';
 
   @override
@@ -728,4 +735,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get friendsNoEmail => '(no email)';
+
+  @override
+  String get photoSearchTooltip => 'Search by cover photo';
+
+  @override
+  String get photoSearchError =>
+      'Could not read the cover. Try a clearer photo.';
 }

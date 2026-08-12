@@ -203,5 +203,7 @@
   "friendsViewLibrary": "View their library (read-only)",
   "friendsLoadError": "Failed to load: {error}",
   "friendsRetry": "Retry",
-  "friendsNoEmail": "(no email)"
+  "friendsNoEmail": "(no email)",
+  "photoSearchTooltip": "Search by cover photo",
+  "photoSearchError": "Could not read the cover. Try a clearer photo."
 }

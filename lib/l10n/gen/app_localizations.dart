@@ -1066,6 +1066,18 @@ abstract class AppLocalizations {
   /// **'Retirer du pense-bête'**
   String get wishlistRemoveTooltip;
 
+  /// No description provided for @wishlistConfirmRemoveTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer du pense-bête ?'**
+  String get wishlistConfirmRemoveTitle;
+
+  /// No description provided for @wishlistConfirmRemoveBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce titre sera retiré de ton pense-bête.'**
+  String get wishlistConfirmRemoveBody;
+
   /// No description provided for @wishlistToHistory.
   ///
   /// In fr, this message translates to:
@@ -1269,6 +1281,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'(sans e-mail)'**
   String get friendsNoEmail;
+
+  /// No description provided for @photoSearchTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher par photo de jaquette'**
+  String get photoSearchTooltip;
+
+  /// No description provided for @photoSearchError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de lire la jaquette. Essaie une photo plus nette.'**
+  String get photoSearchError;
 }
 
 class _AppLocalizationsDelegate

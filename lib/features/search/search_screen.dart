@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../core/config/app_config.dart';
 import '../../core/l10n/l10n.dart';
 import '../../core/prefs/original_titles_controller.dart';
 import '../../core/utils/format.dart';
@@ -24,6 +26,7 @@ import '../../widgets/poster_image.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../home/selected_media.dart';
+import 'cover_ocr_provider.dart';
 import 'search_controller.dart';
 
 
@@ -53,19 +56,43 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     });
   }
 
+  Future<void> _runPhotoSearch() async {
+    final picker = ImagePicker();
+    final XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    if (file == null || !mounted) return;
+    final bytes = await file.readAsBytes();
+    if (!mounted) return;
+    await ref.read(photoSearchProvider.notifier).searchFromBytes(bytes);
+  }
+
   @override
   Widget build(BuildContext context) {
     final results = ref.watch(searchResultsProvider);
     final query = ref.watch(searchQueryProvider);
 
+    ref.listen<PhotoSearchState>(photoSearchProvider, (_, next) {
+      if (next is PhotoSearchDone) {
+        _controller.text = next.query;
+        ref.read(searchQueryProvider.notifier).state = next.query;
+        ref.read(photoSearchProvider.notifier).reset();
+        setState(() {});
+      } else if (next is PhotoSearchError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.photoSearchError)));
+        ref.read(photoSearchProvider.notifier).reset();
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(context.l10n.searchTitle),
-        actions: const [
-          OriginalTitleButton(),
-          LanguageButton(),
-          ThemeToggleButton(),
-          AccountButton(),
+        actions: [
+          if (AppConfig.hasVisionApi)
+            _PhotoSearchButton(onTap: _runPhotoSearch),
+          const OriginalTitleButton(),
+          const LanguageButton(),
+          const ThemeToggleButton(),
+          const AccountButton(),
         ],
       ),
       body: Column(
@@ -319,6 +346,29 @@ class _WishlistBadgeButton extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Bouton caméra dans l'AppBar : lance la sélection d'image et déclenche l'OCR.
+class _PhotoSearchButton extends ConsumerWidget {
+  const _PhotoSearchButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loading = ref.watch(photoSearchProvider) is PhotoSearchLoading;
+    return IconButton(
+      tooltip: context.l10n.photoSearchTooltip,
+      icon: loading
+          ? const SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            )
+          : const Icon(Icons.camera_alt_outlined),
+      onPressed: loading ? null : onTap,
     );
   }
 }

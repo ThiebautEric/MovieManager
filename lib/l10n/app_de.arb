@@ -203,5 +203,7 @@
   "friendsViewLibrary": "Bibliothek ansehen (nur Lesezugriff)",
   "friendsLoadError": "Laden fehlgeschlagen: {error}",
   "friendsRetry": "Erneut versuchen",
-  "friendsNoEmail": "(ohne E-Mail)"
+  "friendsNoEmail": "(ohne E-Mail)",
+  "photoSearchTooltip": "Über Cover-Foto suchen",
+  "photoSearchError": "Hülle konnte nicht gelesen werden. Versuche ein klareres Foto."
 }

@@ -616,6 +616,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get wishlistRemoveTooltip => 'Retirer du pense-bête';
 
   @override
+  String get wishlistConfirmRemoveTitle => 'Retirer du pense-bête ?';
+
+  @override
+  String get wishlistConfirmRemoveBody =>
+      'Ce titre sera retiré de ton pense-bête.';
+
+  @override
   String get wishlistToHistory => 'Vu';
 
   @override
@@ -727,4 +734,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get friendsNoEmail => '(sans e-mail)';
+
+  @override
+  String get photoSearchTooltip => 'Rechercher par photo de jaquette';
+
+  @override
+  String get photoSearchError =>
+      'Impossible de lire la jaquette. Essaie une photo plus nette.';
 }

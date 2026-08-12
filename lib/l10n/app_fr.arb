@@ -491,5 +491,7 @@
     }
   },
   "friendsRetry": "Réessayer",
-  "friendsNoEmail": "(sans e-mail)"
+  "friendsNoEmail": "(sans e-mail)",
+  "photoSearchTooltip": "Rechercher par photo de jaquette",
+  "photoSearchError": "Impossible de lire la jaquette. Essaie une photo plus nette."
 }

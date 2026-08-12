@@ -16,6 +16,13 @@ class AppConfig {
   static const String supabaseAnonKey =
       String.fromEnvironment('SUPABASE_ANON_KEY');
 
+  /// Clé Google Cloud Vision API (OCR jaquette, feature photo-recherche).
+  static const String visionApiKey =
+      String.fromEnvironment('VISION_API_KEY');
+
+  /// Vrai si la fonctionnalité de recherche par photo est disponible.
+  static bool get hasVisionApi => visionApiKey.isNotEmpty;
+
   /// La clé TMDB est le minimum requis pour faire tourner l'app.
   static bool get hasTmdb => tmdbToken.isNotEmpty;
 
