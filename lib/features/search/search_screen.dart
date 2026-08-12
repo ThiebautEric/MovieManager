@@ -63,7 +63,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     // → ouvre directement la caméra. Sur natif Android, gallery donne
     // accès aux deux (galerie + appareil photo).
     final source = kIsWeb ? ImageSource.camera : ImageSource.gallery;
-    final XFile? file = await picker.pickImage(source: source);
+    final XFile? file = await picker.pickImage(
+      source: source,
+      maxWidth: 1024,
+      maxHeight: 1024,
+      imageQuality: 85,
+    );
     if (file == null || !mounted) return;
     final bytes = await file.readAsBytes();
     if (!mounted) return;
