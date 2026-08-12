@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'cover_ocr_service.dart';
@@ -42,6 +43,9 @@ class PhotoSearchNotifier extends Notifier<PhotoSearchState> {
       } else {
         state = PhotoSearchDone(title);
       }
+    } on DioException catch (e) {
+      final body = e.response?.data?.toString() ?? '';
+      state = PhotoSearchError('HTTP ${e.response?.statusCode}: $body');
     } on Exception catch (e) {
       state = PhotoSearchError(e.toString());
     }
