@@ -683,7 +683,7 @@ class _HistoryCard extends ConsumerWidget {
                     ?.year ??
                 event.film.releaseYear)
         : event.film.releaseYear;
-    final rating = event.rating;
+    final rating = ref.watch(ratingByKeyProvider)[event.film.mediaKey];
     final title = resolveTitle(
       ref,
       tmdbId: event.film.tmdbId,

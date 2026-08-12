@@ -1167,17 +1167,19 @@ final watchedSeasonsByKeyProvider =
 });
 
 /// Map clé → ensemble de Medium possédés.
-/// - Entrées liées à un visionnage : clé `"hist:{historyId}"`.
-/// - Entrées ajoutées depuis la fiche : clé `"${mediaKey}|${seasonNumber}|${episodeNumber}"`.
+/// Chaque entrée est indexée sous sa clé `"${mediaKey}|${seasonNumber}|${episodeNumber}"`
+/// (pour les badges sur toutes les cartes du même film) et, si liée à un
+/// visionnage, aussi sous `"hist:{historyId}"` (pour la correspondance exacte).
 final ownedMediumsByKeySeasonProvider =
     Provider.autoDispose<Map<String, Set<Medium>>>((ref) {
   final coll = ref.watch(collectionStreamProvider).value ?? [];
   final map = <String, Set<Medium>>{};
   for (final c in coll) {
-    final key = c.historyId != null
-        ? 'hist:${c.historyId}'
-        : '${c.film.mediaKey}|${c.seasonNumber}|${c.episodeNumber}';
-    (map[key] ??= {}).add(c.medium);
+    final mediaKey = '${c.film.mediaKey}|${c.seasonNumber}|${c.episodeNumber}';
+    (map[mediaKey] ??= {}).add(c.medium);
+    if (c.historyId != null) {
+      (map['hist:${c.historyId}'] ??= {}).add(c.medium);
+    }
   }
   return map;
 });
