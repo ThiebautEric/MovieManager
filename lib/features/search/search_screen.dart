@@ -87,8 +87,11 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         ref.read(photoSearchProvider.notifier).reset();
         setState(() {});
       } else if (next is PhotoSearchError) {
+        final msg = next.message.isNotEmpty
+            ? next.message
+            : context.l10n.photoSearchError;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.photoSearchError)));
+          SnackBar(content: Text(msg), duration: const Duration(seconds: 10)));
         ref.read(photoSearchProvider.notifier).reset();
       }
     });
