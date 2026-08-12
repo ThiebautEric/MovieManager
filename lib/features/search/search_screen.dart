@@ -87,8 +87,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       appBar: AppBar(
         title: AppBarTitle(context.l10n.searchTitle),
         actions: [
-          if (AppConfig.hasVisionApi)
-            _PhotoSearchButton(onTap: _runPhotoSearch),
+          _PhotoSearchButton(onTap: _runPhotoSearch),
           const OriginalTitleButton(),
           const LanguageButton(),
           const ThemeToggleButton(),

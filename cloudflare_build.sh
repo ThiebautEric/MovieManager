@@ -11,6 +11,7 @@ set -e
 git clone https://github.com/flutter/flutter.git --depth 1 -b stable
 export PATH="$PATH:$PWD/flutter/bin"
 flutter pub get
+flutter clean
 flutter build web --release \
   --dart-define=TMDB_TOKEN=3889808a354ed5f7476794b8b4abc105 \
   --dart-define=SUPABASE_URL=https://msawdukkcgjkxfktthdj.supabase.co \
