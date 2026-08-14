@@ -425,11 +425,18 @@ class _HomeShellState extends ConsumerState<HomeShell>
     if (isWide) {
       // tabs reste toujours dans le tree (Offstage quand un détail est ouvert)
       // pour préserver l'état local des écrans (champs de texte, scroll, etc.).
+      // Idem pour les fiches empilées : chaque entrée reste vivante (Offstage
+      // quand elle n'est pas au sommet) pour éviter la recréation des widgets
+      // et le rechargement des images lors du retour arrière.
       final content = Stack(
         fit: StackFit.expand,
         children: [
           Offstage(offstage: top != null, child: tabs),
-          if (top != null) _buildEntry(top, stack.length),
+          for (int i = 0; i < stack.length; i++)
+            Offstage(
+              offstage: i < stack.length - 1,
+              child: _buildEntry(stack[i], i + 1),
+            ),
         ],
       );
 
