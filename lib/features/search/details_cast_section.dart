@@ -17,11 +17,15 @@ class CastSection extends ConsumerStatefulWidget {
   ConsumerState<CastSection> createState() => _CastSectionState();
 }
 
-class _CastSectionState extends ConsumerState<CastSection> {
+class _CastSectionState extends ConsumerState<CastSection>
+    with AutomaticKeepAliveClientMixin {
   static const _initial = 12;
   static const _step = 20;
 
   int _shown = _initial;
+
+  @override
+  bool get wantKeepAlive => true;
 
   Widget _tile(CastMember c) {
     final theme = Theme.of(context);
@@ -97,6 +101,7 @@ class _CastSectionState extends ConsumerState<CastSection> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final theme = Theme.of(context);
     final cast = widget.cast;
     final hasMore = _shown < cast.length;
