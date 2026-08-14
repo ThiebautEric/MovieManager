@@ -27,10 +27,6 @@ class PosterImage extends StatelessWidget {
     }
     return CachedNetworkImage(
       imageUrl: url,
-      // Pour w342 : réduit de ~700 KB à ~240 KB en mémoire (200×300×4 octets).
-      // Pas appliqué pour les petits formats (w185, w92…) où la source est déjà
-      // plus petite que 200 px et ResizeImage se comporterait de façon imprévisible.
-      memCacheWidth: size == 'w342' ? 200 : null,
       fit: fit,
       placeholder: (_, _) => Container(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,

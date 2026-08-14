@@ -124,8 +124,11 @@ class _PersonBody extends ConsumerWidget {
     };
     final sectionSlivers = <Widget>[];
 
+    int sectionIndex = 0;
+
     void addSection(String label, List<FilmographyItem> items) {
       if (items.isEmpty) return;
+      final sectionKey = sectionIndex++;
       sectionSlivers.add(SliverToBoxAdapter(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
@@ -146,7 +149,7 @@ class _PersonBody extends ConsumerWidget {
           itemBuilder: (context, i) {
             final f = items[i];
             return _FilmographyCard(
-              key: ValueKey('${f.mediaType}:${f.tmdbId}'),
+              key: ValueKey('s${sectionKey}_${f.mediaType}:${f.tmdbId}'),
               item: f,
               status: byKey['${f.mediaType}:${f.tmdbId}'],
             );
