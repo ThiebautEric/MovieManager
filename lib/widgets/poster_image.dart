@@ -27,6 +27,7 @@ class PosterImage extends StatelessWidget {
     }
     return CachedNetworkImage(
       imageUrl: url,
+      memCacheWidth: 200, // réduit l'empreinte mémoire par affiche (~½ du w342)
       fit: fit,
       placeholder: (_, _) => Container(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,

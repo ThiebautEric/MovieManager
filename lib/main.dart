@@ -15,6 +15,12 @@ import 'l10n/gen/app_localizations.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Les fiches acteur peuvent afficher 200+ affiches : le cache mémoire par
+  // défaut (100 images / 100 MB) est trop petit et évince les premières
+  // affiches quand on scrolle bas puis revient en haut.
+  PaintingBinding.instance.imageCache.maximumSize = 500;
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 200 << 20; // 200 MB
+
   // La clé TMDB est le minimum requis ; sinon on affiche un écran explicite.
   if (!AppConfig.isConfigured) {
     runApp(const _MisconfiguredApp());
