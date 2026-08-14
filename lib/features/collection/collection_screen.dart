@@ -184,6 +184,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         owned.containsKey('${e.film.mediaKey}|${e.seasonNumber}|${e.episodeNumber}');
 
     Widget card(HistoryView e) => _HistoryCard(
+          key: ValueKey(e.id ?? e.watchedAt.microsecondsSinceEpoch),
           event: e,
           dateLabel: dateFmt.format(e.watchedAt.toLocal()),
           mediums: mediumsFor(e),
@@ -617,8 +618,9 @@ class _MonthHeader extends StatelessWidget {
   }
 }
 
-class _HistoryCard extends ConsumerWidget {
+class _HistoryCard extends ConsumerStatefulWidget {
   const _HistoryCard({
+    super.key,
     required this.event,
     required this.dateLabel,
     required this.mediums,
@@ -639,8 +641,19 @@ class _HistoryCard extends ConsumerWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_HistoryCard> createState() => _HistoryCardState();
+}
+
+class _HistoryCardState extends ConsumerState<_HistoryCard>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
     final theme = Theme.of(context);
+    final event = widget.event;
     final isSeason = event.seasonNumber != null;
     final isSeasonOnly = isSeason && event.episodeNumber == null;
     // Chargé pour toutes les entrées de saison (saison entière ou épisode
@@ -694,7 +707,7 @@ class _HistoryCard extends ConsumerWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -713,7 +726,7 @@ class _HistoryCard extends ConsumerWidget {
                     left: 0,
                     bottom: 0,
                     child: SeasonBand(
-                      watched: watchedSeasons,
+                      watched: widget.watchedSeasons,
                       known: tmdbSeasons,
                       current: event.seasonNumber,
                     ),
@@ -738,19 +751,19 @@ class _HistoryCard extends ConsumerWidget {
                                 '${event.episodeNumber != null ? 'E${event.episodeNumber}' : ''}'),
                         const SizedBox(height: 4),
                       ],
-                      for (final m in mediums) ...[
+                      for (final m in widget.mediums) ...[
                         MediumBadge(medium: m, compact: true),
                         const SizedBox(height: 3),
                       ],
                     ],
                   ),
                 ),
-                if (showBulk)
+                if (widget.showBulk)
                   Positioned(
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: _BulkAddBar(event: event, owned: mediums),
+                    child: _BulkAddBar(event: event, owned: widget.mediums),
                   ),
               ],
             ),
@@ -803,7 +816,7 @@ class _HistoryCard extends ConsumerWidget {
               const SizedBox(width: 4),
               Expanded(
                 child: Text(
-                  dateLabel,
+                  widget.dateLabel,
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.primary),
                 ),

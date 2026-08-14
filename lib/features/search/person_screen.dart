@@ -146,6 +146,7 @@ class _PersonBody extends ConsumerWidget {
           itemBuilder: (context, i) {
             final f = items[i];
             return _FilmographyCard(
+              key: ValueKey('${f.mediaType}:${f.tmdbId}'),
               item: f,
               status: byKey['${f.mediaType}:${f.tmdbId}'],
             );
@@ -314,17 +315,28 @@ class _MediaStatus {
 
 /// Carte d'un film de la filmographie (format grille d'affiches), avec repères
 /// possédé / vu / note s'il est dans la bibliothèque.
-class _FilmographyCard extends ConsumerWidget {
-  const _FilmographyCard({required this.item, required this.status});
+class _FilmographyCard extends ConsumerStatefulWidget {
+  const _FilmographyCard({super.key, required this.item, required this.status});
 
   final FilmographyItem item;
   final _MediaStatus? status;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_FilmographyCard> createState() => _FilmographyCardState();
+}
+
+class _FilmographyCardState extends ConsumerState<_FilmographyCard>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final c = status;
+    final item = widget.item;
+    final c = widget.status;
     final highlight = c != null && (c.owned || c.watched);
     final tmdbSeasons = ref.watch(
         seasonsTmdbProvider((id: item.tmdbId, type: item.mediaType)));
@@ -432,5 +444,4 @@ class _FilmographyCard extends ConsumerWidget {
       ),
     );
   }
-
 }
