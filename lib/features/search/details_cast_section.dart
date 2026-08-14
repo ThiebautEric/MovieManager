@@ -45,7 +45,7 @@ class _CastSectionState extends ConsumerState<CastSection>
               height: 120,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: PosterImage(posterPath: c.profilePath, size: 'w185'),
+                child: PosterImage(posterPath: c.profilePath),
               ),
             ),
             const SizedBox(height: 4),
