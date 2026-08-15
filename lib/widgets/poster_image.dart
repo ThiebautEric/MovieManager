@@ -42,7 +42,8 @@ class PosterImage extends StatelessWidget {
         if (sourceWidth != null && !constraints.maxWidth.isInfinite) {
           final dpr = MediaQuery.devicePixelRatioOf(context);
           final physical = (constraints.maxWidth * dpr).round();
-          if (physical < sourceWidth) memWidth = physical;
+          // Guard > 0 : évite de passer memCacheWidth:0 qui bloque le chargement.
+          if (physical > 0 && physical < sourceWidth) memWidth = physical;
         }
         return CachedNetworkImage(
           imageUrl: url,
