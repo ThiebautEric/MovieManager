@@ -1,15 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../core/utils/app_cache_manager.dart';
 import '../tmdb/tmdb_client.dart';
 
-/// Affiche TMDB avec cache disque et fallback si l'image est absente.
+/// Affiche une image TMDB avec cache et fallback si l'image est absente.
 ///
-/// Le [memCacheWidth] est calculé automatiquement : si la largeur physique
-/// d'affichage est inférieure à la résolution source TMDB (ex. w342 = 342px),
-/// on stocke l'image décodée à la taille d'affichage réelle. Cela multiplie
-/// la capacité du cache mémoire sans sacrifier la qualité visuelle.
+/// Web : [Image.network] — le navigateur gère son propre cache HTTP, ce qui
+/// est plus fiable que flutter_cache_manager sur IndexedDB.
+///
+/// Mobile : [CachedNetworkImage] avec [AppCacheManager] (5 000 entrées disque)
+/// et [memCacheWidth] réduit à la taille physique d'affichage pour limiter la
+/// pression mémoire sur les grilles denses.
 class PosterImage extends StatelessWidget {
   const PosterImage({
     super.key,
@@ -25,24 +28,35 @@ class PosterImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final url = TmdbClient.imageUrl(posterPath, size: size);
+    final bg = Theme.of(context).colorScheme.surfaceContainerHighest;
     if (url == null) {
       return Container(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        color: bg,
         child: const Center(child: Icon(Icons.movie, size: 40)),
       );
     }
-    // Largeur source TMDB extraite du paramètre size ('w342' → 342).
+
+    if (kIsWeb) {
+      return Image.network(
+        url,
+        fit: fit,
+        loadingBuilder: (_, child, progress) =>
+            progress == null ? child : Container(color: bg),
+        errorBuilder: (_, _, _) => Container(
+          color: bg,
+          child: const Center(child: Icon(Icons.broken_image, size: 40)),
+        ),
+      );
+    }
+
+    // Mobile : cache disque étendu + optimisation mémoire via memCacheWidth.
     final sourceWidth = int.tryParse(size.replaceFirst('w', ''));
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Calcule la largeur physique d'affichage. On ne restreint que si elle
-        // est strictement inférieure à la résolution source, pour éviter tout
-        // upscale qui consommerait plus de mémoire qu'une image source native.
         int? memWidth;
         if (sourceWidth != null && !constraints.maxWidth.isInfinite) {
           final dpr = MediaQuery.devicePixelRatioOf(context);
           final physical = (constraints.maxWidth * dpr).round();
-          // Guard > 0 : évite de passer memCacheWidth:0 qui bloque le chargement.
           if (physical > 0 && physical < sourceWidth) memWidth = physical;
         }
         return CachedNetworkImage(
@@ -50,11 +64,9 @@ class PosterImage extends StatelessWidget {
           fit: fit,
           memCacheWidth: memWidth,
           cacheManager: AppCacheManager.instance,
-          placeholder: (_, _) => Container(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
-          ),
+          placeholder: (_, _) => Container(color: bg),
           errorWidget: (_, _, _) => Container(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            color: bg,
             child: const Center(child: Icon(Icons.broken_image, size: 40)),
           ),
         );
