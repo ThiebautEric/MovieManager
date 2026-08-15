@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../core/utils/app_cache_manager.dart';
 import '../tmdb/tmdb_client.dart';
 
 /// Affiche TMDB avec cache disque et fallback si l'image est absente.
@@ -47,6 +48,7 @@ class PosterImage extends StatelessWidget {
           imageUrl: url,
           fit: fit,
           memCacheWidth: memWidth,
+          cacheManager: AppCacheManager.instance,
           placeholder: (_, _) => Container(
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
           ),
