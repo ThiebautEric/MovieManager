@@ -252,3 +252,164 @@ begin
     end if;
   end loop;
 end $$;
+
+-- ----------------------------------------------------------------------------
+-- restore_backup — restauration ATOMIQUE d'une sauvegarde (export ZIP).
+--
+-- Reçoit tout le contenu de la sauvegarde en un seul objet JSON et exécute,
+-- DANS UNE SEULE TRANSACTION : purge des données de l'utilisateur courant +
+-- ré-attribution des UUID + réinsertion des 6 tables. Soit tout réussit, soit
+-- rien n'est modifié (aucun état partiel possible en cas de coupure réseau).
+--
+-- Les nouveaux UUID sont générés ICI (tables de correspondance _film_map /
+-- _hist_map) : le lien collection.history_id est donc exact sans dépendre de
+-- l'ordre d'un RETURNING. security definer + auth.uid() : un utilisateur ne
+-- peut restaurer que dans SON propre compte (user_id jamais lu du payload).
+-- ----------------------------------------------------------------------------
+create or replace function public.restore_backup(payload jsonb)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  uid uuid := auth.uid();
+  n_films int := 0;
+  n_seasons int := 0;
+  n_history int := 0;
+  n_collection int := 0;
+  n_wishlist int := 0;
+  n_favorites int := 0;
+begin
+  if uid is null then
+    raise exception 'not_authenticated';
+  end if;
+
+  -- Correspondances ancien UUID → nouveau (détruites à la fin de la transaction).
+  create temp table _film_map (old_id uuid primary key, new_id uuid not null)
+    on commit drop;
+  create temp table _hist_map (old_id uuid primary key, new_id uuid not null)
+    on commit drop;
+
+  -- 1. Purge (cascade FK : film_seasons/collection/history/wishlist).
+  delete from public.films     where user_id = uid;
+  delete from public.favorites where user_id = uid;
+
+  -- 2. Films — un nouvel UUID par film, mémorisé dans _film_map.
+  insert into _film_map (old_id, new_id)
+  select (e->>'id')::uuid, gen_random_uuid()
+  from jsonb_array_elements(coalesce(payload->'films', '[]'::jsonb)) e;
+
+  insert into public.films
+    (id, user_id, tmdb_id, media_type, title, original_title, poster_path,
+     release_year, runtime, overview, origin_country, genres, cast_ids)
+  select
+    fm.new_id, uid,
+    (e->>'tmdb_id')::int,
+    e->>'media_type',
+    coalesce(e->>'title', 'Sans titre'),
+    e->>'original_title',
+    e->>'poster_path',
+    (e->>'release_year')::int,
+    (e->>'runtime')::int,
+    e->>'overview',
+    e->>'origin_country',
+    coalesce((select array_agg(v::int) from jsonb_array_elements_text(e->'genres') v), '{}'),
+    coalesce((select array_agg(v::int) from jsonb_array_elements_text(e->'cast_ids') v), '{}')
+  from jsonb_array_elements(coalesce(payload->'films', '[]'::jsonb)) e
+  join _film_map fm on fm.old_id = (e->>'id')::uuid;
+  get diagnostics n_films = row_count;
+
+  -- 3. film_seasons — film_id remappé ; les saisons orphelines sont ignorées.
+  insert into public.film_seasons
+    (user_id, film_id, season_number, name, poster_path, air_year,
+     episode_count, runtime_minutes)
+  select
+    uid, fm.new_id,
+    (e->>'season_number')::int,
+    e->>'name',
+    e->>'poster_path',
+    (e->>'air_year')::int,
+    (e->>'episode_count')::int,
+    (e->>'runtime_minutes')::int
+  from jsonb_array_elements(coalesce(payload->'film_seasons', '[]'::jsonb)) e
+  join _film_map fm on fm.old_id = (e->>'film_id')::uuid;
+  get diagnostics n_seasons = row_count;
+
+  -- 4. history — nouvel UUID par visionnage, mémorisé dans _hist_map.
+  insert into _hist_map (old_id, new_id)
+  select (e->>'id')::uuid, gen_random_uuid()
+  from jsonb_array_elements(coalesce(payload->'history', '[]'::jsonb)) e
+  where exists (
+    select 1 from _film_map fm where fm.old_id = (e->>'film_id')::uuid
+  );
+
+  insert into public.history
+    (id, user_id, film_id, season_number, watched_at, rating, comment,
+     episode_number, episode_name, episode_runtime)
+  select
+    hm.new_id, uid, fm.new_id,
+    (e->>'season_number')::int,
+    (e->>'watched_at')::timestamptz,
+    (e->>'rating')::numeric,
+    e->>'comment',
+    (e->>'episode_number')::int,
+    e->>'episode_name',
+    (e->>'episode_runtime')::int
+  from jsonb_array_elements(coalesce(payload->'history', '[]'::jsonb)) e
+  join _film_map fm on fm.old_id = (e->>'film_id')::uuid
+  join _hist_map hm on hm.old_id = (e->>'id')::uuid;
+  get diagnostics n_history = row_count;
+
+  -- 5. collection — film_id ET history_id remappés (history_id peut être null).
+  insert into public.collection
+    (user_id, film_id, season_number, episode_number, history_id, medium, added_at)
+  select
+    uid, fm.new_id,
+    (e->>'season_number')::int,
+    (e->>'episode_number')::int,
+    hm.new_id,
+    e->>'medium',
+    coalesce((e->>'added_at')::timestamptz, now())
+  from jsonb_array_elements(coalesce(payload->'collection', '[]'::jsonb)) e
+  join _film_map fm on fm.old_id = (e->>'film_id')::uuid
+  left join _hist_map hm on hm.old_id = (e->>'history_id')::uuid;
+  get diagnostics n_collection = row_count;
+
+  -- 6. wishlist — film_id remappé.
+  insert into public.wishlist
+    (user_id, film_id, season_number, added_at)
+  select
+    uid, fm.new_id,
+    (e->>'season_number')::int,
+    coalesce((e->>'added_at')::timestamptz, now())
+  from jsonb_array_elements(coalesce(payload->'wishlist', '[]'::jsonb)) e
+  join _film_map fm on fm.old_id = (e->>'film_id')::uuid;
+  get diagnostics n_wishlist = row_count;
+
+  -- 7. favorites — clé naturelle person_id, aucun UUID à remapper.
+  insert into public.favorites
+    (user_id, person_id, name, profile_path, added_at)
+  select
+    uid,
+    (e->>'person_id')::int,
+    coalesce(e->>'name', ''),
+    e->>'profile_path',
+    coalesce((e->>'added_at')::timestamptz, now())
+  from jsonb_array_elements(coalesce(payload->'favorites', '[]'::jsonb)) e;
+  get diagnostics n_favorites = row_count;
+
+  return jsonb_build_object(
+    'films',      n_films,
+    'seasons',    n_seasons,
+    'history',    n_history,
+    'collection', n_collection,
+    'wishlist',   n_wishlist,
+    'favorites',  n_favorites
+  );
+end;
+$$;
+
+-- Réservée aux utilisateurs authentifiés (jamais anon).
+revoke all on function public.restore_backup(jsonb) from public;
+grant execute on function public.restore_backup(jsonb) to authenticated;

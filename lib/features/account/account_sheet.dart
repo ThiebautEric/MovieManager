@@ -103,9 +103,7 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
 
     setState(() => _loading = true);
     try {
-      final stats = await ref
-          .read(backupServiceProvider)
-          .importZip(bytes, clearFirst: true);
+      final stats = await ref.read(backupServiceProvider).importZip(bytes);
       await ref.read(libraryRepositoryProvider).refresh();
       ref.invalidate(favoritesProvider);
       if (mounted) {

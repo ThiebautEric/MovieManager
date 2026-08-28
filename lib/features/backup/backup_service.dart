@@ -32,12 +32,6 @@ class BackupService {
 
   String get _uid => _client.auth.currentUser!.id;
 
-  static Iterable<List<T>> _chunks<T>(List<T> list, int size) sync* {
-    for (var i = 0; i < list.length; i += size) {
-      yield list.sublist(i, (i + size).clamp(0, list.length));
-    }
-  }
-
   Future<List<Map<String, dynamic>>> _selectAll(String table) async {
     const pageSize = 1000;
     final out = <Map<String, dynamic>>[];
@@ -87,15 +81,10 @@ class BackupService {
 
   /// Importe un ZIP de sauvegarde dans le compte courant.
   ///
-  /// Si [clearFirst] = true : efface d'abord toutes les données
-  /// (recommandé pour une restauration complète, y compris sur un nouveau compte).
-  ///
-  /// Les UUIDs internes sont remappés via la clé naturelle (tmdb_id, media_type)
-  /// pour les films, puis répercutés sur toutes les tables liées.
-  Future<BackupStats> importZip(
-    Uint8List zipBytes, {
-    required bool clearFirst,
-  }) async {
+  /// La restauration est ATOMIQUE : la fonction Postgres `restore_backup`
+  /// purge, remappe les UUID et réinsère les 6 tables dans une seule
+  /// transaction. En cas de coupure, aucun état partiel n'est laissé.
+  Future<BackupStats> importZip(Uint8List zipBytes) async {
     final arc = ZipDecoder().decodeBytes(zipBytes);
 
     List<Map<String, dynamic>> readFile(String name) {
@@ -112,8 +101,7 @@ class BackupService {
     final bWishlist = readFile('wishlist.json');
     final bFavorites = readFile('favorites.json');
 
-    // Validation avant tout effacement : on refuse un fichier vide ou structurellement
-    // invalide pour ne pas effacer des données contre rien.
+    // Validation locale avant tout envoi : refuse un fichier vide ou invalide.
     if (bFilms.isEmpty && bHistory.isEmpty && bCollection.isEmpty &&
         bWishlist.isEmpty && bFavorites.isEmpty) {
       throw const FormatException('La sauvegarde ne contient aucune donnée.');
@@ -131,147 +119,27 @@ class BackupService {
       }
     }
 
-    if (clearFirst) {
-      // La suppression des films cascade sur film_seasons/collection/history/wishlist
-      // via les FK ON DELETE CASCADE définies dans le schéma.
-      await _client.from('films').delete().eq('user_id', _uid);
-      await _client.from('favorites').delete().eq('user_id', _uid);
-    }
+    // Restauration atomique côté serveur (transaction unique).
+    final result = await _client.rpc('restore_backup', params: {
+      'payload': {
+        'films': bFilms,
+        'film_seasons': bSeasons,
+        'history': bHistory,
+        'collection': bCollection,
+        'wishlist': bWishlist,
+        'favorites': bFavorites,
+      },
+    });
 
-    // --- Films : upsert + construction de la carte old_uuid → new_uuid ---
-    // La clé naturelle (tmdb_id, media_type) permet de retrouver le nouvel UUID
-    // après upsert, même si le compte cible est différent du compte source.
-    final filmIdMap = <String, String>{};
-    for (final chunk in _chunks(bFilms, 200)) {
-      final keyToOldId = {
-        for (final f in chunk)
-          '${f['tmdb_id']}:${f['media_type']}': f['id'] as String,
-      };
-      final rows = chunk.map((f) {
-        final r = Map<String, dynamic>.from(f)
-          ..remove('id')
-          ..remove('added_at'); // sera réinitialisé à now()
-        r['user_id'] = _uid;
-        return r;
-      }).toList();
-      final returned = await _client
-          .from('films')
-          .upsert(rows, onConflict: 'user_id,tmdb_id,media_type')
-          .select('id,tmdb_id,media_type');
-      for (final r in returned.cast<Map<String, dynamic>>()) {
-        final key = '${r['tmdb_id']}:${r['media_type']}';
-        final oldId = keyToOldId[key];
-        if (oldId != null) filmIdMap[oldId] = r['id'] as String;
-      }
-    }
-
-    // --- film_seasons ---
-    int cntSeasons = 0;
-    for (final chunk in _chunks(bSeasons, 200)) {
-      final rows = chunk
-          .where((s) => filmIdMap.containsKey(s['film_id']))
-          .map((s) {
-            final r = Map<String, dynamic>.from(s)..remove('id');
-            r['film_id'] = filmIdMap[r['film_id']];
-            r['user_id'] = _uid;
-            return r;
-          })
-          .toList();
-      if (rows.isEmpty) continue;
-      await _client
-          .from('film_seasons')
-          .upsert(rows, onConflict: 'film_id,season_number');
-      cntSeasons += rows.length;
-    }
-
-    // --- history : INSERT RETURNING garantit le même ordre que les VALUES ---
-    // (à distinguer du SELECT sans ORDER BY dont l'ordre est indéfini).
-    // Le mapping positionnel est donc exact et sans risque de doublon de clé.
-    final historyIdMap = <String, String>{};
-    int cntHistory = 0;
-    for (final chunk in _chunks(bHistory, 200)) {
-      final valid = chunk
-          .where((h) => filmIdMap.containsKey(h['film_id']))
-          .toList();
-      if (valid.isEmpty) continue;
-      final oldIds = valid.map((h) => h['id'] as String).toList();
-      final rows = valid.map((h) {
-        final r = Map<String, dynamic>.from(h)
-          ..remove('id')
-          ..remove('created_at');
-        r['film_id'] = filmIdMap[r['film_id']];
-        r['user_id'] = _uid;
-        return r;
-      }).toList();
-      final returned = await _client
-          .from('history')
-          .insert(rows)
-          .select('id');
-      final newIds = returned.cast<Map<String, dynamic>>();
-      for (var i = 0; i < newIds.length && i < oldIds.length; i++) {
-        historyIdMap[oldIds[i]] = newIds[i]['id'] as String;
-      }
-      cntHistory += rows.length;
-    }
-
-    // --- collection (history_id remappé via historyIdMap) ---
-    int cntCollection = 0;
-    for (final chunk in _chunks(bCollection, 200)) {
-      final rows = chunk
-          .where((c) => filmIdMap.containsKey(c['film_id']))
-          .map((c) {
-            final r = Map<String, dynamic>.from(c)..remove('id');
-            r['film_id'] = filmIdMap[r['film_id']];
-            r['user_id'] = _uid;
-            final oldHistId = c['history_id'] as String?;
-            r['history_id'] =
-                oldHistId != null ? historyIdMap[oldHistId] : null;
-            return r;
-          })
-          .toList();
-      if (rows.isEmpty) continue;
-      await _client.from('collection').insert(rows);
-      cntCollection += rows.length;
-    }
-
-    // --- wishlist ---
-    int cntWishlist = 0;
-    for (final chunk in _chunks(bWishlist, 200)) {
-      final rows = chunk
-          .where((w) => filmIdMap.containsKey(w['film_id']))
-          .map((w) {
-            final r = Map<String, dynamic>.from(w)..remove('id');
-            r['film_id'] = filmIdMap[r['film_id']];
-            r['user_id'] = _uid;
-            return r;
-          })
-          .toList();
-      if (rows.isEmpty) continue;
-      await _client.from('wishlist').insert(rows);
-      cntWishlist += rows.length;
-    }
-
-    // --- favorites (clé naturelle : person_id → upsert) ---
-    int cntFavorites = 0;
-    for (final chunk in _chunks(bFavorites, 200)) {
-      final rows = chunk.map((f) {
-        final r = Map<String, dynamic>.from(f)..remove('id');
-        r['user_id'] = _uid;
-        return r;
-      }).toList();
-      await _client
-          .from('favorites')
-          .upsert(rows, onConflict: 'user_id,person_id');
-      cntFavorites += rows.length;
-    }
-
+    final stats = (result as Map).cast<String, dynamic>();
+    int n(String k) => (stats[k] as num?)?.toInt() ?? 0;
     return BackupStats(
-      films: filmIdMap.length,
-      seasons: cntSeasons,
-      history: cntHistory,
-      collection: cntCollection,
-      wishlist: cntWishlist,
-      favorites: cntFavorites,
+      films: n('films'),
+      seasons: n('seasons'),
+      history: n('history'),
+      collection: n('collection'),
+      wishlist: n('wishlist'),
+      favorites: n('favorites'),
     );
   }
 }
