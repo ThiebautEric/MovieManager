@@ -89,8 +89,6 @@ class BackupService {
   ///
   /// Si [clearFirst] = true : efface d'abord toutes les données
   /// (recommandé pour une restauration complète, y compris sur un nouveau compte).
-  /// Si [clearFirst] = false (fusion) : insère par-dessus les données existantes ;
-  /// des doublons peuvent apparaître dans l'historique.
   ///
   /// Les UUIDs internes sont remappés via la clé naturelle (tmdb_id, media_type)
   /// pour les films, puis répercutés sur toutes les tables liées.
@@ -113,6 +111,25 @@ class BackupService {
     final bCollection = readFile('collection.json');
     final bWishlist = readFile('wishlist.json');
     final bFavorites = readFile('favorites.json');
+
+    // Validation avant tout effacement : on refuse un fichier vide ou structurellement
+    // invalide pour ne pas effacer des données contre rien.
+    if (bFilms.isEmpty && bHistory.isEmpty && bCollection.isEmpty &&
+        bWishlist.isEmpty && bFavorites.isEmpty) {
+      throw const FormatException('La sauvegarde ne contient aucune donnée.');
+    }
+    if (bFilms.isNotEmpty) {
+      final f = bFilms.first;
+      if (f['tmdb_id'] == null || f['media_type'] == null || f['id'] == null) {
+        throw const FormatException('Format de sauvegarde invalide (films).');
+      }
+    }
+    if (bHistory.isNotEmpty) {
+      final h = bHistory.first;
+      if (h['film_id'] == null || h['watched_at'] == null || h['id'] == null) {
+        throw const FormatException('Format de sauvegarde invalide (historique).');
+      }
+    }
 
     if (clearFirst) {
       // La suppression des films cascade sur film_seasons/collection/history/wishlist
@@ -191,7 +208,7 @@ class BackupService {
           .insert(rows)
           .select('id');
       final newIds = returned.cast<Map<String, dynamic>>();
-      for (var i = 0; i < oldIds.length; i++) {
+      for (var i = 0; i < newIds.length && i < oldIds.length; i++) {
         historyIdMap[oldIds[i]] = newIds[i]['id'] as String;
       }
       cntHistory += rows.length;
