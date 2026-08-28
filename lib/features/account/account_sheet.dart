@@ -68,35 +68,29 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
   Future<void> _importBackup() async {
     final cs = Theme.of(context).colorScheme;
 
-    final clearFirst = await showDialog<bool>(
+    final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Importer une sauvegarde'),
         content: const Text(
-          'Voulez-vous effacer vos données actuelles avant la restauration, '
-          'ou les conserver et fusionner ?\n\n'
-          'Écraser est recommandé pour une restauration complète ou une '
-          'migration vers un nouveau compte.\n\n'
-          'En mode fusion, les visionnages peuvent être dupliqués.',
+          'Toutes vos données actuelles (historique, collection, pense-bête, '
+          'favoris) seront définitivement supprimées et remplacées par celles '
+          'de la sauvegarde.\n\nCette action est irréversible.',
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Annuler'),
-          ),
-          OutlinedButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Fusionner'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: cs.error),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Écraser mes données'),
+            child: const Text('Continuer'),
           ),
         ],
       ),
     );
-    if (clearFirst == null || !mounted) return;
+    if (confirmed != true || !mounted) return;
 
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -111,7 +105,7 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
     try {
       final stats = await ref
           .read(backupServiceProvider)
-          .importZip(bytes, clearFirst: clearFirst);
+          .importZip(bytes, clearFirst: true);
       await ref.read(libraryRepositoryProvider).refresh();
       ref.invalidate(favoritesProvider);
       if (mounted) {
