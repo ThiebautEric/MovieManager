@@ -120,6 +120,8 @@ class MediaDetails {
     this.originCountry,
     this.seasons = const [],
     this.numberOfEpisodes,
+    this.budget,
+    this.revenue,
   });
 
   final int tmdbId;
@@ -153,12 +155,30 @@ class MediaDetails {
   /// les « Spéciaux » (saison 0) en dernier.
   final List<SeasonInfo> seasons;
 
+  /// Budget de production en USD (films uniquement). Null si inconnu — TMDB
+  /// renvoie 0 quand l'info manque, qu'on traite donc comme « inconnu ».
+  final int? budget;
+
+  /// Recettes (box-office mondial) en USD (films uniquement). Null si inconnu.
+  final int? revenue;
+
+  /// Rentabilité brute (recettes − budget), uniquement si les DEUX sont connus.
+  /// Approximation grossière : n'inclut ni marketing ni part des salles.
+  int? get profit =>
+      (budget != null && revenue != null) ? revenue! - budget! : null;
+
   int? get releaseYear {
     if (releaseDate == null || releaseDate!.length < 4) return null;
     return int.tryParse(releaseDate!.substring(0, 4));
   }
 
   List<int> get genreIds => genres.map((g) => g.id).toList();
+
+  /// Convertit une valeur TMDB en entier positif, ou null (0/absent = inconnu).
+  static int? _positiveOrNull(dynamic v) {
+    final n = (v as num?)?.toInt() ?? 0;
+    return n > 0 ? n : null;
+  }
 
   List<Video> get trailers =>
       videos.where((v) => v.isYoutube && v.type == 'Trailer').toList();
@@ -256,6 +276,9 @@ class MediaDetails {
               ? (json['episode_run_time'] as List<dynamic>).first as int?
               : null),
       numberOfEpisodes: isMovie ? null : json['number_of_episodes'] as int?,
+      // Budget/recettes : films uniquement, et 0 = inconnu → null.
+      budget: isMovie ? _positiveOrNull(json['budget']) : null,
+      revenue: isMovie ? _positiveOrNull(json['revenue']) : null,
       genres: (json['genres'] as List<dynamic>? ?? [])
           .map((e) => Genre.fromJson(e as Map<String, dynamic>))
           .toList(),

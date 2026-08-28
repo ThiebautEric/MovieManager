@@ -159,6 +159,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get detailsTrailers => 'Trailers';
 
   @override
+  String get detailsBoxOffice => 'Box office';
+
+  @override
+  String get detailsBudget => 'Budget';
+
+  @override
+  String get detailsRevenue => 'Revenue';
+
+  @override
+  String get detailsProfit => 'Profit';
+
+  @override
   String detailsCastTitle(int count) {
     return 'Cast ($count)';
   }

@@ -254,6 +254,25 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
           Text(details.overview),
           const SizedBox(height: 24),
         ],
+        // Box-office (films uniquement, seulement si TMDB a l'info).
+        if (isMovie && (details.budget != null || details.revenue != null)) ...[
+          Text(l10n.detailsBoxOffice, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 8),
+          if (details.budget != null)
+            _MoneyRow(label: l10n.detailsBudget, value: fmtUsd(details.budget!)),
+          if (details.revenue != null)
+            _MoneyRow(label: l10n.detailsRevenue, value: fmtUsd(details.revenue!)),
+          if (details.profit != null)
+            _MoneyRow(
+              label: l10n.detailsProfit,
+              value: '${details.profit! >= 0 ? '+' : '−'}'
+                  '${fmtUsd(details.profit!.abs())}',
+              color: details.profit! >= 0
+                  ? Colors.green.shade600
+                  : theme.colorScheme.error,
+            ),
+          const SizedBox(height: 24),
+        ],
         LibraryControls(details: details),
         if (details.trailers.isNotEmpty) ...[
           const SizedBox(height: 24),
@@ -272,6 +291,39 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
           CastSection(cast: details.cast),
         ],
       ],
+    );
+  }
+}
+
+/// Ligne « libellé … montant » de la section box-office.
+class _MoneyRow extends StatelessWidget {
+  const _MoneyRow({required this.label, required this.value, this.color});
+
+  final String label;
+  final String value;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(label,
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+          ),
+          Text(
+            value,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: color,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

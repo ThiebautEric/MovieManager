@@ -358,6 +358,30 @@ abstract class AppLocalizations {
   /// **'Bandes-annonces'**
   String get detailsTrailers;
 
+  /// No description provided for @detailsBoxOffice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Box-office'**
+  String get detailsBoxOffice;
+
+  /// No description provided for @detailsBudget.
+  ///
+  /// In fr, this message translates to:
+  /// **'Budget'**
+  String get detailsBudget;
+
+  /// No description provided for @detailsRevenue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recettes'**
+  String get detailsRevenue;
+
+  /// No description provided for @detailsProfit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rentabilité'**
+  String get detailsProfit;
+
   /// No description provided for @detailsCastTitle.
   ///
   /// In fr, this message translates to:

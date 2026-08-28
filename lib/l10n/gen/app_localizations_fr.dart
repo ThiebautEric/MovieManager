@@ -159,6 +159,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get detailsTrailers => 'Bandes-annonces';
 
   @override
+  String get detailsBoxOffice => 'Box-office';
+
+  @override
+  String get detailsBudget => 'Budget';
+
+  @override
+  String get detailsRevenue => 'Recettes';
+
+  @override
+  String get detailsProfit => 'Rentabilité';
+
+  @override
   String detailsCastTitle(int count) {
     return 'Casting ($count)';
   }

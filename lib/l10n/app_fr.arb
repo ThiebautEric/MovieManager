@@ -88,6 +88,10 @@
   "detailsCreatorLabel": "Création :",
   "detailsSynopsis": "Synopsis",
   "detailsTrailers": "Bandes-annonces",
+  "detailsBoxOffice": "Box-office",
+  "detailsBudget": "Budget",
+  "detailsRevenue": "Recettes",
+  "detailsProfit": "Rentabilité",
   "detailsCastTitle": "Casting ({count})",
   "@detailsCastTitle": {
     "placeholders": {

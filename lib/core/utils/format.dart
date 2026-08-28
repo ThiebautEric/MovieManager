@@ -18,6 +18,10 @@ String fmtDuration(int minutes) {
   return m == 0 ? '${h}h' : '${h}h${m.toString().padLeft(2, '0')}';
 }
 
+/// Formate un montant en dollars US avec séparateurs de milliers (« 3 000 000 $ »).
+String fmtUsd(int amount) =>
+    '${NumberFormat.decimalPattern('fr').format(amount)} \$';
+
 /// Convertit une exception en message lisible par l'utilisateur.
 /// Masque les détails internes des erreurs Supabase/base de données.
 String friendlyError(Object e) {
