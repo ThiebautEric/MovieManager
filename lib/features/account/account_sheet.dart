@@ -1,11 +1,15 @@
+import 'package:file_picker/file_picker.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/config/app_version.dart';
 import '../../core/supabase/supabase_providers.dart';
 import '../../core/utils/format.dart';
+import '../../data/repositories/collection_repository.dart';
+import '../../data/repositories/favorites_repository.dart';
 import '../auth/auth_controller.dart';
+import '../backup/backup_service.dart';
 
 class AccountSheet extends ConsumerStatefulWidget {
   const AccountSheet({super.key});
@@ -29,6 +33,110 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
     _pwdCtrl.dispose();
     _confirmCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _exportBackup() async {
+    setState(() => _loading = true);
+    try {
+      final bytes = await ref.read(backupServiceProvider).export();
+      final now = DateTime.now();
+      final d = '${now.year.toString().padLeft(4, '0')}'
+          '${now.month.toString().padLeft(2, '0')}'
+          '${now.day.toString().padLeft(2, '0')}';
+      await FileSaver.instance.saveFile(
+        name: 'sauvegarde_$d',
+        bytes: bytes,
+        fileExtension: 'zip',
+        mimeType: MimeType.zip,
+      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Sauvegarde exportée.')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur export : ${friendlyError(e)}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  Future<void> _importBackup() async {
+    final cs = Theme.of(context).colorScheme;
+
+    final clearFirst = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Importer une sauvegarde'),
+        content: const Text(
+          'Voulez-vous effacer vos données actuelles avant la restauration, '
+          'ou les conserver et fusionner ?\n\n'
+          'Écraser est recommandé pour une restauration complète ou une '
+          'migration vers un nouveau compte.\n\n'
+          'En mode fusion, les visionnages peuvent être dupliqués.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('Annuler'),
+          ),
+          OutlinedButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Fusionner'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: cs.error),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Écraser mes données'),
+          ),
+        ],
+      ),
+    );
+    if (clearFirst == null || !mounted) return;
+
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['zip'],
+      withData: true,
+    );
+    if (result == null || !mounted) return;
+    final bytes = result.files.first.bytes;
+    if (bytes == null) return;
+
+    setState(() => _loading = true);
+    try {
+      final stats = await ref
+          .read(backupServiceProvider)
+          .importZip(bytes, clearFirst: clearFirst);
+      await ref.read(libraryRepositoryProvider).refresh();
+      ref.invalidate(favoritesProvider);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Import réussi : ${stats.films} films, '
+              '${stats.history} visionnages, '
+              '${stats.collection} possessions, '
+              '${stats.wishlist} pense-bêtes, '
+              '${stats.favorites} favoris.',
+            ),
+            duration: const Duration(seconds: 6),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur import : ${friendlyError(e)}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
   }
 
   Future<void> _submit() async {
@@ -159,6 +267,25 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
                   : const Text('Mettre à jour'),
             ),
             const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 12),
+            Text(
+              'Sauvegarde',
+              style: tt.labelLarge?.copyWith(color: cs.onSurfaceVariant),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(
+              icon: const Icon(Icons.download_outlined),
+              label: const Text('Exporter toutes les données (.zip)'),
+              onPressed: _loading ? null : _exportBackup,
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(
+              icon: const Icon(Icons.upload_outlined),
+              label: const Text('Importer une sauvegarde (.zip)'),
+              onPressed: _loading ? null : _importBackup,
+            ),
+            const SizedBox(height: 16),
             const Divider(),
             const SizedBox(height: 8),
             OutlinedButton.icon(
