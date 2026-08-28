@@ -68,6 +68,19 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
   Future<void> _importBackup() async {
     final cs = Theme.of(context).colorScheme;
 
+    // IMPORTANT (web) : le sélecteur de fichier doit être ouvert directement
+    // depuis le geste utilisateur. Un `await showDialog` avant l'ouverture fait
+    // expirer le « geste » et le navigateur bloque le sélecteur. On choisit donc
+    // le fichier d'abord, puis on confirme avant l'import destructif.
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['zip'],
+      withData: true,
+    );
+    if (result == null || !mounted) return;
+    final bytes = result.files.first.bytes;
+    if (bytes == null) return;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -91,15 +104,6 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
       ),
     );
     if (confirmed != true || !mounted) return;
-
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['zip'],
-      withData: true,
-    );
-    if (result == null || !mounted) return;
-    final bytes = result.files.first.bytes;
-    if (bytes == null) return;
 
     setState(() => _loading = true);
     try {
