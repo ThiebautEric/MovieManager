@@ -74,10 +74,15 @@ create table if not exists public.collection (
   user_id       uuid not null references auth.users (id) on delete cascade,
   film_id       uuid not null references public.films (id) on delete cascade,
   season_number integer,
+  episode_number integer,
+  history_id    uuid,   -- visionnage lié (soft ref, pas de FK)
   medium        text not null check (medium in ('dvd', 'bluray', 'digital')),
   added_at      timestamptz not null default now(),
   unique (user_id, film_id, season_number, medium)
 );
+-- Ajouts pour une base déjà créée.
+alter table public.collection add column if not exists episode_number integer;
+alter table public.collection add column if not exists history_id uuid;
 
 -- ----------------------------------------------------------------------------
 -- 4. history — visionnages. UNE LIGNE PAR VISIONNAGE. Note + commentaire par séance.
