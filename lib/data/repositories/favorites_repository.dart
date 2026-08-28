@@ -42,9 +42,23 @@ class FavoritesController extends Notifier<List<FavoritePerson>> {
 
   bool isFavorite(int personId) => state.any((e) => e.personId == personId);
 
-  static List<FavoritePerson> _sortDesc(List<FavoritePerson> list) =>
-      [...list]..sort((a, b) =>
+  static List<FavoritePerson> _sortDesc(List<FavoritePerson> list) {
+    // Dédoublonnage par person_id (identité réelle d'un favori) : le flux
+    // realtime peut retenir des entrées périmées après un import (anciens id
+    // supprimés mais événement DELETE raté + nouveaux id ajoutés). On ne garde
+    // qu'une entrée par personne, la plus récemment ajoutée.
+    final byPerson = <int, FavoritePerson>{};
+    for (final f in list) {
+      final cur = byPerson[f.personId];
+      if (cur == null ||
+          (f.addedAt ?? DateTime(0)).isAfter(cur.addedAt ?? DateTime(0))) {
+        byPerson[f.personId] = f;
+      }
+    }
+    return byPerson.values.toList()
+      ..sort((a, b) =>
           (b.addedAt ?? DateTime(0)).compareTo(a.addedAt ?? DateTime(0)));
+  }
 
   // --- Cloud --------------------------------------------------------------
   void _subscribeCloud() {
