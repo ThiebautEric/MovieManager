@@ -167,42 +167,34 @@ class BackupService {
       cntSeasons += rows.length;
     }
 
-    // --- history : insert sans dépendance à l'ordre de retour ---
+    // --- history : INSERT RETURNING garantit le même ordre que les VALUES ---
+    // (à distinguer du SELECT sans ORDER BY dont l'ordre est indéfini).
+    // Le mapping positionnel est donc exact et sans risque de doublon de clé.
+    final historyIdMap = <String, String>{};
     int cntHistory = 0;
     for (final chunk in _chunks(bHistory, 200)) {
-      final rows = chunk
+      final valid = chunk
           .where((h) => filmIdMap.containsKey(h['film_id']))
-          .map((h) {
-            final r = Map<String, dynamic>.from(h)
-              ..remove('id')
-              ..remove('created_at');
-            r['film_id'] = filmIdMap[r['film_id']];
-            r['user_id'] = _uid;
-            return r;
-          })
           .toList();
-      if (rows.isEmpty) continue;
-      await _client.from('history').insert(rows);
+      if (valid.isEmpty) continue;
+      final oldIds = valid.map((h) => h['id'] as String).toList();
+      final rows = valid.map((h) {
+        final r = Map<String, dynamic>.from(h)
+          ..remove('id')
+          ..remove('created_at');
+        r['film_id'] = filmIdMap[r['film_id']];
+        r['user_id'] = _uid;
+        return r;
+      }).toList();
+      final returned = await _client
+          .from('history')
+          .insert(rows)
+          .select('id');
+      final newIds = returned.cast<Map<String, dynamic>>();
+      for (var i = 0; i < oldIds.length; i++) {
+        historyIdMap[oldIds[i]] = newIds[i]['id'] as String;
+      }
       cntHistory += rows.length;
-    }
-
-    // Carte old_uuid → new_uuid via clé naturelle (film_id, watched_at,
-    // season_number, episode_number) — aucune dépendance à l'ordre PostgreSQL.
-    final historyIdMap = <String, String>{};
-    final allNewHistory = await _selectAll('history');
-    final newHistByKey = <String, String>{};
-    for (final row in allNewHistory) {
-      final key = '${row['film_id']}|${row['watched_at']}'
-          '|${row['season_number']}|${row['episode_number']}';
-      newHistByKey[key] = row['id'] as String;
-    }
-    for (final h in bHistory) {
-      final newFilmId = filmIdMap[h['film_id'] as String?];
-      if (newFilmId == null) continue;
-      final key = '$newFilmId|${h['watched_at']}'
-          '|${h['season_number']}|${h['episode_number']}';
-      final newId = newHistByKey[key];
-      if (newId != null) historyIdMap[h['id'] as String] = newId;
     }
 
     // --- collection (history_id remappé via historyIdMap) ---
