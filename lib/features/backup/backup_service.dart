@@ -167,36 +167,48 @@ class BackupService {
       cntSeasons += rows.length;
     }
 
-    // --- history (pas de contrainte unique → insert simple) ---
+    // --- history : insert + carte old_uuid → new_uuid (positionnelle) ---
+    // PostgreSQL retourne les lignes insérées dans l'ordre d'insertion,
+    // ce qui permet de reconstruire la correspondance des UUIDs.
+    final historyIdMap = <String, String>{};
     int cntHistory = 0;
     for (final chunk in _chunks(bHistory, 200)) {
-      final rows = chunk
+      final valid = chunk
           .where((h) => filmIdMap.containsKey(h['film_id']))
-          .map((h) {
-            final r = Map<String, dynamic>.from(h)
-              ..remove('id')
-              ..remove('created_at');
-            r['film_id'] = filmIdMap[r['film_id']];
-            r['user_id'] = _uid;
-            return r;
-          })
           .toList();
-      if (rows.isEmpty) continue;
-      await _client.from('history').insert(rows);
+      if (valid.isEmpty) continue;
+      final oldIds = valid.map((h) => h['id'] as String).toList();
+      final rows = valid.map((h) {
+        final r = Map<String, dynamic>.from(h)
+          ..remove('id')
+          ..remove('created_at');
+        r['film_id'] = filmIdMap[r['film_id']];
+        r['user_id'] = _uid;
+        return r;
+      }).toList();
+      final returned = await _client
+          .from('history')
+          .insert(rows)
+          .select('id');
+      final newIds = returned.cast<Map<String, dynamic>>();
+      for (var i = 0; i < oldIds.length && i < newIds.length; i++) {
+        historyIdMap[oldIds[i]] = newIds[i]['id'] as String;
+      }
       cntHistory += rows.length;
     }
 
-    // --- collection (history_id non remappable : omis) ---
+    // --- collection (history_id remappé via historyIdMap) ---
     int cntCollection = 0;
     for (final chunk in _chunks(bCollection, 200)) {
       final rows = chunk
           .where((c) => filmIdMap.containsKey(c['film_id']))
           .map((c) {
-            final r = Map<String, dynamic>.from(c)
-              ..remove('id')
-              ..remove('history_id'); // UUID non remappable
+            final r = Map<String, dynamic>.from(c)..remove('id');
             r['film_id'] = filmIdMap[r['film_id']];
             r['user_id'] = _uid;
+            final oldHistId = c['history_id'] as String?;
+            r['history_id'] =
+                oldHistId != null ? historyIdMap[oldHistId] : null;
             return r;
           })
           .toList();
