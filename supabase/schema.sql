@@ -132,6 +132,15 @@ create table if not exists public.favorites (
 -- Index pour les filtres/jointures fréquents.
 -- ----------------------------------------------------------------------------
 create index if not exists favorites_user_idx       on public.favorites (user_id);
+
+-- REPLICA IDENTITY FULL sur favorites : cette table est la seule consommée via
+-- un flux realtime filtré (.stream().eq('user_id', …)). Avec l'identité par
+-- défaut, un DELETE n'écrit que la clé primaire dans le WAL ; le filtre
+-- user_id ne peut donc jamais matcher un événement DELETE, qui est alors
+-- ignoré côté client → les favoris supprimés restent dans le flux et se
+-- dédoublent après un ré-import (ancienne + nouvelle ligne, même person_id).
+-- FULL inclut toutes les colonnes dans le WAL → les DELETE filtrés passent.
+alter table public.favorites replica identity full;
 create index if not exists films_user_idx          on public.films (user_id);
 create index if not exists film_seasons_film_idx    on public.film_seasons (film_id);
 create index if not exists film_seasons_user_idx    on public.film_seasons (user_id);
