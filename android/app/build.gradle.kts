@@ -6,7 +6,9 @@ plugins {
 
 android {
     namespace = "de.ianeo.movie_manager"
-    compileSdk = flutter.compileSdkVersion
+    // file_picker exige compileSdk >= 36 ; on force la valeur car
+    // flutter.compileSdkVersion reste en deçà avec le SDK Flutter actuel.
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
