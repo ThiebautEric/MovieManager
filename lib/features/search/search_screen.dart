@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../core/config/app_config.dart';
 import '../../core/l10n/l10n.dart';
+import '../../core/l10n/locale_controller.dart';
 import '../../core/prefs/original_titles_controller.dart';
 import '../../core/utils/format.dart';
 import '../../core/supabase/view_as.dart';
@@ -228,12 +229,31 @@ class _ResultCard extends ConsumerWidget {
   final Set<int> watchedSeasons;
   final double? rating;
 
+  /// Affiche dans la langue de sortie du film plutôt que dans celle de
+  /// l'interface. Si le film est déjà dans la langue de l'appli, l'affiche
+  /// renvoyée par la recherche convient (aucun appel réseau supplémentaire) ;
+  /// sinon on résout l'affiche d'origine via [originalPosterProvider], en
+  /// retombant sur l'affiche localisée tant qu'elle n'est pas chargée.
+  String? _originalPosterPath(WidgetRef ref) {
+    final uiLang = ref.watch(tmdbLanguageProvider).split('-').first;
+    if (item.originalLanguage == null || item.originalLanguage == uiLang) {
+      return item.posterPath;
+    }
+    final original = ref.watch(originalPosterProvider((
+      id: item.tmdbId,
+      type: item.mediaType,
+      lang: item.originalLanguage,
+    )));
+    return original.value ?? item.posterPath;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final hasBand = watchedSeasons.isNotEmpty;
     final tmdbSeasons = ref.watch(
         seasonsTmdbProvider((id: item.tmdbId, type: item.mediaType)));
     final allKnown = tmdbSeasons.isNotEmpty ? tmdbSeasons : watchedSeasons;
+    final posterPath = _originalPosterPath(ref);
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: onTap,
@@ -246,7 +266,7 @@ class _ResultCard extends ConsumerWidget {
                 Positioned.fill(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: PosterImage(posterPath: item.posterPath),
+                    child: PosterImage(posterPath: posterPath),
                   ),
                 ),
                 if (hasBand)

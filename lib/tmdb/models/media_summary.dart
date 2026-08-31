@@ -7,6 +7,7 @@ class MediaSummary {
     this.originalTitle,
     required this.overview,
     required this.posterPath,
+    this.originalLanguage,
     required this.releaseDate,
     required this.voteAverage,
     required this.genreIds,
@@ -18,6 +19,7 @@ class MediaSummary {
   final String? originalTitle;
   final String overview;
   final String? posterPath;
+  final String? originalLanguage; // code ISO-639-1, ex. « ja », « fr »
   final String? releaseDate; // 'YYYY-MM-DD'
   final double voteAverage;
   final List<int> genreIds;
@@ -47,6 +49,7 @@ class MediaSummary {
           (isMovie ? json['original_title'] : json['original_name']) as String?,
       overview: (json['overview'] as String?) ?? '',
       posterPath: json['poster_path'] as String?,
+      originalLanguage: json['original_language'] as String?,
       releaseDate:
           (isMovie ? json['release_date'] : json['first_air_date']) as String?,
       voteAverage: ((json['vote_average'] as num?) ?? 0).toDouble(),

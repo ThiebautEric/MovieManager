@@ -33,6 +33,19 @@ final localizedTitleProvider =
   return ref.watch(tmdbClientProvider).title(key.id, key.type);
 });
 
+/// Affiche d'un média dans sa langue d'origine (résultats de recherche).
+/// Interroge `/images` (non localisé) et retient l'affiche de la langue de
+/// sortie du film. Mise en cache par média pour la session.
+final originalPosterProvider =
+    FutureProvider.family<String?, ({int id, String type, String? lang})>(
+  (ref, key) {
+    ref.keepAlive();
+    return ref
+        .watch(tmdbClientProvider)
+        .originalPoster(key.id, key.type, key.lang);
+  },
+);
+
 /// Détails d'un média, mis en cache par (tmdbId, mediaType).
 /// keepAlive : évite l'autoDispose entre les rebuilds du screen (comme les
 /// autres providers TMDB) ; invalidé automatiquement si la langue change.

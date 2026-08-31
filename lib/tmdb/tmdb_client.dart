@@ -75,6 +75,31 @@ class TmdbClient {
     return hits;
   }
 
+  /// Affiche d'un média dans sa langue d'origine, pour les résultats de
+  /// recherche (où `/search/multi` ne renvoie que l'affiche localisée à la
+  /// langue de l'interface).
+  ///
+  /// L'endpoint `/images` n'est PAS filtré par langue : on choisit l'affiche
+  /// dont `iso_639_1` vaut [originalLanguage], sinon la première sans texte.
+  /// Retourne null si aucune ne convient — l'appelant retombe alors sur
+  /// l'affiche localisée du résultat de recherche.
+  Future<String?> originalPoster(
+      int tmdbId, String mediaType, String? originalLanguage,
+      {CancelToken? cancelToken}) async {
+    final res = await _dio.get('/$mediaType/$tmdbId/images',
+        cancelToken: cancelToken);
+    final posters = (res.data['posters'] as List<dynamic>?) ?? const [];
+    String? textless;
+    for (final p in posters.whereType<Map<String, dynamic>>()) {
+      final lang = p['iso_639_1'] as String?;
+      final path = p['file_path'] as String?;
+      if (path == null) continue;
+      if (originalLanguage != null && lang == originalLanguage) return path;
+      if (lang == null) textless ??= path;
+    }
+    return textless;
+  }
+
   /// Titre seul d'un média (requête légère, utilisée pour le mode
   /// « titres anglais » avec un client en-US).
   Future<String?> title(int tmdbId, String mediaType) async {
