@@ -1,0 +1,48 @@
+{
+  "movies": {
+    "plays": 3030,
+    "watched": 2765,
+    "minutes": 304681,
+    "collected": 252,
+    "ratings": 2496,
+    "comments": 0
+  },
+  "shows": {
+    "watched": 281,
+    "collected": 19,
+    "ratings": 28,
+    "comments": 0
+  },
+  "seasons": {
+    "ratings": 39,
+    "comments": 0
+  },
+  "episodes": {
+    "plays": 871,
+    "watched": 747,
+    "minutes": 30865,
+    "collected": 82,
+    "ratings": 709,
+    "comments": 0
+  },
+  "network": {
+    "friends": 0,
+    "followers": 0,
+    "following": 0
+  },
+  "ratings": {
+    "total": 3272,
+    "distribution": {
+      "1": 65,
+      "2": 43,
+      "3": 88,
+      "4": 124,
+      "5": 309,
+      "6": 490,
+      "7": 807,
+      "8": 821,
+      "9": 456,
+      "10": 69
+    }
+  }
+}
