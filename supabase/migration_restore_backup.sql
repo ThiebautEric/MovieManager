@@ -18,6 +18,9 @@ alter table public.favorites replica identity full;
 -- ----------------------------------------------------------------------------
 -- BLOC 2 — fonction d'import atomique (purge + remap UUID + réinsertion des
 -- 6 tables dans UNE seule transaction : tout réussit, ou rien ne change).
+--
+-- ⚠️ DÉFINITION DUPLIQUÉE À L'IDENTIQUE dans supabase/schema.sql. Garder les
+-- deux fichiers synchronisés à chaque modification de la fonction.
 -- ----------------------------------------------------------------------------
 create or replace function public.restore_backup(payload jsonb)
 returns jsonb

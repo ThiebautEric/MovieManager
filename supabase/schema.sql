@@ -265,6 +265,11 @@ end $$;
 -- _hist_map) : le lien collection.history_id est donc exact sans dépendre de
 -- l'ordre d'un RETURNING. security definer + auth.uid() : un utilisateur ne
 -- peut restaurer que dans SON propre compte (user_id jamais lu du payload).
+--
+-- ⚠️ DÉFINITION DUPLIQUÉE À L'IDENTIQUE dans supabase/migration_restore_backup.sql
+-- (script de migration pour bases existantes). Toute modification ici DOIT être
+-- répercutée là-bas, et inversement — sinon la fonction diverge selon le fichier
+-- exécuté en dernier.
 -- ----------------------------------------------------------------------------
 create or replace function public.restore_backup(payload jsonb)
 returns jsonb
