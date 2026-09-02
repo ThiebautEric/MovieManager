@@ -8,7 +8,7 @@ import '../../core/l10n/l10n.dart';
 import '../../core/prefs/original_titles_controller.dart';
 import '../../core/utils/format.dart';
 import '../../data/models/history_entry.dart';
-import '../../data/repositories/collection_repository.dart';
+import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/dark_badge.dart';
 import '../../widgets/empty_state.dart';
@@ -18,14 +18,20 @@ import '../../widgets/original_title_button.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../collection/collection_filter.dart';
-import '../collection/filter_sheet.dart';
 import '../collection/history_sort.dart';
 import 'share_service.dart';
+
+/// Largeur au-delà de laquelle le panneau de filtres est affiché en colonne.
+const double _kWide = 720;
 
 /// Écran public (sans compte) d'un historique partagé. Lecture seule : le
 /// destinataire peut uniquement changer les filtres et le tri. Les données sont
 /// chargées en direct via les RPC confinées au token ; l'état de filtre/tri du
 /// lien sert d'état initial.
+///
+/// Entièrement autonome (état local, pas d'override de providers) : ni les
+/// modales ni les providers dérivés ne peuvent lire par erreur les données de
+/// l'utilisateur connecté à la place de celles du partage.
 class SharedHistoryScreen extends ConsumerWidget {
   const SharedHistoryScreen({super.key, required this.token});
 
@@ -36,8 +42,8 @@ class SharedHistoryScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final async = ref.watch(sharedHistoryProvider(token));
     return async.when(
-      loading: () => const Scaffold(
-          body: Center(child: CircularProgressIndicator())),
+      loading: () =>
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
       error: (e, _) => Scaffold(
         appBar: AppBar(title: AppBarTitle(l10n.sharedHistoryTitle)),
         body: EmptyState(
@@ -46,31 +52,23 @@ class SharedHistoryScreen extends ConsumerWidget {
               : l10n.errorMessage(friendlyError(e)),
         ),
       ),
-      // Le corps réutilise tout le pipeline de filtre existant : on remplace la
-      // source de l'historique (et l'état de filtre initial) dans un ProviderScope
-      // imbriqué, sans dépendre de l'authentification.
-      data: (data) => ProviderScope(
-        overrides: [
-          historyStreamProvider.overrideWith((ref) => Stream.value(data.history)),
-          historyFilterProvider.overrideWith((ref) => data.filter),
-        ],
-        child: _SharedHistoryBody(sortInitial: data.sort),
-      ),
+      data: (data) => _SharedHistoryBody(data: data),
     );
   }
 }
 
 class _SharedHistoryBody extends ConsumerStatefulWidget {
-  const _SharedHistoryBody({required this.sortInitial});
+  const _SharedHistoryBody({required this.data});
 
-  final HistorySort sortInitial;
+  final SharedHistoryData data;
 
   @override
   ConsumerState<_SharedHistoryBody> createState() => _SharedHistoryBodyState();
 }
 
 class _SharedHistoryBodyState extends ConsumerState<_SharedHistoryBody> {
-  late HistorySort _sort = widget.sortInitial;
+  late CollectionFilter _filter = widget.data.filter;
+  late HistorySort _sort = widget.data.sort;
   final _titleController = TextEditingController();
   String _titleQuery = '';
   Timer? _debounce;
@@ -97,17 +95,16 @@ class _SharedHistoryBodyState extends ConsumerState<_SharedHistoryBody> {
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final dateFmt = DateFormat.yMd(locale);
-    final filter = ref.watch(historyFilterProvider);
-    final all = ref.watch(historyStreamProvider).value ?? const <HistoryView>[];
-    final films = [for (final v in all) v.film];
-    final events = ref.watch(filteredHistoryProvider);
-    final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
+    final all = widget.data.history;
+    final wide = MediaQuery.of(context).size.width >= _kWide;
 
-    // Titre affiché (selon la langue de titre choisie) : sert au filtre texte,
-    // au tri alphabétique et à l'affichage. resolveTitle fait des ref.watch.
+    final matched = all.where(_filter.matchesHistory).toList();
+
+    // Titre affiché (selon la langue de titre choisie) : filtre texte, tri
+    // alphabétique et affichage. resolveTitle fait des ref.watch.
     final titleCache = <String, String>{
-      for (final v in events)
-        (v.id ?? '${v.watchedAt.microsecondsSinceEpoch}'): resolveTitle(
+      for (final v in matched)
+        _keyOf(v): resolveTitle(
           ref,
           tmdbId: v.film.tmdbId,
           mediaType: v.film.mediaType,
@@ -115,13 +112,11 @@ class _SharedHistoryBodyState extends ConsumerState<_SharedHistoryBody> {
           originalTitle: v.film.originalTitle,
         ),
     };
-    String keyOf(HistoryView v) =>
-        v.id ?? '${v.watchedAt.microsecondsSinceEpoch}';
-    String titleOf(HistoryView v) => titleCache[keyOf(v)] ?? v.film.title;
+    String titleOf(HistoryView v) => titleCache[_keyOf(v)] ?? v.film.title;
 
     final filtered = _titleQuery.isEmpty
-        ? events
-        : events
+        ? matched
+        : matched
             .where((v) => titleOf(v).toLowerCase().contains(_titleQuery))
             .toList();
     final sorted = [...filtered]..sort(historyComparator(_sort, titleOf));
@@ -237,14 +232,14 @@ class _SharedHistoryBodyState extends ConsumerState<_SharedHistoryBody> {
             IconButton(
               tooltip: l10n.filterTooltip,
               icon: Badge(
-                isLabelVisible: filter.isActive,
+                isLabelVisible: _filter.isActive,
                 child: const Icon(Icons.filter_list),
               ),
-              onPressed: () => FilterSheet.show(
+              onPressed: () => _SharedFilterSheet.show(
                 context,
-                filterProvider: historyFilterProvider,
-                films: films,
-                showRating: true,
+                filter: _filter,
+                history: all,
+                onChanged: (f) => setState(() => _filter = f),
               ),
             ),
           const OriginalTitleButton(),
@@ -260,10 +255,22 @@ class _SharedHistoryBodyState extends ConsumerState<_SharedHistoryBody> {
                   child: Row(
                     children: [
                       Expanded(child: content),
-                      FilterSidePanel(
-                        filterProvider: historyFilterProvider,
-                        films: films,
-                        showRating: true,
+                      Container(
+                        width: 300,
+                        decoration: BoxDecoration(
+                          border: Border(
+                              left: BorderSide(
+                                  color: Theme.of(context).dividerColor)),
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.all(16),
+                          child: _SharedFilterPanel(
+                            filter: _filter,
+                            history: all,
+                            onChanged: (f) => setState(() => _filter = f),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -276,6 +283,216 @@ class _SharedHistoryBodyState extends ConsumerState<_SharedHistoryBody> {
                 Expanded(child: content),
               ],
             ),
+    );
+  }
+
+  static String _keyOf(HistoryView v) =>
+      v.id ?? '${v.watchedAt.microsecondsSinceEpoch}';
+}
+
+/// Panneau de filtres autonome pour la vue partagée : facettes (genre, pays,
+/// année, note) calculées directement depuis l'historique partagé, édition via
+/// [onChanged] (aucun provider global, donc robuste dans une modale).
+class _SharedFilterPanel extends ConsumerWidget {
+  const _SharedFilterPanel({
+    required this.filter,
+    required this.history,
+    required this.onChanged,
+  });
+
+  final CollectionFilter filter;
+  final List<HistoryView> history;
+  final ValueChanged<CollectionFilter> onChanged;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final genresById = ref.watch(genresByIdProvider);
+    final films = [for (final v in history) v.film];
+
+    final genreKeys = <int, Set<String>>{};
+    final countryKeys = <String, Set<String>>{};
+    final yearKeys = <int, Set<String>>{};
+    for (final f in films) {
+      final k = f.mediaKey;
+      for (final g in f.genres) {
+        (genreKeys[g] ??= {}).add(k);
+      }
+      final c = f.originCountry;
+      if (c != null && c.isNotEmpty) (countryKeys[c] ??= {}).add(k);
+      if (f.releaseYear != null) (yearKeys[f.releaseYear!] ??= {}).add(k);
+    }
+    final presentGenres = genreKeys.entries.toList()
+      ..sort((a, b) =>
+          (genresById[a.key] ?? '').compareTo(genresById[b.key] ?? ''));
+    final presentCountries = countryKeys.entries.toList()
+      ..sort((a, b) => b.value.length.compareTo(a.value.length));
+    final presentYears = yearKeys.entries.toList()
+      ..sort((a, b) => b.key.compareTo(a.key));
+
+    // Facette « note » : notes présentes dans l'historique partagé.
+    final ratingKeys = <double, int>{};
+    var unrated = 0;
+    for (final v in history) {
+      if (v.rating != null) {
+        ratingKeys[v.rating!] = (ratingKeys[v.rating!] ?? 0) + 1;
+      } else {
+        unrated++;
+      }
+    }
+    final presentRatings = ratingKeys.entries.toList()
+      ..sort((a, b) => b.key.compareTo(a.key));
+    String ratingLabel(double r) {
+      final i = r.round();
+      return r == i.toDouble() ? '$i ★' : '${r.toStringAsFixed(1)} ★';
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+                child: Text(l10n.filterTitle,
+                    style: Theme.of(context).textTheme.titleLarge)),
+            if (filter.isActive)
+              TextButton(
+                onPressed: () => onChanged(const CollectionFilter()),
+                child: Text(l10n.filterReset),
+              ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Text(l10n.filterType),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          children: [
+            ChoiceChip(
+              label: Text(l10n.filterAll),
+              selected: filter.mediaType == null,
+              onSelected: (_) => onChanged(filter.copyWith(clearMediaType: true)),
+            ),
+            ChoiceChip(
+              label: Text(l10n.filterFilms),
+              selected: filter.mediaType == 'movie',
+              onSelected: (_) => onChanged(filter.copyWith(mediaType: 'movie')),
+            ),
+            ChoiceChip(
+              label: Text(l10n.filterSeries),
+              selected: filter.mediaType == 'tv',
+              onSelected: (_) => onChanged(filter.copyWith(mediaType: 'tv')),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        DropdownButtonFormField<int?>(
+          isExpanded: true,
+          initialValue: filter.genreId,
+          decoration: InputDecoration(labelText: l10n.filterGenre),
+          items: [
+            DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
+            ...presentGenres.map((e) => DropdownMenuItem(
+                  value: e.key,
+                  child: Text(
+                      '${genresById[e.key] ?? l10n.filterGenreFallback(e.key)} (${e.value.length})'),
+                )),
+          ],
+          onChanged: (v) => onChanged(v == null
+              ? filter.copyWith(clearGenre: true)
+              : filter.copyWith(genreId: v)),
+        ),
+        const SizedBox(height: 16),
+        DropdownButtonFormField<String?>(
+          isExpanded: true,
+          initialValue: filter.country,
+          decoration: InputDecoration(labelText: l10n.filterCountry),
+          items: [
+            DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
+            ...presentCountries.map((e) => DropdownMenuItem(
+                  value: e.key,
+                  child: Text('${countryLabel(e.key)} (${e.value.length})'),
+                )),
+          ],
+          onChanged: (v) => onChanged(v == null
+              ? filter.copyWith(clearCountry: true)
+              : filter.copyWith(country: v)),
+        ),
+        const SizedBox(height: 16),
+        DropdownButtonFormField<int?>(
+          isExpanded: true,
+          initialValue: filter.year,
+          decoration: InputDecoration(labelText: l10n.filterYear),
+          items: [
+            DropdownMenuItem(value: null, child: Text(l10n.filterAllFeminine)),
+            ...presentYears.map((e) => DropdownMenuItem(
+                  value: e.key,
+                  child: Text('${e.key} (${e.value.length})'),
+                )),
+          ],
+          onChanged: (v) => onChanged(v == null
+              ? filter.copyWith(clearYear: true)
+              : filter.copyWith(year: v)),
+        ),
+        if (presentRatings.isNotEmpty || unrated > 0) ...[
+          const SizedBox(height: 16),
+          DropdownButtonFormField<double?>(
+            isExpanded: true,
+            initialValue: filter.rating,
+            decoration: InputDecoration(labelText: l10n.filterRating),
+            items: [
+              DropdownMenuItem(value: null, child: Text(l10n.filterAll)),
+              ...presentRatings.map((e) => DropdownMenuItem(
+                    value: e.key,
+                    child: Text('${ratingLabel(e.key)}  (${e.value})'),
+                  )),
+              if (unrated > 0)
+                DropdownMenuItem(
+                  value: -1,
+                  child: Text('${l10n.filterRatingNone}  ($unrated)'),
+                ),
+            ],
+            onChanged: (v) => onChanged(v == null
+                ? filter.copyWith(clearRating: true)
+                : filter.copyWith(rating: v)),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Repli modal (écrans étroits) du panneau de filtres partagé.
+class _SharedFilterSheet {
+  static Future<void> show(
+    BuildContext context, {
+    required CollectionFilter filter,
+    required List<HistoryView> history,
+    required ValueChanged<CollectionFilter> onChanged,
+  }) {
+    // État local à la feuille : chaque changement remonte via onChanged ET
+    // rafraîchit la feuille (StatefulBuilder) pour refléter la sélection.
+    var current = filter;
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => StatefulBuilder(
+        builder: (context, setSheet) => Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+          child: SingleChildScrollView(
+            child: _SharedFilterPanel(
+              filter: current,
+              history: history,
+              onChanged: (f) {
+                setSheet(() => current = f);
+                onChanged(f);
+              },
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -297,83 +514,83 @@ class _SharedHistoryCard extends StatelessWidget {
     final isSeason = event.seasonNumber != null;
     final year = event.film.releaseYear;
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: PosterImage(posterPath: event.posterPath),
-                  ),
-                ),
-                Positioned(
-                  top: 6,
-                  right: 6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (event.rating != null) ...[
-                        DarkBadge(
-                            icon: Icons.star,
-                            label: event.rating!.toStringAsFixed(1)),
-                        const SizedBox(height: 4),
-                      ],
-                      if (isSeason)
-                        DarkBadge(
-                          icon: Icons.live_tv,
-                          label: 'S${event.seasonNumber}'
-                              '${event.episodeNumber != null ? 'E${event.episodeNumber}' : ''}',
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text.rich(
-            TextSpan(
-              text: title,
-              style: theme.textTheme.bodyMedium,
-              children: [
-                if (year != null)
-                  TextSpan(
-                    text: '  ($year)',
-                    style: theme.textTheme.labelSmall
-                        ?.copyWith(color: theme.colorScheme.outline),
-                  ),
-                if (event.totalMinutes != null)
-                  TextSpan(
-                    text: '  ${fmtDuration(event.totalMinutes!)}',
-                    style: theme.textTheme.labelSmall
-                        ?.copyWith(color: theme.colorScheme.outline),
-                  ),
-              ],
-            ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Stack(
             children: [
-              Icon(Icons.visibility, size: 14, color: theme.colorScheme.primary),
-              const SizedBox(width: 4),
-              Expanded(
-                child: Text(dateLabel,
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.primary)),
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: PosterImage(posterPath: event.posterPath),
+                ),
+              ),
+              Positioned(
+                top: 6,
+                right: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (event.rating != null) ...[
+                      DarkBadge(
+                          icon: Icons.star,
+                          label: event.rating!.toStringAsFixed(1)),
+                      const SizedBox(height: 4),
+                    ],
+                    if (isSeason)
+                      DarkBadge(
+                        icon: Icons.live_tv,
+                        label: 'S${event.seasonNumber}'
+                            '${event.episodeNumber != null ? 'E${event.episodeNumber}' : ''}',
+                      ),
+                  ],
+                ),
               ),
             ],
           ),
-          if ((event.comment ?? '').isNotEmpty)
-            Text(event.comment!,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(fontStyle: FontStyle.italic)),
-        ],
-      );
+        ),
+        const SizedBox(height: 6),
+        Text.rich(
+          TextSpan(
+            text: title,
+            style: theme.textTheme.bodyMedium,
+            children: [
+              if (year != null)
+                TextSpan(
+                  text: '  ($year)',
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(color: theme.colorScheme.outline),
+                ),
+              if (event.totalMinutes != null)
+                TextSpan(
+                  text: '  ${fmtDuration(event.totalMinutes!)}',
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(color: theme.colorScheme.outline),
+                ),
+            ],
+          ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        Row(
+          children: [
+            Icon(Icons.visibility, size: 14, color: theme.colorScheme.primary),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Text(dateLabel,
+                  style: theme.textTheme.bodySmall
+                      ?.copyWith(color: theme.colorScheme.primary)),
+            ),
+          ],
+        ),
+        if ((event.comment ?? '').isNotEmpty)
+          Text(event.comment!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(fontStyle: FontStyle.italic)),
+      ],
+    );
   }
 }
