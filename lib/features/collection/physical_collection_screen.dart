@@ -256,13 +256,27 @@ class _PhysicalCollectionScreenState
         final runtimeCache = <String?, int?>{
           for (final e in displayedEntries) e.id: effectiveRuntime(e),
         };
+        // Titre AFFICHÉ selon le mode de titre courant (VO / EN / traduit) —
+        // sert au tri alphabétique ET à l'affichage, pour que l'ordre suive la
+        // langue du titre choisie. resolveTitle fait des ref.watch, d'où le
+        // pré-calcul hors comparateur.
+        final titleCache = <String?, String>{
+          for (final e in displayedEntries)
+            e.id: resolveTitle(
+              ref,
+              tmdbId: e.film.tmdbId,
+              mediaType: e.film.mediaType,
+              title: e.film.title,
+              originalTitle: e.film.originalTitle,
+            ),
+        };
 
         // Départage commun : titre (insensible à la casse), puis saison, puis
         // épisode — pour un ordre stable à valeur de tri principale égale.
         int titleTie(CollectionView a, CollectionView b) {
-          final t = a.film.title
+          final t = (titleCache[a.id] ?? '')
               .toLowerCase()
-              .compareTo(b.film.title.toLowerCase());
+              .compareTo((titleCache[b.id] ?? '').toLowerCase());
           if (t != 0) return t;
           final s = (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
           if (s != 0) return s;
@@ -316,13 +330,7 @@ class _PhysicalCollectionScreenState
           final duration = totalMin != null ? fmtDuration(totalMin) : null;
           return _CollectionCard(
             poster: entry.posterPath,
-            title: resolveTitle(
-              ref,
-              tmdbId: entry.film.tmdbId,
-              mediaType: entry.film.mediaType,
-              title: entry.film.title,
-              originalTitle: entry.film.originalTitle,
-            ),
+            title: titleCache[entry.id] ?? entry.film.title,
             year: yearCache[entry.id],
             duration: duration,
             subtitle: entry.episodeNumber != null
