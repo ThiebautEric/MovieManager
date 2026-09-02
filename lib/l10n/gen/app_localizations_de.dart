@@ -493,6 +493,51 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sortAddedAsc => 'Hinzugefügt (alt)';
 
   @override
+  String get sortWatchedDesc => 'Gesehen (neu)';
+
+  @override
+  String get sortWatchedAsc => 'Gesehen (alt)';
+
+  @override
+  String get sortRatingDesc => 'Bewertung (hoch)';
+
+  @override
+  String get shareTooltip => 'Teilen';
+
+  @override
+  String get shareTitle => 'Verlauf teilen';
+
+  @override
+  String get shareDescription =>
+      'Jeder mit diesem Link kann diesen Verlauf ansehen (nur Lesen) und Filter und Sortierung anpassen. Der Link bleibt gültig, bis du ihn widerrufst.';
+
+  @override
+  String get shareCopyLink => 'Link kopieren';
+
+  @override
+  String get shareCopied => 'Link kopiert';
+
+  @override
+  String get shareRevoke => 'Widerrufen';
+
+  @override
+  String get shareRevokeConfirm =>
+      'Dieser Link funktioniert dann nicht mehr. Fortfahren?';
+
+  @override
+  String get mySharesTitle => 'Meine geteilten Links';
+
+  @override
+  String get mySharesEmpty => 'Keine aktiven Freigabe-Links.';
+
+  @override
+  String get sharedHistoryTitle => 'Geteilter Verlauf';
+
+  @override
+  String get sharedUnavailable =>
+      'Dieser Freigabe-Link ist ungültig oder wurde widerrufen.';
+
+  @override
   String get filterFilms => 'Filme';
 
   @override

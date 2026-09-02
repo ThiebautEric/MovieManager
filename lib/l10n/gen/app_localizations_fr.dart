@@ -492,6 +492,50 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sortAddedAsc => 'Ajout (ancien)';
 
   @override
+  String get sortWatchedDesc => 'Vu (récent)';
+
+  @override
+  String get sortWatchedAsc => 'Vu (ancien)';
+
+  @override
+  String get sortRatingDesc => 'Note (élevée)';
+
+  @override
+  String get shareTooltip => 'Partager';
+
+  @override
+  String get shareTitle => 'Partager l\'historique';
+
+  @override
+  String get shareDescription =>
+      'Toute personne disposant de ce lien peut consulter cet historique (lecture seule) et ajuster filtres et tri. Le lien reste valide jusqu\'à sa révocation.';
+
+  @override
+  String get shareCopyLink => 'Copier le lien';
+
+  @override
+  String get shareCopied => 'Lien copié';
+
+  @override
+  String get shareRevoke => 'Révoquer';
+
+  @override
+  String get shareRevokeConfirm => 'Ce lien ne fonctionnera plus. Continuer ?';
+
+  @override
+  String get mySharesTitle => 'Mes liens partagés';
+
+  @override
+  String get mySharesEmpty => 'Aucun lien de partage actif.';
+
+  @override
+  String get sharedHistoryTitle => 'Historique partagé';
+
+  @override
+  String get sharedUnavailable =>
+      'Ce lien de partage est invalide ou a été révoqué.';
+
+  @override
   String get filterFilms => 'Films';
 
   @override

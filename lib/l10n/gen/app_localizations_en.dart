@@ -493,6 +493,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sortAddedAsc => 'Added (oldest)';
 
   @override
+  String get sortWatchedDesc => 'Watched (newest)';
+
+  @override
+  String get sortWatchedAsc => 'Watched (oldest)';
+
+  @override
+  String get sortRatingDesc => 'Rating (highest)';
+
+  @override
+  String get shareTooltip => 'Share';
+
+  @override
+  String get shareTitle => 'Share history';
+
+  @override
+  String get shareDescription =>
+      'Anyone with this link can view this history (read-only) and adjust filters and sorting. The link stays valid until you revoke it.';
+
+  @override
+  String get shareCopyLink => 'Copy link';
+
+  @override
+  String get shareCopied => 'Link copied';
+
+  @override
+  String get shareRevoke => 'Revoke';
+
+  @override
+  String get shareRevokeConfirm => 'This link will stop working. Continue?';
+
+  @override
+  String get mySharesTitle => 'My shared links';
+
+  @override
+  String get mySharesEmpty => 'No active share links.';
+
+  @override
+  String get sharedHistoryTitle => 'Shared history';
+
+  @override
+  String get sharedUnavailable =>
+      'This share link is invalid or has been revoked.';
+
+  @override
   String get filterFilms => 'Movies';
 
   @override

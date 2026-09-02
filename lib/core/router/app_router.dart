@@ -8,6 +8,8 @@ import '../../features/auth/login_screen.dart';
 import '../../features/home/home_shell.dart';
 import '../../features/search/details_screen.dart';
 import '../../features/search/person_screen.dart';
+import '../../features/share/shared_history_screen.dart';
+import '../../features/share/my_shares_screen.dart';
 import '../config/app_config.dart';
 import '../supabase/supabase_providers.dart';
 
@@ -19,6 +21,13 @@ final routerProvider = Provider<GoRouter>((ref) {
   final routes = [
     GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
     GoRoute(path: '/', builder: (_, _) => const HomeShell()),
+    // Route PUBLIQUE (sans connexion) : historique partagé en lecture seule.
+    GoRoute(
+      path: '/partage',
+      builder: (_, state) =>
+          SharedHistoryScreen(token: state.uri.queryParameters['t'] ?? ''),
+    ),
+    GoRoute(path: '/mes-liens', builder: (_, _) => const MySharesScreen()),
     GoRoute(
       path: '/media/:type/:id',
       builder: (_, state) => DetailsScreen(
@@ -48,7 +57,9 @@ final routerProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final loggedIn = client.auth.currentSession != null;
       final goingToLogin = state.matchedLocation == '/login';
-      if (!loggedIn) return goingToLogin ? null : '/login';
+      // La vue partagée est publique : accessible sans authentification.
+      final publicShare = state.matchedLocation == '/partage';
+      if (!loggedIn) return (goingToLogin || publicShare) ? null : '/login';
       if (goingToLogin) return '/';
       return null;
     },

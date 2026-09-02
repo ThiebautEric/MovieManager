@@ -868,6 +868,90 @@ abstract class AppLocalizations {
   /// **'Ajout (ancien)'**
   String get sortAddedAsc;
 
+  /// No description provided for @sortWatchedDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vu (récent)'**
+  String get sortWatchedDesc;
+
+  /// No description provided for @sortWatchedAsc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vu (ancien)'**
+  String get sortWatchedAsc;
+
+  /// No description provided for @sortRatingDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note (élevée)'**
+  String get sortRatingDesc;
+
+  /// No description provided for @shareTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager'**
+  String get shareTooltip;
+
+  /// No description provided for @shareTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager l\'historique'**
+  String get shareTitle;
+
+  /// No description provided for @shareDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toute personne disposant de ce lien peut consulter cet historique (lecture seule) et ajuster filtres et tri. Le lien reste valide jusqu\'à sa révocation.'**
+  String get shareDescription;
+
+  /// No description provided for @shareCopyLink.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier le lien'**
+  String get shareCopyLink;
+
+  /// No description provided for @shareCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien copié'**
+  String get shareCopied;
+
+  /// No description provided for @shareRevoke.
+  ///
+  /// In fr, this message translates to:
+  /// **'Révoquer'**
+  String get shareRevoke;
+
+  /// No description provided for @shareRevokeConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce lien ne fonctionnera plus. Continuer ?'**
+  String get shareRevokeConfirm;
+
+  /// No description provided for @mySharesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes liens partagés'**
+  String get mySharesTitle;
+
+  /// No description provided for @mySharesEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun lien de partage actif.'**
+  String get mySharesEmpty;
+
+  /// No description provided for @sharedHistoryTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique partagé'**
+  String get sharedHistoryTitle;
+
+  /// No description provided for @sharedUnavailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce lien de partage est invalide ou a été révoqué.'**
+  String get sharedUnavailable;
+
   /// No description provided for @filterFilms.
   ///
   /// In fr, this message translates to:

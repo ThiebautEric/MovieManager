@@ -174,6 +174,27 @@ class CollectionFilter {
       year != null ||
       rating != null ||
       favoritePersonId != null;
+
+  /// Sérialisation compacte (n'émet que les champs actifs) — pour les liens de
+  /// partage stockés côté serveur.
+  Map<String, dynamic> toJson() => {
+        if (mediaType != null) 'mediaType': mediaType,
+        if (genreId != null) 'genreId': genreId,
+        if (country != null) 'country': country,
+        if (year != null) 'year': year,
+        if (rating != null) 'rating': rating,
+        if (favoritePersonId != null) 'favoritePersonId': favoritePersonId,
+      };
+
+  factory CollectionFilter.fromJson(Map<String, dynamic> json) =>
+      CollectionFilter(
+        mediaType: json['mediaType'] as String?,
+        genreId: (json['genreId'] as num?)?.toInt(),
+        country: json['country'] as String?,
+        year: (json['year'] as num?)?.toInt(),
+        rating: (json['rating'] as num?)?.toDouble(),
+        favoritePersonId: (json['favoritePersonId'] as num?)?.toInt(),
+      );
 }
 
 /// Filtre de l'onglet Historique (indépendant de la collection).

@@ -4,8 +4,10 @@ import 'dart:convert';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/l10n/l10n.dart';
@@ -27,10 +29,11 @@ import '../../widgets/dark_badge.dart';
 import '../../widgets/season_band.dart';
 import '../../widgets/theme_toggle_button.dart';
 import '../../core/supabase/supabase_providers.dart';
-import '../home/selected_media.dart';
 import '../search/details_library_controls.dart';
+import '../share/share_service.dart';
 import 'collection_filter.dart';
 import 'filter_sheet.dart';
+import 'history_sort.dart';
 
 final _historyTitleQueryProvider = StateProvider<String>((ref) {
   ref.keepAlive();
@@ -121,6 +124,60 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
           SnackBar(content: Text(l10n.errorMessage(friendlyError(e)))),
         );
       }
+    }
+  }
+
+  /// Génère un lien de partage public (lecture seule) de l'historique, avec les
+  /// filtres actuels, puis propose de le copier ou de gérer ses liens.
+  Future<void> _shareHistory() async {
+    final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final token = await createHistoryShare(
+        ref,
+        filter: ref.read(historyFilterProvider),
+        sort: HistorySort.watchedDesc,
+      );
+      if (!mounted) return;
+      final url = shareUrlForToken(token);
+      await showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l10n.shareTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(l10n.shareDescription),
+              const SizedBox(height: 12),
+              SelectableText(url,
+                  style: Theme.of(ctx).textTheme.bodySmall),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                context.push('/mes-liens');
+              },
+              child: Text(l10n.mySharesTitle),
+            ),
+            FilledButton.icon(
+              icon: const Icon(Icons.copy, size: 18),
+              onPressed: () async {
+                await Clipboard.setData(ClipboardData(text: url));
+                if (ctx.mounted) Navigator.pop(ctx);
+                messenger.showSnackBar(
+                    SnackBar(content: Text(l10n.shareCopied)));
+              },
+              label: Text(l10n.shareCopyLink),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      messenger.showSnackBar(
+          SnackBar(content: Text(l10n.errorMessage(friendlyError(e)))));
     }
   }
 
@@ -379,6 +436,11 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
       appBar: AppBar(
         title: AppBarTitle(l10n.historyTitle),
         actions: [
+          IconButton(
+            tooltip: l10n.shareTooltip,
+            icon: const Icon(Icons.share_outlined),
+            onPressed: async.hasValue ? _shareHistory : null,
+          ),
           IconButton(
             tooltip: l10n.historyExportTooltip,
             icon: const Icon(Icons.file_download_outlined),
