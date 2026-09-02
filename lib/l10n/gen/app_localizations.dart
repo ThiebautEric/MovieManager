@@ -832,6 +832,42 @@ abstract class AppLocalizations {
   /// **'Non vus'**
   String get filterUnseen;
 
+  /// No description provided for @sortTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier'**
+  String get sortTooltip;
+
+  /// No description provided for @sortReleaseDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sortie (récente)'**
+  String get sortReleaseDesc;
+
+  /// No description provided for @sortReleaseAsc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sortie (ancienne)'**
+  String get sortReleaseAsc;
+
+  /// No description provided for @sortTitleAsc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre (A–Z)'**
+  String get sortTitleAsc;
+
+  /// No description provided for @sortAddedDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajout (récent)'**
+  String get sortAddedDesc;
+
+  /// No description provided for @sortAddedAsc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajout (ancien)'**
+  String get sortAddedAsc;
+
   /// No description provided for @filterFilms.
   ///
   /// In fr, this message translates to:

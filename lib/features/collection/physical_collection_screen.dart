@@ -35,6 +35,24 @@ final _collectionTitleQueryProvider = StateProvider<String>((ref) {
 
 enum _SeenFilter { all, seen, unseen }
 
+/// Critères de tri de la collection. `release*` conservent le regroupement par
+/// année ; les autres affichent une grille à plat.
+enum _CollectionSort { releaseDesc, releaseAsc, titleAsc, addedDesc, addedAsc }
+
+/// Tri courant, conservé pour la session (keepAlive) comme la recherche titre.
+final _collectionSortProvider = StateProvider<_CollectionSort>((ref) {
+  ref.keepAlive();
+  return _CollectionSort.releaseDesc;
+});
+
+String _sortLabel(AppLocalizations l10n, _CollectionSort s) => switch (s) {
+      _CollectionSort.releaseDesc => l10n.sortReleaseDesc,
+      _CollectionSort.releaseAsc => l10n.sortReleaseAsc,
+      _CollectionSort.titleAsc => l10n.sortTitleAsc,
+      _CollectionSort.addedDesc => l10n.sortAddedDesc,
+      _CollectionSort.addedAsc => l10n.sortAddedAsc,
+    };
+
 /// Écran « Collection » : tout ce que l'utilisateur possède (DVD, Blu-ray,
 /// Digital), en grille d'affiches. Pour les séries, chaque saison possédée
 /// apparaît avec sa propre affiche. Trié par titre puis n° de saison.
@@ -100,6 +118,7 @@ class _PhysicalCollectionScreenState
     final filter = ref.watch(collectionFilterProvider);
     final entries = ref.watch(filteredCollectionProvider);
     final titleQuery = ref.watch(_collectionTitleQueryProvider);
+    final sort = ref.watch(_collectionSortProvider);
     final films = [for (final c in (async.value ?? const <CollectionView>[])) c.film];
     final ratingBySeason = ref.watch(ratingByKeySeasonProvider);
     final wide = MediaQuery.of(context).size.width >= kFilterBreakpoint;
@@ -238,38 +257,52 @@ class _PhysicalCollectionScreenState
           for (final e in displayedEntries) e.id: effectiveRuntime(e),
         };
 
-        // Tri : année desc, titre asc, saison asc, épisode asc.
-        final sorted = [...displayedEntries]
-          ..sort((a, b) {
-            final ay = yearCache[a.id];
-            final by = yearCache[b.id];
-            if (ay == null && by == null) {
-              final t = a.film.title.compareTo(b.film.title);
-              if (t != 0) return t;
-              final s = (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
-              if (s != 0) return s;
-              return (a.episodeNumber ?? -1).compareTo(b.episodeNumber ?? -1);
-            }
-            if (ay == null) return 1;
-            if (by == null) return -1;
-            if (ay != by) return by.compareTo(ay);
-            final t = a.film.title.compareTo(b.film.title);
-            if (t != 0) return t;
-            final s = (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
-            if (s != 0) return s;
-            return (a.episodeNumber ?? -1).compareTo(b.episodeNumber ?? -1);
-          });
-
-        // Regroupement par année.
-        final groups = <({int? year, List<CollectionView> items})>[];
-        for (final e in sorted) {
-          final y = yearCache[e.id];
-          if (groups.isEmpty || groups.last.year != y) {
-            groups.add((year: y, items: [e]));
-          } else {
-            groups.last.items.add(e);
-          }
+        // Départage commun : titre (insensible à la casse), puis saison, puis
+        // épisode — pour un ordre stable à valeur de tri principale égale.
+        int titleTie(CollectionView a, CollectionView b) {
+          final t = a.film.title
+              .toLowerCase()
+              .compareTo(b.film.title.toLowerCase());
+          if (t != 0) return t;
+          final s = (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
+          if (s != 0) return s;
+          return (a.episodeNumber ?? -1).compareTo(b.episodeNumber ?? -1);
         }
+
+        // Année de sortie (valeurs nulles en dernier).
+        int byYear(CollectionView a, CollectionView b, bool desc) {
+          final ay = yearCache[a.id];
+          final by = yearCache[b.id];
+          if (ay == null && by == null) return titleTie(a, b);
+          if (ay == null) return 1;
+          if (by == null) return -1;
+          if (ay != by) return desc ? by.compareTo(ay) : ay.compareTo(by);
+          return titleTie(a, b);
+        }
+
+        // Date d'ajout à la collection (valeurs nulles en dernier).
+        int byAdded(CollectionView a, CollectionView b, bool desc) {
+          final aa = a.addedAt;
+          final bb = b.addedAt;
+          if (aa == null && bb == null) return titleTie(a, b);
+          if (aa == null) return 1;
+          if (bb == null) return -1;
+          final c = desc ? bb.compareTo(aa) : aa.compareTo(bb);
+          return c != 0 ? c : titleTie(a, b);
+        }
+
+        final Comparator<CollectionView> comparator = switch (sort) {
+          _CollectionSort.releaseDesc => (a, b) => byYear(a, b, true),
+          _CollectionSort.releaseAsc => (a, b) => byYear(a, b, false),
+          _CollectionSort.titleAsc => titleTie,
+          _CollectionSort.addedDesc => (a, b) => byAdded(a, b, true),
+          _CollectionSort.addedAsc => (a, b) => byAdded(a, b, false),
+        };
+        final sorted = [...displayedEntries]..sort(comparator);
+
+        // Le regroupement par année n'a de sens que pour les tris par sortie.
+        final groupByYear = sort == _CollectionSort.releaseDesc ||
+            sort == _CollectionSort.releaseAsc;
 
         const grid = SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 160,
@@ -278,74 +311,90 @@ class _PhysicalCollectionScreenState
           mainAxisSpacing: 12,
         );
 
+        Widget buildCard(CollectionView entry) {
+          final totalMin = runtimeCache[entry.id];
+          final duration = totalMin != null ? fmtDuration(totalMin) : null;
+          return _CollectionCard(
+            poster: entry.posterPath,
+            title: resolveTitle(
+              ref,
+              tmdbId: entry.film.tmdbId,
+              mediaType: entry.film.mediaType,
+              title: entry.film.title,
+              originalTitle: entry.film.originalTitle,
+            ),
+            year: yearCache[entry.id],
+            duration: duration,
+            subtitle: entry.episodeNumber != null
+                ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber!, episodeNumber: entry.episodeNumber!, stored: null)}'
+                : entry.seasonNumber != null
+                    ? l10n.collSeasonLabel(entry.seasonNumber!)
+                    : entry.film.isMovie
+                        ? l10n.film
+                        : l10n.serie,
+            badge: MediumBadge(medium: entry.medium),
+            seasonNumber: entry.seasonNumber,
+            dateLabel: entry.addedAt != null
+                ? dateFmt.format(entry.addedAt!.toLocal())
+                : null,
+            rating: ratingBySeason[
+                '${entry.film.mediaKey}|${entry.seasonNumber}'],
+            onTap: () => openEntry(
+              context,
+              ref,
+              tmdbId: entry.film.tmdbId,
+              mediaType: entry.film.mediaType,
+              title: entry.film.title,
+              posterPath: entry.film.posterPath,
+              seasonNumber: entry.seasonNumber,
+              episodeNumber: entry.episodeNumber,
+            ),
+          );
+        }
+
+        SliverPadding gridSliver(List<CollectionView> items) => SliverPadding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
+              sliver: SliverGrid(
+                gridDelegate: grid,
+                delegate: SliverChildBuilderDelegate(
+                  (context, i) => buildCard(items[i]),
+                  childCount: items.length,
+                ),
+              ),
+            );
+
         final slivers = <Widget>[
           SliverToBoxAdapter(child: searchBar),
         ];
-        for (final g in groups) {
-          slivers.add(SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 6),
-              child: Text(
-                g.year?.toString() ?? '—',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: FontWeight.bold),
+        if (groupByYear) {
+          // Regroupement par année (sorted est déjà ordonné).
+          final groups = <({int? year, List<CollectionView> items})>[];
+          for (final e in sorted) {
+            final y = yearCache[e.id];
+            if (groups.isEmpty || groups.last.year != y) {
+              groups.add((year: y, items: [e]));
+            } else {
+              groups.last.items.add(e);
+            }
+          }
+          for (final g in groups) {
+            slivers.add(SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 6),
+                child: Text(
+                  g.year?.toString() ?? '—',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          ));
-          slivers.add(SliverPadding(
-            padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
-            sliver: SliverGrid(
-              gridDelegate: grid,
-              delegate: SliverChildBuilderDelegate(
-                (context, i) {
-                  final entry = g.items[i];
-                  final totalMin = runtimeCache[entry.id];
-                  final duration = totalMin != null
-                      ? fmtDuration(totalMin)
-                      : null;
-                  return _CollectionCard(
-                    poster: entry.posterPath,
-                    title: resolveTitle(
-                      ref,
-                      tmdbId: entry.film.tmdbId,
-                      mediaType: entry.film.mediaType,
-                      title: entry.film.title,
-                      originalTitle: entry.film.originalTitle,
-                    ),
-                    year: yearCache[entry.id],
-                    duration: duration,
-                    subtitle: entry.episodeNumber != null
-                        ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber!, episodeNumber: entry.episodeNumber!, stored: null)}'
-                        : entry.seasonNumber != null
-                            ? l10n.collSeasonLabel(entry.seasonNumber!)
-                            : entry.film.isMovie
-                                ? l10n.film
-                                : l10n.serie,
-                    badge: MediumBadge(medium: entry.medium),
-                    seasonNumber: entry.seasonNumber,
-                    dateLabel: entry.addedAt != null
-                        ? dateFmt.format(entry.addedAt!.toLocal())
-                        : null,
-                    rating: ratingBySeason[
-                        '${entry.film.mediaKey}|${entry.seasonNumber}'],
-                    onTap: () => openEntry(
-                      context,
-                      ref,
-                      tmdbId: entry.film.tmdbId,
-                      mediaType: entry.film.mediaType,
-                      title: entry.film.title,
-                      posterPath: entry.film.posterPath,
-                      seasonNumber: entry.seasonNumber,
-                      episodeNumber: entry.episodeNumber,
-                    ),
-                  );
-                },
-                childCount: g.items.length,
-              ),
-            ),
-          ));
+            ));
+            slivers.add(gridSliver(g.items));
+          }
+        } else {
+          slivers.add(const SliverToBoxAdapter(child: SizedBox(height: 8)));
+          slivers.add(gridSliver(sorted));
         }
         slivers.add(const SliverToBoxAdapter(child: SizedBox(height: 16)));
 
@@ -383,6 +432,21 @@ class _PhysicalCollectionScreenState
                 ),
               ),
         actions: [
+          PopupMenuButton<_CollectionSort>(
+            tooltip: l10n.sortTooltip,
+            icon: const Icon(Icons.sort),
+            initialValue: sort,
+            onSelected: (v) =>
+                ref.read(_collectionSortProvider.notifier).state = v,
+            itemBuilder: (_) => [
+              for (final opt in _CollectionSort.values)
+                CheckedPopupMenuItem(
+                  value: opt,
+                  checked: opt == sort,
+                  child: Text(_sortLabel(l10n, opt)),
+                ),
+            ],
+          ),
           if (!wide)
             IconButton(
               tooltip: l10n.filterTooltip,

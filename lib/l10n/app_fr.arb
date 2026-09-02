@@ -308,6 +308,12 @@
   "filterAllFeminine": "Toutes",
   "filterSeen": "Vus",
   "filterUnseen": "Non vus",
+  "sortTooltip": "Trier",
+  "sortReleaseDesc": "Sortie (récente)",
+  "sortReleaseAsc": "Sortie (ancienne)",
+  "sortTitleAsc": "Titre (A–Z)",
+  "sortAddedDesc": "Ajout (récent)",
+  "sortAddedAsc": "Ajout (ancien)",
   "@filterAllFeminine": {
     "description": "Variante féminine de « Tous » (ex. toutes les années)"
   },

@@ -475,6 +475,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get filterUnseen => 'Ungesehen';
 
   @override
+  String get sortTooltip => 'Sortieren';
+
+  @override
+  String get sortReleaseDesc => 'Erscheinung (neu)';
+
+  @override
+  String get sortReleaseAsc => 'Erscheinung (alt)';
+
+  @override
+  String get sortTitleAsc => 'Titel (A–Z)';
+
+  @override
+  String get sortAddedDesc => 'Hinzugefügt (neu)';
+
+  @override
+  String get sortAddedAsc => 'Hinzugefügt (alt)';
+
+  @override
   String get filterFilms => 'Filme';
 
   @override
