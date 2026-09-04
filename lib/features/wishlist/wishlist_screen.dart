@@ -17,7 +17,6 @@ import '../../widgets/original_title_button.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
-import '../home/selected_media.dart';
 import '../search/details_library_controls.dart';
 
 /// Écran « Pense-bête » : les titres/saisons gardés pour plus tard. Chaque

@@ -229,5 +229,32 @@
   "friendsRetry": "Retry",
   "friendsNoEmail": "(no email)",
   "photoSearchTooltip": "Search by cover photo",
-  "photoSearchError": "Could not read the cover. Try a clearer photo."
+  "photoSearchError": "Could not read the cover. Try a clearer photo.",
+  "sagaTitle": "Franchise",
+  "sagaBadge": "Saga",
+  "sagaAddFavoriteTooltip": "Add franchise to favorites",
+  "sagaRemoveFavoriteTooltip": "Remove franchise from favorites",
+  "sagaOwnedCount": "{owned} / {total} in your library",
+  "@sagaOwnedCount": {
+    "placeholders": {
+      "owned": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "sagaFilmsSection": "Franchise films ({count})",
+  "@sagaFilmsSection": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "favSagasSection": "Franchises",
+  "favPersonsSection": "People",
+  "searchSagasSection": "Franchises",
+  "filterFavoriteSaga": "Favorite franchise",
+  "detailsBelongsToSaga": "Franchise: {name}",
+  "@detailsBelongsToSaga": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  }
 }

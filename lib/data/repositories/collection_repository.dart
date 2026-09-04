@@ -107,6 +107,7 @@ Film _mergeFilm(Film e, Film f) => Film(
       originCountry: f.originCountry ?? e.originCountry,
       genres: f.genres.isNotEmpty ? f.genres : e.genres,
       castIds: f.castIds.isNotEmpty ? f.castIds : e.castIds,
+      collectionId: f.collectionId ?? e.collectionId,
     );
 
 bool _intSetEq(List<int> a, List<int> b) {
@@ -121,6 +122,7 @@ bool _sameMeta(Film a, Film b) =>
     a.runtime == b.runtime &&
     a.overview == b.overview &&
     a.originalTitle == b.originalTitle &&
+    a.collectionId == b.collectionId &&
     _intSetEq(a.genres, b.genres) &&
     _intSetEq(a.castIds, b.castIds);
 
@@ -837,6 +839,7 @@ class LocalLibraryRepository implements LibraryRepository {
       originCountry: film.originCountry,
       genres: film.genres,
       castIds: film.castIds,
+      collectionId: film.collectionId ?? existing?.collectionId,
     );
     _filmsById[id] = saved;
     _filmsByKey[saved.mediaKey] = saved;
@@ -844,13 +847,24 @@ class LocalLibraryRepository implements LibraryRepository {
   }
 
   void _ensureSeason(Film film, FilmSeason season) {
+    // Préserve les métadonnées déjà connues (durée/nb d'épisodes backfillés)
+    // quand le nouvel objet saison ne les porte pas.
+    FilmSeason? existing;
+    for (final x in _seasons) {
+      if (x.filmId == film.id && x.seasonNumber == season.seasonNumber) {
+        existing = x;
+        break;
+      }
+    }
     final saved = FilmSeason(
       id: '${film.id}#${season.seasonNumber}',
       filmId: film.id,
       seasonNumber: season.seasonNumber,
-      name: season.name,
-      posterPath: season.posterPath,
-      airYear: season.airYear,
+      name: season.name ?? existing?.name,
+      posterPath: season.posterPath ?? existing?.posterPath,
+      airYear: season.airYear ?? existing?.airYear,
+      episodeCount: season.episodeCount ?? existing?.episodeCount,
+      runtimeMinutes: season.runtimeMinutes ?? existing?.runtimeMinutes,
     );
     _seasons = [
       ..._seasons.where(

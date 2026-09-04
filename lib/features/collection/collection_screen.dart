@@ -205,7 +205,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     if (!_initCollapse) {
       final all = async.value ?? const <HistoryView>[];
       if (all.isNotEmpty) {
-        final years = all.map((e) => e.watchedAt.year).toSet();
+        final years = all.map((e) => e.watchedAt.toLocal().year).toSet();
         final now = DateTime.now().year;
         final current =
             years.contains(now) ? now : years.reduce((a, b) => a > b ? a : b);
@@ -240,8 +240,13 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         (e.id != null && owned.containsKey('hist:${e.id}')) ||
         owned.containsKey('${e.film.mediaKey}|${e.seasonNumber}|${e.episodeNumber}');
 
-    Widget card(HistoryView e) => _HistoryCard(
-          key: ValueKey(e.id ?? e.watchedAt.microsecondsSinceEpoch),
+    Widget card(HistoryView e) => HistoryCard(
+          // Clé composite quand l'entrée n'a pas encore d'id (non synchronisée /
+          // import) : évite les collisions entre deux visionnages au même
+          // instant (dates à 00:00) mais d'épisodes/saisons différents.
+          key: ValueKey(e.id ??
+              '${e.film.mediaKey}|${e.seasonNumber}|${e.episodeNumber}'
+                  '|${e.watchedAt.microsecondsSinceEpoch}'),
           event: e,
           dateLabel: dateFmt.format(e.watchedAt.toLocal()),
           mediums: mediumsFor(e),
@@ -312,9 +317,9 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         );
 
         // Totaux par année (pour l'en-tête année).
-        final yearStats = <int, _Counts>{};
+        final yearStats = <int, HistoryCounts>{};
         for (final item in allItems) {
-          yearStats.putIfAbsent(item.date.year, () => _Counts())
+          yearStats.putIfAbsent(item.date.year, () => HistoryCounts())
               .add(item.view, owned: inColl(item.view));
         }
 
@@ -331,7 +336,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
             final collapsed = isCollapsed(g.year);
             final s = yearStats[g.year]!;
             slivers.add(SliverToBoxAdapter(
-              child: _YearHeader(
+              child: YearHeader(
                 year: g.year,
                 counts: s,
                 collapsed: collapsed,
@@ -343,12 +348,12 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
             lastYear = g.year;
           }
           if (isCollapsed(g.year)) continue; // année repliée
-          final mc = _Counts();
+          final mc = HistoryCounts();
           for (final item in g.items) {
             if (item is _SingleItem) mc.add(item.view, owned: inColl(item.view));
           }
           slivers.add(SliverToBoxAdapter(
-            child: _MonthHeader(month: g.month, counts: mc),
+            child: MonthHeader(month: g.month, counts: mc),
           ));
           slivers.add(SliverPadding(
             padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
@@ -510,7 +515,9 @@ final class _SingleItem extends _HistoryItem {
   _SingleItem(this.view);
   final HistoryView view;
   @override
-  DateTime get date => view.watchedAt;
+  // Heure locale : le regroupement par mois/année doit coïncider avec la date
+  // affichée sur la carte (elle-même en `.toLocal()`).
+  DateTime get date => view.watchedAt.toLocal();
 }
 
 /// Un mois de visionnages (regroupement de l'historique).
@@ -523,7 +530,7 @@ class _MonthGroup {
 
 /// Compteurs films/séries vus (et combien possédés en collection),
 /// plus les durées cumulées en minutes.
-class _Counts {
+class HistoryCounts {
   int films = 0, filmsInColl = 0, series = 0, seriesInColl = 0;
   int filmsMin = 0, seriesMin = 0;
 
@@ -551,7 +558,7 @@ String _fmtCumul(int minutes, AppLocalizations l10n) {
 }
 
 /// Texte « total : X (films : Y · séries : Z) » — vide si aucune durée connue.
-String _durationText(_Counts c, AppLocalizations l10n) {
+String _durationText(HistoryCounts c, AppLocalizations l10n) {
   final total = c.filmsMin + c.seriesMin;
   if (total == 0) return '';
   final parts = <String>[
@@ -577,8 +584,8 @@ String _breakdownText(
 }
 
 /// Séparateur d'année, repliable, avec le détail annuel.
-class _YearHeader extends StatelessWidget {
-  const _YearHeader({
+class YearHeader extends StatelessWidget {
+  const YearHeader({
     required this.year,
     required this.counts,
     required this.collapsed,
@@ -586,7 +593,7 @@ class _YearHeader extends StatelessWidget {
   });
 
   final int year;
-  final _Counts counts;
+  final HistoryCounts counts;
   final bool collapsed;
   final VoidCallback onTap;
 
@@ -639,11 +646,11 @@ class _YearHeader extends StatelessWidget {
 }
 
 /// Séparateur de mois, avec le détail films/séries vus (dont en collection).
-class _MonthHeader extends StatelessWidget {
-  const _MonthHeader({required this.month, required this.counts});
+class MonthHeader extends StatelessWidget {
+  const MonthHeader({required this.month, required this.counts});
 
   final int month;
-  final _Counts counts;
+  final HistoryCounts counts;
 
   @override
   Widget build(BuildContext context) {
@@ -680,8 +687,8 @@ class _MonthHeader extends StatelessWidget {
   }
 }
 
-class _HistoryCard extends ConsumerStatefulWidget {
-  const _HistoryCard({
+class HistoryCard extends ConsumerStatefulWidget {
+  const HistoryCard({
     super.key,
     required this.event,
     required this.dateLabel,
@@ -703,10 +710,10 @@ class _HistoryCard extends ConsumerStatefulWidget {
   final VoidCallback onTap;
 
   @override
-  ConsumerState<_HistoryCard> createState() => _HistoryCardState();
+  ConsumerState<HistoryCard> createState() => HistoryCardState();
 }
 
-class _HistoryCardState extends ConsumerState<_HistoryCard>
+class HistoryCardState extends ConsumerState<HistoryCard>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
@@ -862,7 +869,7 @@ class _HistoryCardState extends ConsumerState<_HistoryCard>
           if (isSeason)
             Builder(builder: (context) {
               final label = '${context.l10n.collSeasonLabel(event.seasonNumber!)}'
-                  '${event.episodeNumber != null ? ' · ${resolveEpisodeName(ref, tmdbId: event.film.tmdbId, seasonNumber: event.seasonNumber!, episodeNumber: event.episodeNumber!, stored: event.episodeName)}' : ''}';
+                  '${event.episodeNumber != null ? ' · ${resolveEpisodeName(ref, tmdbId: event.film.tmdbId, seasonNumber: event.seasonNumber, episodeNumber: event.episodeNumber!, stored: event.episodeName)}' : ''}';
               // Tooltip : libellé intégral quand il est tronqué.
               return Tooltip(
                 message: label,

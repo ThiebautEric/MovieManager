@@ -816,4 +816,43 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get photoSearchError =>
       'Could not read the cover. Try a clearer photo.';
+
+  @override
+  String get sagaTitle => 'Franchise';
+
+  @override
+  String get sagaBadge => 'Saga';
+
+  @override
+  String get sagaAddFavoriteTooltip => 'Add franchise to favorites';
+
+  @override
+  String get sagaRemoveFavoriteTooltip => 'Remove franchise from favorites';
+
+  @override
+  String sagaOwnedCount(int owned, int total) {
+    return '$owned / $total in your library';
+  }
+
+  @override
+  String sagaFilmsSection(int count) {
+    return 'Franchise films ($count)';
+  }
+
+  @override
+  String get favSagasSection => 'Franchises';
+
+  @override
+  String get favPersonsSection => 'People';
+
+  @override
+  String get searchSagasSection => 'Franchises';
+
+  @override
+  String get filterFavoriteSaga => 'Favorite franchise';
+
+  @override
+  String detailsBelongsToSaga(String name) {
+    return 'Franchise: $name';
+  }
 }

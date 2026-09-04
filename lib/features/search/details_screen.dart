@@ -12,8 +12,8 @@ import '../../tmdb/models/media_details.dart';
 import '../../tmdb/tmdb_client.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/app_bar_title.dart';
+import '../../widgets/image_viewer.dart';
 import '../../widgets/original_title_button.dart';
-import '../../widgets/poster_image.dart';
 import '../home/detail_app_bar.dart';
 import '../home/selected_media.dart';
 import 'details_cast_section.dart';
@@ -139,13 +139,10 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            TappablePoster(
+              posterPath: details.libraryPosterPath,
               width: 120,
               height: 180,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: PosterImage(posterPath: details.libraryPosterPath, size: 'w342'),
-              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -248,6 +245,25 @@ class _DetailsBodyState extends ConsumerState<_DetailsBody> {
           ],
         ),
         const SizedBox(height: 16),
+        // Saga (collection TMDB) à laquelle appartient le film — cliquable.
+        if (details.collection != null) ...[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: ActionChip(
+              avatar: Icon(Icons.movie_filter,
+                  size: 18, color: theme.colorScheme.primary),
+              label: Text(l10n.detailsBelongsToSaga(details.collection!.name)),
+              onPressed: () => openSaga(
+                context,
+                ref,
+                id: details.collection!.id,
+                name: details.collection!.name,
+                posterPath: details.collection!.posterPath,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
         if (details.overview.isNotEmpty) ...[
           Text(l10n.detailsSynopsis, style: theme.textTheme.titleMedium),
           const SizedBox(height: 8),

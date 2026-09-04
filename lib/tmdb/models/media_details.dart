@@ -1,4 +1,5 @@
 import 'genre.dart';
+import 'tmdb_collection.dart';
 
 /// Membre du casting (acteur principal).
 class CastMember {
@@ -122,6 +123,7 @@ class MediaDetails {
     this.numberOfEpisodes,
     this.budget,
     this.revenue,
+    this.collection,
   });
 
   final int tmdbId;
@@ -161,6 +163,10 @@ class MediaDetails {
 
   /// Recettes (box-office mondial) en USD (films uniquement). Null si inconnu.
   final int? revenue;
+
+  /// Saga TMDB à laquelle appartient le film (`belongs_to_collection`), ou null
+  /// (films isolés et séries).
+  final CollectionRef? collection;
 
   /// Rentabilité brute (recettes − budget), uniquement si les DEUX sont connus.
   /// Approximation grossière : n'inclut ni marketing ni part des salles.
@@ -255,7 +261,7 @@ class MediaDetails {
             : null);
 
     return MediaDetails(
-      tmdbId: json['id'] as int,
+      tmdbId: (json['id'] as num).toInt(),
       mediaType: mediaType,
       title: (isMovie ? json['title'] : json['name']) as String? ?? 'Sans titre',
       originalTitle:
@@ -271,11 +277,13 @@ class MediaDetails {
       // PAS de repli sur last_episode_to_air.runtime : les finals de série
       // sont souvent anormalement longs et faussent tous les cumuls.
       runtime: isMovie
-          ? json['runtime'] as int?
+          ? (json['runtime'] as num?)?.toInt()
           : ((json['episode_run_time'] as List<dynamic>?)?.isNotEmpty ?? false
-              ? (json['episode_run_time'] as List<dynamic>).first as int?
-              : null),
-      numberOfEpisodes: isMovie ? null : json['number_of_episodes'] as int?,
+              ? (json['episode_run_time'] as List<dynamic>).first as num?
+              : null)
+              ?.toInt(),
+      numberOfEpisodes:
+          isMovie ? null : (json['number_of_episodes'] as num?)?.toInt(),
       // Budget/recettes : films uniquement, et 0 = inconnu → null.
       budget: isMovie ? _positiveOrNull(json['budget']) : null,
       revenue: isMovie ? _positiveOrNull(json['revenue']) : null,
@@ -301,6 +309,10 @@ class MediaDetails {
               if (b.seasonNumber == 0) return -1;
               return a.seasonNumber.compareTo(b.seasonNumber);
             })),
+      collection: isMovie
+          ? CollectionRef.fromJson(
+              json['belongs_to_collection'] as Map<String, dynamic>?)
+          : null,
     );
   }
 }

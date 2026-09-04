@@ -36,7 +36,10 @@ class HistoryEntry {
         episodeNumber: (json['episode_number'] as num?)?.toInt(),
         episodeName: json['episode_name'] as String?,
         episodeRuntime: (json['episode_runtime'] as num?)?.toInt(),
-        watchedAt: DateTime.parse(json['watched_at'] as String),
+        // tryParse + repli : une valeur legacy nulle/malformée ne doit pas
+        // faire échouer le chargement de tout l'historique.
+        watchedAt: DateTime.tryParse(json['watched_at'] as String? ?? '') ??
+            DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
         rating: (json['rating'] as num?)?.toDouble(),
         comment: json['comment'] as String?,
       );

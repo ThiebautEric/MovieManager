@@ -70,10 +70,15 @@ String resolveTitle(
 String resolveEpisodeName(
   WidgetRef ref, {
   required int tmdbId,
-  required int seasonNumber,
+  required int? seasonNumber,
   required int episodeNumber,
   String? stored,
 }) {
+  // Sans saison connue (entrées d'import), on ne résout pas via TMDB : la
+  // saison 0 (spéciaux) renverrait un mauvais épisode homonyme. Repli direct.
+  if (seasonNumber == null) {
+    return (stored != null && stored.isNotEmpty) ? stored : 'E$episodeNumber';
+  }
   final mode = ref.watch(titleDisplayModeProvider);
   final provider = mode == TitleDisplayMode.localized
       ? seasonEpisodesProvider((id: tmdbId, season: seasonNumber))

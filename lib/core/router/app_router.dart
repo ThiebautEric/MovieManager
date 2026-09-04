@@ -8,6 +8,7 @@ import '../../features/auth/login_screen.dart';
 import '../../features/home/home_shell.dart';
 import '../../features/search/details_screen.dart';
 import '../../features/search/person_screen.dart';
+import '../../features/search/saga_screen.dart';
 import '../../features/share/shared_history_screen.dart';
 import '../../features/share/my_shares_screen.dart';
 import '../config/app_config.dart';
@@ -39,6 +40,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       path: '/person/:id',
       builder: (_, state) =>
           PersonScreen(personId: int.parse(state.pathParameters['id']!)),
+    ),
+    GoRoute(
+      path: '/saga/:id',
+      builder: (_, state) =>
+          SagaScreen(collectionId: int.parse(state.pathParameters['id']!)),
     ),
   ];
 

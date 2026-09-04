@@ -15,6 +15,7 @@ import '../../tmdb/models/season_episodes.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/add_entry_dialogs.dart';
 import '../../widgets/dark_badge.dart';
+import '../../widgets/image_viewer.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../home/detail_app_bar.dart';
@@ -404,49 +405,18 @@ class LibraryControls extends ConsumerWidget {
     _pushSeason(context, ref, details: details, info: info);
   }
 
-  Future<void> _rateEpisode(BuildContext context, LibraryRepository repo,
-      SeasonInfo info, List<HistoryView> hist) async {
-    final ep = await showDialog<EpisodeInfo>(
-      context: context,
-      builder: (_) => EpisodePickerDialog(
-        tmdbId: details.tmdbId,
-        seasonNumber: info.seasonNumber,
-        watched: {
-          for (final h in hist)
-            if (h.episodeNumber != null) h.episodeNumber!,
-        },
-      ),
-    );
-    if (ep == null || !context.mounted) return;
-    final res = await showDialog<HistChoice>(
-      context: context,
-      builder: (_) => AddHistoryDialog(
-        title: ep.name.isEmpty ? 'E${ep.episodeNumber}' : ep.name,
-        header: EpisodeHeader(episode: ep),
-      ),
-    );
-    if (res == null) return;
-    try {
-      await repo.addToHistory(
-        _film,
-        season: _season(info.seasonNumber),
-        episodeNumber: ep.episodeNumber,
-        episodeName: ep.name.isEmpty ? null : ep.name,
-        episodeRuntime: ep.runtime,
-        watchedAt: res.date,
-        rating: res.rating,
-        comment: res.comment,
+  /// Mini-affiche + titre de l'œuvre pour l'en-tête des dialogues.
+  Widget _dialogHeader(BuildContext context, int? season) => DialogMediaHeader(
+        posterPath: details.libraryPosterPath,
+        title: details.title,
+        subtitle: _scopeLabel(context, season),
       );
-    } catch (e) {
-      if (context.mounted) _toast(context, context.l10n.errorMessage(friendlyError(e)));
-    }
-  }
 
   Future<void> _addCollection(BuildContext context, LibraryRepository repo,
       {required int? season}) async {
     final res = await showDialog<CollChoice>(
       context: context,
-      builder: (_) => const AddCollectionDialog(),
+      builder: (_) => AddCollectionDialog(header: _dialogHeader(context, season)),
     );
     if (res == null) return;
     try {
@@ -465,7 +435,7 @@ class LibraryControls extends ConsumerWidget {
       {required int? season}) async {
     final res = await showDialog<HistChoice>(
       context: context,
-      builder: (_) => const AddHistoryDialog(),
+      builder: (_) => AddHistoryDialog(header: _dialogHeader(context, season)),
     );
     if (res == null) return;
     try {
@@ -490,6 +460,7 @@ class LibraryControls extends ConsumerWidget {
         initialRating: e.rating,
         initialComment: e.comment,
         title: context.l10n.detailsEditViewing,
+        header: _dialogHeader(context, e.seasonNumber),
       ),
     );
     if (res == null || e.id == null) return;
@@ -535,6 +506,60 @@ class LibraryControls extends ConsumerWidget {
 }
 
 // ---------------------------------------------------------------------------
+// Vignette poster commune aux entrées collection / historique
+// ---------------------------------------------------------------------------
+
+/// Petite affiche arrondie (46×69) posée à gauche d'une entrée collection /
+/// historique pour donner un repère visuel.
+class _EntryThumb extends StatelessWidget {
+  const _EntryThumb({required this.posterPath});
+
+  final String? posterPath;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 46,
+      height: 69,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(6),
+        child: PosterImage(posterPath: posterPath, size: 'w92'),
+      ),
+    );
+  }
+}
+
+/// Badge « note » ambre (★ 8.0) réutilisé dans l'historique.
+class _RatingBadge extends StatelessWidget {
+  const _RatingBadge({required this.rating});
+
+  final double rating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: Colors.amber.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.amber.withValues(alpha: 0.5)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.star, size: 13, color: Colors.amber),
+          const SizedBox(width: 3),
+          Text(
+            rating.toStringAsFixed(1),
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Section Collection
 // ---------------------------------------------------------------------------
 class _CollectionSection extends StatelessWidget {
@@ -557,6 +582,14 @@ class _CollectionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // Plus récemment acquis en premier (les dates nulles en fin de liste).
+    final items = [...entries]..sort((a, b) {
+        final da = a.addedAt, db = b.addedAt;
+        if (da == null && db == null) return 0;
+        if (da == null) return 1;
+        if (db == null) return -1;
+        return db.compareTo(da);
+      });
     return Card(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
@@ -579,32 +612,62 @@ class _CollectionSection extends StatelessWidget {
                   ),
               ],
             ),
-            if (entries.isEmpty)
+            if (items.isEmpty)
               Padding(
-                padding: const EdgeInsets.only(bottom: 4),
+                padding: const EdgeInsets.only(top: 4, bottom: 4),
                 child: Text(context.l10n.detailsNotInCollection,
-                    style: theme.textTheme.bodySmall),
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(color: theme.colorScheme.outline)),
               )
             else
-              ...entries.map((e) => ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    leading: MediumBadge(medium: e.medium, compact: true),
-                    title: Text('${scopeLabel(e.seasonNumber)} · ${e.medium.label}'),
-                    subtitle: e.addedAt != null
-                        ? Text(context.l10n
-                            .detailsAcquiredOn(fmtDateLocalized(context, e.addedAt!)))
-                        : null,
-                    trailing: readOnly
-                        ? null
-                        : IconButton(
-                            tooltip: context.l10n.detailsRemoveFromCollectionTooltip,
-                            icon: const Icon(Icons.close, size: 18),
-                            onPressed: e.id == null ? null : () => onRemove(e.id!),
-                          ),
-                  )),
+              for (final e in items) _tile(context, e),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _tile(BuildContext context, CollectionView e) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final duration = e.totalMinutes;
+    final meta = <String>[
+      if (e.addedAt != null) l10n.detailsAcquiredOn(fmtDateLocalized(context, e.addedAt!)),
+      if (duration != null) fmtDuration(duration),
+    ];
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _EntryThumb(posterPath: e.posterPath),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(scopeLabel(e.seasonNumber),
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(height: 4),
+                MediumBadge(medium: e.medium),
+                if (meta.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(meta.join(' · '),
+                      style: theme.textTheme.bodySmall
+                          ?.copyWith(color: theme.colorScheme.outline)),
+                ],
+              ],
+            ),
+          ),
+          if (!readOnly)
+            IconButton(
+              tooltip: l10n.detailsRemoveFromCollectionTooltip,
+              icon: const Icon(Icons.close, size: 18),
+              onPressed: e.id == null ? null : () => onRemove(e.id!),
+            ),
+        ],
       ),
     );
   }
@@ -659,34 +722,107 @@ class _HistorySection extends ConsumerWidget {
             ),
             if (entries.isEmpty)
               Padding(
-                padding: const EdgeInsets.only(bottom: 4),
+                padding: const EdgeInsets.only(top: 4, bottom: 4),
                 child: Text(context.l10n.detailsNoViewings,
-                    style: theme.textTheme.bodySmall),
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(color: theme.colorScheme.outline)),
               )
             else
-              ...entries.map((e) => ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.visibility, size: 20),
-                    title: Text(
-                      '${context.l10n.detailsWatchedOn(fmtDateLocalized(context, e.watchedAt))}'
-                      '${e.seasonNumber != null ? ' · ${scopeLabel(e.seasonNumber)}' : ''}'
-                      '${e.episodeNumber != null ? ' · E${e.episodeNumber} ${resolveEpisodeName(ref, tmdbId: e.film.tmdbId, seasonNumber: e.seasonNumber ?? 0, episodeNumber: e.episodeNumber!, stored: e.episodeName)}' : ''}'
-                      '${e.rating != null ? ' · ${e.rating!.toStringAsFixed(1)}/10' : ''}',
+              for (final e in ([...entries]
+                    ..sort((a, b) => b.watchedAt.compareTo(a.watchedAt))))
+                _tile(context, ref, e),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _tile(BuildContext context, WidgetRef ref, HistoryView e) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
+    // Portée : « Saison X · E3 · Titre » (série) ou vide (film).
+    final scopeParts = <String>[
+      if (e.seasonNumber != null && e.episodeNumber == null)
+        scopeLabel(e.seasonNumber),
+      if (e.episodeNumber != null)
+        'E${e.episodeNumber} ${resolveEpisodeName(ref, tmdbId: e.film.tmdbId, seasonNumber: e.seasonNumber, episodeNumber: e.episodeNumber!, stored: e.episodeName)}'
+            .trim(),
+    ];
+    final duration = e.totalMinutes;
+    final meta = <String>[
+      if (scopeParts.isNotEmpty) scopeParts.join(' · '),
+      if (duration != null) fmtDuration(duration),
+    ];
+    final comment = (e.comment ?? '').trim();
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(8),
+      onTap: readOnly ? null : () => onEdit(e),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _EntryThumb(posterPath: e.posterPath),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          l10n.detailsWatchedOn(
+                              fmtDateLocalized(context, e.watchedAt)),
+                          style: theme.textTheme.bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      if (e.rating != null) ...[
+                        const SizedBox(width: 8),
+                        _RatingBadge(rating: e.rating!),
+                      ],
+                    ],
+                  ),
+                  if (meta.isNotEmpty) ...[
+                    const SizedBox(height: 2),
+                    Text(meta.join(' · '),
+                        style: theme.textTheme.bodySmall
+                            ?.copyWith(color: theme.colorScheme.outline)),
+                  ],
+                  if (comment.isNotEmpty) ...[
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 6, 10, 6),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surfaceContainerHighest
+                            .withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border(
+                          left: BorderSide(
+                              color: theme.colorScheme.primary
+                                  .withValues(alpha: 0.6),
+                              width: 3),
+                        ),
+                      ),
+                      child: Text(comment,
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(fontStyle: FontStyle.italic)),
                     ),
-                    subtitle: (e.comment ?? '').isNotEmpty
-                        ? Text(e.comment!,
-                            style: const TextStyle(fontStyle: FontStyle.italic))
-                        : null,
-                    onTap: readOnly ? null : () => onEdit(e),
-                    trailing: readOnly
-                        ? null
-                        : IconButton(
-                            tooltip: context.l10n.detailsDeleteViewingTooltip,
-                            icon: const Icon(Icons.close, size: 18),
-                            onPressed: e.id == null ? null : () => onRemove(e.id!),
-                          ),
-                  )),
+                  ],
+                ],
+              ),
+            ),
+            if (!readOnly)
+              IconButton(
+                tooltip: l10n.detailsDeleteViewingTooltip,
+                icon: const Icon(Icons.close, size: 18),
+                onPressed: e.id == null ? null : () => onRemove(e.id!),
+              ),
           ],
         ),
       ),
@@ -837,13 +973,11 @@ class SeasonScreen extends ConsumerWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              TappablePoster(
+                posterPath: info.posterPath,
                 width: 80,
                 height: 120,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: PosterImage(posterPath: info.posterPath, size: 'w185'),
-                ),
+                size: 'w185',
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -942,77 +1076,20 @@ class SeasonScreen extends ConsumerWidget {
     _pushEpisode(context, ref, details: details, info: info, episode: ep);
   }
 
-  Future<void> _addEpisodeToHistory(
-      BuildContext context, LibraryRepository repo, EpisodeInfo ep) async {
-    final res = await showDialog<HistChoice>(
-      context: context,
-      builder: (_) => AddHistoryDialog(
-        title: ep.name.isEmpty ? 'E${ep.episodeNumber}' : ep.name,
-        header: EpisodeHeader(episode: ep),
-      ),
-    );
-    if (res == null || !context.mounted) return;
-    try {
-      await repo.addToHistory(
-        _film,
-        season: _season(),
-        episodeNumber: ep.episodeNumber,
-        episodeName: ep.name.isEmpty ? null : ep.name,
-        episodeRuntime: ep.runtime,
-        watchedAt: res.date,
-        rating: res.rating,
-        comment: res.comment,
+  /// Mini-affiche de la saison + titre de la série pour l'en-tête des dialogues.
+  Widget _dialogHeader(BuildContext context) => DialogMediaHeader(
+        posterPath: info.posterPath,
+        title: details.title,
+        subtitle: info.name.isNotEmpty
+            ? info.name
+            : context.l10n.detailsSeasonNumber(info.seasonNumber),
       );
-    } catch (e) {
-      if (context.mounted)
-        _toast(context, context.l10n.errorMessage(friendlyError(e)));
-    }
-  }
-
-  Future<void> _rateEpisode(BuildContext context, LibraryRepository repo,
-      List<HistoryView> hist) async {
-    final ep = await showDialog<EpisodeInfo>(
-      context: context,
-      builder: (_) => EpisodePickerDialog(
-        tmdbId: details.tmdbId,
-        seasonNumber: info.seasonNumber,
-        watched: {
-          for (final h in hist)
-            if (h.episodeNumber != null) h.episodeNumber!,
-        },
-      ),
-    );
-    if (ep == null || !context.mounted) return;
-    final res = await showDialog<HistChoice>(
-      context: context,
-      builder: (_) => AddHistoryDialog(
-        title: ep.name.isEmpty ? 'E${ep.episodeNumber}' : ep.name,
-        header: EpisodeHeader(episode: ep),
-      ),
-    );
-    if (res == null) return;
-    try {
-      await repo.addToHistory(
-        _film,
-        season: _season(),
-        episodeNumber: ep.episodeNumber,
-        episodeName: ep.name.isEmpty ? null : ep.name,
-        episodeRuntime: ep.runtime,
-        watchedAt: res.date,
-        rating: res.rating,
-        comment: res.comment,
-      );
-    } catch (e) {
-      if (context.mounted)
-        _toast(context, context.l10n.errorMessage(friendlyError(e)));
-    }
-  }
 
   Future<void> _addCollection(
       BuildContext context, LibraryRepository repo) async {
     final res = await showDialog<CollChoice>(
       context: context,
-      builder: (_) => const AddCollectionDialog(),
+      builder: (_) => AddCollectionDialog(header: _dialogHeader(context)),
     );
     if (res == null) return;
     try {
@@ -1028,7 +1105,7 @@ class SeasonScreen extends ConsumerWidget {
       BuildContext context, LibraryRepository repo) async {
     final res = await showDialog<HistChoice>(
       context: context,
-      builder: (_) => const AddHistoryDialog(),
+      builder: (_) => AddHistoryDialog(header: _dialogHeader(context)),
     );
     if (res == null) return;
     try {
@@ -1052,6 +1129,7 @@ class SeasonScreen extends ConsumerWidget {
         initialRating: e.rating,
         initialComment: e.comment,
         title: context.l10n.detailsEditViewing,
+        header: _dialogHeader(context),
       ),
     );
     if (res == null || e.id == null) return;
@@ -1354,11 +1432,23 @@ class EpisodeScreen extends ConsumerWidget {
             ),
           ),
 
-          // Still 16:9 (sous le synopsis)
+          // Still 16:9 (sous le synopsis) — cliquable pour l'agrandir
           AspectRatio(
             aspectRatio: 16 / 9,
             child: episode.stillPath != null
-                ? PosterImage(posterPath: episode.stillPath, size: 'w780')
+                ? Material(
+                    type: MaterialType.transparency,
+                    child: InkWell(
+                      onTap: () => showImageViewer(context,
+                          posterPath: episode.stillPath,
+                          heroTag: 'still:${episode.stillPath}'),
+                      child: Hero(
+                        tag: 'still:${episode.stillPath}',
+                        child: PosterImage(
+                            posterPath: episode.stillPath, size: 'w780'),
+                      ),
+                    ),
+                  )
                 : Container(
                     color: theme.colorScheme.surfaceContainerHighest,
                     child: Icon(Icons.live_tv,
@@ -1417,7 +1507,8 @@ class EpisodeScreen extends ConsumerWidget {
       BuildContext context, LibraryRepository repo) async {
     final res = await showDialog<CollChoice>(
       context: context,
-      builder: (_) => const AddCollectionDialog(),
+      builder: (_) =>
+          AddCollectionDialog(header: EpisodeHeader(episode: episode)),
     );
     if (res == null) return;
     try {
@@ -1468,6 +1559,7 @@ class EpisodeScreen extends ConsumerWidget {
         initialRating: e.rating,
         initialComment: e.comment,
         title: context.l10n.detailsEditViewing,
+        header: EpisodeHeader(episode: episode),
       ),
     );
     if (res == null || e.id == null) return;

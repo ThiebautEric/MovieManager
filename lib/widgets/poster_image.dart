@@ -36,21 +36,35 @@ class PosterImage extends StatelessWidget {
       );
     }
 
+    final sourceWidth = int.tryParse(size.replaceFirst('w', ''));
+
     if (kIsWeb) {
-      return Image.network(
-        url,
-        fit: fit,
-        loadingBuilder: (_, child, progress) =>
-            progress == null ? child : Container(color: bg),
-        errorBuilder: (_, _, _) => Container(
-          color: bg,
-          child: const Center(child: Icon(Icons.broken_image, size: 40)),
-        ),
+      // Le navigateur gère le cache HTTP ; on borne juste la taille de décodage
+      // mémoire à la taille physique d'affichage (grilles d'affiches denses).
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          int? cacheWidth;
+          if (sourceWidth != null && !constraints.maxWidth.isInfinite) {
+            final dpr = MediaQuery.devicePixelRatioOf(context);
+            final physical = (constraints.maxWidth * dpr).round();
+            if (physical > 0 && physical < sourceWidth) cacheWidth = physical;
+          }
+          return Image.network(
+            url,
+            fit: fit,
+            cacheWidth: cacheWidth,
+            loadingBuilder: (_, child, progress) =>
+                progress == null ? child : Container(color: bg),
+            errorBuilder: (_, _, _) => Container(
+              color: bg,
+              child: const Center(child: Icon(Icons.broken_image, size: 40)),
+            ),
+          );
+        },
       );
     }
 
     // Mobile : cache disque étendu + optimisation mémoire via memCacheWidth.
-    final sourceWidth = int.tryParse(size.replaceFirst('w', ''));
     return LayoutBuilder(
       builder: (context, constraints) {
         int? memWidth;

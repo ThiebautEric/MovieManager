@@ -5,6 +5,7 @@ import 'models/genre.dart';
 import 'models/media_details.dart';
 import 'models/person_details.dart';
 import 'models/season_episodes.dart';
+import 'models/tmdb_collection.dart';
 import 'tmdb_client.dart';
 
 /// Client TMDB partagé. Suit la langue de l'application : en changer
@@ -67,6 +68,21 @@ final seasonsTmdbProvider =
     for (final s in details.seasons)
       if (s.seasonNumber > 0) s.seasonNumber,
   };
+});
+
+/// Collection TMDB (saga) complète avec ses films, mise en cache par id.
+final collectionProvider = FutureProvider.family<TmdbCollection, int>((ref, id) {
+  ref.keepAlive();
+  return ref.watch(tmdbClientProvider).collection(id);
+});
+
+/// Recherche de collections (sagas) par nom — autoDispose comme la recherche
+/// multi (résultat éphémère, dépend de la requête courante).
+final searchCollectionsProvider =
+    FutureProvider.autoDispose.family<List<CollectionRef>, String>((ref, query) {
+  final q = query.trim();
+  if (q.isEmpty) return Future.value(const <CollectionRef>[]);
+  return ref.watch(tmdbClientProvider).searchCollections(q);
 });
 
 /// Fiche détaillée d'une personne (acteur), mise en cache par id.

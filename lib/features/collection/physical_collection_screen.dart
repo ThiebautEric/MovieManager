@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/l10n/l10n.dart';
-import '../../l10n/gen/app_localizations.dart';
 import '../../core/prefs/original_titles_controller.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../core/utils/format.dart';
@@ -23,7 +22,6 @@ import '../../widgets/dark_badge.dart';
 import '../../widgets/owned_format_badge.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/theme_toggle_button.dart';
-import '../home/selected_media.dart';
 import '../search/details_library_controls.dart';
 import 'collection_filter.dart';
 import 'filter_sheet.dart';
@@ -248,21 +246,28 @@ class _PhysicalCollectionScreenState
           );
         }
 
+        // Clé stable même sans id (entrées non synchronisées / import) : sinon
+        // toutes les lignes id==null partagent le bucket `null` et héritent des
+        // valeurs de la dernière insérée.
+        String cacheKey(CollectionView e) =>
+            e.id ??
+            '${e.film.mediaKey}|${e.seasonNumber}|${e.episodeNumber}|${e.medium.name}';
+
         // Pré-calcul des années et durées — évite d'appeler ref.watch dans le
         // comparateur de sort (O(n log n) appels) et dans les builders de grille.
-        final yearCache = <String?, int?>{
-          for (final e in displayedEntries) e.id: effectiveYear(e),
+        final yearCache = <String, int?>{
+          for (final e in displayedEntries) cacheKey(e): effectiveYear(e),
         };
-        final runtimeCache = <String?, int?>{
-          for (final e in displayedEntries) e.id: effectiveRuntime(e),
+        final runtimeCache = <String, int?>{
+          for (final e in displayedEntries) cacheKey(e): effectiveRuntime(e),
         };
         // Titre AFFICHÉ selon le mode de titre courant (VO / EN / traduit) —
         // sert au tri alphabétique ET à l'affichage, pour que l'ordre suive la
         // langue du titre choisie. resolveTitle fait des ref.watch, d'où le
         // pré-calcul hors comparateur.
-        final titleCache = <String?, String>{
+        final titleCache = <String, String>{
           for (final e in displayedEntries)
-            e.id: resolveTitle(
+            cacheKey(e): resolveTitle(
               ref,
               tmdbId: e.film.tmdbId,
               mediaType: e.film.mediaType,
@@ -274,9 +279,9 @@ class _PhysicalCollectionScreenState
         // Départage commun : titre (insensible à la casse), puis saison, puis
         // épisode — pour un ordre stable à valeur de tri principale égale.
         int titleTie(CollectionView a, CollectionView b) {
-          final t = (titleCache[a.id] ?? '')
+          final t = (titleCache[cacheKey(a)] ?? '')
               .toLowerCase()
-              .compareTo((titleCache[b.id] ?? '').toLowerCase());
+              .compareTo((titleCache[cacheKey(b)] ?? '').toLowerCase());
           if (t != 0) return t;
           final s = (a.seasonNumber ?? -1).compareTo(b.seasonNumber ?? -1);
           if (s != 0) return s;
@@ -285,8 +290,8 @@ class _PhysicalCollectionScreenState
 
         // Année de sortie (valeurs nulles en dernier).
         int byYear(CollectionView a, CollectionView b, bool desc) {
-          final ay = yearCache[a.id];
-          final by = yearCache[b.id];
+          final ay = yearCache[cacheKey(a)];
+          final by = yearCache[cacheKey(b)];
           if (ay == null && by == null) return titleTie(a, b);
           if (ay == null) return 1;
           if (by == null) return -1;
@@ -326,15 +331,15 @@ class _PhysicalCollectionScreenState
         );
 
         Widget buildCard(CollectionView entry) {
-          final totalMin = runtimeCache[entry.id];
+          final totalMin = runtimeCache[cacheKey(entry)];
           final duration = totalMin != null ? fmtDuration(totalMin) : null;
           return _CollectionCard(
             poster: entry.posterPath,
-            title: titleCache[entry.id] ?? entry.film.title,
-            year: yearCache[entry.id],
+            title: titleCache[cacheKey(entry)] ?? entry.film.title,
+            year: yearCache[cacheKey(entry)],
             duration: duration,
             subtitle: entry.episodeNumber != null
-                ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber!, episodeNumber: entry.episodeNumber!, stored: null)}'
+                ? 'S${entry.seasonNumber}E${entry.episodeNumber} · ${resolveEpisodeName(ref, tmdbId: entry.film.tmdbId, seasonNumber: entry.seasonNumber, episodeNumber: entry.episodeNumber!, stored: null)}'
                 : entry.seasonNumber != null
                     ? l10n.collSeasonLabel(entry.seasonNumber!)
                     : entry.film.isMovie
@@ -378,7 +383,7 @@ class _PhysicalCollectionScreenState
           // Regroupement par année (sorted est déjà ordonné).
           final groups = <({int? year, List<CollectionView> items})>[];
           for (final e in sorted) {
-            final y = yearCache[e.id];
+            final y = yearCache[cacheKey(e)];
             if (groups.isEmpty || groups.last.year != y) {
               groups.add((year: y, items: [e]));
             } else {

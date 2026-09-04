@@ -1437,6 +1437,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Impossible de lire la jaquette. Essaie une photo plus nette.'**
   String get photoSearchError;
+
+  /// No description provided for @sagaTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saga'**
+  String get sagaTitle;
+
+  /// No description provided for @sagaBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saga'**
+  String get sagaBadge;
+
+  /// No description provided for @sagaAddFavoriteTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter la saga aux favoris'**
+  String get sagaAddFavoriteTooltip;
+
+  /// No description provided for @sagaRemoveFavoriteTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la saga des favoris'**
+  String get sagaRemoveFavoriteTooltip;
+
+  /// No description provided for @sagaOwnedCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{owned} / {total} dans ta bibliothèque'**
+  String sagaOwnedCount(int owned, int total);
+
+  /// No description provided for @sagaFilmsSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Films de la saga ({count})'**
+  String sagaFilmsSection(int count);
+
+  /// No description provided for @favSagasSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sagas'**
+  String get favSagasSection;
+
+  /// No description provided for @favPersonsSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personnes'**
+  String get favPersonsSection;
+
+  /// No description provided for @searchSagasSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sagas'**
+  String get searchSagasSection;
+
+  /// No description provided for @filterFavoriteSaga.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saga favorite'**
+  String get filterFavoriteSaga;
+
+  /// No description provided for @detailsBelongsToSaga.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saga : {name}'**
+  String detailsBelongsToSaga(String name);
 }
 
 class _AppLocalizationsDelegate

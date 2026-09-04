@@ -42,7 +42,7 @@ class MediaSummary {
     if (type != 'movie' && type != 'tv') return null;
     final isMovie = type == 'movie';
     return MediaSummary(
-      tmdbId: json['id'] as int,
+      tmdbId: (json['id'] as num).toInt(),
       mediaType: type!,
       title: (isMovie ? json['title'] : json['name']) as String? ?? '?',
       originalTitle:
@@ -54,7 +54,8 @@ class MediaSummary {
           (isMovie ? json['release_date'] : json['first_air_date']) as String?,
       voteAverage: ((json['vote_average'] as num?) ?? 0).toDouble(),
       genreIds: (json['genre_ids'] as List<dynamic>? ?? [])
-          .map((e) => e as int)
+          .whereType<num>()
+          .map((e) => e.toInt())
           .toList(),
     );
   }

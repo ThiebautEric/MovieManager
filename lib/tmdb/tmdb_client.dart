@@ -8,6 +8,7 @@ import 'models/person_details.dart';
 import 'models/person_summary.dart';
 import 'models/search_hit.dart';
 import 'models/season_episodes.dart';
+import 'models/tmdb_collection.dart';
 
 /// Client de l'API TMDB (endpoints v3).
 ///
@@ -73,6 +74,28 @@ class TmdbClient {
       }
     }
     return hits;
+  }
+
+  /// Collection TMDB (saga) complète avec ses films : endpoint `/collection/{id}`.
+  Future<TmdbCollection> collection(int id, {CancelToken? cancelToken}) async {
+    final res = await _dio.get('/collection/$id',
+        queryParameters: {'language': language}, cancelToken: cancelToken);
+    return TmdbCollection.fromJson(res.data as Map<String, dynamic>);
+  }
+
+  /// Recherche de collections (sagas) par nom : endpoint `/search/collection`.
+  Future<List<CollectionRef>> searchCollections(String query,
+      {CancelToken? cancelToken}) async {
+    if (query.trim().isEmpty) return [];
+    final res = await _dio.get('/search/collection',
+        queryParameters: {'query': query, 'language': language},
+        cancelToken: cancelToken);
+    final results = (res.data['results'] as List<dynamic>? ?? []);
+    return results
+        .whereType<Map<String, dynamic>>()
+        .map((e) => CollectionRef.fromJson(e))
+        .whereType<CollectionRef>()
+        .toList();
   }
 
   /// Affiche d'un média dans sa langue d'origine, pour les résultats de

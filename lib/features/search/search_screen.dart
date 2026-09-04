@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../core/config/app_config.dart';
 import '../../core/l10n/l10n.dart';
 import '../../core/l10n/locale_controller.dart';
 import '../../core/prefs/original_titles_controller.dart';
@@ -18,6 +17,7 @@ import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/season_band.dart';
 import '../../tmdb/models/person_summary.dart';
 import '../../tmdb/models/search_hit.dart';
+import '../../tmdb/models/tmdb_collection.dart';
 import '../../widgets/app_bar_title.dart';
 import '../../widgets/language_button.dart';
 import '../../widgets/original_title_button.dart';
@@ -158,7 +158,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     if (query.trim().isEmpty) {
       return Center(child: Text(context.l10n.searchStartTyping));
     }
-    if (items.isEmpty) {
+    // Sagas (collections TMDB) correspondantes — section dédiée en tête.
+    final sagas = ref.watch(searchCollectionsProvider(query)).value ??
+        const <CollectionRef>[];
+    if (items.isEmpty && sagas.isEmpty) {
       return Center(child: Text(context.l10n.searchNoResults));
     }
     // Badges sur les résultats déjà possédés / déjà vus.
@@ -166,48 +169,128 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final watchedKeys = ref.watch(watchedKeysProvider);
     final watchedSeasonsByKey = ref.watch(watchedSeasonsByKeyProvider);
     final ratingByKey = ref.watch(ratingByKeyProvider);
-    return GridView.builder(
-      padding: const EdgeInsets.all(12),
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 160,
-        childAspectRatio: 0.55,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+    return CustomScrollView(
+      slivers: [
+        if (sagas.isNotEmpty) ...[
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+              child: Text(context.l10n.searchSagasSection,
+                  style: Theme.of(context).textTheme.titleSmall),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 210,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                itemCount: sagas.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 12),
+                itemBuilder: (context, i) => _SagaResultCard(saga: sagas[i]),
+              ),
+            ),
+          ),
+        ],
+        SliverPadding(
+          padding: const EdgeInsets.all(12),
+          sliver: SliverGrid.builder(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 160,
+              childAspectRatio: 0.55,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+            ),
+            itemCount: items.length,
+            itemBuilder: (context, i) {
+              final hit = items[i];
+              return switch (hit) {
+                MediaHit h => _ResultCard(
+                    item: h.media,
+                    medium:
+                        mediumByKey['${h.media.mediaType}:${h.media.tmdbId}'],
+                    watched: watchedKeys
+                        .contains('${h.media.mediaType}:${h.media.tmdbId}'),
+                    watchedSeasons: watchedSeasonsByKey[
+                            '${h.media.mediaType}:${h.media.tmdbId}'] ??
+                        const {},
+                    rating:
+                        ratingByKey['${h.media.mediaType}:${h.media.tmdbId}'],
+                    onTap: () => openMedia(
+                      context,
+                      ref,
+                      type: h.media.mediaType,
+                      id: h.media.tmdbId,
+                      title: h.media.title,
+                      posterPath: h.media.posterPath,
+                    ),
+                  ),
+                PersonHit h => _PersonCard(
+                    person: h.person,
+                    onTap: () => openPerson(
+                      context,
+                      ref,
+                      id: h.person.id,
+                      name: h.person.name,
+                      profilePath: h.person.profilePath,
+                    ),
+                  ),
+              };
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Carte d'une saga dans la bande « Sagas » des résultats de recherche.
+class _SagaResultCard extends ConsumerWidget {
+  const _SagaResultCard({required this.saga});
+
+  final CollectionRef saga;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: 110,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: () => openSaga(
+          context,
+          ref,
+          id: saga.id,
+          name: saga.name,
+          posterPath: saga.posterPath,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: PosterImage(posterPath: saga.posterPath),
+                    ),
+                  ),
+                  Positioned(
+                    top: 6,
+                    left: 6,
+                    child: DarkBadge(
+                        icon: Icons.movie_filter,
+                        label: context.l10n.sagaBadge),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 6),
+            CardTitle(saga.name, style: theme.textTheme.bodySmall),
+          ],
+        ),
       ),
-      itemCount: items.length,
-      itemBuilder: (context, i) {
-        final hit = items[i];
-        return switch (hit) {
-          MediaHit h => _ResultCard(
-              item: h.media,
-              medium: mediumByKey['${h.media.mediaType}:${h.media.tmdbId}'],
-              watched:
-                  watchedKeys.contains('${h.media.mediaType}:${h.media.tmdbId}'),
-              watchedSeasons: watchedSeasonsByKey[
-                      '${h.media.mediaType}:${h.media.tmdbId}'] ??
-                  const {},
-              rating: ratingByKey['${h.media.mediaType}:${h.media.tmdbId}'],
-              onTap: () => openMedia(
-                context,
-                ref,
-                type: h.media.mediaType,
-                id: h.media.tmdbId,
-                title: h.media.title,
-                posterPath: h.media.posterPath,
-              ),
-            ),
-          PersonHit h => _PersonCard(
-              person: h.person,
-              onTap: () => openPerson(
-                context,
-                ref,
-                id: h.person.id,
-                name: h.person.name,
-                profilePath: h.person.profilePath,
-              ),
-            ),
-        };
-      },
     );
   }
 }

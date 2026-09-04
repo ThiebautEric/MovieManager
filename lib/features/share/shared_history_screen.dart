@@ -181,7 +181,8 @@ class _SharedHistoryBodyState extends ConsumerState<_SharedHistoryBody> {
               }
 
               for (final v in sorted) {
-                final y = v.watchedAt.year;
+                // Heure locale : cohérent avec la date affichée sur la carte.
+                final y = v.watchedAt.toLocal().year;
                 if (y != lastYear) {
                   flush();
                   slivers.add(SliverToBoxAdapter(

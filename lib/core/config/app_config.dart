@@ -17,9 +17,11 @@ class AppConfig {
       String.fromEnvironment('SUPABASE_ANON_KEY');
 
   /// Clé Google Cloud Vision API (OCR jaquette, feature photo-recherche).
-  static const String visionApiKey =
-      String.fromEnvironment('VISION_API_KEY',
-          defaultValue: 'AIzaSyAqCzHQkKl0hYOguyaJhiWyDQkjwtKHSaE');
+  /// Injectée au build (comme les autres clés) — aucune valeur en dur.
+  /// ⚠️ Clé appelée côté client : elle DOIT être restreinte côté GCP
+  /// (referrer HTTP + API Vision uniquement + quota), car elle est
+  /// nécessairement présente dans le bundle livré.
+  static const String visionApiKey = String.fromEnvironment('VISION_API_KEY');
 
   /// Vrai si la fonctionnalité de recherche par photo est disponible.
   static bool get hasVisionApi => visionApiKey.isNotEmpty;

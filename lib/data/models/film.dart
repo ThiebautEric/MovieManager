@@ -46,6 +46,7 @@ class Film {
     this.originCountry,
     this.genres = const [],
     this.castIds = const [],
+    this.collectionId,
   });
 
   final String? id; // null avant insertion (généré par Supabase)
@@ -65,6 +66,10 @@ class Film {
   /// Identifiants TMDB des acteurs principaux (pour le filtre « favoris »).
   final List<int> castIds;
 
+  /// Id TMDB de la saga (collection) à laquelle appartient le film, ou null
+  /// (films isolés, séries). Pour le filtre « saga favorite ».
+  final int? collectionId;
+
   bool get isMovie => mediaType == 'movie';
 
   /// Clé d'identité TMDB (indépendante de l'`id` Supabase).
@@ -81,11 +86,13 @@ class Film {
         runtime: (json['runtime'] as num?)?.toInt(),
         overview: json['overview'] as String?,
         originCountry: json['origin_country'] as String?,
-        genres:
-            (json['genres'] as List<dynamic>? ?? []).map((e) => e as int).toList(),
+        genres: (json['genres'] as List<dynamic>? ?? [])
+            .map((e) => (e as num).toInt())
+            .toList(),
         castIds: (json['cast_ids'] as List<dynamic>? ?? [])
             .map((e) => (e as num).toInt())
             .toList(),
+        collectionId: (json['collection_id'] as num?)?.toInt(),
       );
 
   /// Payload pour insert/upsert dans `films` (`user_id` injecté par le repo).
@@ -101,6 +108,7 @@ class Film {
         'origin_country': originCountry,
         'genres': genres,
         'cast_ids': castIds,
+        'collection_id': collectionId,
       };
 
   /// JSON complet (avec `id`) pour la persistance locale.
@@ -135,5 +143,6 @@ class Film {
           ...d.cast.map((c) => c.id),
           ...d.directors.map((c) => c.id),
         }.where((id) => id != 0).toList(),
+        collectionId: d.collection?.id,
       );
 }

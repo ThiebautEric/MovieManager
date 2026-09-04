@@ -35,6 +35,17 @@ class PersonEntry extends DetailEntry {
   final String? profilePath;
 }
 
+class SagaEntry extends DetailEntry {
+  const SagaEntry({
+    required this.id,
+    required this.name,
+    this.posterPath,
+  });
+  final int id;
+  final String name;
+  final String? posterPath;
+}
+
 class SeasonEntry extends DetailEntry {
   const SeasonEntry({required this.details, required this.info});
   final MediaDetails details;
@@ -98,6 +109,25 @@ void openPerson(
     ];
   } else {
     context.push('/person/$id');
+  }
+}
+
+/// Ouvre une fiche saga : empile (grand écran) ou pousse une route (mobile).
+void openSaga(
+  BuildContext context,
+  WidgetRef ref, {
+  required int id,
+  required String name,
+  String? posterPath,
+}) {
+  if (_isWide(context)) {
+    final stack = ref.read(detailStackProvider);
+    ref.read(detailStackProvider.notifier).state = [
+      ...stack,
+      SagaEntry(id: id, name: name, posterPath: posterPath),
+    ];
+  } else {
+    context.push('/saga/$id');
   }
 }
 

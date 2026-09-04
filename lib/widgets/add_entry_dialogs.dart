@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../core/l10n/l10n.dart';
 import '../data/models/film.dart';
+import 'poster_image.dart';
 
 /// Dialogues d'ajout partagés entre la fiche détail et le pense-bête :
 /// possession (support + date d'acquisition) et visionnage (date + note +
@@ -10,6 +11,14 @@ import '../data/models/film.dart';
 
 String _fmtDate(BuildContext context, DateTime d) =>
     DateFormat.yMd(Localizations.localeOf(context).toString()).format(d);
+
+/// Date du jour normalisée en UTC-midi : évite le glissement d'un jour lors de
+/// la conversion en UTC quand l'utilisateur valide sans toucher au sélecteur
+/// (même logique que [DateRow.onPick]).
+DateTime _todayUtcNoon() {
+  final n = DateTime.now();
+  return DateTime.utc(n.year, n.month, n.day, 12);
+}
 
 /// Résultat de [AddCollectionDialog].
 class CollChoice {
@@ -26,9 +35,65 @@ class HistChoice {
   final String? comment;
 }
 
+/// En-tête « mini-affiche + titre + sous-titre » des dialogues d'ajout, pour
+/// rappeler visuellement l'œuvre concernée.
+class DialogMediaHeader extends StatelessWidget {
+  const DialogMediaHeader({
+    super.key,
+    required this.posterPath,
+    required this.title,
+    this.subtitle,
+    this.size = 'w185',
+  });
+
+  final String? posterPath;
+  final String title;
+  final String? subtitle;
+  final String size;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: SizedBox(
+            width: 54,
+            height: 81,
+            child: PosterImage(posterPath: posterPath, size: size),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleSmall),
+              if (subtitle != null && subtitle!.isNotEmpty) ...[
+                const SizedBox(height: 2),
+                Text(subtitle!,
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(color: theme.colorScheme.outline)),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 /// « Ajouter à la collection » : choix du support et de la date d'acquisition.
 class AddCollectionDialog extends StatefulWidget {
-  const AddCollectionDialog({super.key});
+  const AddCollectionDialog({super.key, this.header});
+
+  /// Contenu optionnel affiché en tête (ex. mini-affiche + titre de l'œuvre).
+  final Widget? header;
 
   @override
   State<AddCollectionDialog> createState() => _AddCollectionDialogState();
@@ -36,7 +101,7 @@ class AddCollectionDialog extends StatefulWidget {
 
 class _AddCollectionDialogState extends State<AddCollectionDialog> {
   Medium _medium = Medium.dvd;
-  DateTime _date = DateTime.now();
+  DateTime _date = _todayUtcNoon();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +113,10 @@ class _AddCollectionDialogState extends State<AddCollectionDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (widget.header != null) ...[
+              widget.header!,
+              const SizedBox(height: 12),
+            ],
             Text(l10n.detailsMediumLabel),
             const SizedBox(height: 6),
             Wrap(
@@ -109,7 +178,7 @@ class AddHistoryDialog extends StatefulWidget {
 }
 
 class _AddHistoryDialogState extends State<AddHistoryDialog> {
-  late DateTime _date = widget.initialDate ?? DateTime.now();
+  late DateTime _date = widget.initialDate ?? _todayUtcNoon();
   late double _rating = widget.initialRating ?? 0;
   late final TextEditingController _comment =
       TextEditingController(text: widget.initialComment ?? '');

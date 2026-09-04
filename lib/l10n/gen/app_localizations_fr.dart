@@ -815,4 +815,43 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get photoSearchError =>
       'Impossible de lire la jaquette. Essaie une photo plus nette.';
+
+  @override
+  String get sagaTitle => 'Saga';
+
+  @override
+  String get sagaBadge => 'Saga';
+
+  @override
+  String get sagaAddFavoriteTooltip => 'Ajouter la saga aux favoris';
+
+  @override
+  String get sagaRemoveFavoriteTooltip => 'Retirer la saga des favoris';
+
+  @override
+  String sagaOwnedCount(int owned, int total) {
+    return '$owned / $total dans ta bibliothèque';
+  }
+
+  @override
+  String sagaFilmsSection(int count) {
+    return 'Films de la saga ($count)';
+  }
+
+  @override
+  String get favSagasSection => 'Sagas';
+
+  @override
+  String get favPersonsSection => 'Personnes';
+
+  @override
+  String get searchSagasSection => 'Sagas';
+
+  @override
+  String get filterFavoriteSaga => 'Saga favorite';
+
+  @override
+  String detailsBelongsToSaga(String name) {
+    return 'Saga : $name';
+  }
 }

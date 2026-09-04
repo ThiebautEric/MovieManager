@@ -1,26 +1,73 @@
 -- ============================================================================
--- Migration à exécuter dans le SQL Editor de Supabase.
+-- Migration « Sagas favorites » — à exécuter dans le SQL Editor de Supabase.
 --
--- NON DESTRUCTIF : ne supprime AUCUNE donnée existante.
---   * Bloc 1 : change un réglage de réplication (métadonnée).
---   * Bloc 2 : DÉFINIT une fonction (les DELETE qu'elle contient ne s'exécutent
---              que lorsqu'un import est lancé depuis l'app, pas à sa création).
+-- AUTO-SUFFISANTE : exécuter CE SEUL fichier applique tout ce qui est requis
+--   * colonne films.collection_id (filtre « saga favorite »)
+--   * table favorite_collections (+ RLS, index, realtime, replica identity)
+--   * restore_backup à jour (7 tables + collection_id + added_at + created_at)
+-- Elle REMPLACE l'ancienne migration_restore_backup.sql (qu'elle inclut).
 --
--- Ouvrez ce fichier, tout sélectionner (Ctrl+A), copier, coller, Run.
+-- Idempotente (if not exists / create or replace) et NON destructive.
+-- Ctrl+A, copier, coller, Run.
 -- ============================================================================
 
 -- ----------------------------------------------------------------------------
--- BLOC 1 — corrige le dédoublement des favoris après un ré-import.
--- (flux realtime filtré : sans ceci, les DELETE ne sont pas propagés)
+-- 1. Colonne saga sur les films.
 -- ----------------------------------------------------------------------------
-alter table public.favorites replica identity full;
+alter table public.films add column if not exists collection_id integer;
 
 -- ----------------------------------------------------------------------------
--- BLOC 2 — fonction d'import atomique (purge + remap UUID + réinsertion des
--- 6 tables dans UNE seule transaction : tout réussit, ou rien ne change).
---
--- ⚠️ DÉFINITION DUPLIQUÉE À L'IDENTIQUE dans supabase/schema.sql. Garder les
--- deux fichiers synchronisés à chaque modification de la fonction.
+-- 2. Table des sagas favorites (collections TMDB de films).
+-- ----------------------------------------------------------------------------
+create table if not exists public.favorite_collections (
+  id            uuid primary key default gen_random_uuid(),
+  user_id       uuid not null references auth.users (id) on delete cascade,
+  collection_id integer not null,
+  name          text not null,
+  poster_path   text,
+  added_at      timestamptz not null default now(),
+  unique (user_id, collection_id)
+);
+create index if not exists favorite_collections_user_idx
+  on public.favorite_collections (user_id);
+-- REPLICA IDENTITY FULL : indispensable pour que les DELETE passent le filtre
+-- realtime .eq('user_id', …) (cf. favorites).
+alter table public.favorite_collections replica identity full;
+
+-- ----------------------------------------------------------------------------
+-- 3. RLS : chaque utilisateur ne voit/modifie que ses lignes.
+-- ----------------------------------------------------------------------------
+alter table public.favorite_collections enable row level security;
+drop policy if exists "select own favorite_collections" on public.favorite_collections;
+create policy "select own favorite_collections" on public.favorite_collections
+  for select using (auth.uid() = user_id);
+drop policy if exists "insert own favorite_collections" on public.favorite_collections;
+create policy "insert own favorite_collections" on public.favorite_collections
+  for insert with check (auth.uid() = user_id);
+drop policy if exists "update own favorite_collections" on public.favorite_collections;
+create policy "update own favorite_collections" on public.favorite_collections
+  for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
+drop policy if exists "delete own favorite_collections" on public.favorite_collections;
+create policy "delete own favorite_collections" on public.favorite_collections
+  for delete using (auth.uid() = user_id);
+
+-- ----------------------------------------------------------------------------
+-- 4. Realtime (ajout idempotent).
+-- ----------------------------------------------------------------------------
+do $$
+begin
+  if not exists (
+        select 1 from pg_publication_tables
+        where pubname = 'supabase_realtime' and schemaname = 'public'
+          and tablename = 'favorite_collections'
+      ) then
+    alter publication supabase_realtime add table public.favorite_collections;
+  end if;
+end $$;
+
+-- ----------------------------------------------------------------------------
+-- 5. restore_backup — version à jour. DOIT rester identique à la copie de
+--    supabase/schema.sql et supabase/migration_restore_backup.sql.
 -- ----------------------------------------------------------------------------
 create or replace function public.restore_backup(payload jsonb)
 returns jsonb

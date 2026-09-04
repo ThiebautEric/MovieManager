@@ -39,12 +39,15 @@ create table if not exists public.films (
   origin_country text,
   genres         integer[] not null default '{}',
   cast_ids       integer[] not null default '{}',
+  collection_id  integer,
   added_at       timestamptz not null default now(),
   unique (user_id, tmdb_id, media_type)
 );
 -- Ajouts pour une base déjà créée (sans perte).
 alter table public.films add column if not exists origin_country text;
 alter table public.films add column if not exists cast_ids integer[] not null default '{}';
+-- Saga TMDB (collection) du film, pour le filtre « saga favorite ».
+alter table public.films add column if not exists collection_id integer;
 
 -- ----------------------------------------------------------------------------
 -- 2. film_seasons — catalogue des saisons (séries) réellement suivies.
@@ -129,9 +132,23 @@ create table if not exists public.favorites (
 );
 
 -- ----------------------------------------------------------------------------
+-- 6. favorite_collections — sagas (collections TMDB de films) favorites.
+-- ----------------------------------------------------------------------------
+create table if not exists public.favorite_collections (
+  id            uuid primary key default gen_random_uuid(),
+  user_id       uuid not null references auth.users (id) on delete cascade,
+  collection_id integer not null,
+  name          text not null,
+  poster_path   text,
+  added_at      timestamptz not null default now(),
+  unique (user_id, collection_id)
+);
+
+-- ----------------------------------------------------------------------------
 -- Index pour les filtres/jointures fréquents.
 -- ----------------------------------------------------------------------------
 create index if not exists favorites_user_idx       on public.favorites (user_id);
+create index if not exists favorite_collections_user_idx on public.favorite_collections (user_id);
 
 -- REPLICA IDENTITY FULL sur favorites : cette table est la seule consommée via
 -- un flux realtime filtré (.stream().eq('user_id', …)). Avec l'identité par
@@ -141,6 +158,7 @@ create index if not exists favorites_user_idx       on public.favorites (user_id
 -- dédoublent après un ré-import (ancienne + nouvelle ligne, même person_id).
 -- FULL inclut toutes les colonnes dans le WAL → les DELETE filtrés passent.
 alter table public.favorites replica identity full;
+alter table public.favorite_collections replica identity full;
 create index if not exists films_user_idx          on public.films (user_id);
 create index if not exists film_seasons_film_idx    on public.film_seasons (film_id);
 create index if not exists film_seasons_user_idx    on public.film_seasons (user_id);
@@ -217,7 +235,7 @@ do $$
 declare
   t text;
 begin
-  foreach t in array array['films', 'film_seasons', 'collection', 'history', 'wishlist', 'favorites']
+  foreach t in array array['films', 'film_seasons', 'collection', 'history', 'wishlist', 'favorites', 'favorite_collections']
   loop
     execute format('alter table public.%I enable row level security;', t);
     execute format('drop policy if exists "select own %1$s" on public.%1$I;', t);
@@ -242,7 +260,7 @@ do $$
 declare
   t text;
 begin
-  foreach t in array array['films', 'film_seasons', 'collection', 'history', 'wishlist', 'favorites']
+  foreach t in array array['films', 'film_seasons', 'collection', 'history', 'wishlist', 'favorites', 'favorite_collections']
   loop
     if not exists (
           select 1 from pg_publication_tables
@@ -285,6 +303,7 @@ declare
   n_collection int := 0;
   n_wishlist int := 0;
   n_favorites int := 0;
+  n_favorite_collections int := 0;
 begin
   if uid is null then
     raise exception 'not_authenticated';
@@ -297,8 +316,9 @@ begin
     on commit drop;
 
   -- 1. Purge (cascade FK : film_seasons/collection/history/wishlist).
-  delete from public.films     where user_id = uid;
-  delete from public.favorites where user_id = uid;
+  delete from public.films                where user_id = uid;
+  delete from public.favorites            where user_id = uid;
+  delete from public.favorite_collections where user_id = uid;
 
   -- 2. Films — un nouvel UUID par film, mémorisé dans _film_map.
   insert into _film_map (old_id, new_id)
@@ -307,7 +327,8 @@ begin
 
   insert into public.films
     (id, user_id, tmdb_id, media_type, title, original_title, poster_path,
-     release_year, runtime, overview, origin_country, genres, cast_ids)
+     release_year, runtime, overview, origin_country, genres, cast_ids,
+     collection_id, added_at)
   select
     fm.new_id, uid,
     (e->>'tmdb_id')::int,
@@ -320,7 +341,9 @@ begin
     e->>'overview',
     e->>'origin_country',
     coalesce((select array_agg(v::int) from jsonb_array_elements_text(e->'genres') v), '{}'),
-    coalesce((select array_agg(v::int) from jsonb_array_elements_text(e->'cast_ids') v), '{}')
+    coalesce((select array_agg(v::int) from jsonb_array_elements_text(e->'cast_ids') v), '{}'),
+    (e->>'collection_id')::int,
+    coalesce((e->>'added_at')::timestamptz, now())
   from jsonb_array_elements(coalesce(payload->'films', '[]'::jsonb)) e
   join _film_map fm on fm.old_id = (e->>'id')::uuid;
   get diagnostics n_films = row_count;
@@ -351,7 +374,7 @@ begin
 
   insert into public.history
     (id, user_id, film_id, season_number, watched_at, rating, comment,
-     episode_number, episode_name, episode_runtime)
+     episode_number, episode_name, episode_runtime, created_at)
   select
     hm.new_id, uid, fm.new_id,
     (e->>'season_number')::int,
@@ -360,7 +383,8 @@ begin
     e->>'comment',
     (e->>'episode_number')::int,
     e->>'episode_name',
-    (e->>'episode_runtime')::int
+    (e->>'episode_runtime')::int,
+    coalesce((e->>'created_at')::timestamptz, now())
   from jsonb_array_elements(coalesce(payload->'history', '[]'::jsonb)) e
   join _film_map fm on fm.old_id = (e->>'film_id')::uuid
   join _hist_map hm on hm.old_id = (e->>'id')::uuid;
@@ -404,13 +428,26 @@ begin
   from jsonb_array_elements(coalesce(payload->'favorites', '[]'::jsonb)) e;
   get diagnostics n_favorites = row_count;
 
+  -- 8. favorite_collections — clé naturelle collection_id, aucun remap.
+  insert into public.favorite_collections
+    (user_id, collection_id, name, poster_path, added_at)
+  select
+    uid,
+    (e->>'collection_id')::int,
+    coalesce(e->>'name', ''),
+    e->>'poster_path',
+    coalesce((e->>'added_at')::timestamptz, now())
+  from jsonb_array_elements(coalesce(payload->'favorite_collections', '[]'::jsonb)) e;
+  get diagnostics n_favorite_collections = row_count;
+
   return jsonb_build_object(
     'films',      n_films,
     'seasons',    n_seasons,
     'history',    n_history,
     'collection', n_collection,
     'wishlist',   n_wishlist,
-    'favorites',  n_favorites
+    'favorites',  n_favorites,
+    'favorite_collections', n_favorite_collections
   );
 end;
 $$;

@@ -7,6 +7,7 @@ import '../../core/config/app_version.dart';
 import '../../core/supabase/supabase_providers.dart';
 import '../../core/utils/format.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../data/repositories/favorite_collections_repository.dart';
 import '../../data/repositories/favorites_repository.dart';
 import '../auth/auth_controller.dart';
 import '../backup/backup_service.dart';
@@ -110,6 +111,7 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
       final stats = await ref.read(backupServiceProvider).importZip(bytes);
       await ref.read(libraryRepositoryProvider).refresh();
       ref.invalidate(favoritesProvider);
+      ref.invalidate(favoriteCollectionsProvider);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -118,7 +120,8 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
               '${stats.history} visionnages, '
               '${stats.collection} possessions, '
               '${stats.wishlist} pense-bêtes, '
-              '${stats.favorites} favoris.',
+              '${stats.favorites} favoris, '
+              '${stats.favoriteCollections} sagas.',
             ),
             duration: const Duration(seconds: 6),
           ),

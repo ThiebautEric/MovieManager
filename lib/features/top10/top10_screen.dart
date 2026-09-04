@@ -15,7 +15,6 @@ import '../../widgets/original_title_button.dart';
 import '../../widgets/poster_image.dart';
 import '../../widgets/account_button.dart';
 import '../../widgets/theme_toggle_button.dart';
-import '../home/selected_media.dart';
 import '../search/details_library_controls.dart';
 
 /// Écran « Top 10 » : les titres préférés, classés par note moyenne
@@ -283,7 +282,7 @@ class _Top10Tile extends ConsumerWidget {
                     Text(
                       '${film.isMovie ? l10n.film : l10n.serie}'
                       '${entry.seasonNumber != null ? ' · ${l10n.collSeasonLabel(entry.seasonNumber!)}' : ''}'
-                      '${entry.episodeNumber != null ? ' · ${resolveEpisodeName(ref, tmdbId: film.tmdbId, seasonNumber: entry.seasonNumber ?? 0, episodeNumber: entry.episodeNumber!, stored: entry.episodeName)}' : ''}',
+                      '${entry.episodeNumber != null ? ' · ${resolveEpisodeName(ref, tmdbId: film.tmdbId, seasonNumber: entry.seasonNumber, episodeNumber: entry.episodeNumber!, stored: entry.episodeName)}' : ''}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall

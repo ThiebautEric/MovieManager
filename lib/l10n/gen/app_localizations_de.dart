@@ -817,4 +817,43 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get photoSearchError =>
       'Hülle konnte nicht gelesen werden. Versuche ein klareres Foto.';
+
+  @override
+  String get sagaTitle => 'Reihe';
+
+  @override
+  String get sagaBadge => 'Reihe';
+
+  @override
+  String get sagaAddFavoriteTooltip => 'Reihe zu Favoriten hinzufügen';
+
+  @override
+  String get sagaRemoveFavoriteTooltip => 'Reihe aus Favoriten entfernen';
+
+  @override
+  String sagaOwnedCount(int owned, int total) {
+    return '$owned / $total in deiner Bibliothek';
+  }
+
+  @override
+  String sagaFilmsSection(int count) {
+    return 'Filme der Reihe ($count)';
+  }
+
+  @override
+  String get favSagasSection => 'Reihen';
+
+  @override
+  String get favPersonsSection => 'Personen';
+
+  @override
+  String get searchSagasSection => 'Reihen';
+
+  @override
+  String get filterFavoriteSaga => 'Lieblingsreihe';
+
+  @override
+  String detailsBelongsToSaga(String name) {
+    return 'Reihe: $name';
+  }
 }

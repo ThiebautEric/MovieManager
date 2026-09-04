@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/legacy.dart';
 import '../../core/l10n/l10n.dart';
 import '../../data/models/film.dart';
 import '../../data/repositories/collection_repository.dart';
+import '../../data/repositories/favorite_collections_repository.dart';
 import '../../data/repositories/favorites_repository.dart';
 import '../../tmdb/tmdb_providers.dart';
 import '../../widgets/tmdb_badge.dart';
@@ -80,6 +81,7 @@ class FilterPanel extends ConsumerWidget {
     final notifier = ref.read(filterProvider.notifier);
     final genresById = ref.watch(genresByIdProvider);
     final favorites = ref.watch(favoritesProvider);
+    final favoriteSagas = ref.watch(favoriteCollectionsProvider);
 
     // Pour chaque facette, on compte les films distincts (par mediaKey).
     final genreKeys = <int, Set<String>>{};
@@ -210,6 +212,24 @@ class FilterPanel extends ConsumerWidget {
               : (v) => notifier.state = v == null
                   ? filter.copyWith(clearFavorite: true)
                   : filter.copyWith(favoritePersonId: v),
+        ),
+        const SizedBox(height: 16),
+        DropdownButtonFormField<int?>(
+          isExpanded: true,
+          initialValue: filter.favoriteCollectionId,
+          decoration: InputDecoration(labelText: l10n.filterFavoriteSaga),
+          items: [
+            DropdownMenuItem(value: null, child: Text(l10n.filterAllFeminine)),
+            ...favoriteSagas.map((s) => DropdownMenuItem(
+                  value: s.collectionId,
+                  child: Text(s.name, overflow: TextOverflow.ellipsis),
+                )),
+          ],
+          onChanged: favoriteSagas.isEmpty
+              ? null
+              : (v) => notifier.state = v == null
+                  ? filter.copyWith(clearSaga: true)
+                  : filter.copyWith(favoriteCollectionId: v),
         ),
         if (showRating) ...[
           const SizedBox(height: 16),

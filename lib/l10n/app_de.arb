@@ -229,5 +229,32 @@
   "friendsRetry": "Erneut versuchen",
   "friendsNoEmail": "(ohne E-Mail)",
   "photoSearchTooltip": "Über Cover-Foto suchen",
-  "photoSearchError": "Hülle konnte nicht gelesen werden. Versuche ein klareres Foto."
+  "photoSearchError": "Hülle konnte nicht gelesen werden. Versuche ein klareres Foto.",
+  "sagaTitle": "Reihe",
+  "sagaBadge": "Reihe",
+  "sagaAddFavoriteTooltip": "Reihe zu Favoriten hinzufügen",
+  "sagaRemoveFavoriteTooltip": "Reihe aus Favoriten entfernen",
+  "sagaOwnedCount": "{owned} / {total} in deiner Bibliothek",
+  "@sagaOwnedCount": {
+    "placeholders": {
+      "owned": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "sagaFilmsSection": "Filme der Reihe ({count})",
+  "@sagaFilmsSection": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "favSagasSection": "Reihen",
+  "favPersonsSection": "Personen",
+  "searchSagasSection": "Reihen",
+  "filterFavoriteSaga": "Lieblingsreihe",
+  "detailsBelongsToSaga": "Reihe: {name}",
+  "@detailsBelongsToSaga": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  }
 }

@@ -15,6 +15,7 @@ class BackupStats {
     required this.collection,
     required this.wishlist,
     required this.favorites,
+    required this.favoriteCollections,
   });
 
   final int films;
@@ -23,6 +24,7 @@ class BackupStats {
   final int collection;
   final int wishlist;
   final int favorites;
+  final int favoriteCollections;
 }
 
 class BackupService {
@@ -61,6 +63,7 @@ class BackupService {
       _selectAll('collection'),
       _selectAll('wishlist'),
       _selectAll('favorites'),
+      _selectAll('favorite_collections'),
     ]);
 
     final arc = Archive();
@@ -71,6 +74,7 @@ class BackupService {
       'collection.json',
       'wishlist.json',
       'favorites.json',
+      'favorite_collections.json',
     ];
     for (var i = 0; i < names.length; i++) {
       final bytes = utf8.encode(jsonEncode(results[i]));
@@ -100,11 +104,26 @@ class BackupService {
     final bCollection = readFile('collection.json');
     final bWishlist = readFile('wishlist.json');
     final bFavorites = readFile('favorites.json');
+    final bFavoriteCollections = readFile('favorite_collections.json');
 
     // Validation locale avant tout envoi : refuse un fichier vide ou invalide.
-    if (bFilms.isEmpty && bHistory.isEmpty && bCollection.isEmpty &&
-        bWishlist.isEmpty && bFavorites.isEmpty) {
+    // `films` est la table parente ; history/collection/wishlist/seasons y font
+    // référence. Les favoris (person_id TMDB) en sont indépendants.
+    final hasFilmDependents = bHistory.isNotEmpty ||
+        bCollection.isNotEmpty ||
+        bWishlist.isNotEmpty ||
+        bSeasons.isNotEmpty;
+    if (bFilms.isEmpty &&
+        bFavorites.isEmpty &&
+        bFavoriteCollections.isEmpty &&
+        !hasFilmDependents) {
       throw const FormatException('La sauvegarde ne contient aucune donnée.');
+    }
+    // Des lignes dépendant des films mais aucun film → sauvegarde corrompue :
+    // ne PAS lancer la restauration (destructive) sur des références orphelines.
+    if (bFilms.isEmpty && hasFilmDependents) {
+      throw const FormatException(
+          'Sauvegarde invalide : des données référencent des films absents.');
     }
     if (bFilms.isNotEmpty) {
       final f = bFilms.first;
@@ -128,6 +147,7 @@ class BackupService {
         'collection': bCollection,
         'wishlist': bWishlist,
         'favorites': bFavorites,
+        'favorite_collections': bFavoriteCollections,
       },
     });
 
@@ -140,6 +160,7 @@ class BackupService {
       collection: n('collection'),
       wishlist: n('wishlist'),
       favorites: n('favorites'),
+      favoriteCollections: n('favorite_collections'),
     );
   }
 }

@@ -34,13 +34,18 @@ class FilmSeason {
         runtimeMinutes: (json['runtime_minutes'] as num?)?.toInt(),
       );
 
+  /// N'inclut que les champs renseignés : un upsert déclenché par un simple
+  /// ajout (saison sans métadonnées enrichies) ne doit PAS écraser à null les
+  /// colonnes déjà backfillées (notamment `runtime_minutes`, cf.
+  /// `backfillSeasonRuntime`). Les colonnes absentes du payload sont préservées
+  /// par PostgREST lors du conflit.
   Map<String, dynamic> toUpsertJson() => {
         'season_number': seasonNumber,
-        'name': name,
-        'poster_path': posterPath,
-        'air_year': airYear,
-        'episode_count': episodeCount,
-        'runtime_minutes': runtimeMinutes,
+        if (name != null) 'name': name,
+        if (posterPath != null) 'poster_path': posterPath,
+        if (airYear != null) 'air_year': airYear,
+        if (episodeCount != null) 'episode_count': episodeCount,
+        if (runtimeMinutes != null) 'runtime_minutes': runtimeMinutes,
       };
 
   Map<String, dynamic> toFullJson() =>

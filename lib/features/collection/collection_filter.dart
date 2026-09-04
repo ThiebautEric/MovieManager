@@ -111,6 +111,7 @@ class CollectionFilter {
     this.year,
     this.rating,
     this.favoritePersonId,
+    this.favoriteCollectionId,
   });
 
   final String? mediaType; // 'movie' | 'tv' | null (tous)
@@ -119,6 +120,7 @@ class CollectionFilter {
   final int? year;
   final double? rating; // note exacte du visionnage (null = toutes)
   final int? favoritePersonId; // id TMDB d'une personne favorite (casting)
+  final int? favoriteCollectionId; // id TMDB d'une saga favorite (collection)
 
   CollectionFilter copyWith({
     String? mediaType,
@@ -133,6 +135,8 @@ class CollectionFilter {
     bool clearRating = false,
     int? favoritePersonId,
     bool clearFavorite = false,
+    int? favoriteCollectionId,
+    bool clearSaga = false,
   }) {
     return CollectionFilter(
       mediaType: clearMediaType ? null : (mediaType ?? this.mediaType),
@@ -142,6 +146,9 @@ class CollectionFilter {
       rating: clearRating ? null : (rating ?? this.rating),
       favoritePersonId:
           clearFavorite ? null : (favoritePersonId ?? this.favoritePersonId),
+      favoriteCollectionId: clearSaga
+          ? null
+          : (favoriteCollectionId ?? this.favoriteCollectionId),
     );
   }
 
@@ -152,6 +159,10 @@ class CollectionFilter {
     if (country != null && f.originCountry != country) return false;
     if (year != null && f.releaseYear != year) return false;
     if (favoritePersonId != null && !f.castIds.contains(favoritePersonId)) {
+      return false;
+    }
+    if (favoriteCollectionId != null &&
+        f.collectionId != favoriteCollectionId) {
       return false;
     }
     return true;
@@ -173,7 +184,8 @@ class CollectionFilter {
       country != null ||
       year != null ||
       rating != null ||
-      favoritePersonId != null;
+      favoritePersonId != null ||
+      favoriteCollectionId != null;
 
   /// Sérialisation compacte (n'émet que les champs actifs) — pour les liens de
   /// partage stockés côté serveur.
@@ -184,6 +196,8 @@ class CollectionFilter {
         if (year != null) 'year': year,
         if (rating != null) 'rating': rating,
         if (favoritePersonId != null) 'favoritePersonId': favoritePersonId,
+        if (favoriteCollectionId != null)
+          'favoriteCollectionId': favoriteCollectionId,
       };
 
   factory CollectionFilter.fromJson(Map<String, dynamic> json) =>
@@ -194,6 +208,7 @@ class CollectionFilter {
         year: (json['year'] as num?)?.toInt(),
         rating: (json['rating'] as num?)?.toDouble(),
         favoritePersonId: (json['favoritePersonId'] as num?)?.toInt(),
+        favoriteCollectionId: (json['favoriteCollectionId'] as num?)?.toInt(),
       );
 }
 

@@ -21,6 +21,7 @@ import '../favorites/favorites_screen.dart';
 import '../search/details_library_controls.dart';
 import '../search/details_screen.dart';
 import '../search/person_screen.dart';
+import '../search/saga_screen.dart';
 import '../search/search_screen.dart';
 import '../stats/stats_screen.dart';
 import '../top10/top10_screen.dart';
@@ -121,7 +122,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
       // Phase 2 : durées exactes de saison (runtime_minutes dans film_seasons).
       // Re-tenté à chaque lancement tant qu'il reste des saisons sans durée :
       // TMDB peut ne pas avoir les données aujourd'hui mais les avoir demain.
-      await _backfillSeasonRuntimes(repo, coll);
+      await _backfillSeasonRuntimes(repo, coll, hist);
 
       // Phase 3 : épisodes du verlauf sans runtime — récupération depuis TMDB
       // (uniquement si TMDB fournit la valeur exacte ; sinon on n'écrit rien).
@@ -133,32 +134,40 @@ class _HomeShellState extends ConsumerState<HomeShell>
     }
   }
 
-  /// Pour chaque saison en collection sans runtime_minutes, tente de calculer
-  /// la somme exacte via TMDB. Ne sauvegarde QUE si TOUS les épisodes ont un
-  /// runtime connu — sinon ne fait rien (re-tenté au prochain lancement).
-  /// Traite 3 saisons en parallèle pour réduire le temps total.
-  Future<void> _backfillSeasonRuntimes(
-      LibraryRepository repo, List<CollectionView> coll) async {
+  /// Pour chaque saison TRACÉE (possédée OU vue, à n'importe quel niveau) sans
+  /// runtime_minutes, tente de calculer la somme exacte via TMDB. Ne sauvegarde
+  /// QUE si TOUS les épisodes ont un runtime connu — sinon ne fait rien
+  /// (re-tenté au prochain lancement). Traite 3 saisons en parallèle.
+  Future<void> _backfillSeasonRuntimes(LibraryRepository repo,
+      List<CollectionView> coll, List<HistoryView> hist) async {
     final tmdb = ref.read(tmdbClientProvider);
 
-    // Dédupliquer par (filmId, seasonNumber) pour éviter N appels TMDB si
-    // la même saison est possédée en DVD et en Blu-ray.
-    final seen = <String>{};
-    final targets = <({String filmId, int tmdbId, int seasonNumber})>[];
-    for (final e in coll) {
-      if (e.seasonNumber == null) continue;
-      if (e.episodeNumber != null) continue;
-      if (e.season?.runtimeMinutes != null) continue; // déjà connu
-      if (e.film.id == null) continue;
-      final key = '${e.film.id}:${e.seasonNumber}';
-      if (seen.add(key)) {
-        targets.add((
-          filmId: e.film.id!,
-          tmdbId: e.film.tmdbId,
-          seasonNumber: e.seasonNumber!,
-        ));
-      }
+    // Rassemble toutes les saisons tracées (dédup par filmId:saison) et note
+    // celles dont la durée est déjà connue — depuis la collection ET
+    // l'historique, y compris les entrées épisodiques : une saison vue mais
+    // non possédée doit aussi obtenir sa durée cumulée.
+    final candidates =
+        <String, ({String filmId, int tmdbId, int seasonNumber})>{};
+    final known = <String>{};
+    void consider(
+        String? filmId, int tmdbId, int? seasonNumber, int? seasonRuntime) {
+      if (filmId == null || seasonNumber == null) return;
+      final key = '$filmId:$seasonNumber';
+      candidates.putIfAbsent(key,
+          () => (filmId: filmId, tmdbId: tmdbId, seasonNumber: seasonNumber));
+      if (seasonRuntime != null) known.add(key);
     }
+
+    for (final e in coll) {
+      consider(e.film.id, e.film.tmdbId, e.seasonNumber, e.season?.runtimeMinutes);
+    }
+    for (final h in hist) {
+      consider(h.film.id, h.film.tmdbId, h.seasonNumber, h.season?.runtimeMinutes);
+    }
+    final targets = [
+      for (final entry in candidates.entries)
+        if (!known.contains(entry.key)) entry.value,
+    ];
 
     // Traitement par lots de 3 requêtes simultanées.
     const batchSize = 3;
@@ -326,6 +335,11 @@ class _HomeShellState extends ConsumerState<HomeShell>
       PersonEntry e => PersonScreen(
           key: ValueKey('p${e.id}_$depth'),
           personId: e.id,
+          embedded: true,
+        ),
+      SagaEntry e => SagaScreen(
+          key: ValueKey('sg${e.id}_$depth'),
+          collectionId: e.id,
           embedded: true,
         ),
       SeasonEntry e => SeasonScreen(
@@ -496,6 +510,7 @@ class _SideRail extends StatelessWidget {
     final (String? poster, String label) = switch (top) {
       MediaEntry e => (e.posterPath, e.title),
       PersonEntry e => (e.profilePath, e.name),
+      SagaEntry e => (e.posterPath, e.name),
       SeasonEntry e => (
           e.info.posterPath,
           e.info.name.isNotEmpty ? e.info.name : 'S${e.info.seasonNumber}',

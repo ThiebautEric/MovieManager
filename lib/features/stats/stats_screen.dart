@@ -39,24 +39,22 @@ class StatsScreen extends ConsumerWidget {
     };
     final watchedKeys = {for (final v in history) v.film.mediaKey};
     final ownedKeys = {for (final c in collection) c.film.mediaKey};
-    // Moyenne des notes par œuvre/épisode — tous les visionnages contribuent.
+    // Moyenne de note PAR TITRE (œuvre) : tous les visionnages notés d'un même
+    // titre (épisodes compris) contribuent à sa moyenne. Granularité alignée
+    // sur le décompte « non noté » et l'affichage, eux aussi par titre — sinon
+    // les proportions du camembert et la moyenne globale sont faussées par les
+    // séries à nombreux épisodes notés.
     final ratingsByKey = <String, List<double>>{};
     for (final v in history) {
       if (v.rating != null) {
-        final key = v.episodeNumber != null
-            ? '${v.film.mediaKey}:s${v.seasonNumber}:e${v.episodeNumber}'
-            : v.film.mediaKey;
-        (ratingsByKey[key] ??= []).add(v.rating!);
+        (ratingsByKey[v.film.mediaKey] ??= []).add(v.rating!);
       }
     }
     final ratings = ratingsByKey.values
         .map((r) => r.reduce((a, b) => a + b) / r.length)
         .toList();
-    // Titres (films/séries, sans suffixe épisodique) ayant au moins une note.
-    final ratedMediaKeys = {
-      for (final v in history)
-        if (v.rating != null) v.film.mediaKey,
-    };
+    // Titres ayant au moins une note (= clés de ratingsByKey).
+    final ratedMediaKeys = ratingsByKey.keys.toSet();
 
     final total = films.length;
     final watched = watchedKeys.length;
