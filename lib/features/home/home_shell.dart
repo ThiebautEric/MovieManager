@@ -54,6 +54,12 @@ class _HomeShellState extends ConsumerState<HomeShell>
   static const _backfillVersion = 5;
   static const _backfillKey = 'metadata_backfill_version';
 
+  /// Fenêtre du backfill des durées (saisons/épisodes) : on ne (re)tente que
+  /// les entrées ajoutées récemment. Au-delà, si TMDB n'avait pas la durée à
+  /// l'ajout, on cesse de la redemander à chaque lancement — sinon tout
+  /// l'historique est rebalayé indéfiniment (lenteur au démarrage).
+  static const _backfillWindow = Duration(days: 30);
+
 
   @override
   void initState() {
@@ -146,23 +152,32 @@ class _HomeShellState extends ConsumerState<HomeShell>
     // celles dont la durée est déjà connue — depuis la collection ET
     // l'historique, y compris les entrées épisodiques : une saison vue mais
     // non possédée doit aussi obtenir sa durée cumulée.
+    final cutoff = DateTime.now().subtract(_backfillWindow);
     final candidates =
         <String, ({String filmId, int tmdbId, int seasonNumber})>{};
     final known = <String>{};
-    void consider(
-        String? filmId, int tmdbId, int? seasonNumber, int? seasonRuntime) {
+    void consider(String? filmId, int tmdbId, int? seasonNumber,
+        int? seasonRuntime, DateTime? addedAt) {
       if (filmId == null || seasonNumber == null) return;
       final key = '$filmId:$seasonNumber';
+      // Durée déjà connue (quelle que soit la source) : jamais un candidat.
+      if (seasonRuntime != null) {
+        known.add(key);
+        return;
+      }
+      // Sans durée : ne (re)tenter que les ajouts récents.
+      if (addedAt == null || addedAt.isBefore(cutoff)) return;
       candidates.putIfAbsent(key,
           () => (filmId: filmId, tmdbId: tmdbId, seasonNumber: seasonNumber));
-      if (seasonRuntime != null) known.add(key);
     }
 
     for (final e in coll) {
-      consider(e.film.id, e.film.tmdbId, e.seasonNumber, e.season?.runtimeMinutes);
+      consider(e.film.id, e.film.tmdbId, e.seasonNumber,
+          e.season?.runtimeMinutes, e.addedAt);
     }
     for (final h in hist) {
-      consider(h.film.id, h.film.tmdbId, h.seasonNumber, h.season?.runtimeMinutes);
+      consider(h.film.id, h.film.tmdbId, h.seasonNumber,
+          h.season?.runtimeMinutes, h.createdAt);
     }
     final targets = [
       for (final entry in candidates.entries)
@@ -202,12 +217,15 @@ class _HomeShellState extends ConsumerState<HomeShell>
     final tmdb = ref.read(tmdbClientProvider);
 
     // Grouper par (tmdbId, saison) pour n'appeler TMDB qu'une fois par saison.
+    final cutoff = DateTime.now().subtract(_backfillWindow);
     final byKey = <({int tmdbId, int season}), List<HistoryView>>{};
     for (final h in hist) {
       if (h.episodeNumber == null) continue;
       if (h.seasonNumber == null) continue;
       if (h.entry.episodeRuntime != null) continue; // déjà connu
       if (h.entry.id == null) continue;
+      // Ne (re)tenter que les visionnages récemment ajoutés (cf. Phase 2).
+      if (h.createdAt == null || h.createdAt!.isBefore(cutoff)) continue;
       final key = (tmdbId: h.film.tmdbId, season: h.seasonNumber!);
       (byKey[key] ??= []).add(h);
     }

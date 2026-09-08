@@ -17,6 +17,7 @@ class HistoryEntry {
     required this.watchedAt,
     this.rating,
     this.comment,
+    this.createdAt,
   });
 
   final String? id;
@@ -28,6 +29,12 @@ class HistoryEntry {
   final DateTime watchedAt;
   final double? rating;
   final String? comment;
+
+  /// Date d'INSERTION de la ligne (colonne `created_at`), distincte de
+  /// [watchedAt] (date du visionnage, potentiellement ancienne). Sert à cibler
+  /// le backfill sur les entrées récemment ajoutées, y compris après un import
+  /// où `watchedAt` est ancien mais la ligne vient d'être créée.
+  final DateTime? createdAt;
 
   factory HistoryEntry.fromJson(Map<String, dynamic> json) => HistoryEntry(
         id: json['id'] as String?,
@@ -42,6 +49,9 @@ class HistoryEntry {
             DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
         rating: (json['rating'] as num?)?.toDouble(),
         comment: json['comment'] as String?,
+        createdAt: json['created_at'] != null
+            ? DateTime.tryParse(json['created_at'] as String)
+            : null,
       );
 
   Map<String, dynamic> toUpsertJson() => {
@@ -57,7 +67,13 @@ class HistoryEntry {
         'comment': comment,
       };
 
-  Map<String, dynamic> toFullJson() => {...toUpsertJson(), 'id': id};
+  Map<String, dynamic> toFullJson() => {
+        ...toUpsertJson(),
+        'id': id,
+        // `created_at` n'est pas dans toUpsertJson (la base la défaut à now()
+        // à l'insert) ; on la conserve ici pour le round-trip local.
+        if (createdAt != null) 'created_at': createdAt!.toIso8601String(),
+      };
 }
 
 /// Vue composite (jointure faite par le repository) : un visionnage enrichi de
@@ -78,6 +94,7 @@ class HistoryView {
   int? get episodeNumber => entry.episodeNumber;
   String? get episodeName => entry.episodeName;
   DateTime get watchedAt => entry.watchedAt;
+  DateTime? get createdAt => entry.createdAt;
   double? get rating => entry.rating;
   String? get comment => entry.comment;
 
