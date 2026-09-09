@@ -16,9 +16,11 @@ class SplashGate extends StatefulWidget {
 
   final Widget child;
 
-  // Durées : plein écran opaque, puis fondu de sortie.
-  static const _hold = Duration(milliseconds: 1000);
-  static const _fade = Duration(milliseconds: 350);
+  // Durées : plein écran opaque, puis fondu de sortie. Court volontairement :
+  // l'écran de lancement natif a déjà affiché le logo, ce splash ne fait que
+  // prolonger brièvement pour un total (natif + Flutter) d'environ 2 s max.
+  static const _hold = Duration(milliseconds: 700);
+  static const _fade = Duration(milliseconds: 300);
 
   @override
   State<SplashGate> createState() => _SplashGateState();
