@@ -131,9 +131,10 @@ bool _sameMeta(Film a, Film b) =>
 // mémoire en vues composites (CollectionView / HistoryView).
 // ===========================================================================
 class SupabaseLibraryRepository implements LibraryRepository {
-  SupabaseLibraryRepository(this._client, {this._targetUserId});
+  SupabaseLibraryRepository(this._client, this._prefs, {this._targetUserId});
 
   final SupabaseClient _client;
+  final SharedPreferences _prefs;
 
   /// Mode « consultation admin » : lit les données de cet utilisateur au lieu
   /// de celles du compte connecté. Les politiques RLS n'accordent que SELECT,
@@ -179,7 +180,78 @@ class SupabaseLibraryRepository implements LibraryRepository {
     _wishlistCtrl ??= StreamController<List<WishlistView>>.broadcast();
     if (!_loaded) {
       _loaded = true;
+      // Rendu « local-first » : on affiche d'abord le dernier instantané local
+      // (synchrone, instantané), puis on rafraîchit depuis Supabase en tâche
+      // de fond. L'app est ainsi utilisable dès l'ouverture et hors-ligne.
+      _loadSnapshot();
       _loadAll();
+    }
+  }
+
+  // --- Instantané local (cache hors-ligne) ---------------------------------
+
+  static const _snapshotPrefix = 'cloud_snapshot_v1_';
+
+  /// Clé de l'instantané, isolée par utilisateur (jamais de fuite entre comptes).
+  String get _snapshotKey => '$_snapshotPrefix$_userId';
+
+  /// Applique un lot de lignes brutes (issues du réseau OU de l'instantané) aux
+  /// caches et reconstruit les vues. Chemin unique partagé par les deux sources.
+  void _applyRows(
+    List<Map<String, dynamic>> films,
+    List<Map<String, dynamic>> seasons,
+    List<Map<String, dynamic>> coll,
+    List<Map<String, dynamic>> hist,
+    List<Map<String, dynamic>> wish,
+  ) {
+    final fl = films.map(Film.fromJson).toList();
+    _filmsById = {for (final f in fl) f.id!: f};
+    _filmsByKey = {for (final f in fl) f.mediaKey: f};
+    _seasons = seasons.map(FilmSeason.fromJson).toList();
+    _collection = coll.map(CollectionEntry.fromJson).toList();
+    _history = hist.map(HistoryEntry.fromJson).toList();
+    _wishlist = wish.map(WishlistEntry.fromJson).toList();
+    _rebuild();
+  }
+
+  /// Affiche l'instantané local s'il existe. Jamais en consultation (view-as) :
+  /// on ne cache et n'affiche que ses propres données.
+  void _loadSnapshot() {
+    if (readOnly) return;
+    try {
+      final raw = _prefs.getString(_snapshotKey);
+      if (raw == null) return;
+      final snap = jsonDecode(raw) as Map<String, dynamic>;
+      List<Map<String, dynamic>> rows(String k) =>
+          (snap[k] as List).cast<Map<String, dynamic>>();
+      _applyRows(rows('films'), rows('seasons'), rows('collection'),
+          rows('history'), rows('wishlist'));
+    } catch (_) {
+      // Instantané absent/corrompu : on ignore, le réseau prendra le relais.
+    }
+  }
+
+  /// Écrit l'instantané après un chargement réseau réussi (best-effort).
+  void _saveSnapshot(
+    List<Map<String, dynamic>> films,
+    List<Map<String, dynamic>> seasons,
+    List<Map<String, dynamic>> coll,
+    List<Map<String, dynamic>> hist,
+    List<Map<String, dynamic>> wish,
+  ) {
+    if (readOnly) return; // ne jamais cacher les données consultées d'un tiers
+    try {
+      _prefs.setString(
+          _snapshotKey,
+          jsonEncode({
+            'films': films,
+            'seasons': seasons,
+            'collection': coll,
+            'history': hist,
+            'wishlist': wish,
+          }));
+    } catch (_) {
+      // Persistance best-effort : un échec n'interrompt pas la session.
     }
   }
 
@@ -220,17 +292,13 @@ class SupabaseLibraryRepository implements LibraryRepository {
       final coll = results[2];
       final hist = results[3];
       final wish = results[4];
-      final fl = films.map(Film.fromJson).toList();
-      _filmsById = {for (final f in fl) f.id!: f};
-      _filmsByKey = {for (final f in fl) f.mediaKey: f};
-      _seasons = seasons.map(FilmSeason.fromJson).toList();
-      _collection = coll.map(CollectionEntry.fromJson).toList();
-      _history = hist.map(HistoryEntry.fromJson).toList();
-      _wishlist = wish.map(WishlistEntry.fromJson).toList();
-      _rebuild();
+      _applyRows(films, seasons, coll, hist, wish);
+      _saveSnapshot(films, seasons, coll, hist, wish);
     } catch (e, st) {
-      // Erreur réseau ou parse : on réinitialise pour autoriser un retry
-      // et on propage l'erreur aux écouteurs des flux.
+      // Si un instantané (ou un chargement précédent) est déjà affiché, une
+      // panne réseau ne doit pas casser l'écran : on garde le cache local et on
+      // réessaiera à la prochaine ouverture. Sinon, on propage l'erreur.
+      if (_emitted) return;
       _loaded = false;
       _collectionCtrl?.addError(e, st);
       _historyCtrl?.addError(e, st);
@@ -1132,6 +1200,7 @@ final libraryRepositoryProvider = Provider<LibraryRepository>((ref) {
     final target = ref.watch(viewAsProvider);
     final repo = SupabaseLibraryRepository(
       ref.watch(supabaseClientProvider),
+      ref.watch(sharedPreferencesProvider),
       targetUserId: target?.userId,
     );
     ref.onDispose(repo.dispose);
