@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,11 @@ import 'l10n/gen/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Edge-to-edge : l'app dessine sous les barres système, rendues transparentes
+  // (voir le style d'overlay dans MovieManagerApp). Supprime la barre de
+  // navigation grise opaque d'Android en bas, qui tranchait avec le thème.
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   // Les fiches acteur peuvent afficher 200+ affiches : le cache mémoire par
   // défaut (100 images / 100 MB) est trop petit et évince les premières
@@ -67,9 +73,22 @@ class MovieManagerApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       routerConfig: router,
-      // Écran de démarrage « The Yellow Frame » (~1 s) par-dessus l'app.
-      builder: (context, child) =>
-          SplashGate(child: child ?? const SizedBox.shrink()),
+      builder: (context, child) {
+        // Barres système transparentes, icônes contrastées avec le thème.
+        final dark = Theme.of(context).brightness == Brightness.dark;
+        final icons = dark ? Brightness.light : Brightness.dark;
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: icons,
+            statusBarBrightness: dark ? Brightness.dark : Brightness.light,
+            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarIconBrightness: icons,
+          ),
+          // Écran de démarrage « The Yellow Frame » (~1 s) par-dessus l'app.
+          child: SplashGate(child: child ?? const SizedBox.shrink()),
+        );
+      },
     );
   }
 }
