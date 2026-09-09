@@ -1,11 +1,16 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+
+import '../../widgets/yellow_frame_logo.dart';
 
 /// Écran de démarrage « The Yellow Frame ».
 ///
 /// Affiché ~1 s au lancement, par-dessus l'application, puis retiré en fondu.
-/// Indépendant de la plateforme (Android/Windows/iOS/web) et du thème clair/
-/// sombre : couleurs de marque figées (fond noir, or). Ne dépend d'aucun asset —
-/// le nom est encadré d'un cadre jaune, en écho au nom de l'app.
+/// Réutilise le logo officiel [YellowFrameLogo] (porte + projecteur + mot-symbole)
+/// sur fond noir de marque.
+///
+/// **Jamais sur le web** (à la demande) : sur cette plateforme, la porte laisse
+/// simplement passer l'app sans splash.
 class SplashGate extends StatefulWidget {
   const SplashGate({super.key, required this.child});
 
@@ -26,6 +31,10 @@ class _SplashGateState extends State<SplashGate> {
   @override
   void initState() {
     super.initState();
+    if (kIsWeb) {
+      _present = false; // pas de splash sur le web
+      return;
+    }
     Future.delayed(SplashGate._hold, () {
       if (mounted) setState(() => _opaque = false);
     });
@@ -36,6 +45,7 @@ class _SplashGateState extends State<SplashGate> {
 
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb) return widget.child;
     return Stack(
       children: [
         widget.child,
@@ -55,30 +65,19 @@ class _SplashGateState extends State<SplashGate> {
 class _SplashView extends StatelessWidget {
   const _SplashView();
 
-  static const _gold = Color(0xFFF2C40F);
   static const _bg = Color(0xFF0A0A0A);
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: _bg,
-      child: Center(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
-          decoration: BoxDecoration(
-            border: Border.all(color: _gold, width: 2.5),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: const Text(
-            'THE YELLOW FRAME',
-            style: TextStyle(
-              color: _gold,
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 3,
-            ),
-          ),
-        ),
+    final screenW = MediaQuery.sizeOf(context).width;
+    final logoWidth = (screenW * 0.55).clamp(160.0, 240.0);
+    // Force le rendu sombre du logo (accents jaunes sur fond noir), quel que
+    // soit le thème courant de l'app.
+    return Theme(
+      data: ThemeData(brightness: Brightness.dark),
+      child: Material(
+        color: _bg,
+        child: Center(child: YellowFrameLogo(width: logoWidth)),
       ),
     );
   }
