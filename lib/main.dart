@@ -10,7 +10,6 @@ import 'core/l10n/locale_controller.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_mode_controller.dart';
-import 'core/ui/immersive_on_scroll.dart';
 import 'data/repositories/collection_repository.dart';
 import 'features/splash/splash_screen.dart';
 import 'l10n/gen/app_localizations.dart';
@@ -73,21 +72,18 @@ class MovieManagerApp extends ConsumerWidget {
         final dark = Theme.of(context).brightness == Brightness.dark;
         final icons = dark ? Brightness.light : Brightness.dark;
         return AnnotatedRegion<SystemUiOverlayStyle>(
-          // Quand la barre de navigation est visible (haut de liste), on la
-          // teinte comme la barre d'onglets ; elle se masque au défilement.
+          // Barre de navigation système NOIRE (pas grise), toujours visible ;
+          // le Scaffold garde la barre d'onglets distincte, au-dessus.
           value: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: icons,
             statusBarBrightness: dark ? Brightness.dark : Brightness.light,
             systemNavigationBarColor:
-                Theme.of(context).colorScheme.surfaceContainer,
+                dark ? Colors.black : Theme.of(context).colorScheme.surface,
             systemNavigationBarIconBrightness: icons,
           ),
-          // Masque la barre système au défilement vers le bas (Android).
-          child: ImmersiveOnScroll(
-            // Écran de démarrage « The Yellow Frame » (~1 s) par-dessus l'app.
-            child: SplashGate(child: child ?? const SizedBox.shrink()),
-          ),
+          // Écran de démarrage « The Yellow Frame » (~1 s) par-dessus l'app.
+          child: SplashGate(child: child ?? const SizedBox.shrink()),
         );
       },
     );
