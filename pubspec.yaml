@@ -75,12 +75,14 @@ dev_dependencies:
 # à la demande, absent du web).
 flutter_native_splash:
   color: "#0A0A0A"
-  # Android < 12 : logo complet avec le mot-symbole (texte), centré.
-  image: assets/native_splash_full.png
+  # Illustration (porte + projecteur) centrée, + mot-symbole (texte) en image de
+  # « branding » en bas — donc le texte s'affiche NATIVEMENT, y compris sur
+  # Android 12+ où l'OS n'autorise qu'une icône centrée + une image de branding.
+  image: assets/native_splash_logo.png
+  branding: assets/native_splash_wordmark.png
   android_12:
-    # Android 12+ : l'OS n'affiche qu'une icône centrée (masquée) — illustration
-    # seule ; le texte est repris par le splash Flutter juste après.
     image: assets/native_splash_logo.png
+    branding: assets/native_splash_wordmark.png
     color: "#0A0A0A"
   web: false
 

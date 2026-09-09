@@ -4,12 +4,21 @@ import 'package:flutter/material.dart';
 /// faisceau au sol, puis le mot-symbole. Dessiné en code (net à toutes les
 /// tailles) et décliné automatiquement selon le thème clair/sombre.
 class YellowFrameLogo extends StatelessWidget {
-  const YellowFrameLogo({super.key, this.width = 220, this.wordmark = true});
+  const YellowFrameLogo({
+    super.key,
+    this.width = 220,
+    this.wordmark = true,
+    this.illustration = true,
+  });
 
   final double width;
 
   /// Affiche le texte sous l'illustration (THE YELLOW FRAME · FILM DATABASE).
   final bool wordmark;
+
+  /// Affiche l'illustration (porte + projecteur). Mettre à `false` pour n'avoir
+  /// que le mot-symbole (ex. image de branding du splash natif Android 12).
+  final bool illustration;
 
   static const yellow = Color(0xFFF2C40F);
   static const deepGold = Color(0xFFB8890B);
@@ -24,13 +33,14 @@ class YellowFrameLogo extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          width: width,
-          height: width * 830 / 720,
-          child: CustomPaint(painter: _DoorPainter(dark: dark)),
-        ),
+        if (illustration)
+          SizedBox(
+            width: width,
+            height: width * 830 / 720,
+            child: CustomPaint(painter: _DoorPainter(dark: dark)),
+          ),
         if (wordmark) ...[
-          const SizedBox(height: 10),
+          if (illustration) const SizedBox(height: 10),
           Text('THE',
               style: TextStyle(
                   fontSize: width * .075,
