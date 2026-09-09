@@ -10,6 +10,7 @@ import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_mode_controller.dart';
 import 'data/repositories/collection_repository.dart';
+import 'features/splash/splash_screen.dart';
 import 'l10n/gen/app_localizations.dart';
 
 Future<void> main() async {
@@ -66,6 +67,9 @@ class MovieManagerApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       routerConfig: router,
+      // Écran de démarrage « The Yellow Frame » (~1 s) par-dessus l'app.
+      builder: (context, child) =>
+          SplashGate(child: child ?? const SizedBox.shrink()),
     );
   }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fond de l'écran de lancement natif : noir de marque « The Yellow Frame »,
+         pour enchaîner sans flash blanc sur le splash Flutter (fond identique). -->
+    <color name="launchBackground">#FF0A0A0A</color>
+</resources>
