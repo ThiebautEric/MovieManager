@@ -10,17 +10,13 @@ import 'core/l10n/locale_controller.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_mode_controller.dart';
+import 'core/ui/immersive_on_scroll.dart';
 import 'data/repositories/collection_repository.dart';
 import 'features/splash/splash_screen.dart';
 import 'l10n/gen/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Edge-to-edge : l'app dessine sous les barres système, rendues transparentes
-  // (voir le style d'overlay dans MovieManagerApp). Supprime la barre de
-  // navigation grise opaque d'Android en bas, qui tranchait avec le thème.
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   // Les fiches acteur peuvent afficher 200+ affiches : le cache mémoire par
   // défaut (100 images / 100 MB) est trop petit et évince les premières
@@ -74,19 +70,24 @@ class MovieManagerApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       routerConfig: router,
       builder: (context, child) {
-        // Barres système transparentes, icônes contrastées avec le thème.
         final dark = Theme.of(context).brightness == Brightness.dark;
         final icons = dark ? Brightness.light : Brightness.dark;
         return AnnotatedRegion<SystemUiOverlayStyle>(
+          // Quand la barre de navigation est visible (haut de liste), on la
+          // teinte comme la barre d'onglets ; elle se masque au défilement.
           value: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: icons,
             statusBarBrightness: dark ? Brightness.dark : Brightness.light,
-            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarColor:
+                Theme.of(context).colorScheme.surfaceContainer,
             systemNavigationBarIconBrightness: icons,
           ),
-          // Écran de démarrage « The Yellow Frame » (~1 s) par-dessus l'app.
-          child: SplashGate(child: child ?? const SizedBox.shrink()),
+          // Masque la barre système au défilement vers le bas (Android).
+          child: ImmersiveOnScroll(
+            // Écran de démarrage « The Yellow Frame » (~1 s) par-dessus l'app.
+            child: SplashGate(child: child ?? const SizedBox.shrink()),
+          ),
         );
       },
     );
