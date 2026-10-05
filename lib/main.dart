@@ -14,6 +14,23 @@ import 'data/repositories/collection_repository.dart';
 import 'features/splash/splash_screen.dart';
 import 'l10n/gen/app_localizations.dart';
 
+/// Force un port explicite sur l'URL Supabase (ex. `https://x.supabase.co` →
+/// `https://x.supabase.co:443`).
+///
+/// Le client realtime dérive l'URL du websocket de cette valeur. Sans port
+/// explicite, `dart:io` (Android/iOS) ne connaît pas le port par défaut du
+/// schéma `wss` et construit `wss://host:0/…` au moment du handshake → la
+/// connexion temps réel est rejetée (« Connection closed before full header
+/// was received ») et toutes les mises à jour en direct échouent. Ajouter le
+/// port par défaut (443 en https, 80 en http) supprime ce `:0` ; c'est sans
+/// effet sur les appels REST (443 est déjà le port implicite du https).
+String _realtimeSafeUrl(String url) {
+  final u = Uri.parse(url);
+  if (u.hasPort) return url;
+  final port = u.scheme == 'http' ? 80 : 443;
+  return '${u.scheme}://${u.host}:$port${u.path}';
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -32,7 +49,7 @@ Future<void> main() async {
   // Mode cloud (Supabase présent) : connexion + synchro.
   if (AppConfig.hasSupabase) {
     await Supabase.initialize(
-      url: AppConfig.supabaseUrl,
+      url: _realtimeSafeUrl(AppConfig.supabaseUrl),
       // La clé « anon public » reste valide ; `anonKey` est marqué déprécié au
       // profit de `publishableKey` mais accepte la même valeur.
       // ignore: deprecated_member_use

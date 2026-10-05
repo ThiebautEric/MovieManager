@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -89,6 +90,13 @@ abstract class LibraryRepository {
   void dispose();
 }
 
+/// Journalisation TEMPORAIRE des durées de démarrage (diagnostic de la lenteur
+/// croissante du chargement initial). Passer à `false` pour couper tous les logs.
+const bool _perfLog = false;
+void _plog(String msg) {
+  if (_perfLog) debugPrint('[perf][repo] $msg');
+}
+
 String _seasonKey(String filmId, int seasonNumber) => '$filmId:$seasonNumber';
 
 /// Fusionne une fiche fraîche TMDB [f] dans le film existant [e] : on garde
@@ -127,8 +135,11 @@ bool _sameMeta(Film a, Film b) =>
     _intSetEq(a.castIds, b.castIds);
 
 // ===========================================================================
-// Backend cloud : 4 tables Supabase écoutées en temps réel et jointes en
-// mémoire en vues composites (CollectionView / HistoryView).
+// Backend cloud : 5 tables Supabase (films, film_seasons, collection, history,
+// wishlist) écoutées EN TEMPS RÉEL via .stream() et jointes en mémoire en vues
+// composites (CollectionView / HistoryView / WishlistView). L'instantané local
+// assure un premier rendu immédiat ; les flux prennent ensuite le relais et
+// maintiennent les données à jour en direct sur tous les appareils.
 // ===========================================================================
 class SupabaseLibraryRepository implements LibraryRepository {
   SupabaseLibraryRepository(this._client, this._prefs, {this._targetUserId});
@@ -157,6 +168,11 @@ class SupabaseLibraryRepository implements LibraryRepository {
   List<HistoryEntry> _history = const [];
   List<WishlistEntry> _wishlist = const [];
 
+  // Canal temps réel unique (un seul websocket, bindings postgres_changes par
+  // table) : les modifications (le tien, un autre appareil, le trigger GC) sont
+  // appliquées en delta au cache local et reflétées en direct.
+  RealtimeChannel? _channel;
+
   StreamController<List<CollectionView>>? _collectionCtrl;
   StreamController<List<HistoryView>>? _historyCtrl;
   StreamController<List<WishlistView>>? _wishlistCtrl;
@@ -180,11 +196,21 @@ class SupabaseLibraryRepository implements LibraryRepository {
     _wishlistCtrl ??= StreamController<List<WishlistView>>.broadcast();
     if (!_loaded) {
       _loaded = true;
-      // Rendu « local-first » : on affiche d'abord le dernier instantané local
-      // (synchrone, instantané), puis on rafraîchit depuis Supabase en tâche
-      // de fond. L'app est ainsi utilisable dès l'ouverture et hors-ligne.
-      _loadSnapshot();
-      _loadAll();
+      if (readOnly) {
+        // Consultation admin (lecture seule, données d'un tiers) : un seul select,
+        // sans temps réel (fragile avec les claims JWT) ni instantané local.
+        _loadAll();
+      } else {
+        // Rendu « local-first », en 3 temps :
+        //   1. instantané local (synchrone) → premier rendu immédiat, hors-ligne ;
+        //   2. _loadAll() (REST) → socle FIABLE, rafraîchit depuis Supabase même
+        //      si le temps réel est indisponible (jamais pire que l'original) ;
+        //   3. temps réel (best-effort) → mises à jour EN DIRECT ensuite, ce qui
+        //      supprime la péremption au démarrage et le besoin de refresh manuel.
+        _loadSnapshot();
+        _loadAll();
+        _subscribeRealtime();
+      }
     }
   }
 
@@ -202,8 +228,10 @@ class SupabaseLibraryRepository implements LibraryRepository {
     List<Map<String, dynamic>> seasons,
     List<Map<String, dynamic>> coll,
     List<Map<String, dynamic>> hist,
-    List<Map<String, dynamic>> wish,
-  ) {
+    List<Map<String, dynamic>> wish, {
+    String tag = '',
+  }) {
+    final parseSw = Stopwatch()..start();
     final fl = films.map(Film.fromJson).toList();
     _filmsById = {for (final f in fl) f.id!: f};
     _filmsByKey = {for (final f in fl) f.mediaKey: f};
@@ -211,7 +239,15 @@ class SupabaseLibraryRepository implements LibraryRepository {
     _collection = coll.map(CollectionEntry.fromJson).toList();
     _history = hist.map(HistoryEntry.fromJson).toList();
     _wishlist = wish.map(WishlistEntry.fromJson).toList();
+    parseSw.stop();
+    final rebuildSw = Stopwatch()..start();
     _rebuild();
+    rebuildSw.stop();
+    _plog('applyRows[$tag]: parse ${parseSw.elapsedMilliseconds} ms, '
+        'rebuild ${rebuildSw.elapsedMilliseconds} ms '
+        '(films=${fl.length}, seasons=${_seasons.length}, '
+        'coll=${_collection.length}, hist=${_history.length}, '
+        'wish=${_wishlist.length})');
   }
 
   /// Affiche l'instantané local s'il existe. Jamais en consultation (view-as) :
@@ -220,12 +256,20 @@ class SupabaseLibraryRepository implements LibraryRepository {
     if (readOnly) return;
     try {
       final raw = _prefs.getString(_snapshotKey);
-      if (raw == null) return;
+      if (raw == null) {
+        _plog('snapshot: absent');
+        return;
+      }
+      final decodeSw = Stopwatch()..start();
       final snap = jsonDecode(raw) as Map<String, dynamic>;
+      decodeSw.stop();
+      _plog('snapshot: ${(raw.length / 1024).toStringAsFixed(0)} Ko, '
+          'jsonDecode ${decodeSw.elapsedMilliseconds} ms');
       List<Map<String, dynamic>> rows(String k) =>
           (snap[k] as List).cast<Map<String, dynamic>>();
       _applyRows(rows('films'), rows('seasons'), rows('collection'),
-          rows('history'), rows('wishlist'));
+          rows('history'), rows('wishlist'),
+          tag: 'snapshot');
     } catch (_) {
       // Instantané absent/corrompu : on ignore, le réseau prendra le relais.
     }
@@ -241,15 +285,21 @@ class SupabaseLibraryRepository implements LibraryRepository {
   ) {
     if (readOnly) return; // ne jamais cacher les données consultées d'un tiers
     try {
-      _prefs.setString(
-          _snapshotKey,
-          jsonEncode({
-            'films': films,
-            'seasons': seasons,
-            'collection': coll,
-            'history': hist,
-            'wishlist': wish,
-          }));
+      final encodeSw = Stopwatch()..start();
+      final encoded = jsonEncode({
+        'films': films,
+        'seasons': seasons,
+        'collection': coll,
+        'history': hist,
+        'wishlist': wish,
+      });
+      encodeSw.stop();
+      final writeSw = Stopwatch()..start();
+      _prefs.setString(_snapshotKey, encoded);
+      writeSw.stop();
+      _plog('saveSnapshot: jsonEncode ${encodeSw.elapsedMilliseconds} ms, '
+          'setString ${writeSw.elapsedMilliseconds} ms, '
+          '${(encoded.length / 1024).toStringAsFixed(0)} Ko');
     } catch (_) {
       // Persistance best-effort : un échec n'interrompt pas la session.
     }
@@ -261,6 +311,8 @@ class SupabaseLibraryRepository implements LibraryRepository {
     const pageSize = 1000;
     final out = <Map<String, dynamic>>[];
     var from = 0;
+    var pages = 0;
+    final sw = Stopwatch()..start();
     while (true) {
       final rows = await _client
           .from(table)
@@ -270,15 +322,21 @@ class SupabaseLibraryRepository implements LibraryRepository {
           .range(from, from + pageSize - 1);
       final list = (rows as List).cast<Map<String, dynamic>>();
       out.addAll(list);
+      pages++;
       if (list.length < pageSize) break;
       from += pageSize;
     }
+    sw.stop();
+    _plog('select $table: ${sw.elapsedMilliseconds} ms '
+        '(${out.length} lignes, $pages page(s))');
     return out;
   }
 
   Future<void> _loadAll() async {
+    final totalSw = Stopwatch()..start();
     try {
       // Charge les 5 tables en parallèle — gain ~200 ms vs séquentiel.
+      final netSw = Stopwatch()..start();
       final results = await Future.wait([
         _selectAll('films'),
         _selectAll('film_seasons'),
@@ -287,13 +345,19 @@ class SupabaseLibraryRepository implements LibraryRepository {
         // Tolère l'absence de la table (migration SQL pas encore exécutée).
         _selectAll('wishlist').catchError((_) => <Map<String, dynamic>>[]),
       ]);
+      netSw.stop();
+      _plog('réseau _loadAll (Future.wait des 5 tables): '
+          '${netSw.elapsedMilliseconds} ms');
       final films = results[0];
       final seasons = results[1];
       final coll = results[2];
       final hist = results[3];
       final wish = results[4];
-      _applyRows(films, seasons, coll, hist, wish);
+      _applyRows(films, seasons, coll, hist, wish, tag: 'réseau');
       _saveSnapshot(films, seasons, coll, hist, wish);
+      totalSw.stop();
+      _plog('_loadAll total (réseau + parse + rebuild + save): '
+          '${totalSw.elapsedMilliseconds} ms');
     } catch (e, st) {
       // Si un instantané (ou un chargement précédent) est déjà affiché, une
       // panne réseau ne doit pas casser l'écran : on garde le cache local et on
@@ -303,6 +367,110 @@ class SupabaseLibraryRepository implements LibraryRepository {
       _collectionCtrl?.addError(e, st);
       _historyCtrl?.addError(e, st);
       _wishlistCtrl?.addError(e, st);
+    }
+  }
+
+  // Tables suivies en temps réel (ordre indifférent).
+  static const _realtimeTables = [
+    'films',
+    'film_seasons',
+    'collection',
+    'history',
+    'wishlist',
+  ];
+
+  /// Ouvre UN canal realtime et y attache, par table :
+  ///   - un binding INSERT/UPDATE filtré par user_id (ne reçoit que mes lignes) ;
+  ///   - un binding DELETE NON filtré : sous RLS, l'« ancienne » ligne d'un DELETE
+  ///     ne contient que la clé primaire, donc un filtre user_id ne matcherait
+  ///     jamais. Non filtré, on reçoit tous les DELETE (clé primaire seule) ;
+  ///     retirer un id absent du cache est un no-op → sans risque et correct.
+  ///
+  /// Best-effort : si le temps réel est indisponible (timeout, hors-ligne), on
+  /// log et on ignore — le socle `_loadAll()` (REST) a déjà fourni les données.
+  void _subscribeRealtime() {
+    final String uid;
+    try {
+      uid = _userId;
+    } catch (_) {
+      return; // pas connecté : rien à faire
+    }
+    final channel = _client.channel('library_$uid');
+    for (final table in _realtimeTables) {
+      channel
+          .onPostgresChanges(
+            event: PostgresChangeEvent.insert,
+            schema: 'public',
+            table: table,
+            filter: PostgresChangeFilter(
+                type: PostgresChangeFilterType.eq, column: 'user_id', value: uid),
+            callback: (p) => _onRealtimeChange(table, p),
+          )
+          .onPostgresChanges(
+            event: PostgresChangeEvent.update,
+            schema: 'public',
+            table: table,
+            filter: PostgresChangeFilter(
+                type: PostgresChangeFilterType.eq, column: 'user_id', value: uid),
+            callback: (p) => _onRealtimeChange(table, p),
+          )
+          .onPostgresChanges(
+            event: PostgresChangeEvent.delete,
+            schema: 'public',
+            table: table,
+            callback: (p) => _onRealtimeChange(table, p),
+          );
+    }
+    channel.subscribe((status, [error]) {
+      _plog('realtime: $status${error != null ? ' ($error)' : ''}');
+    });
+    _channel = channel;
+  }
+
+  /// Applique un changement temps réel au cache de la table concernée, puis
+  /// reconstruit les vues. Tolère toute ligne illisible sans casser l'app.
+  void _onRealtimeChange(String table, PostgresChangePayload p) {
+    try {
+      final isDelete = p.eventType == PostgresChangeEvent.delete;
+      final row = isDelete ? p.oldRecord : p.newRecord;
+      final id = row['id'] as String?;
+      if (id == null) return;
+      switch (table) {
+        case 'films':
+          if (isDelete) {
+            final old = _filmsById.remove(id);
+            if (old != null) _filmsByKey.remove(old.mediaKey);
+          } else {
+            final f = Film.fromJson(p.newRecord);
+            final old = _filmsById[id];
+            if (old != null) _filmsByKey.remove(old.mediaKey);
+            if (f.id != null) {
+              _filmsById[f.id!] = f;
+              _filmsByKey[f.mediaKey] = f;
+            }
+          }
+        case 'film_seasons':
+          _seasons = isDelete
+              ? _seasons.where((e) => e.id != id).toList()
+              : [..._seasons.where((e) => e.id != id), FilmSeason.fromJson(p.newRecord)];
+        case 'collection':
+          _collection = isDelete
+              ? _collection.where((e) => e.id != id).toList()
+              : [..._collection.where((e) => e.id != id), CollectionEntry.fromJson(p.newRecord)];
+        case 'history':
+          _history = isDelete
+              ? _history.where((e) => e.id != id).toList()
+              : [..._history.where((e) => e.id != id), HistoryEntry.fromJson(p.newRecord)];
+        case 'wishlist':
+          _wishlist = isDelete
+              ? _wishlist.where((e) => e.id != id).toList()
+              : [..._wishlist.where((e) => e.id != id), WishlistEntry.fromJson(p.newRecord)];
+        default:
+          return;
+      }
+      _rebuild();
+    } catch (e) {
+      _plog('realtime $table: apply error $e');
     }
   }
 
@@ -705,6 +873,14 @@ class SupabaseLibraryRepository implements LibraryRepository {
   @override
   Future<void> refresh() async {
     _ensureLoaded();
+    if (readOnly) {
+      // Consultation admin : pas de flux, on recharge en one-shot.
+      await _loadAll();
+      return;
+    }
+    // Le temps réel maintient déjà les données à jour pendant la session ; un
+    // refresh manuel force une re-synchronisation complète via REST (rattrape
+    // d'éventuels changements survenus hors-ligne / temps réel indisponible).
     await _loadAll();
   }
 
@@ -733,6 +909,11 @@ class SupabaseLibraryRepository implements LibraryRepository {
 
   @override
   void dispose() {
+    final channel = _channel;
+    if (channel != null) {
+      _channel = null;
+      _client.removeChannel(channel);
+    }
     _collectionCtrl?.close();
     _historyCtrl?.close();
     _wishlistCtrl?.close();

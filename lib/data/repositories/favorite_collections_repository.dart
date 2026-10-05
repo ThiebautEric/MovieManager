@@ -70,6 +70,9 @@ class FavoriteCollectionsController
         .eq('user_id', uid)
         .listen((rows) {
       state = _sortDesc(rows.map(FavoriteCollection.fromJson).toList());
+    }, onError: (Object _) {
+      // Temps réel indisponible : on conserve l'état courant. Sans ce handler,
+      // l'erreur remonterait en exception non catchée à chaque échec.
     });
   }
 

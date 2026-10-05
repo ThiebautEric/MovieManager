@@ -71,6 +71,10 @@ class FavoritesController extends Notifier<List<FavoritePerson>> {
         .eq('user_id', uid)
         .listen((rows) {
       state = _sortDesc(rows.map(FavoritePerson.fromJson).toList());
+    }, onError: (Object _) {
+      // Temps réel indisponible (timeout, réseau, proxy bloquant les websockets) :
+      // on conserve l'état courant. Sans ce handler, l'erreur remonterait en
+      // exception non catchée à chaque échec de souscription.
     });
   }
 
