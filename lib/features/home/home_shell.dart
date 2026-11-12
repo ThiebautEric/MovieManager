@@ -44,7 +44,6 @@ class _HomeShellState extends ConsumerState<HomeShell>
   int _index = 0;
 
   bool _backfilling = false;
-  DateTime? _lastRefresh;
 
   /// Version des métadonnées capturées. À incrémenter quand on enrichit le
   /// modèle (v1 : pays/casting ; v2 : + réalisateurs ; v3 : casting complet,
@@ -277,14 +276,11 @@ class _HomeShellState extends ConsumerState<HomeShell>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      // Resynchronise avec la base, mais pas plus d'une fois toutes les 5 min
-      // pour éviter un rechargement complet à chaque retour d'écran veille.
-      final now = DateTime.now();
-      if (_lastRefresh == null ||
-          now.difference(_lastRefresh!) > const Duration(minutes: 5)) {
-        _lastRefresh = now;
-        ref.read(libraryRepositoryProvider).refresh();
-      }
+      // Resynchronise avec la base à chaque retour au premier plan : le
+      // websocket realtime a été coupé pendant l'arrière-plan, les changements
+      // faits ailleurs entre-temps n'ont pas été reçus. (Le rejoin realtime
+      // déclenche aussi ce rechargement ; les deux appels sont fusionnés.)
+      ref.read(libraryRepositoryProvider).refresh();
     }
   }
 

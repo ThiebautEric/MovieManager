@@ -172,6 +172,12 @@ class SupabaseLibraryRepository implements LibraryRepository {
   // table) : les modifications (le tien, un autre appareil, le trigger GC) sont
   // appliquées en delta au cache local et reflétées en direct.
   RealtimeChannel? _channel;
+  // Vrai après le premier `subscribed` : tout `subscribed` suivant est un
+  // rejoin (websocket coupé puis rétabli) → rattrapage REST (voir plus bas).
+  bool _subscribedOnce = false;
+  // _loadAll en cours, partagé pour ne pas lancer deux rechargements complets
+  // en parallèle (resume + rejoin realtime arrivent quasi en même temps).
+  Future<void>? _loading;
 
   StreamController<List<CollectionView>>? _collectionCtrl;
   StreamController<List<HistoryView>>? _historyCtrl;
@@ -276,14 +282,15 @@ class SupabaseLibraryRepository implements LibraryRepository {
   }
 
   /// Écrit l'instantané après un chargement réseau réussi (best-effort).
-  void _saveSnapshot(
+  Future<void> _saveSnapshot(
     List<Map<String, dynamic>> films,
     List<Map<String, dynamic>> seasons,
     List<Map<String, dynamic>> coll,
     List<Map<String, dynamic>> hist,
     List<Map<String, dynamic>> wish,
-  ) {
+  ) async {
     if (readOnly) return; // ne jamais cacher les données consultées d'un tiers
+    var size = 0;
     try {
       final encodeSw = Stopwatch()..start();
       final encoded = jsonEncode({
@@ -294,14 +301,18 @@ class SupabaseLibraryRepository implements LibraryRepository {
         'wishlist': wish,
       });
       encodeSw.stop();
+      size = encoded.length;
       final writeSw = Stopwatch()..start();
-      _prefs.setString(_snapshotKey, encoded);
+      final ok = await _prefs.setString(_snapshotKey, encoded);
       writeSw.stop();
+      if (!ok) throw StateError('setString a renvoyé false');
       _plog('saveSnapshot: jsonEncode ${encodeSw.elapsedMilliseconds} ms, '
           'setString ${writeSw.elapsedMilliseconds} ms, '
-          '${(encoded.length / 1024).toStringAsFixed(0)} Ko');
-    } catch (_) {
-      // Persistance best-effort : un échec n'interrompt pas la session.
+          '${(size / 1024).toStringAsFixed(0)} Ko');
+    } catch (e) {
+      // Best-effort, mais jamais silencieux : un échec ici fige l'instantané.
+      debugPrint('[repo] saveSnapshot échoué '
+          '(${(size / 1024).toStringAsFixed(0)} Ko) : $e');
     }
   }
 
@@ -332,7 +343,10 @@ class SupabaseLibraryRepository implements LibraryRepository {
     return out;
   }
 
-  Future<void> _loadAll() async {
+  Future<void> _loadAll() =>
+      _loading ??= _doLoadAll().whenComplete(() => _loading = null);
+
+  Future<void> _doLoadAll() async {
     final totalSw = Stopwatch()..start();
     try {
       // Charge les 5 tables en parallèle — gain ~200 ms vs séquentiel.
@@ -423,6 +437,17 @@ class SupabaseLibraryRepository implements LibraryRepository {
     }
     channel.subscribe((status, [error]) {
       _plog('realtime: $status${error != null ? ' ($error)' : ''}');
+      if (status != RealtimeSubscribeStatus.subscribed) return;
+      // Supabase ne rejoue pas les événements manqués pendant une coupure. Or
+      // sur mobile, supabase_flutter FERME le websocket dès que l'app passe en
+      // arrière-plan et le rouvre au retour : tout ce qui a changé entre-temps
+      // (ex. depuis le web) serait perdu. Chaque rejoin déclenche donc un
+      // rechargement REST complet pour rattraper le trou.
+      if (_subscribedOnce) {
+        _loadAll();
+      } else {
+        _subscribedOnce = true;
+      }
     });
     _channel = channel;
   }
