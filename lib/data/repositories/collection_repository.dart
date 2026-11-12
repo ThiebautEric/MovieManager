@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:archive/archive.dart' show GZipDecoder, GZipEncoder;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -222,7 +223,10 @@ class SupabaseLibraryRepository implements LibraryRepository {
 
   // --- Instantané local (cache hors-ligne) ---------------------------------
 
-  static const _snapshotPrefix = 'cloud_snapshot_v1_';
+  // v2 : JSON compressé gzip + base64. Sur le web, shared_preferences écrit
+  // dans localStorage, plafonné par le navigateur à ~5 Mo par site.
+  static const _snapshotPrefix = 'cloud_snapshot_v2_';
+  static const _legacySnapshotPrefix = 'cloud_snapshot_v1_';
 
   /// Clé de l'instantané, isolée par utilisateur (jamais de fuite entre comptes).
   String get _snapshotKey => '$_snapshotPrefix$_userId';
@@ -267,7 +271,8 @@ class SupabaseLibraryRepository implements LibraryRepository {
         return;
       }
       final decodeSw = Stopwatch()..start();
-      final snap = jsonDecode(raw) as Map<String, dynamic>;
+      final text = utf8.decode(GZipDecoder().decodeBytes(base64Decode(raw)));
+      final snap = jsonDecode(text) as Map<String, dynamic>;
       decodeSw.stop();
       _plog('snapshot: ${(raw.length / 1024).toStringAsFixed(0)} Ko, '
           'jsonDecode ${decodeSw.elapsedMilliseconds} ms');
@@ -276,8 +281,9 @@ class SupabaseLibraryRepository implements LibraryRepository {
       _applyRows(rows('films'), rows('seasons'), rows('collection'),
           rows('history'), rows('wishlist'),
           tag: 'snapshot');
-    } catch (_) {
+    } catch (e) {
       // Instantané absent/corrompu : on ignore, le réseau prendra le relais.
+      debugPrint('[repo] lecture de l\'instantané échouée : $e');
     }
   }
 
@@ -290,29 +296,39 @@ class SupabaseLibraryRepository implements LibraryRepository {
     List<Map<String, dynamic>> wish,
   ) async {
     if (readOnly) return; // ne jamais cacher les données consultées d'un tiers
-    var size = 0;
+    String ko(int n) => '${(n / 1024).toStringAsFixed(0)} Ko';
+    var jsonSize = 0;
+    var storedSize = 0;
     try {
+      // L'ancien format occupe le quota localStorage : à libérer avant d'écrire.
+      await _prefs.remove('$_legacySnapshotPrefix$_userId');
       final encodeSw = Stopwatch()..start();
-      final encoded = jsonEncode({
+      final bytes = utf8.encode(jsonEncode({
         'films': films,
         'seasons': seasons,
         'collection': coll,
         'history': hist,
         'wishlist': wish,
-      });
+      }));
+      final encoded = base64Encode(GZipEncoder().encode(bytes)!);
       encodeSw.stop();
-      size = encoded.length;
+      jsonSize = bytes.length;
+      storedSize = encoded.length;
       final writeSw = Stopwatch()..start();
       final ok = await _prefs.setString(_snapshotKey, encoded);
       writeSw.stop();
       if (!ok) throw StateError('setString a renvoyé false');
-      _plog('saveSnapshot: jsonEncode ${encodeSw.elapsedMilliseconds} ms, '
-          'setString ${writeSw.elapsedMilliseconds} ms, '
-          '${(size / 1024).toStringAsFixed(0)} Ko');
+      debugPrint('[repo] instantané : ${ko(jsonSize)} JSON → '
+          '${ko(storedSize)} stockés');
+      _plog('saveSnapshot: encode ${encodeSw.elapsedMilliseconds} ms, '
+          'setString ${writeSw.elapsedMilliseconds} ms');
     } catch (e) {
-      // Best-effort, mais jamais silencieux : un échec ici fige l'instantané.
-      debugPrint('[repo] saveSnapshot échoué '
-          '(${(size / 1024).toStringAsFixed(0)} Ko) : $e');
+      debugPrint('[repo] saveSnapshot échoué (${ko(jsonSize)} JSON → '
+          '${ko(storedSize)} stockés) : $e');
+      // Mieux vaut aucun instantané qu'un instantané périmé affiché au démarrage.
+      try {
+        await _prefs.remove(_snapshotKey);
+      } catch (_) {}
     }
   }
 
@@ -373,6 +389,7 @@ class SupabaseLibraryRepository implements LibraryRepository {
       _plog('_loadAll total (réseau + parse + rebuild + save): '
           '${totalSw.elapsedMilliseconds} ms');
     } catch (e, st) {
+      debugPrint('[repo] _loadAll échoué : $e');
       // Si un instantané (ou un chargement précédent) est déjà affiché, une
       // panne réseau ne doit pas casser l'écran : on garde le cache local et on
       // réessaiera à la prochaine ouverture. Sinon, on propage l'erreur.
